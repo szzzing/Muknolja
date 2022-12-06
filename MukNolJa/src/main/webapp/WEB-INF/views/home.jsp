@@ -7,7 +7,7 @@
 <body>
 <h1>
 	Hello world!   
-	test
+	test, test2
 </h1>
 
 <P>  The time on the server is ${serverTime}.test </P>
