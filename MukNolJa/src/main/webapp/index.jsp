@@ -10,5 +10,6 @@
 <body>
 <c:set value="${ pageContext.servletContext.contextPath }" var="contextPath" scope="application"/>
 	<a href="${ contextPath }/member.me">membedsewhtwhtjkWWWWsssssdss</a>
+	<a href="${ contextPath }/chat.ch">채팅</a>
 </body>
 </html>
