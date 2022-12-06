@@ -9,6 +9,6 @@
 </head>
 <body>
 <c:set value="${ pageContext.servletContext.contextPath }" var="contextPath" scope="application"/>
-	<a href="${ contextPath }/member.me">membedsdss</a>
+	<a href="${ contextPath }/member.me">membedsewhtwhtjkWWWWdss</a>
 </body>
 </html>
