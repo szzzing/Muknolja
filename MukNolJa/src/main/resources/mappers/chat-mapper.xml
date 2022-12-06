@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatmapper">
+	<insert id="createRoom">
+		insert into CHAT_ROOM
+		values(#{roomCode}, #{BoardId}, #{roomName})
+	</insert>
+	
+	<select id="selectChatRoomList" resultMap="ChatRoomResultSet">
+		select *
+		from CHAT_ROOM
+		
+	</select>
+	
+	<resultMap type="ChatRoom" id="ChatRoomResultSet">
+		<id column="CHAT_ROOM_CODE" property="roomCode"/>
+		<result column="BOARD_ID" property="BoardId"/>
+		<result column="CHAT_ROOM_NAME" property="roomName"/>
+	</resultMap>
+	
+</mapper>
