@@ -114,7 +114,8 @@
 	</servlet-mapping>
 	
 	<!-- 후기 게시판 -->
-	<servlet>ReviewServlet</servlet-name>
+	<servlet>
+		<servlet-name>ReviewServlet</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
