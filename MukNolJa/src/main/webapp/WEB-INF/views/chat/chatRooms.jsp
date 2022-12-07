@@ -40,16 +40,16 @@
 				<b>채팅방</b>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col rooms">
-				<c:forEach var="c" items="${ list }">
-					<b>&nbsp;&nbsp;&nbsp;&nbsp;${ c.roomName }</b>
-					<br>
-					<small>&nbsp;&nbsp;&nbsp;&nbsp;2022-11-11</small>
-					<input type="hidden" value="${ c.roomCode }">
-				</c:forEach>
+		<c:forEach var="c" items="${ list }">
+			<div class="row">
+				<div class="col rooms">
+						<b>&nbsp;&nbsp;&nbsp;&nbsp;${ c.roomName }</b>
+						<br>
+						<small>&nbsp;&nbsp;&nbsp;&nbsp;2022-11-11</small>
+						<input type="hidden" value="${ c.roomCode }">
+				</div>
 			</div>
-		</div>
+		</c:forEach>
 	</div>
 </body>
 <script>
