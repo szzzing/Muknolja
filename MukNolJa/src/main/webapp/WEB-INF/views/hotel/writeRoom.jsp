@@ -22,13 +22,13 @@
 
 	<div class="container" style="width:800px; margin-top:100px;">
 		<h2 style="text-align: center;">객실 등록</h2>
-		<form action="${ contextPath }/insertRoom.ho" method="post">
+		<form action="${ contextPath }/insertRoom.ho" enctype="multipart/form-data" method="post">
 			<div class="col form-floating mb-3 mt-3">
 				<input type="text" class="form-control" name="roomName" placeholder="객실명을 입력하세요." required>
 				<label for="roomName">객실명</label>
 			</div>
 			<div class="col form-floating mb-3 mt-3">
-				<input type="text" class="form-control" name="roomPrice" placeholder="숫자만 입력하세요." required>
+				<input type="number" class="form-control" name="roomPrice" min="0" required>
 				<label for="roomPrice">가격</label>
 			</div>
 			<div class="col form-floating mb-3 mt-3" style="width: 200px; float: left;">
@@ -51,6 +51,12 @@
 				</select>
 				<label for="maxAccept">인원</label>
 			</div>
+			
+			<div class="col form-floating mb-3 mt-3">
+				<input type="number" class="form-control" name="totalNumber" min="0" required>
+				<label for="roomPrice">객실 수</label>
+			</div>
+			
 			<div class="form-floating mb-3">
 				<textarea class="form-control" name="roomInfo" placeholder="내용을 입력하세요." rows="10" style="height:300px; resize:none" required></textarea>
 				<label for="roomInfo" class="form-label">객실 기본정보</label>

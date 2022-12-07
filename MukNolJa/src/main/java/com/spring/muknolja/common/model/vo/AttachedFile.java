@@ -21,4 +21,5 @@ public class AttachedFile {
 	private String fileModifyName;
 	private String fileLink;
 	private String fileStatus;
+	private String fileThumbnail;
 }

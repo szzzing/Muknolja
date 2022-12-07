@@ -1,6 +1,6 @@
 package com.spring.muknolja.hotel.model.vo;
 
-import java.sql.Date;
+import java.sql.Time;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,11 +16,11 @@ import lombok.ToString;
 public class Room {
 	private int roomId;
 	private int hotelId;
-	private String hotelName;
 	private int maxAccept;
+	private String roomName;
 	private int roomPrice;
-	private Date checkinTime;
-	private Date checkoutTime;
+	private String checkinTime;
+	private String checkoutTime;
 	private int totalNumber;
 	private String roomInfo;
 }

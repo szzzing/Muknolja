@@ -9,5 +9,6 @@
 
 	<mappers>
 		<mapper resource="mappers/chat-mapper.xml"/>
+		<mapper resource="mappers/hotel-mapper.xml"/>
 	</mappers>
 </configuration>

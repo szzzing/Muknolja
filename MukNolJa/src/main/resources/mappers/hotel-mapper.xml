@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hotelmapper">
+	<insert id="insertRoom">
+		insert into ROOM
+		values(SEQ_ROOMID.nextval, 2, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo})
+	</insert>
+	
+	<insert id="insertAttm">
+		insert all
+		<foreach collection="list" item="a">
+			into ATTACHED_FILE
+			values(NEW_FID, #{a.fileType}, sysdate, #{a.fileName}, #{a.fileModifyName}, #{a.fileLink}, default, #{a.fileThumbnail})
+			into ROOM_IMG
+			values(CUR_FID, SEQ_ROOMID.currval)
+		</foreach>
+		select * from dual
+	</insert>
+</mapper>
