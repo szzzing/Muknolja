@@ -1,4 +1,4 @@
-package com.spring.muknolja.chat.vo;
+package com.spring.muknolja.chat.model.vo;
 
 import java.sql.Date;
 

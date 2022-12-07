@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.muknolja.chat.model.service.ChatService;
-import com.spring.muknolja.chat.vo.ChatMessage;
-import com.spring.muknolja.chat.vo.ChatRoom;
+import com.spring.muknolja.chat.model.vo.ChatMessage;
+import com.spring.muknolja.chat.model.vo.ChatRoom;
 
 @Controller
 public class ChatroomController {

@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.muknolja.chat.model.dao.ChatDAO;
-import com.spring.muknolja.chat.vo.ChatMessage;
-import com.spring.muknolja.chat.vo.ChatRoom;
+import com.spring.muknolja.chat.model.vo.ChatMessage;
+import com.spring.muknolja.chat.model.vo.ChatRoom;
 
 @Service("cService")
 public class ChatServiceImpl implements ChatService{
