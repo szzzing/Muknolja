@@ -3,8 +3,8 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias type="com.spring.muknolja.chat.vo.ChatRoom" alias="ChatRoom"/>
-		<typeAlias type="com.spring.muknolja.chat.vo.ChatMessage" alias="ChatMessage"/>
+		<typeAlias type="com.spring.muknolja.chat.model.vo.ChatRoom" alias="ChatRoom"/>
+		<typeAlias type="com.spring.muknolja.chat.model.vo.ChatMessage" alias="ChatMessage"/>
 	</typeAliases>
 
 	<mappers>

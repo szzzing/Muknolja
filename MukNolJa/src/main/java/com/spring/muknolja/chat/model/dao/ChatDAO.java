@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.spring.muknolja.chat.vo.ChatMessage;
-import com.spring.muknolja.chat.vo.ChatRoom;
+import com.spring.muknolja.chat.model.vo.ChatMessage;
+import com.spring.muknolja.chat.model.vo.ChatRoom;
 
 @Repository("cDAO")
 public class ChatDAO {

@@ -2,8 +2,8 @@ package com.spring.muknolja.chat.model.service;
 
 import java.util.ArrayList;
 
-import com.spring.muknolja.chat.vo.ChatMessage;
-import com.spring.muknolja.chat.vo.ChatRoom;
+import com.spring.muknolja.chat.model.vo.ChatMessage;
+import com.spring.muknolja.chat.model.vo.ChatRoom;
 
 public interface ChatService {
 
