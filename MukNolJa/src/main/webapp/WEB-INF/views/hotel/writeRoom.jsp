@@ -65,15 +65,9 @@
 				<input type="file" class="form-control form-control-lg" name="roomImg">
 			</div>
 			<div class="d-grid gap-2">
-				<button type="button" class="btn btn-outline-secondary" style="align:bottom !important">작성하기</button>
+				<button type="submit" class="btn btn-outline-secondary" style="align:bottom !important">작성하기</button>
 			</div>
 		</form>
 	</div>
-	
-	<script>
-		$("button").on("click", function(){
-			console.log($("#checkinTime").val());
-		});
-	</script>
 </body>
 </html>

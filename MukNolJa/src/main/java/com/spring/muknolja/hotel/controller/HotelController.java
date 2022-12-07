@@ -29,8 +29,8 @@ public class HotelController {
 		return "writeRoom";
 	}
 	
-	@RequestMapping("insertRoom.ho")
-	public String insertRoom(@ModelAttribute Room r, @RequestParam("file") ArrayList<MultipartFile> files, HttpServletRequest request) {
-		
-	}
+//	@RequestMapping("insertRoom.ho")
+//	public String insertRoom(@ModelAttribute Room r, @RequestParam("file") ArrayList<MultipartFile> files, HttpServletRequest request) {
+//		
+//	}
 }
