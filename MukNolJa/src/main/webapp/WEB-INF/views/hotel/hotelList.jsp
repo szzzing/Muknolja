@@ -87,7 +87,17 @@
 				<label for="location">지역</label>
 			</div>
 			<div class="col form-floating">
-				<input type="email" class="form-control" name="searchValue" placeholder="검색어를 입력하세요.">
+				<select class="form-select" name="accept">
+					<option selected>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+				<label for="accept">인원</label>
+			</div>
+			<div class="col form-floating">
+				<input type="text" class="form-control" name="searchValue" placeholder="검색어를 입력하세요.">
 				<label for="searchValue">전체검색</label>
 			</div>
 			<div class="form-check">
