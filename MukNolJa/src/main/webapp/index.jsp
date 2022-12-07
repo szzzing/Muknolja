@@ -12,5 +12,7 @@
 	<a href="${ contextPath }/member.me">membedsewhtwhtjkWWWWsssssdss</a>
 	<a href="${ contextPath }/createRoom.ch?roomName=CHAT&BoardId=23" >채팅방 만들기</a>
 	<a href="${ contextPath }/chatRoomList.ch" >채팅방 목록</a>
+	<a href="${ contextPath }/hotelList.ho">호텔리스트</a>
+	<a href="${ contextPath }/insertRoomView.ho">객실만들기</a>
 </body>
 </html>
