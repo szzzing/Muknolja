@@ -3,8 +3,10 @@
 <configuration>
 
 	<typeAliases>
+		<typeAlias type="com.spring.muknolja.member.model.vo.Member" alias="Member"/>
 	</typeAliases>
-
+		
 	<mappers>
+		<mapper resource="mappers/member-mapper.xml"/>
 	</mappers>
 </configuration>
