@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.muknolja.chat.model.dao.ChatDAO;
+import com.spring.muknolja.chat.vo.ChatMessage;
 import com.spring.muknolja.chat.vo.ChatRoom;
 
 @Service("cService")
@@ -26,5 +27,10 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public ArrayList<ChatRoom> selectChatRoomList() {
 		return cDAO.selectChatRoomList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<ChatMessage> selectChatMessage(String roomCode) {
+		return cDAO.selectChatMessage(sqlSession, roomCode);
 	}
 }

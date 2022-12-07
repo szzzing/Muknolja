@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.muknolja.chat.model.service.ChatService;
+import com.spring.muknolja.chat.vo.ChatMessage;
 import com.spring.muknolja.chat.vo.ChatRoom;
 
 @Controller
@@ -39,6 +41,16 @@ public class ChatroomController {
     	
     	model.addAttribute("list", list);
     	return "chatRooms";
+    }
+    
+    // 채팅방 이동
+    @RequestMapping("chatRoom.ch")
+    public String chatRoom(@RequestParam("roomCode") String roomCode, Model model) {
+    	ArrayList<ChatMessage> list = cService.selectChatMessage(roomCode);
+    	
+    	model.addAttribute("list", list);
+    	model.addAttribute("roomCode", roomCode);
+    	return "chatRoom";
     }
 
 }

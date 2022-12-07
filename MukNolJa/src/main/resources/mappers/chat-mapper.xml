@@ -18,4 +18,20 @@
 		<result column="CHAT_ROOM_NAME" property="roomName"/>
 	</resultMap>
 	
+	<select id="selectChatMessage" resultMap="ChatMessageResultSet">
+		select *
+		from CHAT_MESSAGE
+		where CHAT_ROOM_CODE = #{roomCode}
+		order by CHAT_ID desc
+	</select>
+	
+	<resultMap type="ChatMessage" id="ChatMessageResultSet">
+		<id column="CHAT_ID" property="chatId"/>
+		<result column="SENDER_ID" property="senderId"/>
+		<result column="CHAT_ROOM_CODE" property="roomCode"/>
+		<result column="CHAT_CONTENTS" property="chatContent"/>
+		<result column="TRANSFER_TIME" property="transferTime"/>
+	</resultMap>
+	
+	
 </mapper>

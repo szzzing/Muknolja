@@ -4,6 +4,7 @@
 
 	<typeAliases>
 		<typeAlias type="com.spring.muknolja.chat.vo.ChatRoom" alias="ChatRoom"/>
+		<typeAlias type="com.spring.muknolja.chat.vo.ChatMessage" alias="ChatMessage"/>
 	</typeAliases>
 
 	<mappers>
