@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>객실 등록하기</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -55,30 +55,25 @@
 				<textarea class="form-control" name="roomInfo" placeholder="내용을 입력하세요." rows="10" style="height:300px; resize:none" required></textarea>
 				<label for="roomInfo" class="form-label">객실 기본정보</label>
 			</div>
+			<div class="mb-3">
+				<input type="file" class="form-control form-control-lg" name="roomImg">
+			</div>
+			<div class="mb-3">
+				<input type="file" class="form-control form-control-lg" name="roomImg">
+			</div>
+			<div class="mb-3">
+				<input type="file" class="form-control form-control-lg" name="roomImg">
+			</div>
+			<div class="d-grid gap-2">
+				<button type="button" class="btn btn-outline-secondary" style="align:bottom !important">작성하기</button>
+			</div>
 		</form>
 	</div>
-	<script type="text/javascript">
-function roomCheck(){
-	const ro_name = document.f.ro_name.value;
-	const roomNameCheck = document.querySelector("#roomNameCheck")
-	$.ajax({
-		type:'POST',
-		url:'${pageContext.request.contextPath}/room/roomCheck',
-		header:{"Content-Type":"application/json"},
-		dateType:'json',
-		data:{ro_name:ro_name},
-		success : function(result){
-			if(result == true){
-				roomNameCheck.innerHTML = '중복된 객실 이름이 존재합니다.';
-				roomNameCheck.style.color = 'red';
-			} else {
-				roomNameCheck.innerHTML = '사용가능합니다';
-				roomNameCheck.style.color = 'blue';
-			}
-		}
-	})
-}
-  
-</script>
+	
+	<script>
+		$("button").on("click", function(){
+			console.log($("#checkinTime").val());
+		});
+	</script>
 </body>
 </html>

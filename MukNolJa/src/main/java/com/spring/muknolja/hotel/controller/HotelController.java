@@ -11,8 +11,13 @@ public class HotelController {
 		return "hotelList";
 	}
 	
-	@RequestMapping("insertRoomView.ho")
+	@RequestMapping("writeRoom.ho")
 	public String insertRoomView() {
-		return "insertRoomView";
+		return "writeRoom";
+	}
+	
+	@RequestMapping("insertRoom.ho")
+	public String insertRoom() {
+		return null;
 	}
 }
