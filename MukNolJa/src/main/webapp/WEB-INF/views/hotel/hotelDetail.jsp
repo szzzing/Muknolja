@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>호텔 상세페이지</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 ul li {
