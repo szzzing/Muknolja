@@ -23,4 +23,8 @@ public class ChatDAO {
 		return (ArrayList)sqlSession.selectList("chatmapper.selectChatMessage", roomCode);
 	}
 
+	public void insertMessage(SqlSessionTemplate sqlSession, ChatMessage message) {
+		sqlSession.insert("chatmapper.insertMessage", message);
+	}
+
 }

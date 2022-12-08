@@ -16,6 +16,6 @@ public class ChatMessage {
 	private String senderId;
 	private String roomCode;
 	private String chatContent;
-	private Date transferTime;
+	private String transferTime;
 	
 }
