@@ -13,7 +13,7 @@
    		width: 100vw;
    		height: 100vh;
    
-   		background: radial-gradient(ellipse at bottom,   rgb(0, 158, 255, 0.1) 0%,  white 100%);
+   		background: white;
    		}
 	.c1{
 		
@@ -21,7 +21,7 @@
 
 	.st{
 		
-		width: 8vw;;
+		width: 8vw;
 	   	box-shadow: 5px 5px 7px 0px rgba(0,0,0,0.3);
 	   	border-radius:15%;
 	   	
@@ -131,16 +131,16 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>	
   		
-   	<div class="c1" style="background-image:url('${contextPath}/resources/img/main5.png'); width: 100vw;
+   	<div class="c1" style="background-image:url('${contextPath}/resources/img/POPO.PNG'); width: 100vw;
    		height: 100vh;
    		background-repeat: no-repeat ;
-   		background-size: 25vw 100vh;
-   		background-position: 35% 100%;">
+   		background-size: 30vw 100vh;
+   		background-position: 32% 100%;">
    	   <img alt="1" id="poin" src="${contextPath}/resources/img/click.png"   style="position:absolute;  margin-top:7vh; margin-left: 15vw; width:2vw; height:4vh;">
 	   <a id="a1" class="ac ad1" href="${ contextPath }/home.do"><div class="st" style="position:absolute; margin-top:3vh; margin-left: 18vw;">경 Gyeong<br>기 ggi</div></a>
 	   <a id="a2" class="ac ad2"href=""><div class="st" style=" position:absolute; margin-top:21vh; margin-left: 15vw;">서 Seo<br>울 Ul</div></a>
 	   <a id="a3" class="ac ad3"href=""><div class="st" style=" position:absolute; margin-top:8vh; margin-left: 47vw;">강 Kang<br>원 Won</div></a>
-	   <a id="a4" class="ac ad4"href=""><div class="st" style=" position:absolute; margin-top:26vh; margin-left: 51vw;">충 Chung<br>북 Buk</div></a>
+	   <a id="a4" class="ac ad4"href="${contextPath}/loding.me?load=chungbuk"><div class="st" style=" position:absolute; margin-top:26vh; margin-left: 51vw;">충 Chung<br>북 Buk</div></a>
 	   <a id="a5" class="ac ad5"href=""><div class="st" style=" position:absolute; margin-top:47vh; margin-left: 52vw;">경 Gyeong<br>북 Buk</div></a>
 	   <a id="a6" class="ac ad6"href=""><div class="st" style=" position:absolute; margin-top:73vh; margin-left: 47vw;">경 Gyeong<br>남 Nam</div></a>
 	   <a id="a7" class="ac ad7"href=""><div class="st" style=" position:absolute; margin-top:82vh; margin-left: 35vw;">제 Je<br>주 Ju</div></a>
@@ -150,13 +150,11 @@
 	 
 	   <div style="font-size:4vw; font-weight:700; position:absolute; margin-top:2vh; margin-left: 2vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);" >
 	   먹놀자
-	   <div style=" position:absolute; margin-top:2vh; margin-left: 1vw; font-size:2vw;">E<br>A<br>T</div>
-	   <div style=" position:absolute; margin-top:2vh; margin-left: 5vw; font-size:2vw;">P<br>L<br>A<br>Y</div>
-	   <div style=" position:absolute; margin-top:2vh; margin-left: 9.4vw; font-size:2vw;">S<br>L<br>E<br>E<br>P</div>
+	   
 	   </div> 
-	    <div class="we" id="we1" style="font-size:4vw; font-weight:700; position:absolute; margin-top:3vh; margin-left: 65vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); width:30vw; height:35vh;  border-radius:10%" >
+	    <div class="we" id="we1" style="font-size:4vw; font-weight:700;  position:absolute; margin-top:3vh; margin-left: 65vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); width:30vw; height:35vh;  border-radius:10%" >
 			<div style="margin-left:2vw; margin-top:1vh;"id="ttt"></div>
-			<table style="margin-top:2vh; margin-left:2vw;">
+			<table style=" height:100%;background: radial-gradient(ellipse, white 0%, RGB(232, 232, 232) 100%); ;margin-top:2vh; margin-left:2vw;">
 		     <tbody>
 		     </tbody>
   		 </table>
@@ -821,11 +819,6 @@
     		});
   
 	
-
-		
-     
-		
-		
 		
 		
 	
