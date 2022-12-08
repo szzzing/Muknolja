@@ -63,9 +63,11 @@
 </head>
 <body>
 
+	<jsp:include page="../member/menubar.jsp"/>
+
 	<div class="container">
 	
-	<br><br><br><br><br><br>
+		<br><br><br><br><br><br>
 	
 		<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMDlfODgg%2FMDAxNjY3OTY5OTMzNzUw.nBSmNlV8uDvnFKqWt-OPry4vj_kqvXvAbEncuTSeIQ4g.3TXDOLw_NDlgt2Eq7MmNMRoIZbVVSlbcWBE9Is6kh3cg.JPEG.yomlog%2FIMG_6948.jpg&type=sc960_832" class="img-fluid" alt="..." id="thumbnail">
 		
@@ -73,7 +75,7 @@
 		<div class="title row">
 			<div class="col-lg-8">
 				<!-- 제목 -->
-				<h3>저랑 같이 강릉가실분😉어절다ㅣㅓ래멀디ㅏ머랟머림저래라라라라라라라라라라</h3>
+				<h3>저랑 같이 강릉가실분😉</h3>
 				
 				<!-- 선택목록 -->
 				<div id="location1">

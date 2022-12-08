@@ -71,10 +71,12 @@
 </style>
 </head>
 <body>
-	<br><br><br><br><br><br>
+	
+	
+	<jsp:include page="../member/menubar.jsp"/>
 	
 	<div class="container">
-	
+		<br><br><br><br><br><br>
 		<h1>동행게시판</h1>
 		
 		
