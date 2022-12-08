@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,101 +31,82 @@ ul li {
 </head>
 <body>
 	<div class="container mt-5 mb-5">
-		<table class="table align-middle mb-5">
+		<table class="table table-borderless align-middle">
 			<tr>
-				<td rowspan="3" scope="col" width="300">
+				<td rowspan="2" scope="col" width="300">
 					<img src="${ hotelImg }" style="margin-left: auto; margin-right: auto; display: block;">
 				</td>
-				<td colspan="3" height="200">
+				<td colspan="4" height="200">
 					<h1 class="fw-bold">${hotel.hotelName }</h1>
-					<table class="mt-3 mb-3">
+					<span class="text-muted">${hotel.star }성급</span>
+					<table class="table-borderless align-middle text-center mt-3 mb-3">
 						<tr>
-							<td class="text-muted" width="100px"><i class="bi bi-wifi"></i> 와이파이</td>
-							<td>
-								<c:if test="${hotel.wifi=='Y' }">가능</c:if>
-								<c:if test="${hotel.wifi=='N' }">불가능</c:if>
-							</td>
+							<td width="70px" <c:if test="${hotel.wifi=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-wifi"></h2></td>
+							<td width="70px" <c:if test="${hotel.park=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-p-square-fill"></h2></td>
+							<td width="70px" <c:if test="${hotel.amenity=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-gift-fill"></h2></td>
+							<td width="70px" <c:if test="${hotel.breakfast=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-basket-fill"></i></h2></td>
 						</tr>
 						<tr>
-							<td class="text-muted"><i class="bi bi-p-square-fill"></i> 주차</td>
-							<td>
-								<c:if test="${hotel.park=='Y' }">가능</c:if>
-								<c:if test="${hotel.park=='N' }">불가능</c:if>
-							</td>
-						</tr>
-						<tr>
-							<td class="text-muted"><i class="bi bi-gift-fill"></i> 어메니티</td>
-							<td>
-								<c:if test="${hotel.amenity=='Y' }">가능</c:if>
-								<c:if test="${hotel.amenity=='N' }">불가능</c:if>
-							</td>
-						</tr>
-						<tr>
-							<td class="text-muted"><i class="bi bi-basket-fill"></i> 조식</td>
-							<td>
-								<c:if test="${hotel.breakfast=='Y' }">가능</c:if>
-								<c:if test="${hotel.breakfast=='N' }">불가능</c:if>
-							</td>
+							<td width="70px" <c:if test="${hotel.wifi=='N' }">style="color:lightgray"</c:if>>와이파이</td>
+							<td width="70px" <c:if test="${hotel.park=='N' }">style="color:lightgray"</c:if>>주차</td>
+							<td width="70px" <c:if test="${hotel.amenity=='N' }">style="color:lightgray"</c:if>>어메니티</td>
+							<td width="70px" <c:if test="${hotel.breakfast=='N' }">style="color:lightgray"</c:if>>조식</td>
 						</tr>
 					</table>
 				</td>
-				
 			</tr>
-			<tr height="200">
-				<td scope="row" width="200">
-					<h4>찜하기<h4>
-					<h4><i class="heart-click bi-heart-fill" style="font-size: 3em; cursor: pointer;"></i></h4>
-				</td>
-				<td scope="row" width="200">
-					<h4>리뷰 작성<h4>
-					<h4><i class="heart-click bi-heart-fill" style="font-size: 3em; cursor: pointer;"></i></h4>
+			<tr>
+				<td>
+					<div id="map" style="width:400px;height:300px;"></div>
 				</td>
 			</tr>
 		</table>
 		
-		<table class="table border-top align-middle">
+		<table class="table text-center mt-5 mb-5">
 			<tr>
-				<td class="myHover" scope="col">
-					<h4>예약하기</h4>
+				<td scope="col">
+					<h5>예약하기</h5>
 				</td>
-				<td class="myHover" scope="col">
-					<h4>리뷰보기</h4>
+				<td scope="col">
+					<h5>리뷰보기</h5>
+				</td>
+				<td scope="col">
+					<h5>호텔 정보</h5>
 				</td>
 			</tr>
 		</table>
-		${hotelImg }<br>
-		${roomArray }<br>
-		${roomThumbnail }
 		<!-- 객실 리스트 시작 -->
 		<div id="roomList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 justify-content-start mt-4 mb-4">
+		<c:forEach items="${roomArray }" var="r">
 			<div class="room col mb-4">
-				<div class="card">
+				<div class="card card-cover h-100 overflow-hidden rounded-5">
 					<div class="row">
 						<div class="col col-sm-auto col-md-auto" style="margin:0; padding-right:0">
 							<img id="hotelImg" class="img-fluid rounded-start" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="200px" height="300px" style="background: lightgray">
 						</div>
 						<div class="col mt-4 mb-4">
 							<input type="hidden" name="hotelId">
-							<h4 id="hotelName" class="card-title lh-1 fw-bold">디럭스 트윈룸</h4>
+							<h4 id="hotelName" class="card-title lh-1 fw-bold">${r.roomName }</h4>
 							<table class="mt-3 mb-3">
 								<tr>
 									<td class="text-muted" width="80px">최대인원</td>
-									<td class="text-muted">4명</td>
+									<td class="text-muted">${r.maxAccept }</td>
 								</tr>
 								<tr>
 									<td class="text-muted">체크인</td>
-									<td class="text-muted">16:00</td>
+									<td class="text-muted">${r.checkinTime }</td>
 								</tr>
 								<tr>
 									<td class="text-muted">체크아웃</td>
-									<td class="text-muted">11:00</td>
+									<td class="text-muted">${r.checkoutTime }</td>
 								</tr>
 							</table>
-							<h5 class="lh-1 fw-bold">80,000 원</h5>
+							<h5 class="lh-1 fw-bold"><fmt:formatNumber value="${r.roomPrice }" pattern="#,###"/>원</h5>
 						</div>
 					</div>
 				</div>
 			</div>
+		</c:forEach>
 		</div>
 		<!-- 객실 리스트 끝 -->
 		
@@ -136,7 +118,18 @@ ul li {
 	</div>
 
 
-<script
+
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4aaeb935cb2fd15933272e12d906ced0&libraries=services"></script>
+	<script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			level : 3
+		};
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+ 	</script>
+
+	<script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	crossorigin="anonymous">

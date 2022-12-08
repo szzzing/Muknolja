@@ -60,6 +60,7 @@
 		<result column="BREAKFAST" property="breakfast"/>
 		<result column="AMENITY" property="amenity"/>
 		<result column="PARK" property="park"/>
+		<result column="STAR" property="star"/>
 		<result column="ENT_APPROVAL" property="entApproval"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
 	</resultMap>
