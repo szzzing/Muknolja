@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.service.HotelService;
+import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Controller
@@ -27,6 +29,25 @@ public class HotelController {
 	@RequestMapping("hotelList.ho")
 	public String hotelList() {
 		return "hotelList";
+	}
+	
+	@RequestMapping("hotelDetail.ho")
+	public String hotelDetail(@RequestParam("hotelId") int hotelId, Model model) {
+		Hotel hotel = hService.selectHotel(hotelId);
+		AttachedFile hotelImg = hService.selectHotelImg(hotelId);
+		ArrayList<Room> roomArray = hService.selectAllRoom(hotelId);
+		ArrayList<AttachedFile> roomThumbnail = new ArrayList<AttachedFile>();
+		
+		for(Room r : roomArray) {
+			AttachedFile thumb = hService.selectRoomThumbnail(r.getRoomId());
+			roomThumbnail.add(thumb);
+		}
+		
+		model.addAttribute("hotel", hotel);
+		model.addAttribute("hotelImg", hotelImg);
+		model.addAttribute("roomArray", roomArray);
+		model.addAttribute("roomThumbnail", roomThumbnail);
+		return "hotelDetail";
 	}
 	
 	@RequestMapping("writeRoom.ho")
