@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.muknolja.common.exception.Exceptions;
+import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Room;
@@ -37,7 +37,7 @@ public class HotelController {
 	@RequestMapping("insertRoom.ho")
 	public String insertRoom(@ModelAttribute Room r, @RequestParam("roomImg") ArrayList<MultipartFile> files, HttpServletRequest request) {
 		
-		ArrayList<AttachedFile> list = new ArrayList<>();
+		ArrayList<AttachedFile> list = new ArrayList();
 		for(MultipartFile file : files) {
 			String fileName = file.getOriginalFilename();
 			if(!fileName.equals("")) {
@@ -81,7 +81,7 @@ public class HotelController {
 			for(AttachedFile a : list) {
 				deleteFile(a.getFileModifyName(), request);
 			}
-			throw new Exceptions("봉사 게시글 작성 실패");
+			throw new CommonException("객실 등록 실패");
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class HotelController {
 		try {
 			file.transferTo(new File(renamePath));
 		} catch (Exception e) {
-			System.out.println("파일 전송 에러" + e.getMessage());
+			System.out.println("�뙆�씪 �쟾�넚 �뿉�윭" + e.getMessage());
 		}
 		
 		String[] returnArr = new String[2];
