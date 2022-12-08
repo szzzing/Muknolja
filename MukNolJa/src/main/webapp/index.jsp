@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <!-- ì¶”ê?? ë?ë¶? -->
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <!-- ì¶”ï¿½??ï¿½ï¿½?ï¿½? -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
@@ -56,22 +56,22 @@
 <body>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>	
-  
+  		
    	<div class="c1">
    	   <img alt="1" src="${contextPath}/resources/img/click.png"   style="position:absolute;  margin-top:7vh; margin-left: 15vw; width:2vw; height:4vh;">
-	   <a id="a1" href="${ contextPath }/home.do"><div class="st" style="position:absolute; margin-top:3vh; margin-left: 18vw;">ê²? Gyeong<br>ê¸? ggi</div></a>
+	   <a id="a1" href="${ contextPath }/home.do"><div class="st" style="position:absolute; margin-top:3vh; margin-left: 18vw;">ï¿½? Gyeong<br>ï¿½? ggi</div></a>
 	   <a href=""><div class="st" style=" position:absolute; margin-top:21vh; margin-left: 15vw;">?? Seo<br>?? Ul</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:8vh; margin-left: 47vw;">ê°? Kang<br>?? Won</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:26vh; margin-left: 51vw;">ì¶? Chung<br>ë¶? Buk</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:47vh; margin-left: 52vw;">ê²? Gyeong<br>ë¶? Buk</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:73vh; margin-left: 47vw;">ê²? Gyeong<br>?? Nam</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:82vh; margin-left: 35vw;">?? Je<br>ì£? Ju</div></a>
+	   <a href=""><div class="st" style=" position:absolute; margin-top:8vh; margin-left: 47vw;">ï¿½? Kang<br>?? Won</div></a>
+	   <a href=""><div class="st" style=" position:absolute; margin-top:26vh; margin-left: 51vw;">ï¿½? Chung<br>ï¿½? Buk</div></a>
+	   <a href=""><div class="st" style=" position:absolute; margin-top:47vh; margin-left: 52vw;">ï¿½? Gyeong<br>ï¿½? Buk</div></a>
+	   <a href=""><div class="st" style=" position:absolute; margin-top:73vh; margin-left: 47vw;">ï¿½? Gyeong<br>?? Nam</div></a>
+	   <a href=""><div class="st" style=" position:absolute; margin-top:82vh; margin-left: 35vw;">?? Je<br>ï¿½? Ju</div></a>
 	   <a href=""><div class="st" style=" position:absolute; margin-top:75vh; margin-left: 15vw;">?? Jeon<br>?? Nam</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:40vh; margin-left: 16vw;">ì¶? Chung<br>?? Nam</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:58vh; margin-left: 13vw;">?? Jeon<br>ë¶? Buk</div></a>
+	   <a href=""><div class="st" style=" position:absolute; margin-top:40vh; margin-left: 16vw;">ï¿½? Chung<br>?? Nam</div></a>
+	   <a href=""><div class="st" style=" position:absolute; margin-top:58vh; margin-left: 13vw;">?? Jeon<br>ï¿½? Buk</div></a>
 	 
 	   <div style="font-size:4vw; font-weight:700; position:absolute; margin-top:2vh; margin-left: 2vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);" >
-		ë¨¹ë???	
+		ë¨¹ï¿½???	
 	   </div> 
 	    <div class="we" id="we1" style="font-size:4vw; font-weight:700; position:absolute; margin-top:5vh; margin-left: 65vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); width:30vw; height:35vh;  border-radius:10%" >
 			
@@ -86,12 +86,12 @@
 	   </div> 
 	   
    </div> 
-   <div class="time">?„ì¬ ?œê°„</div>
-   <div class="ctemp">?„ì¬ ?¨ë„</div>
-   <div class="lowtemp">ìµœì? ?¨ë„</div>
-   <div class="hightemp">ìµœê³  ?¨ë„</div>
+   <div class="time">?ï¿½ì¬ ?ï¿½ê°„</div>
+   <div class="ctemp">?ï¿½ì¬ ?ï¿½ë„</div>
+   <div class="lowtemp">ìµœï¿½? ?ï¿½ë„</div>
+   <div class="hightemp">ìµœê³  ?ï¿½ë„</div>
    <div class="icon"></div>
-   
+   dslfjklsdjfl
     <script>
      $(document).ready(function () 
     		{	
