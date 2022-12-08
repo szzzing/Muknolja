@@ -33,6 +33,7 @@ public class HotelController {
 	@RequestMapping("hotelDetail.ho")
 	public String hotelDetail(@RequestParam("hotelId") int hotelId) {
 		Hotel hotel = hService.selectHotel(hotelId);
+		AttachedFile hotelImg = hService.selectHotelImg(hotelId);
 //		ArrayList<Room> roomArray = hService.selectAllRoom(hotelId);
 		
 		return "hotelDetail";

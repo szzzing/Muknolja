@@ -14,4 +14,6 @@ public interface HotelService {
 
 	Hotel selectHotel(int hotelId);
 
+	AttachedFile selectHotelImg(int hotelId);
+
 }
