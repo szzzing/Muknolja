@@ -12,7 +12,7 @@
     	
     </style>
   </head>
-  <body style="margin-top:25vh; font-family: 'HSYuji-Regular';">
+  <body style="margin-top:25vh;">
   <jsp:include page="menubar.jsp"></jsp:include>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
    
