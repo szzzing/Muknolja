@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <!-- 추�??��?�? -->
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <!-- 추�??��?�? -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
 <html>
@@ -56,7 +56,7 @@
 <body>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>	
-  
+  		
    	<div class="c1">
    	   <img alt="1" src="${contextPath}/resources/img/click.png"   style="position:absolute;  margin-top:7vh; margin-left: 15vw; width:2vw; height:4vh;">
 	   <a id="a1" href="${ contextPath }/home.do"><div class="st" style="position:absolute; margin-top:3vh; margin-left: 18vw;">�? Gyeong<br>�? ggi</div></a>
@@ -91,7 +91,10 @@
    <div class="lowtemp">최�? ?�도</div>
    <div class="hightemp">최고 ?�도</div>
    <div class="icon"></div>
+
    aaaa
+   dslfjklsdjfl
+
     <script>
      $(document).ready(function () 
     		{	
