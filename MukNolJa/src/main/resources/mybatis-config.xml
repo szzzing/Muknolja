@@ -4,11 +4,13 @@
 
 	<typeAliases>
 		<typeAlias type="com.spring.muknolja.chat.model.vo.ChatRoom" alias="ChatRoom"/>
+		<typeAlias type="com.spring.muknolja.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.spring.muknolja.chat.model.vo.ChatMessage" alias="ChatMessage"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/chat-mapper.xml"/>
 		<mapper resource="mappers/hotel-mapper.xml"/>
+		<mapper resource="mappers/member-mapper.xml"/>
 	</mappers>
 </configuration>
