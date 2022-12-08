@@ -119,13 +119,14 @@
 		</form>
 		
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 justify-content-start mt-4 mb-4">
-			<div class="col mb-4">
+			<div class="hotel col mb-4">
 				<div class="card">
 					<div class="row">
 						<div class="col col-sm-auto col-md-auto" style="margin:0; padding-right:0">
 							<img id="hotelImg" class="img-fluid rounded-start" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="200px" height="300px" style="background: lightgray">
 						</div>
 						<div class="col mt-4 mb-4">
+							<input type="hidden" name="hotelId">
 							<h4 id="hotelName" class="card-title lh-1 fw-bold">롯데호텔</h4>
 							<i class="bi bi-geo-alt-fill text-muted"></i><span id="hotelAddress" class="text-muted">서울시 종로구 명동</span><br>
 							<table class="mt-3 mb-3">
@@ -188,5 +189,12 @@
 		});
 	</script>
 	<!-- daterangepicker 기본설정, 날짜 기입 시작 -->
+	
+	<script>
+		$(".hotel").on("click", function(){
+// 			location.href="${contextPath}/hotelDetail.ho?hotelId="+$("input[name=hotelId]").val();
+			location.href="${contextPath}/hotelDetail.ho?hotelId=2";
+		});
+	</script>
 </body>
 </html>
