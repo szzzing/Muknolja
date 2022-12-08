@@ -13,4 +13,6 @@ public interface ChatService {
 
 	ArrayList<ChatMessage> selectChatMessage(String roomCode);
 
+	void insertMessage(ChatMessage message);
+
 }

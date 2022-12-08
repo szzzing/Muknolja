@@ -33,5 +33,10 @@
 		<result column="TRANSFER_TIME" property="transferTime"/>
 	</resultMap>
 	
+	<insert id="insertMessage">
+		insert into CHAT_MESSAGE
+		values(SEQ_CHATID.nextval, #{senderId}, #{roomCode}, #{chatContent}, sysdate)
+	</insert>
+	
 	
 </mapper>

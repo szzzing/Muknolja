@@ -199,6 +199,7 @@ body {
 	window.onload = () => {
 		const roomCode  = '${roomCode}';
 		const scroll = document.getElementsByClassName('chat-window');
+		const message = document.getElementById('message');
 		
 		// webSocket connect
 		const sockJs = new SockJS("${contextPath}/stomp/chat");
@@ -206,12 +207,12 @@ body {
 		
 		// connect 시
 		stomp.connect({}, function (){
-			console.log('connect');
 			
 			// subscribe 시
-			stomp.subscribe("/sub/chat/room", function (chat) {
+			stomp.subscribe("/sub/chat/room/" + roomCode, function (chat) {
 				const content = JSON.parse(chat.body);
-				console.log(content.chatContent);
+				
+				message.value ='';
 				
 				let str = '<article class="msg-container msg-remote" id="msg-0">';
 				str += '<div class="msg-box">';
@@ -229,15 +230,16 @@ body {
 				
 				$("#chatSession").append(str);
 				
-				console.log($('#a'));
-				
 				$('#chatSession').scrollTop($('#chatSession')[0].scrollHeight);
 			});
 			
+			stomp.send('/pub/chat/enter', {}, JSON.stringify({senderId: 'sender', roomCode: roomCode}));
+			
 			// send 버튼 클릭시
-			document.getElementById('send').addEventListener('click', () => {
-				const message = document.getElementById('message');
-				stomp.send('/pub/chat/message', {}, JSON.stringify({senderId: 'sender', chatContent: message.value}));
+			document.getElementById('send').addEventListener('click', function() {
+				if(message.value != ''){
+					stomp.send('/pub/chat/message', {}, JSON.stringify({senderId: 'user', chatContent: message.value, roomCode: roomCode}));	
+				}
 			});
 			
 			

@@ -33,4 +33,9 @@ public class ChatServiceImpl implements ChatService{
 	public ArrayList<ChatMessage> selectChatMessage(String roomCode) {
 		return cDAO.selectChatMessage(sqlSession, roomCode);
 	}
+
+	@Override
+	public void insertMessage(ChatMessage message) {
+		cDAO.insertMessage(sqlSession, message);
+	}
 }
