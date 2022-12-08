@@ -16,4 +16,9 @@
 		</foreach>
 		select * from dual
 	</insert>
+	
+	<resultMap type="Hotel" id="hotelResultSet">
+		<id column="CHAT_ID" property="chatId"/>
+		<result column="SENDER_ID" property="senderId"/>
+	</resultMap>
 </mapper>

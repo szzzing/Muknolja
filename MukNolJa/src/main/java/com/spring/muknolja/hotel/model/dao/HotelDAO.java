@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
+import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Repository("hDAO")
@@ -17,6 +18,10 @@ public class HotelDAO {
 
 	public int insertAttm(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
 		return sqlSession.insert("hotelmapper.insertAttm", list);
+	}
+
+	public Hotel selectHotel(SqlSessionTemplate sqlSession, int hotelId) {
+		return sqlSession.selectOne("hotelmapper.selectHotel", hotelId);
 	}
 
 }

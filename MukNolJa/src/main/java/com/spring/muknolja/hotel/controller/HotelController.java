@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.service.HotelService;
+import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Controller
@@ -27,6 +28,14 @@ public class HotelController {
 	@RequestMapping("hotelList.ho")
 	public String hotelList() {
 		return "hotelList";
+	}
+	
+	@RequestMapping("hotelDetail.ho")
+	public String hotelDetail(@RequestParam("hotelId") int hotelId) {
+		Hotel hotel = hService.selectHotel(hotelId);
+//		ArrayList<Room> roomArray = hService.selectAllRoom(hotelId);
+		
+		return "hotelDetail";
 	}
 	
 	@RequestMapping("writeRoom.ho")
