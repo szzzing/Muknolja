@@ -46,12 +46,13 @@
 	   	text-shadow: 1px 5px 5px rgba(0,0,0,0.3);
 		}
 		
-		.a1 {  
-		  animation-name: a1;
+		#poin {  
+		  animation-name: poin;
 		  animation-duration: 1s;
 		  animation-fill-mode: both;
+		   animation-iteration-count: infinite;
 		}
-		@-webkit-keyframes a1 {
+		@-webkit-keyframes poin {
 		  0% {
 		    opacity: 0;
 		    transform: translate3d(0, -100%, 0);
@@ -61,7 +62,7 @@
 		    transform: none;
 		  }
 		}
-		@keyframes fadeInDown {
+		@keyframes poin {
 		  0% {
 		    opacity: 0;
 		    transform: translate3d(0, -100%, 0);
@@ -83,23 +84,26 @@
    		background-repeat: no-repeat ;
    		background-size: 25vw 100vh;
    		background-position: 35% 100%;">
-   	   <img alt="1" src="${contextPath}/resources/img/click.png"   style="position:absolute;  margin-top:7vh; margin-left: 15vw; width:2vw; height:4vh;">
+   	   <img alt="1" id="poin" src="${contextPath}/resources/img/click.png"   style="position:absolute;  margin-top:7vh; margin-left: 15vw; width:2vw; height:4vh;">
 	   <a id="a1" href="${ contextPath }/home.do"><div class="st" style="position:absolute; margin-top:3vh; margin-left: 18vw;">경 Gyeong<br>기 ggi</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:21vh; margin-left: 15vw;">서 Seo<br>울 Ul</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:8vh; margin-left: 47vw;">강 Kang<br>원 Won</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:26vh; margin-left: 51vw;">충 Chung<br>북 Buk</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:47vh; margin-left: 52vw;">경 Gyeong<br>북 Buk</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:73vh; margin-left: 47vw;">경 Gyeong<br>남 Nam</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:82vh; margin-left: 35vw;">제 Je<br>주 Ju</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:75vh; margin-left: 15vw;">전 Jeon<br>남 Nam</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:40vh; margin-left: 16vw;">충 Chung<br>남 Nam</div></a>
-	   <a href=""><div class="st" style=" position:absolute; margin-top:58vh; margin-left: 13vw;">전 Jeon<br>북 Buk</div></a>
+	   <a id="a2" href=""><div class="st" style=" position:absolute; margin-top:21vh; margin-left: 15vw;">서 Seo<br>울 Ul</div></a>
+	   <a id="a3"href=""><div class="st" style=" position:absolute; margin-top:8vh; margin-left: 47vw;">강 Kang<br>원 Won</div></a>
+	   <a id="a4"href=""><div class="st" style=" position:absolute; margin-top:26vh; margin-left: 51vw;">충 Chung<br>북 Buk</div></a>
+	   <a id="a5"href=""><div class="st" style=" position:absolute; margin-top:47vh; margin-left: 52vw;">경 Gyeong<br>북 Buk</div></a>
+	   <a id="a6"href=""><div class="st" style=" position:absolute; margin-top:73vh; margin-left: 47vw;">경 Gyeong<br>남 Nam</div></a>
+	   <a id="a7"href=""><div class="st" style=" position:absolute; margin-top:82vh; margin-left: 35vw;">제 Je<br>주 Ju</div></a>
+	   <a id="a8"href=""><div class="st" style=" position:absolute; margin-top:75vh; margin-left: 15vw;">전 Jeon<br>남 Nam</div></a>
+	   <a id="a9"href=""><div class="st" style=" position:absolute; margin-top:40vh; margin-left: 16vw;">충 Chung<br>남 Nam</div></a>
+	   <a id="a10"href=""><div class="st" style=" position:absolute; margin-top:58vh; margin-left: 13vw;">전 Jeon<br>북 Buk</div></a>
 	 
 	   <div style="font-size:4vw; font-weight:700; position:absolute; margin-top:2vh; margin-left: 2vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);" >
-		먹놀자
+	   먹놀자
+	   <div style=" position:absolute; margin-top:2vh; margin-left: 1vw; font-size:2vw;">E<br>A<br>T</div>
+	   <div style=" position:absolute; margin-top:2vh; margin-left: 5vw; font-size:2vw;">P<br>L<br>A<br>Y</div>
+	   <div style=" position:absolute; margin-top:2vh; margin-left: 9.4vw; font-size:2vw;">S<br>L<br>E<br>E<br>P</div>
 	   </div> 
-	    <div class="we" id="we1" style="font-size:4vw; font-weight:700; position:absolute; margin-top:5vh; margin-left: 65vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); width:30vw; height:35vh;  border-radius:10%" >
-			<div style="margin-left:2vw; margin-top:3vh;"id="ttt"></div>
+	    <div class="we" id="we1" style="font-size:4vw; font-weight:700; position:absolute; margin-top:3vh; margin-left: 65vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); width:30vw; height:35vh;  border-radius:10%" >
+			<div style="margin-left:2vw; margin-top:1vh;"id="ttt"></div>
 			<table style="margin-top:2vh; margin-left:2vw;">
 		     <tbody>
 		     </tbody>
@@ -121,8 +125,15 @@
 			
     		    $('#a1').hover(function(){
     		       $('.we').show();
+    		       $('#poin').css('margin-top','20vh');
+    		       $('#poin').css('margin-left','33.5vw');
+    		       
+    		      
+    		       
     		    }, function() {
     		    	$('.we').hide();
+    		    	$('#poin').css('margin-top','7vh');
+    		    	  $('#poin').css('margin-left','15vw');
     		    });
     		});
      
@@ -156,7 +167,7 @@
 						$('#ttt').append(taHtml);
 		
 		
-		for(var i =1; i < 20; i=i+2){
+		for(var i =1; i < 12; i=i+2){
 			var ctime = result.list[i].dt
 			var ctemp = result.list[i].main.temp;
 			var hum = result.list[i].main.humidity;
@@ -175,8 +186,8 @@
 			}
 	
 			var currentTime = convertTime(ctime);
-			var tableHtml = '<tr style="box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.1); font-size:1.7vw; font-weight:600" >' +
-								'<td>'+currentTime+'</td>' +
+			var tableHtml = '<tr style="box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.1); font-size:1.7vw; font-weight:600; padding:5vh 5vw; heigh:10vh"  >' +
+								'<td style="height:10vh">'+currentTime+'</td>' +
 								'<td>'+wiconUr1+'</td>' +
 								'<td style="width:7vw">'+ctemp+'℃</td>' + 
 								'<td style="width:5vw">'+wind+'m/s</td>' +
