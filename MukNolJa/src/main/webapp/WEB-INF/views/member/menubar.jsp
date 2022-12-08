@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
@@ -48,6 +48,53 @@
 	            			<div style="float:right; margin-left:550px; margin-top:-2px; display:flex">
 	            				<h3 style=""><i class="fa-solid fa-comments"></i></h3>
 	            				
+		        <li class="nav-item" style="margin-right:5%;">
+		          <a class="nav-link" href="#" style="font-size: 1.4vw;">후기</a>
+		        </li>
+		        
+		        <li class="nav-item" style="margin-right:5%;">
+		          <a class="nav-link" href="" style="font-size: 1.4vw;">동행</a>
+		        </li>
+		      </ul>
+		      
+		      
+		      <div style="margin-right:2%; width:20%">
+		      	<ul class="navbar-nav me-auto mb-2 md-lg-0" >
+		      	<c:if test="${ !empty loginUser }">
+		        <li class="nav-item" style="margin-right:5%; width:40%" >
+		          <a class="nav-link " href="${ contextPath }/logout.me" style="font-size: 1.4vw; ">내정보</a>
+		        </li>
+		        </c:if>
+		        <c:if test="${ empty loginUser }">
+		        <li class="nav-item" style="margin-right:3%; width:40%" >
+		          <a class="nav-link " href="${contextPath }/loginView.me" style="font-size: 1.4vw; ">로그인</a>
+		        </li>
+		        </c:if>
+		        <c:if test="${ empty loginUser }">
+		        <li class="nav-item" style=" width:50%">
+		          <a class="nav-link" href="#" style="font-size: 1.4vw;">회원가입</a>
+		        </li>
+		        </c:if>
+		        <c:if test="${ !empty loginUser }">
+		        <li class="nav-item" style=" width:50%">
+		          <a class="nav-link" href="${contextPath }/logout.me" style="font-size: 1.4vw;">로그아웃</a>
+		        </li>
+		        </c:if>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		</nav>
+		</header>
+		<!-- <script>
+		setTimeout(function() {
+			location = "index.jsp";
+			}, 3000);
+		</script> -->
+		
+	            			
+							  </ul>
+							</div>
 	            				
 		     				    
 	            			</div>
