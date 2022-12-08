@@ -22,6 +22,11 @@
    <a href="${ contextPath }/hotelList.ho">호텔 리스트</a>
    <a href="${ contextPath }/writeRoom.ho">객실만들기</a>
    <a href="${ contextPath }/adminPage.me" >관리자 페이지</a>
+   <a href="${ contextPath }/partyList.pa">동행 리스트</a>
+   <a href="${ contextPath }/partyDetail.pa">동행 상세보기</a>
+   <a href="${ contextPath }/partyWrite.pa">동행 글쓰기</a>
+   <a href="${ contextPath }/travelList.tr">여행 리스트</a>
+   <a href="${ contextPath }/travelDetail.tr">여행 상세보기</a>
      <div class="container-fluid text-center">
 	  	<div class="row justify-content-center" style="width: 100%">
             <div class="col">
