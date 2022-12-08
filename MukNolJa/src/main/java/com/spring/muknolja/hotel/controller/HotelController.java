@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,11 +32,21 @@ public class HotelController {
 	}
 	
 	@RequestMapping("hotelDetail.ho")
-	public String hotelDetail(@RequestParam("hotelId") int hotelId) {
+	public String hotelDetail(@RequestParam("hotelId") int hotelId, Model model) {
 		Hotel hotel = hService.selectHotel(hotelId);
 		AttachedFile hotelImg = hService.selectHotelImg(hotelId);
-//		ArrayList<Room> roomArray = hService.selectAllRoom(hotelId);
+		ArrayList<Room> roomArray = hService.selectAllRoom(hotelId);
+		ArrayList<AttachedFile> roomThumbnail = new ArrayList<AttachedFile>();
 		
+		for(Room r : roomArray) {
+			AttachedFile thumb = hService.selectRoomThumbnail(r.getRoomId());
+			roomThumbnail.add(thumb);
+		}
+		
+		model.addAttribute("hotel", hotel);
+		model.addAttribute("hotelImg", hotelImg);
+		model.addAttribute("roomArray", roomArray);
+		model.addAttribute("roomThumbnail", roomThumbnail);
 		return "hotelDetail";
 	}
 	

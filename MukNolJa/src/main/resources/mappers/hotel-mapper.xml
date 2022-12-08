@@ -33,7 +33,7 @@
 	<select id="selectAllRoom" resultMap="roomResultSet">
 		select *
 		from room
-		where where hotel_id=#{hotelId}
+		where hotel_id=#{hotelId}
 	</select>
 	
 	<select id="selectRoomImg" resultMap="attachedFileResultSet">
@@ -41,6 +41,13 @@
 		from room_img
 			join attached_file using(file_id)
 		where room_id=#{roomId}
+	</select>
+	
+	<select id="selectRoomThumbnail" resultMap="attachedFileResultSet">
+		select *
+		from room_img
+			join attached_file using(file_id)
+		where room_id=#{roomId} and file_thumbnail='Y'
 	</select>
 	
 	<resultMap type="Hotel" id="hotelResultSet">

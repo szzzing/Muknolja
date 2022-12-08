@@ -26,8 +26,7 @@ ul li {
 	rel="stylesheet"
 	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
 	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 <body>
 	<div class="container mt-5 mb-5">
@@ -37,8 +36,39 @@ ul li {
 					<img src="${ hotelImg }" style="margin-left: auto; margin-right: auto; display: block;">
 				</td>
 				<td colspan="3" height="200">
-					<h1>롯데호텔</h1>
+					<h1 class="fw-bold">${hotel.hotelName }</h1>
+					<table class="mt-3 mb-3">
+						<tr>
+							<td class="text-muted" width="100px"><i class="bi bi-wifi"></i> 와이파이</td>
+							<td>
+								<c:if test="${hotel.wifi=='Y' }">가능</c:if>
+								<c:if test="${hotel.wifi=='N' }">불가능</c:if>
+							</td>
+						</tr>
+						<tr>
+							<td class="text-muted"><i class="bi bi-p-square-fill"></i> 주차</td>
+							<td>
+								<c:if test="${hotel.park=='Y' }">가능</c:if>
+								<c:if test="${hotel.park=='N' }">불가능</c:if>
+							</td>
+						</tr>
+						<tr>
+							<td class="text-muted"><i class="bi bi-gift-fill"></i> 어메니티</td>
+							<td>
+								<c:if test="${hotel.amenity=='Y' }">가능</c:if>
+								<c:if test="${hotel.amenity=='N' }">불가능</c:if>
+							</td>
+						</tr>
+						<tr>
+							<td class="text-muted"><i class="bi bi-basket-fill"></i> 조식</td>
+							<td>
+								<c:if test="${hotel.breakfast=='Y' }">가능</c:if>
+								<c:if test="${hotel.breakfast=='N' }">불가능</c:if>
+							</td>
+						</tr>
+					</table>
 				</td>
+				
 			</tr>
 			<tr height="200">
 				<td scope="row" width="200">
@@ -62,7 +92,9 @@ ul li {
 				</td>
 			</tr>
 		</table>
-		
+		${hotelImg }<br>
+		${roomArray }<br>
+		${roomThumbnail }
 		<!-- 객실 리스트 시작 -->
 		<div id="roomList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 justify-content-start mt-4 mb-4">
 			<div class="room col mb-4">

@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class Hotel {
 	private int hotelId;
-	private int entId;
+	private String entId;
 	private String hotelName;
 	private String hotelPhone;
 	private String hotelAddress;

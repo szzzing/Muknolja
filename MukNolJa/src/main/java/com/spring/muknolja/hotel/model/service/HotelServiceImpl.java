@@ -39,4 +39,19 @@ public class HotelServiceImpl implements HotelService{
 	public AttachedFile selectHotelImg(int hotelId) {
 		return hDAO.selectHotelImg(sqlSession, hotelId);
 	}
+	
+	@Override
+	public ArrayList<Room> selectAllRoom(int hotelId) {
+		return hDAO.selectAllRoom(sqlSession, hotelId);
+	}
+	
+	@Override
+	public ArrayList<AttachedFile> selectRoomImg(int roomId) {
+		return hDAO.selectRoomImg(sqlSession, roomId);
+	}
+	
+	@Override
+	public AttachedFile selectRoomThumbnail(int roomId) {
+		return hDAO.selectRoomThumbnail(sqlSession, roomId);
+	}
 }

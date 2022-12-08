@@ -16,4 +16,10 @@ public interface HotelService {
 
 	AttachedFile selectHotelImg(int hotelId);
 
+	ArrayList<Room> selectAllRoom(int hotelId);
+
+	ArrayList<AttachedFile> selectRoomImg(int roomId);
+
+	AttachedFile selectRoomThumbnail(int roomId);
+
 }

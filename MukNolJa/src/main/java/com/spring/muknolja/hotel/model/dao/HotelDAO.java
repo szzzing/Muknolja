@@ -28,4 +28,16 @@ public class HotelDAO {
 		return sqlSession.selectOne("hotelmapper.selectHotelImg", hotelId);
 	}
 
+	public ArrayList<Room> selectAllRoom(SqlSessionTemplate sqlSession, int hotelId) {
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectAllRoom", hotelId);
+	}
+
+	public ArrayList<AttachedFile> selectRoomImg(SqlSessionTemplate sqlSession, int roomId) {
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectRoomImg", roomId);
+	}
+
+	public AttachedFile selectRoomThumbnail(SqlSessionTemplate sqlSession, int roomId) {
+		return sqlSession.selectOne("hotelmapper.selectRoomThumbnail", roomId);
+	}
+
 }
