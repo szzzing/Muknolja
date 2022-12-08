@@ -13,50 +13,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <style>
-	.map_wrap, .map_wrap * {margin:0;padding:0;font-size:12px;}
-	.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration:none;}
-	.map_wrap {position:relative;width:500px;height:300px;}
-	#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:200px;height:250px;margin:20px 0 10px 20px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
-	.bg_white {background:#fff;}
-	#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
-	#menu_wrap .option{text-align: center;}
-	#menu_wrap .option p {margin:10px 0;}  
-	#menu_wrap .option button {margin-left:5px;}
-	#placesList li {list-style: none;}
-	#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
-	#placesList .item span {display: block;margin-top:4px;}
-	#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-	#placesList .item .info{padding:10px 0 10px 55px;}
-	#placesList .info .gray {color:#8a8a8a;}
-	#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
-	#placesList .info .tel {color:#009900;}
-	#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
-	#placesList .item .marker_1 {background-position: 0 -10px;}
-	#placesList .item .marker_2 {background-position: 0 -56px;}
-	#placesList .item .marker_3 {background-position: 0 -102px}
-	#placesList .item .marker_4 {background-position: 0 -148px;}
-	#placesList .item .marker_5 {background-position: 0 -194px;}
-	#placesList .item .marker_6 {background-position: 0 -240px;}
-	#placesList .item .marker_7 {background-position: 0 -286px;}
-	#placesList .item .marker_8 {background-position: 0 -332px;}
-	#placesList .item .marker_9 {background-position: 0 -378px;}
-	#placesList .item .marker_10 {background-position: 0 -423px;}
-	#placesList .item .marker_11 {background-position: 0 -470px;}
-	#placesList .item .marker_12 {background-position: 0 -516px;}
-	#placesList .item .marker_13 {background-position: 0 -562px;}
-	#placesList .item .marker_14 {background-position: 0 -608px;}
-	#placesList .item .marker_15 {background-position: 0 -654px;}
-	#pagination {margin:10px auto;text-align: center;}
-	#pagination a {display:inline-block;margin-right:10px;}
-	#pagination .on {font-weight: bold; cursor: default;color:#777;}
+	.mukButton {background: #6BB6EC; border-color: #6BB6EC;}
+	.mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC;}
 </style>
 </head>
 <body>
 	<div class="container" style="width:800px; margin-top:100px;">
 		<h2 style="text-align: center;">호텔 등록하기</h2>
-		
-		<form enctype="multipart/form-data" method="post">
-			<input type="hidden" name="${loginUser.id }">
+		<form method="post">
+			<input type="hidden" name="hotelId" value="${ loginUser.id }">
 			<input type="hidden" name="hotelName">
 			<input type="hidden" name="hotelPhone">
 			<input type="hidden" name="hotelAddress">
@@ -69,77 +34,96 @@
 			<input type="hidden" name="hotelGeoX">
 			<input type="hidden" name="hotelGeoY">
 		</form>
-
-		
-			<div class="map_wrap">
-			    <div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
-			
-			    <div id="menu_wrap" class="bg_white">
-			        <div class="option">
-			            <div>
-			                <form onsubmit="searchPlaces(); return false;">
-			                    <input type="text" class="form-control" id="keyword">
-			                </form>
-			            </div>
-			        </div>
-			        <ul id="placesList"></ul>
-			        <div id="pagination"></div>
-			    </div>
-			</div>
-			
+		<form action="${contextPath }/insertHotel.ho" class="row g-2 row-cols-1" method="post">
+			<input type="hidden" name="hotelId" value="${ loginUser.id }">
 			<div class="col form-floating mb-3 mt-3">
-				<input type="text" class="form-control" name="roomName" placeholder="객실명을 입력하세요." required>
-				<label for="roomName">객실명</label>
+				<input type="text" class="form-control" name="hotelName" required>
+				<label for="hotelName">호텔명</label>
 			</div>
 			<div class="col form-floating mb-3 mt-3">
-				<input type="number" class="form-control" name="roomPrice" min="0" required>
-				<label for="roomPrice">가격</label>
-			</div>
-			<div class="col form-floating mb-3 mt-3" style="width: 200px; float: left;">
-				<input type="time" class="form-control" id="checkinTime" name="checkinTime" required>
-				<label for="checkinTime">체크인 시간</label>
-			</div>
-			<div class="col form-floating m-3" style="width: 200px; float: left;">
-				<input type="time" class="form-control" id="checkoutTime" name="checkoutTime" required>
-				<label for="checkoutTime">체크아웃 시간</label>
-			</div>
-			<div style="clear:both;"></div>
-
-			<div class="col form-floating mb-3 mt-3">
-				<select class="form-select" name="maxAccept">
-					<option selected>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
-				</select>
-				<label for="maxAccept">인원</label>
+				<input type="text" id="sample4_roadAddress" class="form-control" name="hotelAddress" onclick="sample4_execDaumPostcode()">
+				<label for="hotelAddress">주소</label>
+				<span id="guide" style="color:#fff;display:none"></span>
 			</div>
 			
-			<div class="col form-floating mb-3 mt-3">
-				<input type="number" class="form-control" name="totalNumber" min="0" required>
-				<label for="roomPrice">객실 수</label>
-			</div>
 			
-			<div class="form-floating mb-3">
-				<textarea class="form-control" name="roomInfo" placeholder="내용을 입력하세요." rows="10" style="height:300px; resize:none" required></textarea>
-				<label for="roomInfo" class="form-label">객실 기본정보</label>
-			</div>
-			<div class="mb-3">
-				<input type="file" class="form-control form-control-lg" name="roomImg">
-			</div>
-			<div class="mb-3">
-				<input type="file" class="form-control form-control-lg" name="roomImg">
-			</div>
-			<div class="mb-3">
-				<input type="file" class="form-control form-control-lg" name="roomImg">
-			</div>
-			<div class="d-grid gap-2">
-				<button type="submit" class="btn btn-outline-secondary" style="align:bottom !important">작성하기</button>
-			</div>
-
+		</form>
 	</div>
 	
+	
+	
+	
+	
+	
+	
+	<!-- 주소찾기 시작 -->
+	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	
+	<script>
+		function sample4_execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+							// 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var roadAddr = data.roadAddress; // 도로명 주소 변수
+							var extraRoadAddr = ''; // 참고 항목 변수
+
+							// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+							// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+							if (data.bname !== ''
+									&& /[동|로|가]$/g.test(data.bname)) {
+								extraRoadAddr += data.bname;
+							}
+							// 건물명이 있고, 공동주택일 경우 추가한다.
+							if (data.buildingName !== ''
+									&& data.apartment === 'Y') {
+								extraRoadAddr += (extraRoadAddr !== '' ? ', '
+										+ data.buildingName : data.buildingName);
+							}
+							// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+							if (extraRoadAddr !== '') {
+								extraRoadAddr = ' (' + extraRoadAddr + ')';
+							}
+
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+// 							document.getElementById('sample4_postcode').value = data.zonecode;
+							document.getElementById("sample4_roadAddress").value = roadAddr;
+// 							document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+
+							// 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+// 							if (roadAddr !== '') {
+// 								document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+// 							} else {
+// 								document.getElementById("sample4_extraAddress").value = '';
+// 							}
+
+							var guideTextBox = document.getElementById("guide");
+							// 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+							if (data.autoRoadAddress) {
+								var expRoadAddr = data.autoRoadAddress
+										+ extraRoadAddr;
+								guideTextBox.innerHTML = '(예상 도로명 주소 : '
+										+ expRoadAddr + ')';
+								guideTextBox.style.display = 'block';
+
+							} else if (data.autoJibunAddress) {
+								var expJibunAddr = data.autoJibunAddress;
+								guideTextBox.innerHTML = '(예상 지번 주소 : '
+										+ expJibunAddr + ')';
+								guideTextBox.style.display = 'block';
+							} else {
+								guideTextBox.innerHTML = '';
+								guideTextBox.style.display = 'none';
+							}
+						}
+					}).open();
+		}
+	</script>
+	<!-- 주소찾기 끝 -->
 	
 	<!-- 지도 api 설정 시작 -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4aaeb935cb2fd15933272e12d906ced0&libraries=services"></script>
@@ -204,9 +188,9 @@
 		// 검색 결과 목록과 마커를 표출하는 함수입니다
 		function displayPlaces(places) {
 
-			var listEl = document.getElementById('placesList'), menuEl = document
-					.getElementById('menu_wrap'), fragment = document
-					.createDocumentFragment(), bounds = new kakao.maps.LatLngBounds(), listStr = '';
+			var listEl = document.getElementById('placesList'), menuEl = document.getElementById('menu_wrap'),
+			fragment = document.createDocumentFragment(),
+			bounds = new kakao.maps.LatLngBounds(), listStr = '';
 
 			// 검색 결과 목록에 추가된 항목들을 제거합니다
 			removeAllChildNods(listEl);
@@ -215,11 +199,14 @@
 			removeMarker();
 
 			for (var i = 0; i < places.length; i++) {
-
+				console.log(places[i]);
+				
 				// 마커를 생성하고 지도에 표시합니다
-				var placePosition = new kakao.maps.LatLng(places[i].y,
-						places[i].x), marker = addMarker(placePosition, i), itemEl = getListItem(
-						i, places[i]); // 검색 결과 항목 Element를 생성합니다
+				var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x);
+				var roadAddressName = places[i].road_address_name;
+				
+				var marker = addMarker(placePosition, i);
+				var itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
 				// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
 				// LatLngBounds 객체에 좌표를 추가합니다
@@ -229,15 +216,15 @@
 				// 해당 장소에 인포윈도우에 장소명을 표시합니다
 				// mouseout 했을 때는 인포윈도우를 닫습니다
 				(function(marker, title) {
-					kakao.maps.event.addListener(marker, 'click', (function(placePosition) {
-					    displayInfowindow(marker, title);
+					kakao.maps.event.addListener(marker, 'click', (function(placePosition, roadAddressName) {
+						displayInfowindow(marker, title);
 					    return function() {
 					        // 좌표정보를 파싱하기 위해 hidden input에 값 지정
-					        $("#x").text(placePosition.La);
-					        $("#y").text(placePosition.Ma);
-					        $("#name").text(title);
+					        console.log(placePosition.La);
+					        console.log(placePosition.Ma);
+					        console.log(roadAddressName);
 					    }
-					})(placePosition));
+					})(placePosition, roadAddressName));
 					
 					kakao.maps.event.addListener(marker, 'mouseover', function() {
 						displayInfowindow(marker, title);
