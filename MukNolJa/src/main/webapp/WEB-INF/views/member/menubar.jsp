@@ -47,7 +47,11 @@
 		            		<div class="menud">동행</div>
 	            			<div style="float:right; margin-left:550px; margin-top:-2px; display:flex">
 	            				<h3 style=""><i class="fa-solid fa-comments"></i></h3>
-	            				
+	            			<c:if test="${ empty loginUser }">
+		        <li class="nav-item" style="margin-right:3%; width:40%" >
+		          <a class="nav-link " href="${contextPath }/loginView.me" style="font-size: 1.4vw; ">로그인</a>
+		        </li>
+		        </c:if>	
 	            				
 		     				    
 	            			</div>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
@@ -22,14 +22,30 @@
   <body style="margin-top:25vh; background-color: white">
   <jsp:include page="member/menubar.jsp"></jsp:include>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-   <div style="color: white" >
-   	<a class="a" style="color: white" href="${ contextPath }/member.me">membedsewhtwhtjkWWWWsssssdss</a>
-   <a class="a"href="${ contextPath }/createRoom.ch?roomName=CHAT&BoardId=23" >채팅방 생성</a>
-   <a class="a"href="${ contextPath }/chatRoomList.ch" >채팅방 목록</a>
-   <a class="a"href="${ contextPath }/hotelList.ho">호텔 리스트</a>
-   <a class="a"href="${ contextPath }/writeRoom.ho">객실만들기</a>
-   <a class="a"href="${ contextPath }/adminPage.me" >관리자 페이지</a>
-     
+   
+  
+   
+   	<a href="${ contextPath }/member.me">membedsewhtwhtjkWWWWsssssdss</a>
+   <a href="${ contextPath }/createRoom.ch?roomName=CHAT&BoardId=23" >채팅방 생성</a>
+   <a href="${ contextPath }/chatRoomList.ch" >채팅방 목록</a>
+   <a href="${ contextPath }/hotelList.ho">호텔 리스트</a>
+   <a href="${ contextPath }/writeRoom.ho">객실만들기</a>
+   <a href="${ contextPath }/adminPage.me" >관리자 페이지</a>
+   <a href="${ contextPath }/partyList.pa">동행 리스트</a>
+   <a href="${ contextPath }/partyDetail.pa">동행 상세보기</a>
+   <a href="${ contextPath }/partyWrite.pa">동행 글쓰기</a>
+   <a href="${ contextPath }/travelList.tr">여행 리스트</a>
+   <a href="${ contextPath }/travelDetail.tr">여행 상세보기</a>
+     <div class="container-fluid text-center">
+	  	<div class="row justify-content-center" style="width: 100%">
+            <div class="col">
+            	<div style="display:inLine-block; width:500px; height: 100% ">
+            		
+            		
+            	</div>
+            </div>
+         </div>
+
  
      </div>
     <script>
