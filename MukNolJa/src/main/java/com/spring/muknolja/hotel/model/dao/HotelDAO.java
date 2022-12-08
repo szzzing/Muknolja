@@ -24,4 +24,8 @@ public class HotelDAO {
 		return sqlSession.selectOne("hotelmapper.selectHotel", hotelId);
 	}
 
+	public AttachedFile selectHotelImg(SqlSessionTemplate sqlSession, int hotelId) {
+		return sqlSession.selectOne("hotelmapper.selectHotelImg", hotelId);
+	}
+
 }
