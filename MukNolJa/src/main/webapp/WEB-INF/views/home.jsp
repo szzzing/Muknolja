@@ -16,7 +16,12 @@
   <jsp:include page="member/menubar.jsp"></jsp:include>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
    
-   
+   	<a href="${ contextPath }/member.me">membedsewhtwhtjkWWWWsssssdss</a>
+   <a href="${ contextPath }/createRoom.ch?roomName=CHAT&BoardId=23" >채팅방 생성</a>
+   <a href="${ contextPath }/chatRoomList.ch" >채팅방 목록</a>
+   <a href="${ contextPath }/hotelList.ho">호텔 리스트</a>
+   <a href="${ contextPath }/writeRoom.ho">객실만들기</a>
+   <a href="${ contextPath }/adminPage.me" >관리자 페이지</a>
      <div class="container-fluid text-center">
 	  	<div class="row justify-content-center" style="width: 100%">
             <div class="col">
