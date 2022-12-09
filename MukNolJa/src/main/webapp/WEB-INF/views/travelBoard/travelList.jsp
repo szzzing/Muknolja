@@ -9,12 +9,20 @@
 	<style>
 		#carouselExampleInterval{height: 480px; margin-top: 80px;}
 		#carouselExampleInterval img{height:480px;}
-		.list-group li{width: 100px; height: 70px; text-align: center; padding: 20px;}
-		#list1{margin-top:50px; margin-bottom: 50px;}
-		#list2{list-style: none;}
- 		#list2 li{clear:both; margin-left: auto; margin-right: auto; margin-bottom: 50px; width: 100%; height: 200px; border-bottom: 1px solid lightgray;}
-		#list2 img{height: 150px; width:150px; float: left;}
-		.page-link{color:#3C988D;}
+		#category{
+	 		width: 90%;
+			height: 150px;
+			border-radius: 5px;
+			border-style: hidden;
+			box-shadow: 0 0 0 1px #d3d3d3;
+			table-layout: fixed;
+			margin-left:auto; 
+	    	margin-right:auto;
+			margin-top: 30px;
+	    	margin-bottom: 30px;
+	    	clear: both;
+		}
+		#category td{text-align: center;}
 		.page-link:focus, .page-link:hover {color: #fff; background-color: #3C988D;}
 		.travelInfo a{color: black; font-size: 25px; text-decoration: none;}
 		.travelInfo p{color: gray; font-size: 15px; margin-top: 20px;}
@@ -58,30 +66,30 @@
 	
 	<div class="container">
 	
-		<div id="list1">
-			<ul class="list-group list-group-horizontal-md d-flex justify-content-center">
-			  <li class="list-group-item align-middle">서울</li>
-			  <li class="list-group-item">인천</li>
-			  <li class="list-group-item">대전</li>
-			  <li class="list-group-item">대구</li>
-			  <li class="list-group-item" >광주</li>
-			  <li class="list-group-item">부산</li>
-			  <li class="list-group-item">울산</li>
-			  <li class="list-group-item">세종</li>
-			  <li class="list-group-item">경기</li>
-			</ul>
-			<ul class="list-group list-group-horizontal-md d-flex justify-content-center">
-			  <li class="list-group-item">강원</li>
-			  <li class="list-group-item">충북</li>
-			  <li class="list-group-item">충남</li>
-			  <li class="list-group-item">경북</li>
-			  <li class="list-group-item">경남</li>
-			  <li class="list-group-item ">전북</li>
-			  <li class="list-group-item">전남</li>
-			  <li class="list-group-item">제주</li>
-			  <li class="list-group-item" style="padding: 17px;">전체보기</li>
-			</ul>
-		</div>
+		<table id="category" class="table table-bordered align-middle">
+			<tr>
+				<td>서울</td>			
+				<td>인천</td>			
+				<td>대전</td>			
+				<td>대구</td>			
+				<td>광주</td>			
+				<td>부산</td>			
+				<td>울산</td>			
+				<td>세종</td>			
+				<td>경기</td>			
+			</tr>
+			<tr>
+				<td>강원</td>			
+				<td>충북</td>			
+				<td>충남</td>			
+				<td>경북</td>			
+				<td>경남</td>			
+				<td>전북</td>			
+				<td>전남</td>			
+				<td>제주</td>			
+				<td>전체보기</td>			
+			</tr>
+		</table>
 		
 		<hr id="hr1">
 		
