@@ -6,7 +6,7 @@
 		values(SEQ_ROOMID.nextval, 2, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo})
 	</insert>
 	
-	<insert id="insertAttm">
+	<insert id="insertRoomAttm">
 		insert all
 		<foreach collection="list" item="a">
 			into ATTACHED_FILE
@@ -49,6 +49,24 @@
 			join attached_file using(file_id)
 		where room_id=#{roomId} and file_thumbnail='Y'
 	</select>
+	
+	<insert id="insertHotel">
+		insert into hotel
+		values(
+			SEQ_HID.nextval, #{entId}, #{hotelName}, #{hotelPhone}, #{hotelAddress}, #{wifi}, #{breakfast}, #{amenity}, #{park}, #{swim}, #{fitness}, null, null, default, sysdate, #{star}
+		)
+	</insert>
+	
+	<insert id="insertHotelAttm">
+		insert all
+		<foreach collection="list" item="a">
+			into ATTACHED_FILE
+			values(NEW_FID, #{a.fileType}, sysdate, #{a.fileName}, #{a.fileModifyName}, #{a.fileLink}, default, #{a.fileThumbnail})
+			into HOTEL_IMG
+			values(CUR_FID, SEQ_HID.currval, default)
+		</foreach>
+		select * from dual
+	</insert>
 	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>

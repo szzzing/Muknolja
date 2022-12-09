@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.Room;
+import com.spring.muknolja.member.model.vo.Member;
 
 @Controller
 public class HotelController {
@@ -93,7 +95,7 @@ public class HotelController {
 		int roomResult = hService.insertRoom(r);
 		
 		if(!list.isEmpty()) {
-			attmResult = hService.insertAttm(list);
+			attmResult = hService.insertRoomAttm(list);
 		}
 		
 		if(roomResult + attmResult == list.size()*2+1) {
@@ -149,4 +151,58 @@ public class HotelController {
 	public String writeHotel() {
 		return "writeHotel";
 	}
+	
+	@RequestMapping("insertHotel.ho")
+	public String insertHotel(@ModelAttribute Hotel h, @RequestParam("hotelImg") ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
+		System.out.println("컨트롤러");
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		ArrayList<AttachedFile> list = new ArrayList();
+		for(MultipartFile file : files) {
+			String fileName = file.getOriginalFilename();
+			if(!fileName.equals("")) {
+				String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+				
+				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+					String[] returnArr = saveFile(file, request);
+					
+					if(returnArr[1] != null) {
+						AttachedFile attm = new AttachedFile();
+						attm.setFileName(file.getOriginalFilename());
+						attm.setFileModifyName(returnArr[1]);
+						attm.setFileLink(returnArr[0]);
+						
+						list.add(attm);
+					}
+				}
+			}
+		}
+		
+		for(int i = 0; i < list.size(); i++) {
+			AttachedFile a = list.get(i);
+			if(i == 0) {
+				a.setFileThumbnail("Y");
+			} else {
+				a.setFileThumbnail("N");
+			}
+			a.setFileType("H");
+		}
+		
+		int attmResult = 0;
+		int hotelResult = hService.insertHotel(h);
+		
+		if(!list.isEmpty()) {
+			attmResult = hService.insertHotelAttm(list);
+		}
+		
+		if(hotelResult + attmResult == list.size()*2+1) {
+			return "hotelList";
+		} else {
+			for(AttachedFile a : list) {
+				deleteFile(a.getFileModifyName(), request);
+			}
+			throw new CommonException("호텔 등록 실패");
+		}
+	}
+	
 }

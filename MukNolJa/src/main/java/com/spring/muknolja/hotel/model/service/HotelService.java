@@ -10,7 +10,9 @@ public interface HotelService {
 
 	int insertRoom(Room r);
 
-	int insertAttm(ArrayList<AttachedFile> list);
+	int insertRoomAttm(ArrayList<AttachedFile> list);
+	
+	int insertHotelAttm(ArrayList<AttachedFile> list);
 
 	Hotel selectHotel(int hotelId);
 
@@ -21,5 +23,7 @@ public interface HotelService {
 	ArrayList<AttachedFile> selectRoomImg(int roomId);
 
 	AttachedFile selectRoomThumbnail(int roomId);
+
+	int insertHotel(Hotel h);
 
 }

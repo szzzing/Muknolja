@@ -14,49 +14,17 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 </head>
 <style>
-	#carouselExampleInterval{height: 450px;}
-    #carouselExampleInterval img{height:450px;}
+    .mukButton {background: #6BB6EC; color:white; border-color: #6BB6EC;}
+	.mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC;}
 </style>
 <body>
 
-	<!-- 광고판 시작 -->
-	<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-		<div class="carousel-inner">
-			<div class="carousel-item active" data-bs-interval="10000">
-				<img
-					src="https://search.pstatic.net/common?type=o&size=352x196&quality=75&direct=true&src=https%3A%2F%2Fg-grafolio.pstatic.net%2F20220130_97%2F1643543618449ELxOz_PNG%2FADBE82CC-2827-423F-8700-97641FDE75DF.png%3Ftype%3Df804_452"
-					class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item" data-bs-interval="2000">
-				<img
-					src="https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-texture-black-background-simple-image_556931.jpg"
-					class="d-block w-100" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img
-					src="https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-texture-black-background-simple-image_556931.jpg"
-					class="d-block w-100" alt="...">
-			</div>
-		</div>
-		<button class="carousel-control-prev" type="button"
-			data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button"
-			data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</button>
-	</div>
-	<!-- 광고판 끝 -->
-	
-	
-	<div class="container mt-4">
-		<h1>호텔게시판</h1>
-		<h5 class="text-muted">${hotelCount }개의 호텔이 등록되어 있어요.</h5>
+	<div class="container mt-5 mb-5">
+		<h1 class="fw-bold p-5" style="text-align:center;">호텔게시판</h1>
+		<h5 class="text-muted">${hotelCount }개의 호텔이 있어요.</h5>
 		<form class="row g-2">
 			<div class="col mb-3 form-floating">
 				<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
@@ -100,56 +68,83 @@
 				<input type="text" class="form-control" name="searchValue" placeholder="검색어를 입력하세요.">
 				<label for="searchValue">전체검색</label>
 			</div>
-			<div class="form-check">
-				<input class="form-check-input" type="checkbox" name="wifi">
-				<label class="form-check-label" for="wifi">와이파이</label>
-			</div>
-			<div class="form-check">
-				<input class="form-check-input" type="checkbox" name="park">
-				<label class="form-check-label" for="park">주차</label>
-			</div>
-			<div class="form-check">
-				<input class="form-check-input" type="checkbox" name="breakfast">
-				<label class="form-check-label" for="breakfast">조식</label>
-			</div>
-			<div class="form-check">
-				<input class="form-check-input" type="checkbox" name="amenity">
-				<label class="form-check-label" for="amenity">어메니티</label>
-			</div>
+			<table class="hotelOptionTable table table-borderless align-middle text-center">
+					<tr>
+						<td style="color:#E9E9E9;">
+							<input type="hidden" name="wifi" value='N'>
+							<h2><i class="fa-solid fa-wifi"></i></h2>
+							와이파이
+						</td>
+						<td style="color:#E9E9E9;">
+							<input type="hidden" name="park" value='N'>
+							<h2><i class="bi bi-p-square-fill"></i></h2>
+							주차
+						</td>
+						<td style="color:#E9E9E9;">
+							<input type="hidden" name="amenity" value='N'>
+							<h2><i class="bi bi-gift-fill"></i></h2>
+							어메니티
+						</td>
+						<td style="color:#E9E9E9;">
+							<input type="hidden" name="breakfast" value="N">
+							<h2><i class="fa-solid fa-utensils"></i></h2>
+							조식
+						</td>
+						<td style="color:#E9E9E9;">
+							<input type="hidden" name="fitness" value="N">
+							<h2><i class="fa-solid fa-dumbbell"></i></h2>
+							피트니스
+						</td>
+						<td style="color:#E9E9E9;">
+							<input type="hidden" name="swim" value="Y">
+							<h2><i class="fa-solid fa-water-ladder"></i></h2>
+							수영장
+						</td>
+					</tr>
+				</table>
 		</form>
 		
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 justify-content-start mt-4 mb-4">
 			<div class="hotel col mb-4">
-				<div class="card">
-					<div class="row">
-						<div class="col col-sm-auto col-md-auto" style="margin:0; padding-right:0">
-							<img id="hotelImg" class="img-fluid rounded-start" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="200px" height="300px" style="background: lightgray">
-						</div>
-						<div class="col mt-4 mb-4">
-							<input type="hidden" name="hotelId">
-							<h4 id="hotelName" class="card-title lh-1 fw-bold">롯데호텔</h4>
-							<i class="bi bi-geo-alt-fill text-muted"></i><span id="hotelAddress" class="text-muted">서울시 종로구 명동</span><br>
-							<table class="mt-3 mb-3">
-								<tr>
-									<td class="text-muted" width="100px"><i class="bi bi-wifi"></i> 와이파이</td>
-									<td>가능</td>
-								</tr>
-								<tr>
-									<td class="text-muted"><i class="bi bi-p-square-fill"></i> 주차</td>
-									<td>가능</td>
-								</tr>
-								<tr>
-									<td class="text-muted"><i class="bi bi-gift-fill"></i> 어메니티</td>
-									<td>가능</td>
-								</tr>
-								<tr>
-									<td class="text-muted"><i class="bi bi-basket-fill"></i> 조식</td>
-									<td>가능</td>
-								</tr>
-							</table>
-							<h5 class="lh-1 fw-bold">80,000 원</h5>
-						</div>
-					</div>
+				<div class="row">
+						<table class="col table table-borderless">
+							<tr>
+								<td style="width:200px" rowspan="4">
+									<img class="hotelImg rounded-5" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="200px" height="200px" style="background: lightgray">
+								</td>
+								<td colspan="2" class="align-top">
+									<h4 class="hotelName lh-1 fw-bold">롯데호텔 부산</h4>
+									<small class="bi bi-geo-alt-fill text-muted overflow-hidden"></small><small id="hotelAddress" class="text-muted">부산 부산진구 가야대로 772</small><br>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" style="padding-top:0px">
+									<small class="star">5성급</small><br>
+									<small>
+										<i class="fa-solid fa-wifi"></i>
+										<i class="fa-solid fa-square-parking"></i>
+										<i class="fa-solid fa-gift"></i>
+										<i class="fa-solid fa-utensils"></i>
+										<i class="fa-solid fa-dumbbell"></i>
+										<i class="fa-solid fa-water-ladder"></i>
+									</small><br>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<h5 class="fa-solid fa-star"></h5><b>4.5</b>/5
+								</td>
+								<td class="text-end">
+									<i class="fa-solid fa-heart"></i>10
+									<i class="fa-solid fa-star"></i>10
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="align-bottom text-end" style="padding-top:0px">
+									<h5 class="lh-1 fw-bold" style="margin:0px">80,000원~</h5>
+								</td>
+							</tr>
+						</table>
 				</div>
 			</div>
 		</div>
@@ -188,7 +183,22 @@
 			$(this).parent().find("label").text(journey+"박 "+(journey+1)+"일");
 		});
 	</script>
-	<!-- daterangepicker 기본설정, 날짜 기입 시작 -->
+	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->
+	
+
+	<!-- 호텔 옵션 선택 -->
+	<script>
+		$(".hotelOptionTable").find("td").on("click", function(){
+			if($(this).css("color")=="rgb(233, 233, 233)") {
+				$(this).prop("style").removeProperty("color");
+				$(this).find("input[type=hidden]").val("Y");
+			} else {
+				$(this).css("color", "#E9E9E9");
+				$(this).find("input[type=hidden]").val("N");
+			}
+		});
+	</script>
+	<!-- 호텔 옵션 선택 끝 -->
 	
 	<script>
 		$(".hotel").on("click", function(){

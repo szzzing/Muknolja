@@ -15,23 +15,8 @@
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <style>
-	.mukButton {background: #6BB6EC; border-color: #6BB6EC;}
+	.mukButton {background: #6BB6EC; color:white; border-color: #6BB6EC;}
 	.mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC;}
-	.photoButton {
-		width:50px;
-		height:50px;
-		background: #6BB6EC;
-		color: white;
-		border-radius: 10px;
-	}
-	.photoButton i {
-		margin-top:12px;
-	}
-	.photoButton:hover {
-		background: white;
-		color: #6BB6EC;
-		border: 1px solid #6BB6EC;
-	}
 </style>
 </head>
 <body>
@@ -39,8 +24,8 @@
 		<h2 class="fw-bold p-5" style="text-align:center;">호텔 등록하기</h2>
 		<form method="post">
 		</form>
-		<form action="${contextPath }/insertHotel.ho" class="row g-2 row-cols-1" method="post">
-			<input type="hidden" name="hotelId" value="${ loginUser.id }">
+		<form action="${contextPath }/insertHotel.ho" class="row g-2 row-cols-1" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="entId" value="${ loginUser.id }">
 			<div class="col form-floating mb-3 mt-3">
 				<input type="text" class="form-control" name="hotelName" required>
 				<label for="hotelName">호텔명</label>
@@ -95,11 +80,20 @@
 					</tr>
 				</table>
 			</div>
-			<div class="col form-floating mb-3 mt-3">
+			<div class="col mb-3 mt-3">
 				<h5 class="fw-bold">호텔 사진을 등록하세요.</h5>
-				<input type="file" class="form-control" name="hotelImg">
-				<input type="file" class="form-control" name="hotelImg">
-				<input type="file" class="form-control" name="hotelImg">
+				<div class="mb-3">
+					<input type="file" class="form-control" name="hotelImg">
+				</div>
+				<div class="mb-3">
+					<input type="file" class="form-control" name="hotelImg">
+				</div>
+				<div class="mb-3">
+					<input type="file" class="form-control" name="hotelImg">
+				</div>
+			</div>
+			<div class="d-grid gap-2">
+				<button type="submit" class="mukButton btn btn-outline-primary" style="align:bottom !important">작성하기</button>
 			</div>
 		</form>
 	</div>
