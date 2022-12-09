@@ -68,6 +68,8 @@
 	.card img{height: 250px;}
 	.card{margin-bottom: 30px;}
 	.card td{width: 70px; font-size: 14px; color: gray; margin-right: auto;}
+	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
+	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
 </style>
 </head>
 <body>
@@ -79,34 +81,7 @@
 		<br><br><br><br><br><br>
 		<h1>동행게시판</h1>
 		
-		
-		
-<!-- 		<div id="list1"> -->
-<!-- 				<ul class="list-group list-group-horizontal-md d-flex justify-content-center"> -->
-<!-- 				  <li class="list-group-item align-middle">서울</li> -->
-<!-- 				  <li class="list-group-item">인천</li> -->
-<!-- 				  <li class="list-group-item">대전</li> -->
-<!-- 				  <li class="list-group-item">대구</li> -->
-<!-- 				  <li class="list-group-item" >광주</li> -->
-<!-- 				  <li class="list-group-item">부산</li> -->
-<!-- 				  <li class="list-group-item">울산</li> -->
-<!-- 				  <li class="list-group-item">세종</li> -->
-<!-- 				  <li class="list-group-item">경기</li> -->
-<!-- 				</ul> -->
-<!-- 				<ul class="list-group list-group-horizontal-md d-flex justify-content-center"> -->
-<!-- 				  <li class="list-group-item">강원</li> -->
-<!-- 				  <li class="list-group-item">충북</li> -->
-<!-- 				  <li class="list-group-item">충남</li> -->
-<!-- 				  <li class="list-group-item">경북</li> -->
-<!-- 				  <li class="list-group-item">경남</li> -->
-<!-- 				  <li class="list-group-item ">전북</li> -->
-<!-- 				  <li class="list-group-item">전남</li> -->
-<!-- 				  <li class="list-group-item">제주</li> -->
-<!-- 				  <li class="list-group-item" style="padding: 17px;">전체보기</li> -->
-<!-- 				</ul> -->
-<!-- 			</div> -->
-
-			<table id="category" class="table table-bordered align-middle">
+		<table id="category" class="table table-bordered align-middle">
 			<tr>
 				<td>서울</td>			
 				<td>인천</td>			

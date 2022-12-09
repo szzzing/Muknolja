@@ -8,6 +8,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  	*{font-family: 'Noto Sans KR', sans-serif;}
 	h3{font-weight: bold;}
 	.title{height: 300px; margin-bottom: 10px; margin-top: 30px;}
 	.title button{background: #6BB6EC; border-color: #6BB6EC;}
@@ -19,7 +21,7 @@
 	#profile img{border-radius: 50%; width: 50px; height: 50px; margin-bottom: 10px;}
 	#location2{overflow-x: auto;}
  	#thumbnail{width: 100%; height: 400px; border-radius: 15px; margin-bottom: 30px;}
-	.content{height: 300px; margin-bottom: 30px;}
+	.content{height: 250px; margin-bottom: 30px;}
 	.content textarea{border: none;}
 	
  	
@@ -59,6 +61,10 @@
 	  text-align: center;
 	}
 	
+	#travelReply{margin-top: 30px;}
+	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
+	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
+	
 </style>
 </head>
 <body>
@@ -87,7 +93,7 @@
 				
 				<!-- 내용 -->
 				<div class="content input-group">
-				  <textarea class="form-control" aria-label="With textarea" style="resize: none;">크리스마스에 강릉 같이 가실분 코스는 대충 짰고 가실분들 있으면 코스 같이 상의해서 더 짜봐요!                     같이 놀면 재밌을거같아요!!</textarea>
+				  <textarea class="form-control" aria-label="With textarea" style="resize: none;">크리스마스에 강릉 같이 가실분 코스는 대충 짰고 가실분들 있으면 코스 같이 상의해서 더 짜봐요! 같이 놀면 재밌을거같아요!!</textarea>
 				</div>
 			</div>
 			
@@ -113,7 +119,16 @@
 					</ol>
 				</div>
 			</div>
+			
+			<div id="partyReply">
+				<h4 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h4>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+					<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
+				</div>
+			</div>
 		</div>
+		
 		
 
 		<br><br>
