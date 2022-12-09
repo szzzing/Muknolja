@@ -1,5 +1,7 @@
 package com.spring.muknolja.member.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -25,11 +27,11 @@ public class MemberController {
 	
 	@RequestMapping(value = "loginView.me", method = RequestMethod.GET)
 	public String loginView() {
-		System.out.println("·Î±×ÀÎ Ã³¸®");
+		System.out.println("ï¿½Î±ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½");
 		return "login";
 	}
 	@RequestMapping(value = "login.me", method = RequestMethod.POST)
-	public String login(Member m, Model model) {
+	public String login(Member m, Model model, HttpSession session) {
 		System.out.println(m);
 		System.out.println(m.getPwd());
 		Member loginUser = mService.login(m);
@@ -38,7 +40,7 @@ public class MemberController {
 		String encPwd = bcrypt.encode(m.getPwd());
 		System.out.println(encPwd);
 		if (bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
-			model.addAttribute("loginUser", loginUser);
+			session.setAttribute("loginUser", loginUser);
 			return "redirect:home.do";
 
 		} else {
@@ -47,10 +49,10 @@ public class MemberController {
 		
 		
 	}
-	// ·Î±×¾Æ¿ô 2
+	// ï¿½Î±×¾Æ¿ï¿½ 2
 		@RequestMapping("logout.me")
-		public String logout(SessionStatus status) {
-			status.setComplete();
+		public String logout(HttpSession session) {
+			session.removeAttribute("loginUser");
 			return "redirect:home.do";
 		}
 	

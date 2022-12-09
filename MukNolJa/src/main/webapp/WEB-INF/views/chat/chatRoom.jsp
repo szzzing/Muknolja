@@ -159,33 +159,41 @@ body {
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 </head>
 <body>
+	${ loginUser }
 	<section class="chatbox">
     <section class="chat-window" id="chatSession">
+    <c:forEach var="c" items="${ list }">
+    ${ c }
+    	<c:if test="${ c.nickName != loginUser.nickName }">
       <article class="msg-container msg-remote" id="msg-0">
         <div class="msg-box">
           <div class="flr">
             <div class="messages">
               <p class="msg" id="msg-0">
-                하하하하
+                ${ c.chatContent }
               </p>
             </div>
-            <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">3 minutes ago</span></span>
+            <span class="timestamp">${ c.nickName }<span class="username"></span>&bull;<span class="posttime">3 minutes ago</span></span>
           </div>
         </div>
       </article>
-      
-      <article class="msg-container msg-self" id="msg-0">
+      </c:if>
+      <c:if test="${ c.nickName != loginUser.nickName }">
+      	<article class="msg-container msg-self" id="msg-0">
         <div class="msg-box">
           <div class="flr">
             <div class="messages">
               <p class="msg" id="msg-1">
-                메세지1
+                ${ c.chatContent }
               </p>
             </div>
-            <span class="timestamp"><span class="username">Name</span>&bull;<span class="posttime">2 minutes ago</span></span>
+            <span class="timestamp"><span class="username">${ c.nickName }</span>&bull;<span class="posttime">2 minutes ago</span></span>
           </div>
         </div>
       </article>
+      </c:if>
+      </c:forEach>
+ 
     </section>
       <input type="text" autocomplete="on" placeholder="Type a message" id="message"/>
       <button id="send">

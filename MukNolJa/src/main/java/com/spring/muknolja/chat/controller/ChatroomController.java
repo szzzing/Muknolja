@@ -3,6 +3,8 @@ package com.spring.muknolja.chat.controller;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.spring.muknolja.chat.model.service.ChatService;
 import com.spring.muknolja.chat.model.vo.ChatMessage;
 import com.spring.muknolja.chat.model.vo.ChatRoom;
+import com.spring.muknolja.member.model.vo.Member;
 
 @Controller
 public class ChatroomController {
@@ -31,7 +34,7 @@ public class ChatroomController {
     	
     	System.out.println("# Create Chat Room , name: " + chatRoom.getRoomName());
     	int result = cService.createRoom(chatRoom);
-        return "redirect:/";
+        return "redirect:home.do";
     }
     
     // 채팅방 목록
@@ -45,9 +48,11 @@ public class ChatroomController {
     
     // 채팅방 이동
     @RequestMapping("chatRoom.ch")
-    public String chatRoom(@RequestParam("roomCode") String roomCode, Model model) {
+    public String chatRoom(@RequestParam("roomCode") String roomCode, Model model, HttpSession session) {
     	ArrayList<ChatMessage> list = cService.selectChatMessage(roomCode);
+    	Member loginUser = (Member)session.getAttribute("loginUser");
     	
+    	model.addAttribute("loginUser", loginUser);
     	model.addAttribute("list", list);
     	model.addAttribute("roomCode", roomCode);
     	return "chatRoom";

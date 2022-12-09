@@ -21,6 +21,7 @@
 	<select id="selectChatMessage" resultMap="ChatMessageResultSet">
 		select *
 		from CHAT_MESSAGE
+			join member on(SENDER_ID = ID)
 		where CHAT_ROOM_CODE = #{roomCode}
 		order by CHAT_ID desc
 	</select>
@@ -31,6 +32,7 @@
 		<result column="CHAT_ROOM_CODE" property="roomCode"/>
 		<result column="CHAT_CONTENTS" property="chatContent"/>
 		<result column="TRANSFER_TIME" property="transferTime"/>
+		<result column="NICKNAME" property="nickName"/>
 	</resultMap>
 	
 	<insert id="insertMessage">
