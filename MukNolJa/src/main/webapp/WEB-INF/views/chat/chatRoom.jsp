@@ -153,6 +153,7 @@ body {
 }
 .msg-self .timestamp {
     text-align: right;
+    width: auto;
 }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -163,7 +164,6 @@ body {
 	<section class="chatbox">
     <section class="chat-window" id="chatSession">
     <c:forEach var="c" items="${ list }">
-    ${ c }
     	<c:if test="${ c.nickName != loginUser.nickName }">
       <article class="msg-container msg-remote" id="msg-0">
         <div class="msg-box">

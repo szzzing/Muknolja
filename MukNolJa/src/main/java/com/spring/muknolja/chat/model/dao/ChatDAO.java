@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.chat.model.vo.ChatMessage;
 import com.spring.muknolja.chat.model.vo.ChatRoom;
+import com.spring.muknolja.member.model.vo.Member;
 
 @Repository("cDAO")
 public class ChatDAO {
@@ -25,6 +26,10 @@ public class ChatDAO {
 
 	public void insertMessage(SqlSessionTemplate sqlSession, ChatMessage message) {
 		sqlSession.insert("chatmapper.insertMessage", message);
+	}
+
+	public Member selectUser(SqlSessionTemplate sqlSession, String nick) {
+		return sqlSession.selectOne("chatmapper.selectUser", nick);
 	}
 
 }

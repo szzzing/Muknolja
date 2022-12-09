@@ -40,5 +40,24 @@
 		values(SEQ_CHATID.nextval, #{senderId}, #{roomCode}, #{chatContent}, sysdate)
 	</insert>
 	
+	<resultMap type="Member" id="memberResultSet">
+  		<id column="ID" property="id"/>
+  		<result column="PWD" property="pwd"/>
+  		<result column="NAME" property="name"/>
+  		<result column="NICKNAME" property="nickName"/>
+  		<result column="EMAIL" property="email"/>
+  		<result column="ADDRESS" property="address"/>
+  		<result column="GENDER" property="gender"/>
+  		<result column="ENROLL_DATE" property="enrollDate"/>
+  		<result column="MEMBER_TYPE" property="memberType"/>
+  		<result column="STATUS" property="status"/>
+  	</resultMap>
+  	
+  	<select id="selectUser" resultMap="memberResultSet">
+  		select *
+  		from member
+  		where NICKNAME = #{ncik}
+  	</select>
+	
 	
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.muknolja.chat.model.dao.ChatDAO;
 import com.spring.muknolja.chat.model.vo.ChatMessage;
 import com.spring.muknolja.chat.model.vo.ChatRoom;
+import com.spring.muknolja.member.model.vo.Member;
 
 @Service("cService")
 public class ChatServiceImpl implements ChatService{
@@ -37,5 +38,10 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public void insertMessage(ChatMessage message) {
 		cDAO.insertMessage(sqlSession, message);
+	}
+
+	@Override
+	public Member selectUser(String nick) {
+		return cDAO.selectUser(sqlSession, nick);
 	}
 }

@@ -1,8 +1,11 @@
 package com.spring.muknolja.chat.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +15,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.spring.muknolja.chat.model.service.ChatService;
 import com.spring.muknolja.chat.model.vo.ChatMessage;
 import com.spring.muknolja.chat.model.vo.ChatRoom;
@@ -26,7 +32,7 @@ public class ChatroomController {
 	private ChatService cService;
 	
 	//채팅방 개설
-    @GetMapping("createRoom.ch")
+	@RequestMapping("createRoom.ch")
     public String createRoom(@ModelAttribute ChatRoom chatRoom, RedirectAttributes rttr){
     	
     	chatRoom.setRoomCode(UUID.randomUUID().toString());
@@ -38,24 +44,46 @@ public class ChatroomController {
     }
     
     // 채팅방 목록
-    @GetMapping("chatRoomList.ch")
-    public String chatRoomList(Model model) {
+    @RequestMapping("chatRoomList.ch")
+    public void chatRoomList(HttpServletResponse response) {
     	ArrayList<ChatRoom> list = cService.selectChatRoomList();
     	
-    	model.addAttribute("list", list);
-    	return "chatRooms";
+    	Gson gson = new Gson();
+    	
+    	response.setContentType("application/json; charset=UTF-8");
+    	
+    	try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     // 채팅방 이동
     @RequestMapping("chatRoom.ch")
-    public String chatRoom(@RequestParam("roomCode") String roomCode, Model model, HttpSession session) {
+    public void chatRoom(@RequestParam("roomCode") String roomCode, HttpServletResponse response) {
     	ArrayList<ChatMessage> list = cService.selectChatMessage(roomCode);
-    	Member loginUser = (Member)session.getAttribute("loginUser");
     	
-    	model.addAttribute("loginUser", loginUser);
-    	model.addAttribute("list", list);
-    	model.addAttribute("roomCode", roomCode);
-    	return "chatRoom";
+    	Gson gson = new Gson();
+    	
+    	response.setContentType("application/json; charset=UTF-8");
+    	
+    	try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    // 닉네임 검색
+    @RequestMapping("searchNick.ch")
+    @ResponseBody
+    public Member searchNick(@RequestParam("nick") String nick) {
+    	Member m = cService.selectUser(nick);
+    	
+    	return m;
     }
 
 }

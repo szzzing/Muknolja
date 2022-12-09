@@ -6,7 +6,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	
    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
      <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
@@ -19,17 +18,26 @@
     	 font-size: 15px;
     	 margin-left:50px;
     	 color:#65647C;}
-    	 #my_modal {
+    	 #room_modal{
                 display: none;
                 width: 300px;
                 height: 400px;
-                padding: 20px 60px;
+                padding: 20px 20px;
+                background-color: #fefefe;
+                border: 1px solid #888;
+                border-radius: 3px;
+            }
+            
+            #chat_modal{
+            	display: none;
+                width: 300px;
+                height: 400px;
                 background-color: #fefefe;
                 border: 1px solid #888;
                 border-radius: 3px;
             }
 
-            #my_modal .modal_close_btn {
+            .modal_close_btn{
                 position: absolute;
                 top: 10px;
                 right: 10px;
@@ -37,12 +45,63 @@
                 color: black;
             }
             #chatList{
-            	width: 170px;
             	max-height: 300px;
             	overflow: auto;
             }
             #chatList::-webkit-scrollbar{
             	width: 8px;
+            }
+            .friends{
+            	display: none;
+            }
+            .chatRoom:hover{
+            	cursor: pointer;
+            	background: lightgray;
+            }
+            #chatBoxs{
+            	max-height: 300px;
+            	overflow: auto;
+            }
+            #chatBoxs::-webkit-scrollbar{
+            	width: 8px;
+            }
+            .chatBox{
+           		display: inline-block;
+            	background: #6BB6EC;
+            	border-radius: 6px;
+            	width: auto;
+            	height: auto;
+            	padding: 8px;
+            	margin: 10px;
+            }
+            .message{
+            	display: inline-block;
+            	margin: 0px;
+            }
+            .myChat{
+            	background: lightgray;
+            	float: right;
+            }
+            #sendMessage{
+            	position: fixed;
+            	bottom: 0px;
+            }
+            .messageCheck{
+            	display: inline-block;
+            	width:10px;
+  				height:10px;
+  				border-radius: 50%;
+  				background: green;
+  				float: right;
+  				margin-top: 20px;
+  				margin-right: 20px;
+            }
+            .createRoom{
+            	margin-right: 20px;
+            	float: right;
+            }
+            .nick{
+            	margin-left: 10px;
             }
     </style>
   </head>
@@ -51,9 +110,9 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
    	 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
    	 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
-  	 <header id="header"  style="top:0; left:0; position:fixed; ">
+  	 <header id="header"  style="top:0; left:0; position:fixed; z-index:99999">
      <div class="container-fluid text-center">
-	  	<div class="row justify-content-center" style="width: 100vw; height:80px; background: white; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+	  	<div class="row justify-content-center shadow" style="width: 100vw; height:80px; background: white;">
             <div class="col" style="width:1200px; height:80px; ">
             	<div style=" width:1200px; height:80px; display:inLine-block; " >
             		<div style="display:flex; float:left; ">
@@ -87,26 +146,67 @@
     	</div>
     </div>
     </header>
-	 <div id="my_modal">
-		<div class="container" id="chatList" style="width: 170px;">
+	 <div id="room_modal">
+		<div id="chatList">
 			<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
 			<div class="row text-center" style="border-bottom: 1px solid black;">
 				<div class="col" id="roomBtn"><h4><i class="bi bi-chat-dots"></i></h4></div>
-				<div class="col" id="frndBtn"><h4><i class="bi bi-person-plus"></i></h4></div>
+				<div class="col" id="frndBtn"><h4><i class="bi bi-people"></i></h4></div>
 			</div>
-			<c:forEach begin="0" end="10">
-				<div class="row chatRoom" style="border-bottom: 1px solid black;">
-					<div class="col">
-						<b>채팅방 이름</b><br>
-						<small>3분전</small>
-					</div>
-				</div>
-			</c:forEach>
+			<div id="rooms"></div>
+			<div class="row friends" style="padding: 10px 0px;">
+
+           		<div class = "input-group input-group-sm">
+            		<input type = "text" class = "form-control" id="searchNick" placeholder = "닉네임 검색">
+	                <div class = "input-group-btn">
+	                  	<button class="btn btn-outline-secondary" type="button" id="searchNickBtn"><i class="bi bi-search"></i></button>
+	           		</div>
+            	</div>
+
+			</div>
+			<div id="friends"></div>
 		</div>
+     </div>
+     
+     <div id="chat_modal">
+     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
+     	<div class="row">
+     		<div class="col text-center" style="border-bottom: 1px solid black; padding: 10px;"><b>채팅방 이름</b></div>
+     	</div>
+     	<div id="chatBoxs">
+     		<div style="clear: both;">
+	     		<div class="chatBox">
+	     			<p class="message">상대 채팅</p>
+	     		</div>
+     		</div>
+     		<div>
+	     		<div class="chatBox myChat">
+	     			<p class="message myChat">내 채팅</p>
+	     		</div>
+     		</div>
+     		<div style="clear: both;">
+	     		<div class="chatBox">
+	     			<p class="message">상대 채팅</p>
+	     		</div>
+     		</div>
+     		<div>
+	     		<div class="chatBox myChat">
+	     			<p class="message myChat">내 채팅</p>
+	     		</div>
+     		</div>
+     		<div class = "input-group input-group-sm" id="sendMessage">
+            	<input type = "text" class = "form-control" id="searchNick" placeholder = "message">
+	            <div class = "input-group-btn">
+	               	<button class="btn btn-outline-secondary" type="button" id="searchNickBtn"><i class="bi bi-search"></i></button>
+	           	</div>
+            </div>
+     	</div>
      </div>
 
          <script>
-            function chatModal(id) {
+         window.onload = () => {
+        	 
+            function Modal(id) {
                 var zIndex = 9999;
                 var modal = document.getElementById(id);
 
@@ -155,9 +255,80 @@
             };
 
             document.getElementById('popup_open_btn').addEventListener('click', function() {
-                // 모달창 띄우기
-                chatModal('my_modal');
+            	// 모달창 띄우기
+                Modal('room_modal');
+            	
+      			$.ajax({
+      				url: '${contextPath}/chatRoomList.ch',
+      				success: (data) => {
+      					document.getElementById('rooms').innerHTML = '';
+      					for(const c of data){
+      						let str = '<div class="row chatRoom" style="border-bottom: 1px solid black;">';
+      						str += '<div class="col">';
+      						str += '<b style="padding-left:10px;">' + c.roomName + '</b>';
+      						str += '<div class="messageCheck"></div><br>';
+      						str += '<small style="padding-left:10px;">3분</small>';
+      						str += '<input type="hidden" value="' + c.roomCode + '">';
+      						str += '</div></div>';
+
+      						document.getElementById('rooms').innerHTML += str;
+      					}
+						const chatrooms = document.getElementsByClassName('chatRoom');
+						
+						for(const room of chatrooms){
+					        room.addEventListener('click', function() {
+					            Modal('chat_modal');
+					            const roomCode = room.querySelector('input[type="hidden"]').value;
+
+								$.ajax({
+									url: 'chatRoom.ch',
+									data: {roomCode:roomCode},
+									success: (data) => {
+										console.log(data);
+									},
+									error: (data) => {
+										console.log(data);
+									}
+								});
+					        });	
+					    }
+      				}
+      			});
+      			chatrooms = document.getElementsByClassName('chatRoom');
             });
+            
+            $("#roomBtn").click(function() {
+            	$(".friends").hide();
+            	$(".nicks").hide();
+            	$(".chatRoom").show();
+            });
+            
+            $("#frndBtn").click(function() {
+            	$(".chatRoom").hide();
+            	$(".friends").show();
+            });
+            
+            document.getElementById('searchNickBtn').addEventListener('click', function() {
+            	const nick = document.getElementById('searchNick').value;
+            	
+            	$.ajax({
+            		url: 'searchNick.ch',
+            		data: {nick:nick},
+            		success: (data) => {
+            			document.getElementById('friends').innerHTML = '';
+            			if(data != ''){
+            				console.log(data);
+            				let str = '<div class="row nicks" style="border-bottom: 1px solid black;">';
+            				str += '<div class="col">';
+            				str += '<b class="nick">' + data.nickName + '</b> <small class="createRoom">채팅하기</small>';
+            				str += '</div></div>';
+            				
+            				document.getElementById('friends').innerHTML += str;
+            			}
+            		}
+            	});
+            });
+         }
         </script>
   </body>
 </html>
