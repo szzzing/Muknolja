@@ -60,8 +60,11 @@
 		<result column="BREAKFAST" property="breakfast"/>
 		<result column="AMENITY" property="amenity"/>
 		<result column="PARK" property="park"/>
+		<result column="STAR" property="star"/>
 		<result column="ENT_APPROVAL" property="entApproval"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="HOTEL_GEO_X" property="hotelGeoX"/>
+		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
 	</resultMap>
 	
 	<resultMap type="Room" id="roomResultSet">

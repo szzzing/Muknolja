@@ -16,7 +16,7 @@
     	 .menul{
     	 font-size: 10px;}
     	 .menud{
-    	 font-size: 20px;
+    	 font-size: 15px;
     	 margin-left:50px;
     	 color:#65647C;}
     </style>
@@ -33,8 +33,8 @@
             	<div style=" width:1200px; height:80px; display:inLine-block; " >
             		<div style="display:flex; float:left; ">
             		<div style="font-size:30px; margin-top:15px; color:#6BB6EC; font-weight: 900; ">MUKNOLJA</div>
-            			<div class="menum" style="margin-top: 30px; display:flex">
-	            		 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#65647C; margin-left:30px;font-size: 20px;  font-family: 'HSYuji-Regular'; ">
+            			<div class="menum" style="margin-top: 35px; display:flex">
+	            		 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#65647C; margin-left:30px;font-size: 15px;  font-family: 'HSYuji-Regular'; ">
 			           	 여행
 			          	</a>
 				          <ul class="dropdown-menu">

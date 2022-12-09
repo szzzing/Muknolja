@@ -144,4 +144,9 @@ public class HotelController {
 			f.delete();
 		}
 	}
+	
+	@RequestMapping("writeHotel.ho")
+	public String writeHotel() {
+		return "writeHotel";
+	}
 }

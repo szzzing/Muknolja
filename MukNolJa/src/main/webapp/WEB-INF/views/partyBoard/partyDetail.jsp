@@ -8,20 +8,20 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <style>
-	h1{text-align: center; margin-bottom: 30px;}
-	#datepicker{cursor: pointer;}
-	#title{margin-bottom: 30px;}
- 	.compDate label{color: #3C988D; font-size: 13px;}
-	#gender label{color: #3C988D; font-size: 13px;}
-	.compNum input{accent-color: #3C988D;}
-	.content{height: 400px; margin-bottom: 30px;}
-	.content label{font-size: 20px;}
-	#location1, #location2{border: 1px solid lightgray; height: 250px; margin-bottom: 30px; border-radius: 5px;}
-	#location1{padding: 15px;}
+	h3{font-weight: bold;}
+	.title{height: 300px; margin-bottom: 10px; margin-top: 30px;}
+	.title button{background: #6BB6EC; border-color: #6BB6EC;}
+	.title button:hover{background: white; color: #6BB6EC; border-color: #6BB6EC;}
+	#location1, #location2{border: 1px solid lightgray; border-radius: 5px;}
+	#location1{padding-left: 20px; padding-top: 15px; padding-right: 20px; height: 200px; margin-bottom: 30px;}
+	#location2{height: 400px;}
 	#location1 button{float: right;}
-	#location1 img{border-radius: 50%; width: 50px; height: 50px; margin-bottom: 10px;}
+	#profile img{border-radius: 50%; width: 50px; height: 50px; margin-bottom: 10px;}
 	#location2{overflow-x: auto;}
  	#thumbnail{width: 100%; height: 400px; border-radius: 15px; margin-bottom: 30px;}
+	.content{height: 300px; margin-bottom: 30px;}
+	.content textarea{border: none;}
+	
  	
  	ol.numbered {
 	  list-style: none;
@@ -63,34 +63,42 @@
 </head>
 <body>
 
+	<jsp:include page="../member/menubar.jsp"/>
+
 	<div class="container">
 	
-	<br><br><br><br><br><br>
+		<br><br><br><br><br><br>
 	
 		<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMDlfODgg%2FMDAxNjY3OTY5OTMzNzUw.nBSmNlV8uDvnFKqWt-OPry4vj_kqvXvAbEncuTSeIQ4g.3TXDOLw_NDlgt2Eq7MmNMRoIZbVVSlbcWBE9Is6kh3cg.JPEG.yomlog%2FIMG_6948.jpg&type=sc960_832" class="img-fluid" alt="..." id="thumbnail">
 		
-		<!-- 제목 -->
-		<div id="title" class="input-group input-group-lg">
-		  <span class="input-group-text" id="inputGroup-sizing-lg" style="background: #3C988D; color: white">제목</span>
-		  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
-		</div>
 		
-		<!-- 코스선택 -->
-		<div class="row">
-			<div class="col">
+		<div class="title row">
+			<div class="col-lg-8">
+				<!-- 제목 -->
+				<h3>저랑 같이 강릉가실분😉</h3>
+				
+				<!-- 선택목록 -->
 				<div id="location1">
-					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
-					<label>슬픈고양이</label>
 					<p><i class="fa-solid fa-location-dot"></i> 서울</p>
 					<p>모집인원 5/10</p>
 					<p><i class="fa-solid fa-calendar-days"></i> 2022.12.25~2022.12.27</p>
-					<button type="button" class="btn btn-outline-primary">참여하기</button>
+					<button type="button" class="btn btn-primary btn-lg">동행참여하기</button>
+				</div>
+				
+				<!-- 내용 -->
+				<div class="content input-group">
+				  <textarea class="form-control" aria-label="With textarea" style="resize: none;">크리스마스에 강릉 같이 가실분 코스는 대충 짰고 가실분들 있으면 코스 같이 상의해서 더 짜봐요!                     같이 놀면 재밌을거같아요!!</textarea>
 				</div>
 			</div>
 			
 			<div class="col">
+				<div id="profile">
+					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
+ 					<label style="font-weight: bold;">슬픈고양이</label>
+ 					<button type="button" class="btn btn-primary btn-sm" style="font-size: 10px; font-weight: 100; border-radius: 10px;">채팅하기</button>
+				</div>
 				<div id="location2">
-					<ol class="numbered">
+					 <ol class="numbered">
 						<li>List item one</li>
 						<li>List item two</li>
 						<li>List item three</li>
@@ -99,16 +107,12 @@
 						<li>List item four</li>
 						<li>List item four</li>
 						<li>List item four</li>
+						<li>List item four</li>
+						<li>List item four</li>
+						<li>List item four</li>
 					</ol>
 				</div>
-				
 			</div>
-		</div>
-		
-		<!-- 내용 -->
-		<div class="content input-group">
-		  <span class="input-group-text" style="background: #3C988D; color: white;">내용</span>
-		  <textarea class="form-control" aria-label="With textarea" style="resize: none;"></textarea>
 		</div>
 		
 

@@ -29,6 +29,7 @@
    <a href="${ contextPath }/createRoom.ch?roomName=CHAT&BoardId=23" >채팅방 생성</a>
    <a href="${ contextPath }/chatRoomList.ch" >채팅방 목록</a>
    <a href="${ contextPath }/hotelList.ho">호텔 리스트</a>
+   <a href="${ contextPath }/writeHotel.ho">호텔만들기</a>
    <a href="${ contextPath }/writeRoom.ho">객실만들기</a>
    <a href="${ contextPath }/adminPage.me" >관리자 페이지</a>
    <a href="${ contextPath }/partyList.pa">동행 리스트</a>

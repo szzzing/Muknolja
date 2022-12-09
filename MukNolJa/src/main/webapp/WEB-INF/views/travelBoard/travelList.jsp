@@ -7,8 +7,8 @@
 	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<style>
-		#carouselExampleInterval{height: 450px;}
-		#carouselExampleInterval img{height:450px;}
+		#carouselExampleInterval{height: 480px; margin-top: 80px;}
+		#carouselExampleInterval img{height:480px;}
 		.list-group li{width: 100px; height: 70px; text-align: center; padding: 20px;}
 		#list1{margin-top:50px; margin-bottom: 50px;}
 		#list2{list-style: none;}
@@ -32,10 +32,8 @@
 	
 </head>
 <body>
-<%-- 	<jsp:include page="navbar.jsp"/> --%>
-
+	<jsp:include page="../member/menubar.jsp"/>
 	
-
 	<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 	  <div class="carousel-inner">
 	    <div class="carousel-item active" data-bs-interval="10000">
@@ -59,6 +57,7 @@
 	</div>
 	
 	<div class="container">
+	
 		<div id="list1">
 			<ul class="list-group list-group-horizontal-md d-flex justify-content-center">
 			  <li class="list-group-item align-middle">서울</li>

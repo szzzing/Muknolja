@@ -23,6 +23,9 @@ public class Hotel {
 	private String breakfast;
 	private String amenity;
 	private String park;
+	private int star;
 	private String entApproval;
 	private Date modifyDate;
+	private double hotelGeoX;
+	private double hotelGeoY;
 }

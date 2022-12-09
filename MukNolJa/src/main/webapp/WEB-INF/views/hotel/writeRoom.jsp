@@ -24,7 +24,7 @@
 		<h2 style="text-align: center;">객실 등록</h2>
 		<form action="${ contextPath }/insertRoom.ho" enctype="multipart/form-data" method="post">
 			<div class="col form-floating mb-3 mt-3">
-				<input type="text" class="form-control" name="roomName" placeholder="객실명을 입력하세요." required>
+				<input type="text" class="form-control" name="roomName" required>
 				<label for="roomName">객실명</label>
 			</div>
 			<div class="col form-floating mb-3 mt-3">
@@ -58,17 +58,17 @@
 			</div>
 			
 			<div class="form-floating mb-3">
-				<textarea class="form-control" name="roomInfo" placeholder="내용을 입력하세요." rows="10" style="height:300px; resize:none" required></textarea>
+				<textarea class="form-control" name="roomInfo" rows="10" style="height:300px; resize:none" required></textarea>
 				<label for="roomInfo" class="form-label">객실 기본정보</label>
 			</div>
 			<div class="mb-3">
-				<input type="file" class="form-control form-control-lg" name="roomImg">
+				<input type="file" class="form-control" name="roomImg">
 			</div>
 			<div class="mb-3">
-				<input type="file" class="form-control form-control-lg" name="roomImg">
+				<input type="file" class="form-control" name="roomImg">
 			</div>
 			<div class="mb-3">
-				<input type="file" class="form-control form-control-lg" name="roomImg">
+				<input type="file" class="form-control" name="roomImg">
 			</div>
 			<div class="d-grid gap-2">
 				<button type="submit" class="btn btn-outline-secondary" style="align:bottom !important">작성하기</button>
