@@ -22,12 +22,11 @@ ul li {
 }
 
 </style>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-	crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body>
 	<div class="container mt-5 mb-5">
@@ -76,6 +75,22 @@ ul li {
 			</tr>
 		</table>
 		<!-- 객실 리스트 시작 -->
+		<div class="col mb-3 form-floating">
+			<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
+			<label for="daterangepicker">1박 2일</label>
+			<input type="hidden" name="checkInDate">
+			<input type="hidden" name="checkOutDate">
+		</div>
+		<div class="col form-floating">
+			<select class="form-select" name="accept">
+				<option selected>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select>
+			<label for="accept">인원</label>
+		</div>
 		<div id="roomList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 justify-content-start mt-4 mb-4">
 		<c:forEach items="${roomArray }" var="r">
 			<div class="room col mb-4">
@@ -166,6 +181,40 @@ ul li {
 	crossorigin="anonymous">
 </script>
 
+	<!-- daterangepicker 기본설정, 날짜 기입 시작 -->
+	<script>
+		let today = new Date();
+		let startDate = today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
+		let endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+		$("#daterangepicker").daterangepicker({
+			locale: {
+				"separator": " - ",
+				"format": 'YYYY-MM-DD',
+				"applyLabel": "확인",
+				"cancelLabel": "취소",
+				"daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+				"monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+				},
+			minDate: new Date(),
+			startDate: startDate,
+			endDate: endDate,
+			autoApply: false
+		});
+		
+		$("#daterangepicker").on("change", function(){
+			const inout = $(this).val().split(" - ");
+			const checkIn = new Date(inout[0]);
+			const checkOut = new Date(inout[1]);
+			$("input[name=checkInDate]").val(checkIn);
+			$("input[name=checkOutDate]").val(checkOut);
+			
+			var diff = checkOut - checkIn;
+			var currDay = 24 * 60 * 60 * 1000;
+			const journey = parseInt(diff/currDay);
+			$(this).parent().find("label").text(journey+"박 "+(journey+1)+"일");
+		});
+	</script>
+	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->
 
 </body>
 </html>

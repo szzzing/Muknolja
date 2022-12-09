@@ -16,9 +16,14 @@ public class HotelDAO {
 		return sqlSession.insert("hotelmapper.insertRoom", r);
 	}
 
-	public int insertAttm(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
-		return sqlSession.insert("hotelmapper.insertAttm", list);
+	public int insertRoomAttm(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
+		return sqlSession.insert("hotelmapper.insertRoomAttm", list);
 	}
+	
+	public int insertHotelAttm(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
+		return sqlSession.insert("hotelmapper.insertHotelAttm", list);
+	}
+	
 
 	public Hotel selectHotel(SqlSessionTemplate sqlSession, int hotelId) {
 		return sqlSession.selectOne("hotelmapper.selectHotel", hotelId);
@@ -38,6 +43,10 @@ public class HotelDAO {
 
 	public AttachedFile selectRoomThumbnail(SqlSessionTemplate sqlSession, int roomId) {
 		return sqlSession.selectOne("hotelmapper.selectRoomThumbnail", roomId);
+	}
+
+	public int insertHotel(SqlSessionTemplate sqlSession, Hotel h) {
+		return sqlSession.insert("hotelmapper.insertHotel", h);
 	}
 
 }

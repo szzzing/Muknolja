@@ -26,8 +26,13 @@ public class HotelServiceImpl implements HotelService{
 	}
 
 	@Override
-	public int insertAttm(ArrayList<AttachedFile> list) {
-		return hDAO.insertAttm(sqlSession, list);
+	public int insertRoomAttm(ArrayList<AttachedFile> list) {
+		return hDAO.insertRoomAttm(sqlSession, list);
+	}
+	
+	@Override
+	public int insertHotelAttm(ArrayList<AttachedFile> list) {
+		return hDAO.insertHotelAttm(sqlSession, list);
 	}
 	
 	@Override
@@ -53,5 +58,10 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public AttachedFile selectRoomThumbnail(int roomId) {
 		return hDAO.selectRoomThumbnail(sqlSession, roomId);
+	}
+	
+	@Override
+	public int insertHotel(Hotel h) {
+		return hDAO.insertHotel(sqlSession, h);
 	}
 }
