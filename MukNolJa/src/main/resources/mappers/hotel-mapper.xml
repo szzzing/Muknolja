@@ -61,6 +61,8 @@
 		<result column="AMENITY" property="amenity"/>
 		<result column="PARK" property="park"/>
 		<result column="STAR" property="star"/>
+		<result column="SWIM" property="swim"/>
+		<result column="FITNESS" property="fitness"/>
 		<result column="ENT_APPROVAL" property="entApproval"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
 		<result column="HOTEL_GEO_X" property="hotelGeoX"/>

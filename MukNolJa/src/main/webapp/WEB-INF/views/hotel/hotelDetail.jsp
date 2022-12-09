@@ -41,9 +41,9 @@ ul li {
 					<span class="text-muted">${hotel.star }성급</span>
 					<table class="table-borderless align-middle text-center mt-3 mb-3">
 						<tr>
-							<td width="70px" <c:if test="${hotel.wifi=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-wifi"></h2></td>
-							<td width="70px" <c:if test="${hotel.park=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-p-square-fill"></h2></td>
-							<td width="70px" <c:if test="${hotel.amenity=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-gift-fill"></h2></td>
+							<td width="70px" <c:if test="${hotel.wifi=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-wifi"></i></h2></td>
+							<td width="70px" <c:if test="${hotel.park=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-p-square-fill"></i></h2></td>
+							<td width="70px" <c:if test="${hotel.amenity=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-gift-fill"></i></h2></td>
 							<td width="70px" <c:if test="${hotel.breakfast=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-basket-fill"></i></h2></td>
 						</tr>
 						<tr>

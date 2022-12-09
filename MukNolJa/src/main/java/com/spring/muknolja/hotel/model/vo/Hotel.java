@@ -23,6 +23,8 @@ public class Hotel {
 	private String breakfast;
 	private String amenity;
 	private String park;
+	private String fitness;
+	private String swim;
 	private int star;
 	private String entApproval;
 	private Date modifyDate;

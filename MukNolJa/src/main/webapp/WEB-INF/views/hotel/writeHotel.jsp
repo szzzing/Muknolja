@@ -11,28 +11,33 @@
 <title>호텔 등록하기</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <style>
 	.mukButton {background: #6BB6EC; border-color: #6BB6EC;}
 	.mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC;}
+	.photoButton {
+		width:50px;
+		height:50px;
+		background: #6BB6EC;
+		color: white;
+		border-radius: 10px;
+	}
+	.photoButton i {
+		margin-top:12px;
+	}
+	.photoButton:hover {
+		background: white;
+		color: #6BB6EC;
+		border: 1px solid #6BB6EC;
+	}
 </style>
 </head>
 <body>
-	<div class="container" style="width:800px; margin-top:100px;">
-		<h2 style="text-align: center;">호텔 등록하기</h2>
+	<div class="container mt-5 mb-5" style="max-width:800px;">
+		<h2 class="fw-bold p-5" style="text-align:center;">호텔 등록하기</h2>
 		<form method="post">
-			<input type="hidden" name="hotelId" value="${ loginUser.id }">
-			<input type="hidden" name="hotelName">
-			<input type="hidden" name="hotelPhone">
-			<input type="hidden" name="hotelAddress">
-			<input type="hidden" name="wifi">
-			<input type="hidden" name="breakfast">
-			<input type="hidden" name="amenity">
-			<input type="hidden" name="park">
-			<input type="hidden" name="star">
-			<input type="hidden" name="entApproval">
-			<input type="hidden" name="hotelGeoX">
-			<input type="hidden" name="hotelGeoY">
 		</form>
 		<form action="${contextPath }/insertHotel.ho" class="row g-2 row-cols-1" method="post">
 			<input type="hidden" name="hotelId" value="${ loginUser.id }">
@@ -45,14 +50,86 @@
 				<label for="hotelAddress">주소</label>
 				<span id="guide" style="color:#fff;display:none"></span>
 			</div>
-			
-			
+			<div class="col form-floating mb-3 mt-3">
+				<input type="number" class="form-control" name="star" min="1" max="5" required>
+				<label for="roomPrice">등급</label>
+			</div>
+			<div class="col form-floating mb-3 mt-3">
+				<input type="tel" class="form-control m-input" name="hotelPhone" id="telInput" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13"/>
+				<label for="hotelPhone">전화번호</label>
+			</div>
+			<div class="col form-floating mb-3 mt-3">
+				<h5 class="fw-bold">어떤 옵션을 제공할지 선택하세요.</h5>
+				<table class="hotelOptionTable table table-borderless align-middle text-center">
+					<tr>
+						<td>
+							<input type="hidden" name="wifi" value='Y'>
+							<h2><i class="fa-solid fa-wifi"></i></h2>
+							와이파이
+						</td>
+						<td>
+							<input type="hidden" name="park" value='Y'>
+							<h2><i class="bi bi-p-square-fill"></i></h2>
+							주차
+						</td>
+						<td>
+							<input type="hidden" name="amenity" value='Y'>
+							<h2><i class="bi bi-gift-fill"></i></h2>
+							어메니티
+						</td>
+						<td>
+							<input type="hidden" name="breakfast" value="Y">
+							<h2><i class="fa-solid fa-utensils"></i></h2>
+							조식
+						</td>
+						<td>
+							<input type="hidden" name="fitness" value="Y">
+							<h2><i class="fa-solid fa-dumbbell"></i></h2>
+							피트니스
+						</td>
+						<td>
+							<input type="hidden" name="swim" value="Y">
+							<h2><i class="fa-solid fa-water-ladder"></i></h2>
+							수영장
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col form-floating mb-3 mt-3">
+				<h5 class="fw-bold">호텔 사진을 등록하세요.</h5>
+				<input type="file" class="form-control" name="hotelImg">
+				<input type="file" class="form-control" name="hotelImg">
+				<input type="file" class="form-control" name="hotelImg">
+			</div>
 		</form>
 	</div>
 	
 	
+	<!-- 사진 첨부 시작 -->
+	<script>
+		$(".photoButton").on("click", function() {
+			const input = $("input[type=file]");
+			input.trigger("click");
+			console.log($("input[type=file]"));
+		});
+	</script>
+	<!-- 사진 첨부 끝 -->
 	
 	
+	
+	<!-- 호텔 옵션 선택 -->
+	<script>
+		$(".hotelOptionTable").find("td").on("click", function(){
+			if($(this).css("color")=="rgb(33, 37, 41)") {
+				$(this).css("color", "lightgray");
+				$(this).find("input[type=hidden]").val("N");
+			} else {
+				$(this).prop("style").removeProperty("color");
+				$(this).find("input[type=hidden]").val("Y");
+			}
+		});
+	</script>
+	<!-- 호텔 옵션 선택 끝 -->
 	
 	
 	
@@ -125,238 +202,73 @@
 	</script>
 	<!-- 주소찾기 끝 -->
 	
-	<!-- 지도 api 설정 시작 -->
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4aaeb935cb2fd15933272e12d906ced0&libraries=services"></script>
+	
+	<!-- 전화번호 입력 설정 시작 -->
 	<script>
-		// 마커를 담을 배열입니다
-		var markers = [];
+		function autoHypenTel(str) {
+			str = str.replace(/[^0-9]/g, '');
+			var tmp = '';
 
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		mapOption = {
-			center : new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-			level : 3
-		// 지도의 확대 레벨
-		};
-
-		// 지도를 생성합니다    
-		var map = new kakao.maps.Map(mapContainer, mapOption);
-
-		// 장소 검색 객체를 생성합니다
-		var ps = new kakao.maps.services.Places();
-
-		// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-		var infowindow = new kakao.maps.InfoWindow({
-			zIndex : 1
-		});
-
-		// 키워드로 장소를 검색합니다
-		searchPlaces();
-
-		// 키워드 검색을 요청하는 함수입니다
-		function searchPlaces() {
-
-			var keyword = document.getElementById('keyword').value;
-
-			// 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-			ps.keywordSearch(keyword, placesSearchCB);
-		}
-
-		// 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
-		function placesSearchCB(data, status, pagination) {
-			if (status === kakao.maps.services.Status.OK) {
-
-				// 정상적으로 검색이 완료됐으면
-				// 검색 목록과 마커를 표출합니다
-				displayPlaces(data);
-
-				// 페이지 번호를 표출합니다
-				displayPagination(pagination);
-
-			} else if (status === kakao.maps.services.Status.ZERO_RESULT) {
-
-				alert('검색 결과가 존재하지 않습니다.');
-				return;
-
-			} else if (status === kakao.maps.services.Status.ERROR) {
-
-				alert('검색 결과 중 오류가 발생했습니다.');
-				return;
-
-			}
-		}
-
-		// 검색 결과 목록과 마커를 표출하는 함수입니다
-		function displayPlaces(places) {
-
-			var listEl = document.getElementById('placesList'), menuEl = document.getElementById('menu_wrap'),
-			fragment = document.createDocumentFragment(),
-			bounds = new kakao.maps.LatLngBounds(), listStr = '';
-
-			// 검색 결과 목록에 추가된 항목들을 제거합니다
-			removeAllChildNods(listEl);
-
-			// 지도에 표시되고 있는 마커를 제거합니다
-			removeMarker();
-
-			for (var i = 0; i < places.length; i++) {
-				console.log(places[i]);
-				
-				// 마커를 생성하고 지도에 표시합니다
-				var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x);
-				var roadAddressName = places[i].road_address_name;
-				
-				var marker = addMarker(placePosition, i);
-				var itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-				// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-				// LatLngBounds 객체에 좌표를 추가합니다
-				bounds.extend(placePosition);
-
-				// 마커와 검색결과 항목에 mouseover 했을때
-				// 해당 장소에 인포윈도우에 장소명을 표시합니다
-				// mouseout 했을 때는 인포윈도우를 닫습니다
-				(function(marker, title) {
-					kakao.maps.event.addListener(marker, 'click', (function(placePosition, roadAddressName) {
-						displayInfowindow(marker, title);
-					    return function() {
-					        // 좌표정보를 파싱하기 위해 hidden input에 값 지정
-					        console.log(placePosition.La);
-					        console.log(placePosition.Ma);
-					        console.log(roadAddressName);
-					    }
-					})(placePosition, roadAddressName));
-					
-					kakao.maps.event.addListener(marker, 'mouseover', function() {
-						displayInfowindow(marker, title);
-					});
-
-					kakao.maps.event.addListener(marker, 'mouseout', function() {
-						infowindow.close();
-					});
-
-					itemEl.onmouseover = function() {
-						displayInfowindow(marker, title);
-					};
-
-					itemEl.onmouseout = function() {
-						infowindow.close();
-					};
-					
-				})(marker, places[i].place_name);
-
-				fragment.appendChild(itemEl);
-			}
-
-			// 검색결과 항목들을 검색결과 목록 Element에 추가합니다
-			listEl.appendChild(fragment);
-			menuEl.scrollTop = 0;
-
-			// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-			map.setBounds(bounds);
-		}
-
-		// 검색결과 항목을 Element로 반환하는 함수입니다
-		function getListItem(index, places) {
-
-			var el = document.createElement('li'), itemStr = '<span class="markerbg marker_'
-					+ (index + 1)
-					+ '"></span>'
-					+ '<div class="info">'
-					+ '   <h5>' + places.place_name + '</h5>';
-
-			if (places.road_address_name) {
-				itemStr += '    <span>' + places.road_address_name + '</span>'
-						+ '   <span class="jibun gray">' + places.address_name
-						+ '</span>';
-			} else {
-				itemStr += '    <span>' + places.address_name + '</span>';
-			}
-
-			itemStr += '  <span class="tel">' + places.phone + '</span>'
-					+ '</div>';
-
-			el.innerHTML = itemStr;
-			el.className = 'item';
-
-			return el;
-		}
-
-		// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
-		function addMarker(position, idx, title) {
-			var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
-			imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
-			imgOptions = {
-				spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-				spriteOrigin : new kakao.maps.Point(0, (idx * 46) + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-				offset : new kakao.maps.Point(13, 37)
-			// 마커 좌표에 일치시킬 이미지 내에서의 좌표
-			}, markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize,
-					imgOptions), marker = new kakao.maps.Marker({
-				position : position, // 마커의 위치
-				image : markerImage
-			});
-
-			marker.setMap(map); // 지도 위에 마커를 표출합니다
-			markers.push(marker); // 배열에 생성된 마커를 추가합니다
-
-			return marker;
-		}
-
-		// 지도 위에 표시되고 있는 마커를 모두 제거합니다
-		function removeMarker() {
-			for (var i = 0; i < markers.length; i++) {
-				markers[i].setMap(null);
-			}
-			markers = [];
-		}
-
-		// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-		function displayPagination(pagination) {
-			var paginationEl = document.getElementById('pagination'), fragment = document
-					.createDocumentFragment(), i;
-
-			// 기존에 추가된 페이지번호를 삭제합니다
-			while (paginationEl.hasChildNodes()) {
-				paginationEl.removeChild(paginationEl.lastChild);
-			}
-
-			for (i = 1; i <= pagination.last; i++) {
-				var el = document.createElement('a');
-				el.href = "#";
-				el.innerHTML = i;
-
-				if (i === pagination.current) {
-					el.className = 'on';
+			if (str.substring(0, 2) == 02) {
+				// 서울 전화번호일 경우 10자리까지만 나타나고 그 이상의 자리수는 자동삭제
+				if (str.length < 3) {
+					return str;
+				} else if (str.length < 6) {
+					tmp += str.substr(0, 2);
+					tmp += '-';
+					tmp += str.substr(2);
+					return tmp;
+				} else if (str.length < 10) {
+					tmp += str.substr(0, 2);
+					tmp += '-';
+					tmp += str.substr(2, 3);
+					tmp += '-';
+					tmp += str.substr(5);
+					return tmp;
 				} else {
-					el.onclick = (function(i) {
-						return function() {
-							pagination.gotoPage(i);
-						}
-					})(i);
+					tmp += str.substr(0, 2);
+					tmp += '-';
+					tmp += str.substr(2, 4);
+					tmp += '-';
+					tmp += str.substr(6, 4);
+					return tmp;
 				}
-
-				fragment.appendChild(el);
+			} else {
+				// 핸드폰 및 다른 지역 전화번호 일 경우
+				if (str.length < 4) {
+					return str;
+				} else if (str.length < 7) {
+					tmp += str.substr(0, 3);
+					tmp += '-';
+					tmp += str.substr(3);
+					return tmp;
+				} else if (str.length < 11) {
+					tmp += str.substr(0, 3);
+					tmp += '-';
+					tmp += str.substr(3, 3);
+					tmp += '-';
+					tmp += str.substr(6);
+					return tmp;
+				} else {
+					tmp += str.substr(0, 3);
+					tmp += '-';
+					tmp += str.substr(3, 4);
+					tmp += '-';
+					tmp += str.substr(7);
+					return tmp;
+				}
 			}
-			paginationEl.appendChild(fragment);
-		}
 
-		// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-		// 인포윈도우에 장소명을 표시합니다
-		function displayInfowindow(marker, title) {
-			var content = '<div style="padding:5px;z-index:1;">' + title
-					+ '</div>';
-
-			infowindow.setContent(content);
-			infowindow.open(map, marker);
+			return str;
 		}
-
-		// 검색결과 목록의 자식 Element를 제거하는 함수입니다
-		function removeAllChildNods(el) {
-			while (el.hasChildNodes()) {
-				el.removeChild(el.lastChild);
-			}
-		}
+		
+		
+		$('input[type=tel]').keyup(function(event) {
+			event = event || window.event;
+			var _val = this.value.trim();
+			this.value = autoHypenTel(_val);
+		});
 	</script>
-	<!-- 지도 api 설정 끝 -->
+	<!-- 전화번호 입력 설정 끝 -->
 </body>
 </html>
