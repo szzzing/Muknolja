@@ -40,37 +40,18 @@
 		}
     </style>
   </head> 
-   <body style="background-image: url('${contextPath }/resources/img/rain.jpg');" >
+   <body style=" width: 100vw; height: 100vh;" >
    <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
    
-   
-     <div class="container-fluid text-center">
-	  	<div class="row justify-content-center" style="width: 100%">
-            <div class="col">
-            	<div style=" display:inLine-block; width:1200px; height: 100vh; ">
-	            <div style="margin-left:2vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); font-size: 5vw; color: white; margin-top:20vh; font-weight: 700; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);">
-	            	<div style="display:flex">
-						먹 <div style="font-size: 4vw;"class="load loada">EAT </div>
-					</div>
-					<div style="display:flex">
-						놀 <div style="font-size: 4vw;" class="load loadb">play</div>
-					</div>
-					<div style="display:flex">
-						자 <div style="font-size: 4vw;" class="load loadc">sleep</div>          	
-	            	</div>
-	            </div>
-            		<c:if test="${load eq chungbuk}"> 
-            		<img alt="1" style="width: 50vw; height:70vh; position:absolute; margin-top:-40vh; margin-left: -10vw;"src="${contextPath }/resources/img/1.png" > 
-            		 <div></div>
-            		</c:if>
-            		
-            		
-            		
-					
-				</div>
-			</div>
-		</div>
+    <div  style="width:100vw; height:100vh;">
+    <div style="position:absolute; font-weight:700; color:white; margin-left: 5vw; margin-top:5vh; z-index:1" >MUKNOLJA</div>
+    <div style="position:absolute; width:100vw; height:100vh; background-size:100vw 100vh; background-image: url('${contextPath }/resources/img/sky.jpg'); ">
+	
+	</div>
+	<div style="opacity:0.3; width:30vw; height:100vh; position:absolute;  margin-left: 70vw;   z-index:1; background:black">
+	1111
+	</div>
 	</div>
     <script>
     	

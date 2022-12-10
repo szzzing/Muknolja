@@ -59,9 +59,11 @@ public class MemberController {
 		
 	
 		@RequestMapping("loding.me")
-		public String loding(@RequestParam("load") String load, Model model) {
+		public String loding(@RequestParam("load") String load,@RequestParam("weather") String weather, Model model) {
 			System.out.println(load);
 			model.addAttribute(load);
+			System.out.println(weather);
+			model.addAttribute(weather);
 			return "loading";
 		}
 	
