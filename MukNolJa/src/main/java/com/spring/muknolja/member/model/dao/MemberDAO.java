@@ -13,4 +13,14 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.login", m);
 	}
 
+	public int checkEmail(SqlSessionTemplate sqlSession, String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.checkEmail", email);
+	}
+
+	public int checkId(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.idsol", id);
+	}
+
 }

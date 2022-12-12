@@ -56,4 +56,16 @@
   	
   	
   	</select>
+  	
+  	<select id="checkEmail" resultType="_int">
+  		select count(*)
+	  	from member
+	  	where email=#{email}
+  	</select>
+  	
+  	<select id="idsol" resultType="_int">
+  		select count(*)
+	  	from member
+	  	where id=#{id}
+  	</select>
   </mapper>

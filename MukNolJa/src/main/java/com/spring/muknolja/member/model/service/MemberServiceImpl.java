@@ -22,4 +22,16 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.login(sqlSession, m);
 	}
 
+	@Override
+	public int checkEmail(String email) {
+		// TODO Auto-generated method stub
+		return mDAO.checkEmail(sqlSession,email);
+	}
+
+	@Override
+	public int checkId(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.checkId(sqlSession,id);
+	}
+
 }

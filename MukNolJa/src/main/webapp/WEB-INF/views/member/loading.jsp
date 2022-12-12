@@ -82,11 +82,16 @@
 		
 		  animation-delay: 4s;
 		}
-		
+		@font-face {
+    font-family: 'OTWelcomeRA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 	
     </style>
   </head> 
-   <body style=" width: 100vw; height: 100vh;" >
+   <body style=" width: 100vw; height: 100vh; font-family: 'OTWelcomeRA';" >
    
    <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
