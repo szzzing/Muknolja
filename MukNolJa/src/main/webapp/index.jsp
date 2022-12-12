@@ -8,10 +8,8 @@
         crossorigin="anonymous"></script>
 	<style>
 	body{
-		margin-top:0;
-		margin-left:0;
-   		width: 100vw;
-   		height: 100vh;
+		
+   		
    
    		background-image: url('${contextPath}/resources/img/water4.png');
    		background-size: 100vw 100vh;
@@ -138,24 +136,24 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>	
   	<!-- <div style="width:44vw; height:97vh; border-radius:5%; position:absolute; margin-top:2.5vh; margin-left: 50vw; background:rgb(239, 245, 245,0.6); z-index:-1;"> -->
-  	</div>
-   	<div class="c1" style="background-image:url('${contextPath}/resources/img/main5.png'); width: 100vw;
-   		height: 100vh;
+  	
+   	<div class="c1" style="background-image:url('${contextPath}/resources/img/main5.png'); width: 100%;
+   		height: 100%;
    		background-repeat: no-repeat ;
    		background-size: 25vw 90vh;
    		background-position: 80% 50%;
    		">
-   	   <img alt="1" id="poin" src="${contextPath}/resources/img/click.png"   style="position:absolute;  margin-top:7vh; margin-left: 65vw; width:2vw; height:4vh;">
-	   <a id="a1" class="ac ad1"><div class="st" style="position:absolute; margin-top:7vh; margin-left: 58vw; color:white">경 Gyeong<br>기 ggi</div></a>
-	   <a id="a2" class="ac ad2"><div class="st" style=" position:absolute; margin-top:21vh; margin-left: 57vw; color:white">서 Seo<br>울 Ul</div></a>
+   	   <img alt="1" id="poin" src="${contextPath}/resources/img/click.png"   style="position:absolute;  margin-top:7vh; margin-left: 13vw; width:2vw; height:4vh;">
+	   <a id="a1" class="ac ad1"><div class="st" style="position:absolute; margin-top:7vh; margin-left: 57vw; color:white">경 Gyeong<br>기 ggi</div></a>
+	   <a id="a2" class="ac ad2"><div class="st" style=" position:absolute; margin-top:21vh; margin-left: 56vw; color:white">서 Seo<br>울 Ul</div></a>
 	   <a id="a3" class="ac ad3"><div class="st" style=" position:absolute; margin-top:12vh; margin-left: 81vw; color:white">강 Kang<br>원 Won</div></a>
 	   <a id="a4" class="ac ad4"><div class="st" style=" position:absolute; margin-top:29vh; margin-left: 85vw; color:white">충 Chung<br>북 Buk</div></a>
 	   <a id="a5" class="ac ad5"><div class="st" style=" position:absolute; margin-top:44vh; margin-left: 85vw; color:white">경 Gyeong<br>북 Buk</div></a>
 	   <a id="a6" class="ac ad6"><div class="st" style=" position:absolute; margin-top:76vh; margin-left: 75vw; color:white">경 Gyeong<br>남 Nam</div></a>
 	   <a id="a7" class="ac ad7"><div class="st" style=" position:absolute; margin-top:85.5vh; margin-left: 68vw; color:white">제 Je<br>주 Ju</div></a>
-	   <a id="a8" class="ac ad8"><div class="st" style=" position:absolute; margin-top:65vh; margin-left: 55vw; color:white">전 Jeon<br>남 Nam</div></a>
-	   <a id="a9" class="ac ad9"><div class="st" style=" position:absolute; margin-top:39vh; margin-left: 54vw; color:white">충 Chung<br>남 Nam</div></a>
-	   <a id="a10" class="ac ad10"><div class="st" style=" position:absolute; margin-top:51vh; margin-left: 56vw; color:white">전 Jeon<br>북 Buk</div></a>
+	   <a id="a8" class="ac ad8"><div class="st" style=" position:absolute; margin-top:65vh; margin-left: 54vw; color:white">전 Jeon<br>남 Nam</div></a>
+	   <a id="a9" class="ac ad9"><div class="st" style=" position:absolute; margin-top:39vh; margin-left: 53vw; color:white">충 Chung<br>남 Nam</div></a>
+	   <a id="a10" class="ac ad10"><div class="st" style=" position:absolute; margin-top:51vh; margin-left: 55vw; color:white">전 Jeon<br>북 Buk</div></a>
 	   <div style="opacity:0.5; font-size:4vw; position:absolute; margin-top:30vh; margin-left: 46vw; font-weight:700; color:#F2F2F2">K<br>o<br>R<br>E<br>R</div>
 	   <!-- <div style="font-size:4vw; font-weight:700; position:absolute; margin-top:2vh; margin-left: 2vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);" >
 	   먹놀자
@@ -233,7 +231,7 @@
     		    	 $('#epl').hide();
     		       $('.we').show();
     		       $('#poin').css('margin-top','21.5vh');
-    		       $('#poin').css('margin-left','67.5vw');
+    		       $('#poin').css('margin-left','66.7vw');
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
@@ -277,7 +275,7 @@
     		    	$('#epl').hide();
     		       $('.we').show();
     		       $('#poin').css('margin-top','15.5vh');
-    		       $('#poin').css('margin-left','68.5vw');
+    		       $('#poin').css('margin-left','67.5vw');
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
@@ -321,7 +319,7 @@
     		    	$('#epl').hide();
     		       $('.we').show();
     		       $('#poin').css('margin-top','39vh');
-    		       $('#poin').css('margin-left','66.5vw');
+    		       $('#poin').css('margin-left','65.5vw');
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
@@ -365,7 +363,7 @@
     		    	$('#epl').hide();
     		       $('.we').show();
     		       $('#poin').css('margin-top','17vh');
-    		       $('#poin').css('margin-left','74vw');
+    		       $('#poin').css('margin-left','73vw');
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
@@ -409,7 +407,7 @@
     		    	$('#epl').hide();
     		       $('.we').show();
     		       $('#poin').css('margin-top','35vh');
-    		       $('#poin').css('margin-left','71vw');
+    		       $('#poin').css('margin-left','70vw');
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
@@ -454,7 +452,7 @@
     		    	$('#epl').hide();
     		       $('.we').show();
     		       $('#poin').css('margin-top','43vh');
-    		       $('#poin').css('margin-left','77vw');
+    		       $('#poin').css('margin-left','76vw');
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
@@ -498,13 +496,13 @@
     		    	});
     		    	$('#epl').hide();
     		       $('.we').show();
-    		       $('#poin').css('margin-top','60vh');
+    		       $('#poin').css('margin-top','59vh');
     		       $('#poin').css('margin-left','73.5vw');
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
     		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
+    		    	  $('#poin').css('margin-left','12vw');
     		    });
     		});
   
@@ -543,8 +541,8 @@
     		    	});
     		    	$('#epl').hide();
     		       $('.we').show();
-    		       $('#poin').css('margin-top','87vh');
-    		       $('#poin').css('margin-left','64vw');
+    		       $('#poin').css('margin-top','86vh');
+    		       $('#poin').css('margin-left','63vw');
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
@@ -631,7 +629,7 @@
     		    	});
     		    	$('#epl').hide();
     		       $('.we').show();
-    		       $('#poin').css('margin-top','52.5vh');
+    		       $('#poin').css('margin-top','51.5vh');
     		       $('#poin').css('margin-left','68vw');
     		    }, function() {
     		    	$('#epl').show();

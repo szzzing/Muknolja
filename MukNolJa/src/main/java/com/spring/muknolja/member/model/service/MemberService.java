@@ -6,4 +6,8 @@ public interface MemberService {
 
 	Member login(Member m);
 
+	int checkEmail(String email);
+
+	int checkId(String id);
+
 }

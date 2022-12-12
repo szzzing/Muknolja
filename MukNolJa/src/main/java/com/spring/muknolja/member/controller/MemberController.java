@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -28,7 +29,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "loginView.me", method = RequestMethod.GET)
 	public String loginView() {
-		System.out.println("�α��� ó��");
+	
 		return "login";
 	}
 	@RequestMapping(value = "login.me", method = RequestMethod.POST)
@@ -66,5 +67,34 @@ public class MemberController {
 			model.addAttribute("weather", weather);
 			return "loading";
 		}
-	
+		@RequestMapping("enrollE.me")
+			public String enrollE() {
+				return "enrollE";
+			}
+		
+		@RequestMapping("checkEmail.me")
+		@ResponseBody
+		
+			public String checkEmail(@RequestParam("email")String email) {
+			
+			int count = mService.checkEmail(email);
+			
+			String result = count == 0 ? "yes" : "no";
+			
+			return result;
+		}
+		
+		@RequestMapping("enroll.me")
+		public String enroll(@RequestParam("email")String email, Model model) {
+			model.addAttribute("email", email);
+			return "enroll";
+		}
+		@RequestMapping("checkId.me")
+		@ResponseBody
+		public String checkId(@RequestParam("id")String id) {
+			int count = mService.checkId(id);
+			String result = count == 0 ? "yes" : "no";
+			return result;
+			
+		}
 }
