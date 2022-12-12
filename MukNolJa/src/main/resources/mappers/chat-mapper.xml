@@ -23,7 +23,7 @@
 		from CHAT_MESSAGE
 			join member on(SENDER_ID = ID)
 		where CHAT_ROOM_CODE = #{roomCode}
-		order by CHAT_ID desc
+		order by CHAT_ID
 	</select>
 	
 	<resultMap type="ChatMessage" id="ChatMessageResultSet">

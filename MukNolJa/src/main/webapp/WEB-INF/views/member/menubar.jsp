@@ -18,7 +18,7 @@
     	 font-size: 15px;
     	 margin-left:50px;
     	 color:#65647C;}
-    	 #room_modal{
+    	 #room_modal, #loginCheck_modal{
                 display: none;
                 width: 300px;
                 height: 400px;
@@ -81,6 +81,7 @@
             .myChat{
             	background: lightgray;
             	float: right;
+            	text-align: right;
             }
             #sendMessage{
             	position: fixed;
@@ -102,6 +103,9 @@
             }
             .nick{
             	margin-left: 10px;
+            }
+            .chatNcik{
+            	font-size: 5px;
             }
     </style>
   </head>
@@ -174,15 +178,7 @@
      		<div class="col text-center" style="border-bottom: 1px solid black; padding: 10px;"><b>채팅방 이름</b></div>
      	</div>
      	<div id="chatBoxs">
-     		<div style="clear: both;">
-	     		<div class="chatBox">
-	     			<p class="message">상대 채팅</p>
-	     		</div>
-     		</div>
-     		<div>
-	     		<div class="chatBox myChat">
-	     			<p class="message myChat">내 채팅</p>
-	     		</div>
+     		<div id="chat">
      		</div>
      		<div class = "input-group input-group-sm" id="sendMessage">
             	<input type = "text" class = "form-control" id="message" placeholder = "message">
@@ -192,6 +188,15 @@
             </div>
      	</div>
      </div>
+     
+    <div id="loginCheck_modal">
+    	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
+    	<div class="row">
+    		<div class="col text-center">
+    			로그인 후 이용해 주세요.
+    		</div>
+    	</div>
+    </div>
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
          <script>
@@ -247,6 +252,8 @@
             };
 
             document.getElementById('popup_open_btn').addEventListener('click', function() {
+            	
+            	if(${loginUser != null}){
             	// 모달창 띄우기
                 Modal('room_modal');
             	
@@ -276,25 +283,30 @@
 									url: 'chatRoom.ch',
 									data: {roomCode:roomCode},
 									success: (data) => {
-										const roomCode = data[0].roomCode;
+										const roomCode = data.roomCode;
+										document.getElementById('chat').innerHTML = '';
 										
-										for(const c of data){							
+										for(const c of data.list){							
 											if(c.senderId != '${ loginUser.id }'){
 												let str = '<div style="clear: both;">';
 												str += '<div class="chatBox">';
 												str += '<p class="message">' + c.chatContent + '</p>';
+												str += '<small class="chatNcik" style="clear: both;">' + c.nickName + '</samll>';
 												str += '</div></div>';
 												
-												document.getElementById('chatBoxs').innerHTML += str;
+												document.getElementById('chat').innerHTML += str;
 											} else{
 												let str = '<div style="clear: both;">';
 												str += '<div class="chatBox myChat">';
 												str += '<p class="message myChat">' + c.chatContent + '</p>';
+												str += '<small class="chatNcik myChat" style="clear: both;">' + c.nickName + '</samll>';
 												str += '</div></div>';
 												
-												document.getElementById('chatBoxs').innerHTML += str;
+												document.getElementById('chat').innerHTML += str;
 											}
 										}
+										
+										$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
 										
 										 // webSocket connect
 							    		const sockJs = new SockJS("${contextPath}/stomp/chat");
@@ -307,16 +319,39 @@
 									    		stomp.subscribe("/sub/chat/room/" + roomCode, function (chat) {
 									    			const content = JSON.parse(chat.body);
 									    			console.log(content);
+									    			
+									    			const chatDiv = document.getElementById('chat');
+									    			
+									    			if(content.senderId != '${ loginUser.id }'){
+									    				let str = '<div style="clear: both;">';
+														str += '<div class="chatBox">';
+														str += '<p class="message">' + content.chatContent + '</p>';
+														str += '<small class="chatNcik" style="clear: both;">' + content.nickName + '</samll>';
+														str += '</div></div>';
+														
+														chatDiv.innerHTML += str;
+									    			} else{
+									    				let str = '<div style="clear: both;">';
+														str += '<div class="chatBox myChat">';
+														str += '<p class="message myChat">' + content.chatContent + '</p>';
+														str += '<small class="chatNcik myChat" style="clear: both;">' + content.nickName + '</samll>';
+														str += '</div></div>';
+														
+														chatDiv.innerHTML += str;
+									    			}
+									    			
+									    			$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
 									    		});
 									            
 									            // 입장 시
-									    		stomp.send('/pub/chat/enter', {}, JSON.stringify({senderId: 'sender', roomCode: roomCode}));
+									    		stomp.send('/pub/chat/enter', {}, JSON.stringify({senderId: '${loginUser.id}', roomCode: roomCode, nickName: '${loginUser.nickName}'}));
 									            
 									    		// send 버튼 클릭시
 												document.getElementById('send').addEventListener('click', function() {
 													const message = document.getElementById('message');
 													if(message.value != ''){
-														stomp.send('/pub/chat/message', {}, JSON.stringify({senderId: 'user', chatContent: message.value, roomCode: roomCode}));	
+														stomp.send('/pub/chat/message', {}, JSON.stringify({senderId: '${loginUser.id}', chatContent: message.value, roomCode: roomCode, nickName: '${loginUser.nickName}'}));
+														message.value = '';
 													}
 												});
 									            
@@ -332,6 +367,9 @@
       				}
       			});
       			chatrooms = document.getElementsByClassName('chatRoom');
+            	} else{
+            		Modal("loginCheck_modal");
+            	}
             });
             
             $("#roomBtn").click(function() {
