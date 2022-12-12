@@ -110,9 +110,9 @@
 	            <div id="card" class="card card-cover h-95 overflow-hidden\">
 	               <img class="card-img-top"  style="height:300px;"  src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MTBfMjUw%2FMDAxNjUyMTY2NTY0Mzcx.2hqok9p-BJ-nUskBsMy3x-5ryOh1xdl7IoTJvQEQvpkg.zXcze5BuUlHaL7uSBu4OQCWDBKFp2rHk5VRnqdsSDywg.JPEG.gkdbqls13%2FIMG_3616.jpg&type=sc960_832">
 	               <div class="card-body p-4 mb-auto">
-	                  <h4 class="card-title lh-1 fw-bold">관광지이름</h4>
-	                  <div class="card-text text-muted">지역이름</div>
-	                  <div class="card-text text-muted">전화번호</div>
+	                  <h4 class="card-title lh-1 fw-bold">${ title }</h4>
+	                  <div class="card-text text-muted">${ addr }</div>
+	                  <div class="card-text text-muted">${ tel }</div>
 	               </div>
 	            </div>
 	         </div>
