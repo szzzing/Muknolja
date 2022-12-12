@@ -2,13 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="chatmapper">
 	<insert id="createRoom">
-		insert into CHAT_ROOM
-		values(#{roomCode}, #{BoardId}, #{roomName})
+		insert all
+		into CHAT_ROOM
+		values(#{chatRoom.roomCode}, #{chatRoom.roomName})
+		<foreach collection="participants" item="participant">
+		into CHAT_USER
+		values(#{chatRoom.roomCode}, #{participant})
+		</foreach>
+		select * from dual
 	</insert>
 	
 	<select id="selectChatRoomList" resultMap="ChatRoomResultSet">
 		select *
 		from CHAT_ROOM
+			join CHAT_USER using(CHAT_ROOM_CODE)
+		where PARTICIPANT_ID = #{id}
 		
 	</select>
 	

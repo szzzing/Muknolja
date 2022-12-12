@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -30,20 +30,31 @@ public class ChatroomController {
 	
 	//채팅방 개설
 	@RequestMapping("createRoom.ch")
-    public String createRoom(@ModelAttribute ChatRoom chatRoom, RedirectAttributes rttr){
+	@ResponseBody
+    public int createRoom(@ModelAttribute ChatRoom chatRoom, @RequestParam("participantID") String participantID){
     	
     	chatRoom.setRoomCode(UUID.randomUUID().toString());
-
     	
-    	System.out.println("# Create Chat Room , name: " + chatRoom.getRoomName());
-    	int result = cService.createRoom(chatRoom);
-        return "redirect:home.do";
+    	ArrayList<String> participants = new ArrayList<>();
+    	
+    	participants.add(participantID);
+    	participants.add(chatRoom.getHostId());
+    	
+    	HashMap<String, Object> map = new HashMap<>();
+    	
+    	map.put("chatRoom", chatRoom);
+    	map.put("participants", participants);
+    	
+    	int result = cService.createRoom(map);
+    	
+        return result;
     }
     
     // 채팅방 목록
     @RequestMapping("chatRoomList.ch")
-    public void chatRoomList(HttpServletResponse response) {
-    	ArrayList<ChatRoom> list = cService.selectChatRoomList();
+    public void chatRoomList(HttpServletResponse response, HttpSession session) {
+    	String id = ((Member)session.getAttribute("loginUser")).getId();
+    	ArrayList<ChatRoom> list = cService.selectChatRoomList(id);
     	
     	Gson gson = new Gson();
     	

@@ -18,7 +18,7 @@
     	 font-size: 15px;
     	 margin-left:50px;
     	 color:#65647C;}
-    	 #room_modal, #loginCheck_modal{
+    	 #room_modal, #loginCheck_modal, #createroom_modal, #createRoomSuccess_modal{
                 display: none;
                 width: 300px;
                 height: 400px;
@@ -107,6 +107,10 @@
             .chatNcik{
             	font-size: 5px;
             }
+            #createRoom:hover{
+            	text-decoration: underline;
+            	cursor: pointer;
+            }
     </style>
   </head>
   <body>
@@ -189,11 +193,33 @@
      	</div>
      </div>
      
+     <div id="createroom_modal">
+     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
+     	<div class="row">
+     		<div class="col text-center">
+     			<label for="chatRoomName">채팅방 이름</label><br>
+     			<input type = "text" class = "form-control" id="chatRoomName" name="chatRoomName">
+	            <div class = "input-group-btn">
+	               	<button class="btn btn-outline-secondary" type="button" id="chatRoomBtn">채팅방 생성</button>
+	           	</div>
+     		</div>
+     	</div>
+     </div>
+     
     <div id="loginCheck_modal">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
     		<div class="col text-center">
     			로그인 후 이용해 주세요.
+    		</div>
+    	</div>
+    </div>
+    
+    <div id="createRoomSuccess_modal">
+    	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
+    	<div class="row">
+    		<div class="col text-center">
+    			채팅방 생성 완료
     		</div>
     	</div>
     </div>
@@ -290,7 +316,7 @@
 											if(c.senderId != '${ loginUser.id }'){
 												let str = '<div style="clear: both;">';
 												str += '<div class="chatBox">';
-												str += '<p class="message">' + c.chatContent + '</p>';
+												str += '<p class="message">' + c.chatContent + '</p><br>';
 												str += '<small class="chatNcik" style="clear: both;">' + c.nickName + '</samll>';
 												str += '</div></div>';
 												
@@ -325,7 +351,7 @@
 									    			if(content.senderId != '${ loginUser.id }'){
 									    				let str = '<div style="clear: both;">';
 														str += '<div class="chatBox">';
-														str += '<p class="message">' + content.chatContent + '</p>';
+														str += '<p class="message">' + content.chatContent + '</p><br>';
 														str += '<small class="chatNcik" style="clear: both;">' + content.nickName + '</samll>';
 														str += '</div></div>';
 														
@@ -386,6 +412,7 @@
             document.getElementById('searchNickBtn').addEventListener('click', function() {
             	const nick = document.getElementById('searchNick').value;
             	
+            	if(nick != '${loginUser.nickName}'){
             	$.ajax({
             		url: 'searchNick.ch',
             		data: {nick:nick},
@@ -395,13 +422,33 @@
             				console.log(data);
             				let str = '<div class="row nicks" style="border-bottom: 1px solid black;">';
             				str += '<div class="col">';
-            				str += '<b class="nick">' + data.nickName + '</b> <small class="createRoom">채팅하기</small>';
+            				str += '<b class="nick">' + data.nickName + '</b> <small id="createRoom">채팅하기</small>';
             				str += '</div></div>';
             				
             				document.getElementById('friends').innerHTML += str;
+            				
+            				const createRoom = document.getElementById('createRoom');
+            				
+            				createRoom.addEventListener('click', () => {
+                        		
+                        		Modal('createroom_modal');
+                        		
+                        		document.getElementById('chatRoomBtn').addEventListener('click', function(){
+                        			const roomName = document.getElementById('chatRoomName').value;
+                        			$.ajax({
+                            			url: 'createRoom.ch',
+                            			data: {roomName: roomName, participantID: data.id, hostId: '${loginUser.id}'},
+                            			success: (data) => {
+                            				console.log(data);
+                            				Modal('createRoomSuccess_modal');
+                            			}
+                            		});
+                        		});
+                        	});
             			}
             		}
             	});
+            	}
             });
          }
         </script>

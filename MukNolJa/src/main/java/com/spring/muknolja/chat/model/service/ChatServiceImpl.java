@@ -1,6 +1,7 @@
 package com.spring.muknolja.chat.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,13 @@ public class ChatServiceImpl implements ChatService{
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public int createRoom(ChatRoom chatRoom) {
-		return cDAO.createRoom(sqlSession, chatRoom);
+	public int createRoom(HashMap<String, Object> map) {
+		return cDAO.createRoom(sqlSession, map);
 	}
 
 	@Override
-	public ArrayList<ChatRoom> selectChatRoomList() {
-		return cDAO.selectChatRoomList(sqlSession);
+	public ArrayList<ChatRoom> selectChatRoomList(String id) {
+		return cDAO.selectChatRoomList(sqlSession, id);
 	}
 
 	@Override
