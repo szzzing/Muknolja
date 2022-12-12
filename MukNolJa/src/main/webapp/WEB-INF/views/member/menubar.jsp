@@ -184,27 +184,19 @@
 	     			<p class="message myChat">내 채팅</p>
 	     		</div>
      		</div>
-     		<div style="clear: both;">
-	     		<div class="chatBox">
-	     			<p class="message">상대 채팅</p>
-	     		</div>
-     		</div>
-     		<div>
-	     		<div class="chatBox myChat">
-	     			<p class="message myChat">내 채팅</p>
-	     		</div>
-     		</div>
      		<div class = "input-group input-group-sm" id="sendMessage">
-            	<input type = "text" class = "form-control" id="searchNick" placeholder = "message">
+            	<input type = "text" class = "form-control" id="message" placeholder = "message">
 	            <div class = "input-group-btn">
-	               	<button class="btn btn-outline-secondary" type="button" id="searchNickBtn"><i class="bi bi-search"></i></button>
+	               	<button class="btn btn-outline-secondary" type="button" id="send"><i class="bi bi-chat-square-text"></i></button>
 	           	</div>
             </div>
      	</div>
      </div>
-
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
          <script>
          window.onload = () => {
+        	 let stomp = '';
         	 
             function Modal(id) {
                 var zIndex = 9999;
@@ -284,10 +276,55 @@
 									url: 'chatRoom.ch',
 									data: {roomCode:roomCode},
 									success: (data) => {
-										console.log(data);
+										const roomCode = data[0].roomCode;
+										
+										for(const c of data){							
+											if(c.senderId != '${ loginUser.id }'){
+												let str = '<div style="clear: both;">';
+												str += '<div class="chatBox">';
+												str += '<p class="message">' + c.chatContent + '</p>';
+												str += '</div></div>';
+												
+												document.getElementById('chatBoxs').innerHTML += str;
+											} else{
+												let str = '<div style="clear: both;">';
+												str += '<div class="chatBox myChat">';
+												str += '<p class="message myChat">' + c.chatContent + '</p>';
+												str += '</div></div>';
+												
+												document.getElementById('chatBoxs').innerHTML += str;
+											}
+										}
+										
+										 // webSocket connect
+							    		const sockJs = new SockJS("${contextPath}/stomp/chat");
+							    		stomp = Stomp.over(sockJs);
+							         	
+							    		if(stomp != ''){
+								         	// connect 시
+									        stomp.connect({}, function (){
+									            // subscribe 시
+									    		stomp.subscribe("/sub/chat/room/" + roomCode, function (chat) {
+									    			const content = JSON.parse(chat.body);
+									    			console.log(content);
+									    		});
+									            
+									            // 입장 시
+									    		stomp.send('/pub/chat/enter', {}, JSON.stringify({senderId: 'sender', roomCode: roomCode}));
+									            
+									    		// send 버튼 클릭시
+												document.getElementById('send').addEventListener('click', function() {
+													const message = document.getElementById('message');
+													if(message.value != ''){
+														stomp.send('/pub/chat/message', {}, JSON.stringify({senderId: 'user', chatContent: message.value, roomCode: roomCode}));	
+													}
+												});
+									            
+									        });
+							    		}
 									},
 									error: (data) => {
-										console.log(data);
+										
 									}
 								});
 					        });	
