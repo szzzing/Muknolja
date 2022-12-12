@@ -1,6 +1,6 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <!-- 추�??��?�? -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+
 <html>
 <head>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
@@ -146,16 +146,16 @@
    		background-position: 80% 50%;
    		">
    	   <img alt="1" id="poin" src="${contextPath}/resources/img/click.png"   style="position:absolute;  margin-top:7vh; margin-left: 65vw; width:2vw; height:4vh;">
-	   <a id="a1" class="ac ad1" href="${ contextPath }/home.do"><div class="st" style="position:absolute; margin-top:7vh; margin-left: 58vw; color:white">경 Gyeong<br>기 ggi</div></a>
-	   <a id="a2" class="ac ad2"href=""><div class="st" style=" position:absolute; margin-top:21vh; margin-left: 57vw; color:white">서 Seo<br>울 Ul</div></a>
-	   <a id="a3" class="ac ad3"href=""><div class="st" style=" position:absolute; margin-top:12vh; margin-left: 81vw; color:white">강 Kang<br>원 Won</div></a>
+	   <a id="a1" class="ac ad1"><div class="st" style="position:absolute; margin-top:7vh; margin-left: 58vw; color:white">경 Gyeong<br>기 ggi</div></a>
+	   <a id="a2" class="ac ad2"><div class="st" style=" position:absolute; margin-top:21vh; margin-left: 57vw; color:white">서 Seo<br>울 Ul</div></a>
+	   <a id="a3" class="ac ad3"><div class="st" style=" position:absolute; margin-top:12vh; margin-left: 81vw; color:white">강 Kang<br>원 Won</div></a>
 	   <a id="a4" class="ac ad4"><div class="st" style=" position:absolute; margin-top:29vh; margin-left: 85vw; color:white">충 Chung<br>북 Buk</div></a>
-	   <a id="a5" class="ac ad5"href=""><div class="st" style=" position:absolute; margin-top:44vh; margin-left: 85vw; color:white">경 Gyeong<br>북 Buk</div></a>
-	   <a id="a6" class="ac ad6"href=""><div class="st" style=" position:absolute; margin-top:76vh; margin-left: 75vw; color:white">경 Gyeong<br>남 Nam</div></a>
-	   <a id="a7" class="ac ad7"href=""><div class="st" style=" position:absolute; margin-top:85.5vh; margin-left: 68vw; color:white">제 Je<br>주 Ju</div></a>
-	   <a id="a8" class="ac ad8"href=""><div class="st" style=" position:absolute; margin-top:65vh; margin-left: 55vw; color:white">전 Jeon<br>남 Nam</div></a>
-	   <a id="a9" class="ac ad9"href=""><div class="st" style=" position:absolute; margin-top:39vh; margin-left: 54vw; color:white">충 Chung<br>남 Nam</div></a>
-	   <a id="a10" class="ac ad10"href=""><div class="st" style=" position:absolute; margin-top:51vh; margin-left: 56vw; color:white">전 Jeon<br>북 Buk</div></a>
+	   <a id="a5" class="ac ad5"><div class="st" style=" position:absolute; margin-top:44vh; margin-left: 85vw; color:white">경 Gyeong<br>북 Buk</div></a>
+	   <a id="a6" class="ac ad6"><div class="st" style=" position:absolute; margin-top:76vh; margin-left: 75vw; color:white">경 Gyeong<br>남 Nam</div></a>
+	   <a id="a7" class="ac ad7"><div class="st" style=" position:absolute; margin-top:85.5vh; margin-left: 68vw; color:white">제 Je<br>주 Ju</div></a>
+	   <a id="a8" class="ac ad8"><div class="st" style=" position:absolute; margin-top:65vh; margin-left: 55vw; color:white">전 Jeon<br>남 Nam</div></a>
+	   <a id="a9" class="ac ad9"><div class="st" style=" position:absolute; margin-top:39vh; margin-left: 54vw; color:white">충 Chung<br>남 Nam</div></a>
+	   <a id="a10" class="ac ad10"><div class="st" style=" position:absolute; margin-top:51vh; margin-left: 56vw; color:white">전 Jeon<br>북 Buk</div></a>
 	   <div style="opacity:0.5; font-size:4vw; position:absolute; margin-top:30vh; margin-left: 46vw; font-weight:700; color:#F2F2F2">K<br>o<br>R<br>E<br>R</div>
 	   <!-- <div style="font-size:4vw; font-weight:700; position:absolute; margin-top:2vh; margin-left: 2vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);" >
 	   먹놀자
@@ -211,7 +211,7 @@
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
     		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		 weather = result.list[0].weather[0].description
+    		    		 weather = result.list[0].weather[0].icon
     		    		function convertTime1(t){
     		    			var ot = new Date(t * 1000);
     		    			
@@ -256,6 +256,7 @@
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
+    		    		weather = result.list[0].weather[0].icon
     		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
@@ -284,7 +285,7 @@
     		    	  $('#poin').css('margin-left','13vw');
     		    });
     		
-// 천안
+// 충남
 	$(document).ready(function () 
     		{	
     	 $('.we').hide();
@@ -299,6 +300,7 @@
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
+    		    		weather = result.list[0].weather[0].icon
     		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
@@ -343,6 +345,7 @@
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
+    		    		weather = result.list[0].weather[0].icon
     		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
@@ -386,6 +389,7 @@
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
+    		    		weather = result.list[0].weather[0].icon
     		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
@@ -422,14 +426,15 @@
     		    $('#a5').hover(function(){
     		    	$('#ttt').empty();
     		    	$('tbody').empty();
-    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=36.6372&lon=127.4897&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
+    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=35.8428&lon=129.2117&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
     		    		var ctime1 = result.list[0].dt
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		 wiconUr11 = '<img style="width:5vw; height:12vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
+    		    		var cloud1 = result.list[0].clouds.all
+    		    		weather = result.list[0].weather[0].icon;
+    		    		 wiconUr11 = '<img style="margin-top:-2vh; width:5vw; height:12vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
     		    			
@@ -473,6 +478,7 @@
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
+    		    		weather = result.list[0].weather[0].icon
     		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
@@ -518,7 +524,8 @@
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
-    		    		wiconUr11 = '<img style="width:5vw; height:11vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
+    		    		weather = result.list[0].weather[0].icon
+    		    		wiconUr11 = '<img style="margin-top:-2vh ;idth:5vw; height:11vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
     		    			
@@ -561,6 +568,7 @@
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
+    		    		weather = result.list[0].weather[0].icon
     		    		wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
@@ -604,6 +612,7 @@
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
+    		    		weather = result.list[0].weather[0].icon
     		    		wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
     		    		function convertTime1(ctime){
     		    			var ot = new Date(ctime * 1000);
@@ -633,17 +642,17 @@
     		});
   
 	
-		 $('#a1').click(function(){
+		 $('#a2').click(function(){
 			 location.href = "${ contextPath }/loding.me?load=seoul &weather=" + weather;
 		}); 
-		/* $('#a2').click(function(){
+		 $('#a1').click(function(){
 			 location.href = "${ contextPath }/loding.me?load=gyeongggi &weather=" + weather;
-		}); */
+		}); 
 		$('#a3').click(function(){
 			 location.href = "${ contextPath }/loding.me?load=kangwon &weather=" + weather;
 		});
 		$('#a4').click(function(){
-			 location.href = "${ contextPath }/loding.me?load=chungbuk &weather=" + weather;
+			 location.href = "${ contextPath }/loding.me?load=chungbuk&weather=" + weather;
 		});
 		$('#a5').click(function(){
 			 location.href = "${ contextPath }/loding.me?load=gyeongbuk &weather=" + weather;
@@ -651,7 +660,7 @@
 		$('#a6').click(function(){
 			 location.href = "${ contextPath }/loding.me?load=gyeongnam &weather=" + weather;
 		});
-		v
+		
 		$('#a7').click(function(){
 			 location.href = "${ contextPath }/loding.me?load=jeju &weather=" + weather;
 		});
@@ -667,7 +676,10 @@
 		
 	
 
-
+		
+		
+		
+		
     </script>
    
     
