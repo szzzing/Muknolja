@@ -75,7 +75,7 @@
 	  margin-top: -0.5em;
 	  line-height: 30px;
 	  position: absolute;
-	  left: -19.5px;
+	  left: -17px;
 	  text-align: center;
 	}
 	.mukButton {background: #6BB6EC; color:white; border-color: #6BB6EC;}

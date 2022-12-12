@@ -60,7 +60,7 @@
 	  margin-top: -0.5em;
 	  line-height: 30px;
 	  position: absolute;
-	  left: -19.5px;
+	  left: -17px;
 	  text-align: center;
 	}
 	
