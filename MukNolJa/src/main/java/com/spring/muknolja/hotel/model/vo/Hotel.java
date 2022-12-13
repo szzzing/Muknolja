@@ -30,4 +30,6 @@ public class Hotel {
 	private Date modifyDate;
 	private double hotelGeoX;
 	private double hotelGeoY;
+	private String hotelInfo;
+	private String hotelIntro;
 }

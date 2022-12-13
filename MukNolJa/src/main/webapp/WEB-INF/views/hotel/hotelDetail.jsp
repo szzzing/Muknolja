@@ -10,18 +10,19 @@
 <title>호텔 상세페이지</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
-ul li {
-	list-style: none;
-	float: left;
-	padding: 10px;
-}
-
-.myHover:hover {
-	cursor: pointer;
-	background-color: rgba(205, 92, 92, 0.1);
-}
-
+	ul li {
+		list-style: none;
+		float: left;
+		padding: 10px;
+	}
+	
+	.mukRound {border-radius: 10px;}
+	
+	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 </style>
+<script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -29,37 +30,39 @@ ul li {
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body>
-	<div class="container mt-5 mb-5">
-		<table class="table table-borderless align-middle">
-			<tr>
-				<td rowspan="2" scope="col" width="300">
-					<img src="${ hotelImg }" style="margin-left: auto; margin-right: auto; display: block;">
-				</td>
-				<td colspan="4" height="200">
-					<h1 class="fw-bold">${hotel.hotelName }</h1>
-					<span class="text-muted">${hotel.star }성급</span>
-					<table class="table-borderless align-middle text-center mt-3 mb-3">
-						<tr>
-							<td width="70px" <c:if test="${hotel.wifi=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-wifi"></i></h2></td>
-							<td width="70px" <c:if test="${hotel.park=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-p-square-fill"></i></h2></td>
-							<td width="70px" <c:if test="${hotel.amenity=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-gift-fill"></i></h2></td>
-							<td width="70px" <c:if test="${hotel.breakfast=='N' }">style="color:lightgray"</c:if>><h2><i class="bi bi-basket-fill"></i></h2></td>
-						</tr>
-						<tr>
-							<td width="70px" <c:if test="${hotel.wifi=='N' }">style="color:lightgray"</c:if>>와이파이</td>
-							<td width="70px" <c:if test="${hotel.park=='N' }">style="color:lightgray"</c:if>>주차</td>
-							<td width="70px" <c:if test="${hotel.amenity=='N' }">style="color:lightgray"</c:if>>어메니티</td>
-							<td width="70px" <c:if test="${hotel.breakfast=='N' }">style="color:lightgray"</c:if>>조식</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div id="map" style="width:400px;height:300px;"></div>
-				</td>
-			</tr>
-		</table>
+	<div class="container mb-5" style="min-width:540px">
+		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start">
+		
+			<div class="col col-lg-auto mt-5">
+				<img src="${ hotelImg }" class="mukRound" style="width:500px; height:300px; background-color:#e9e9e9;">
+			</div>
+			<div class="col-lg-auto mt-5">
+				<h1 class="fw-bold">${hotel.hotelName } <i class="fa-solid fa-bookmark" style="color:#6BB6EC"></i></h1>
+				<span class="text-muted">${hotel.star }성급</span>
+				<div class="mt-1 mb-1">${hotel.hotelIntro }</div>
+				<table class="mt-3 mb-3">
+					<tr>
+						<td>
+							<i class="fa-solid fa-phone"></i>
+						</td>
+						<td>
+							${hotel.hotelPhone }
+						</td>
+					</tr>
+					<tr>
+						<td class="align-top">
+							<i class="fa-solid fa-location-dot"></i>
+						</td>
+						<td>
+							${hotel.hotelAddress }
+						</td>
+					</tr>
+				</table>
+				<h4 class="fw-bold"><i class="fa-solid fa-star" style="color:#FFE600"></i> 4.5</h4>
+			</div>
+		</div>
+<!-- <div id="map" class="mukRound" style="width:200px;height:150px;"></div> -->
+
 		
 		<table class="table text-center mt-5 mb-5">
 			<tr>
@@ -74,56 +77,63 @@ ul li {
 				</td>
 			</tr>
 		</table>
+		
+		
 		<!-- 객실 리스트 시작 -->
-		<div class="col mb-3 form-floating">
-			<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
-			<label for="daterangepicker">1박 2일</label>
-			<input type="hidden" name="checkInDate">
-			<input type="hidden" name="checkOutDate">
-		</div>
-		<div class="col form-floating">
-			<select class="form-select" name="accept">
-				<option selected>1</option>
-				<option>2</option>
-				<option>3</option>
-				<option>4</option>
-				<option>5</option>
-			</select>
-			<label for="accept">인원</label>
-		</div>
-		<div id="roomList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 justify-content-start mt-4 mb-4">
-		<c:forEach items="${roomArray }" var="r">
-			<div class="room col mb-4">
-				<div class="card card-cover h-100 overflow-hidden rounded-5">
-					<div class="row">
-						<div class="col col-sm-auto col-md-auto" style="margin:0; padding-right:0">
-							<img id="hotelImg" class="img-fluid rounded-start" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="200px" height="300px" style="background: lightgray">
-						</div>
-						<div class="col mt-4 mb-4">
-							<input type="hidden" name="hotelId">
-							<h4 id="hotelName" class="card-title lh-1 fw-bold">${r.roomName }</h4>
-							<table class="mt-3 mb-3">
-								<tr>
-									<td class="text-muted" width="80px">최대인원</td>
-									<td class="text-muted">${r.maxAccept }</td>
-								</tr>
-								<tr>
-									<td class="text-muted">체크인</td>
-									<td class="text-muted">${r.checkinTime }</td>
-								</tr>
-								<tr>
-									<td class="text-muted">체크아웃</td>
-									<td class="text-muted">${r.checkoutTime }</td>
-								</tr>
-							</table>
-							<h5 class="lh-1 fw-bold"><fmt:formatNumber value="${r.roomPrice }" pattern="#,###"/>원</h5>
-						</div>
-					</div>
+		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2">
+			<div class="col col-lg-3">
+				<input type="hidden" name="checkInDate">
+				<input type="hidden" name="checkOutDate">
+				<div class="mb-3 form-floating">
+					<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
+					<label for="daterangepicker">1박 2일</label>
+				</div>
+				<div class="mb-3 form-floating">
+					<select class="form-select" name="accept">
+						<option selected>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+					</select>
+					<label for="accept">인원</label>
 				</div>
 			</div>
-		</c:forEach>
+			<div class="col col-lg-9">
+				<c:forEach items="${ roomArray }" var="r">
+					<div class="col">
+						<table class="table table-borderless">
+							<tr>
+								<td style="width:300px" rowspan="3">
+									<img class="hotelImg mukRound" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="300px" height="200px" style="background: lightgray">
+								</td>
+								<td colspan="2" class="align-top">
+									<h4 class="hotelName lh-1 fw-bold">${r.roomName }</h4>
+									<span>${r.roomIntro }</span><br>
+									<span>${r.checkinTime }부터 ${r.checkoutTime }까지</span><br>
+									<small class="text-muted">더 많은 정보</small>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="align-middle">
+									<h4 class="lh-1 fw-bold" style="margin:0px"><fmt:formatNumber value="${r.roomPrice }" pattern="#,###원"/></h4>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="align-bottom text-end" style="height:40px">
+									<button type="button" class="mukButton" style="width:100%">예약하기</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</c:forEach>
+			</div>
 		</div>
+		
 		<!-- 객실 리스트 끝 -->
+		
+		
+		
 		
 		<!-- 리뷰 리스트 시작 -->
 		<div id="reviewList">
@@ -149,7 +159,7 @@ ul li {
 		var geocoder = new kakao.maps.services.Geocoder();
 		
 		// 주소로 좌표를 검색합니다
-		geocoder.addressSearch('서울 중구 삼일대로 362', function(result, status) {
+		geocoder.addressSearch("${hotel.hotelAddress}", function(result, status) {
 		
 		    // 정상적으로 검색이 완료됐으면 
 		     if (status === kakao.maps.services.Status.OK) {
@@ -163,10 +173,10 @@ ul li {
 		        });
 		
 		        // 인포윈도우로 장소에 대한 설명을 표시합니다
-		        var infowindow = new kakao.maps.InfoWindow({
-		            content: '<div style="width:150px;text-align:center;padding:6px 0;">호텔</div>'
-		        });
-		        infowindow.open(map, marker);
+// 		        var infowindow = new kakao.maps.InfoWindow({
+// 		            content: '<div style="width:150px;text-align:center;padding:6px 0;">${hotel.hotelName}</div>'
+// 		        });
+// 		        infowindow.open(map, marker);
 		
 		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 		        map.setCenter(coords);
@@ -175,11 +185,7 @@ ul li {
 		});
  	</script>
 
-	<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-	crossorigin="anonymous">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 
 	<!-- daterangepicker 기본설정, 날짜 기입 시작 -->
 	<script>

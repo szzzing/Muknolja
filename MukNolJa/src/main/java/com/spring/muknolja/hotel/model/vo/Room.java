@@ -23,4 +23,5 @@ public class Room {
 	private String checkoutTime;
 	private int totalNumber;
 	private String roomInfo;
+	private String roomIntro;
 }

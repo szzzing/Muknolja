@@ -3,7 +3,7 @@
 <mapper namespace="hotelmapper">
 	<insert id="insertRoom">
 		insert into ROOM
-		values(SEQ_ROOMID.nextval, 2, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo})
+		values(SEQ_ROOMID.nextval, 4, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo}, #{roomIntro})
 	</insert>
 	
 	<insert id="insertRoomAttm">
@@ -53,7 +53,7 @@
 	<insert id="insertHotel">
 		insert into hotel
 		values(
-			SEQ_HID.nextval, #{entId}, #{hotelName}, #{hotelPhone}, #{hotelAddress}, #{wifi}, #{breakfast}, #{amenity}, #{park}, #{swim}, #{fitness}, null, null, default, sysdate, #{star}
+			SEQ_HID.nextval, #{entId}, #{hotelName}, #{hotelPhone}, #{hotelAddress}, #{wifi}, #{breakfast}, #{amenity}, #{park}, #{swim}, #{fitness}, null, null, default, sysdate, #{star}, #{hotelInfo}, #{hotelIntro}
 		)
 	</insert>
 	
@@ -85,6 +85,8 @@
 		<result column="MODIFY_DATE" property="modifyDate"/>
 		<result column="HOTEL_GEO_X" property="hotelGeoX"/>
 		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
+		<result column="HOTEL_INFO" property="hotelInfo"/>
+		<result column="HOTEL_INTRO" property="hotelIntro"/>
 	</resultMap>
 	
 	<resultMap type="Room" id="roomResultSet">
@@ -97,6 +99,7 @@
 		<result column="CHECKOUT_TIME" property="checkoutTime"/>
 		<result column="TOTAL_NUMBER" property="totalNumber"/>
 		<result column="ROOM_INFO" property="roomInfo"/>
+		<result column="ROOM_INTRO" property="roomIntro"/>
 	</resultMap>
 	
 	<resultMap type="AttachedFile" id="attachedFileResultSet">

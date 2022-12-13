@@ -24,7 +24,6 @@
 
 	<div class="container mt-5 mb-5">
 		<h1 class="fw-bold p-5" style="text-align:center;">호텔게시판</h1>
-		<h5 class="text-muted">${hotelCount }개의 호텔이 있어요.</h5>
 		<form class="row g-2">
 			<div class="col mb-3 form-floating">
 				<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
@@ -203,7 +202,7 @@
 	<script>
 		$(".hotel").on("click", function(){
 // 			location.href="${contextPath}/hotelDetail.ho?hotelId="+$("input[name=hotelId]").val();
-			location.href="${contextPath}/hotelDetail.ho?hotelId=2";
+			location.href="${contextPath}/hotelDetail.ho?hotelId=4";
 		});
 	</script>
 </body>

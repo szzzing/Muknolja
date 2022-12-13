@@ -54,12 +54,12 @@
 						</td>
 						<td>
 							<input type="hidden" name="park" value='Y'>
-							<h2><i class="bi bi-p-square-fill"></i></h2>
+							<h2><i class="fa-solid fa-square-parking"></i></h2>
 							주차
 						</td>
 						<td>
 							<input type="hidden" name="amenity" value='Y'>
-							<h2><i class="bi bi-gift-fill"></i></h2>
+							<h2><i class="fa-solid fa-gift"></i></h2>
 							어메니티
 						</td>
 						<td>
@@ -80,6 +80,17 @@
 					</tr>
 				</table>
 			</div>
+			
+			<div class="form-floating mb-3 mt-3">
+				<textarea class="form-control" name="roomInfo" rows="2" style="height:60px; resize:none" required></textarea>
+				<label for="roomInfo" class="form-label">호텔 한줄소개</label>
+			</div>
+			
+			<div class="form-floating mb-3 mt-3">
+				<textarea class="form-control" name="hotelInfo" rows="10" style="height:300px; resize:none" required></textarea>
+				<label for="roomInfo" class="form-label">호텔 설명</label>
+			</div>
+			
 			<div class="col mb-3 mt-3">
 				<h5 class="fw-bold">호텔 사진을 등록하세요.</h5>
 				<div class="mb-3">
@@ -264,5 +275,15 @@
 		});
 	</script>
 	<!-- 전화번호 입력 설정 끝 -->
+	
+	<!-- 호텔 정보 엔터 구현 시작 -->
+	<script>
+		$("button[type=submit]").on("click", function(){
+			var content = $("textarea[name=hotelInfo]").val();
+			content = content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			$("textarea[name=hotelInfo]").val(content);
+		});
+	</script>
+	<!-- 호텔 정보 엔터 구현 끝 -->
 </body>
 </html>

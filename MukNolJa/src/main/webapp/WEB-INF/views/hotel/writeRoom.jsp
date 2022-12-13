@@ -12,11 +12,16 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<style>
+	.mukButton {background: #6BB6EC; color:white; border-color: #6BB6EC;}
+	.mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC;}
+</style>
 </head>
 <body>
 
-	<div class="container" style="width:800px; margin-top:100px;">
-		<h2 style="text-align: center;">객실 등록</h2>
+	<div class="container mt-5 mb-5" style="max-width:800px;">
+		<h2 class="fw-bold p-5" style="text-align:center;">객실 등록</h2>
+		
 		<form action="${ contextPath }/insertRoom.ho" enctype="multipart/form-data" method="post">
 			<div class="col form-floating mb-3 mt-3">
 				<input type="text" class="form-control" name="roomName" required>
@@ -52,10 +57,16 @@
 				<label for="roomPrice">객실 수</label>
 			</div>
 			
-			<div class="form-floating mb-3">
-				<textarea class="form-control" name="roomInfo" rows="10" style="height:300px; resize:none" required></textarea>
-				<label for="roomInfo" class="form-label">객실 기본정보</label>
+			<div class="form-floating mb-3 mt-3">
+				<textarea class="form-control" name="roomIntro" rows="2" style="height:60px; resize:none" required></textarea>
+				<label for="roomInfo" class="form-label">객실 한줄소개</label>
 			</div>
+			
+			<div class="form-floating mb-3 mt-3">
+				<textarea class="form-control" name="roomInfo" rows="10" style="height:300px; resize:none" required></textarea>
+				<label for="roomInfo" class="form-label">객실 설명</label>
+			</div>
+			
 			<div class="mb-3">
 				<input type="file" class="form-control" name="roomImg">
 			</div>
@@ -66,9 +77,17 @@
 				<input type="file" class="form-control" name="roomImg">
 			</div>
 			<div class="d-grid gap-2">
-				<button type="submit" class="btn btn-outline-secondary" style="align:bottom !important">작성하기</button>
+				<button type="submit" class="mukButton btn btn-outline-primary" style="align:bottom !important">작성하기</button>
 			</div>
 		</form>
 	</div>
+	
+	<script>
+		$("button[type=submit]").on("click", function(){
+			var content = $("textarea[name=roomInfo]").val();
+			content = content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			$("textarea[name=roomInfo]").val(content);
+		});
+	</script>
 </body>
 </html>
