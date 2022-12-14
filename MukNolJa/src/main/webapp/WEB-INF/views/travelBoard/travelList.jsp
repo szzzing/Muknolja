@@ -101,66 +101,24 @@
 			<button>인기순</button>
 		</div>
 		
+		${travel}
+		${travel.get("addr1")}
 		<hr id="hr2" >
 		<br>
-		
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start">
-
-			 <div class="col">
-	            <div id="card" class="card card-cover h-95 overflow-hidden\">
-	               <img class="card-img-top"  style="height:300px;"  src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MTBfMjUw%2FMDAxNjUyMTY2NTY0Mzcx.2hqok9p-BJ-nUskBsMy3x-5ryOh1xdl7IoTJvQEQvpkg.zXcze5BuUlHaL7uSBu4OQCWDBKFp2rHk5VRnqdsSDywg.JPEG.gkdbqls13%2FIMG_3616.jpg&type=sc960_832">
-	               <div class="card-body p-4 mb-auto">
-	                  <h4 class="card-title lh-1 fw-bold">${ title }</h4>
-	                  <div class="card-text text-muted">${ addr }</div>
-	                  <div class="card-text text-muted">${ tel }</div>
-	               </div>
-	            </div>
-	         </div>
+			<c:forEach items="${ travel }">
+				 <div class="col">
+		            <div id="card" class="card card-cover h-95 overflow-hidden\">
+		               <img class="card-img-top"  style="height:300px;"  src=${travel.get("firstimage")}>
+		               <div class="card-body p-4 mb-auto">
+		                  <h4 class="card-title lh-1 fw-bold">${ travel.get("title") }</h4>
+		                  <div class="card-text text-muted">${ travel.get("addr1") }</div>
+		                  <div class="card-text text-muted">${ travel.get("tel") }</div>
+		               </div>
+		            </div>
+		         </div>
+	         </c:forEach>
 			
-			<div class="col">
-	            <div id="card" class="card card-cover h-95 overflow-hidden\">
-	               <img class="card-img-top"  style="height:300px;"  src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MTBfMjUw%2FMDAxNjUyMTY2NTY0Mzcx.2hqok9p-BJ-nUskBsMy3x-5ryOh1xdl7IoTJvQEQvpkg.zXcze5BuUlHaL7uSBu4OQCWDBKFp2rHk5VRnqdsSDywg.JPEG.gkdbqls13%2FIMG_3616.jpg&type=sc960_832">
-	               <div class="card-body p-4 mb-auto">
-	                  <h4 class="card-title lh-1 fw-bold">관광지이름</h4>
-	                  <div class="card-text text-muted">지역이름</div>
-	                  <div class="card-text text-muted">전화번호</div>
-	               </div>
-	            </div>
-	         </div>
-			
-			<div class="col">
-	            <div id="card" class="card card-cover h-95 overflow-hidden\">
-	               <img class="card-img-top"  style="height:300px;"  src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MTBfMjUw%2FMDAxNjUyMTY2NTY0Mzcx.2hqok9p-BJ-nUskBsMy3x-5ryOh1xdl7IoTJvQEQvpkg.zXcze5BuUlHaL7uSBu4OQCWDBKFp2rHk5VRnqdsSDywg.JPEG.gkdbqls13%2FIMG_3616.jpg&type=sc960_832">
-	               <div class="card-body p-4 mb-auto">
-	                  <h4 class="card-title lh-1 fw-bold">관광지이름</h4>
-	                  <div class="card-text text-muted">지역이름</div>
-	                  <div class="card-text text-muted">전화번호</div>
-	               </div>
-	            </div>
-	         </div>
-	         
-	         <div class="col">
-	            <div id="card" class="card card-cover h-95 overflow-hidden\">
-	               <img class="card-img-top"  style="height:300px;"  src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MTBfMjUw%2FMDAxNjUyMTY2NTY0Mzcx.2hqok9p-BJ-nUskBsMy3x-5ryOh1xdl7IoTJvQEQvpkg.zXcze5BuUlHaL7uSBu4OQCWDBKFp2rHk5VRnqdsSDywg.JPEG.gkdbqls13%2FIMG_3616.jpg&type=sc960_832">
-	               <div class="card-body p-4 mb-auto">
-	                  <h4 class="card-title lh-1 fw-bold">관광지이름</h4>
-	                  <div class="card-text text-muted">지역이름</div>
-	                  <div class="card-text text-muted">전화번호</div>
-	               </div>
-	            </div>
-	         </div>
-	         
-	         <div class="col">
-	            <div id="card" class="card card-cover h-95 overflow-hidden\">
-	               <img class="card-img-top"  style="height:300px;"  src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA1MTBfMjUw%2FMDAxNjUyMTY2NTY0Mzcx.2hqok9p-BJ-nUskBsMy3x-5ryOh1xdl7IoTJvQEQvpkg.zXcze5BuUlHaL7uSBu4OQCWDBKFp2rHk5VRnqdsSDywg.JPEG.gkdbqls13%2FIMG_3616.jpg&type=sc960_832">
-	               <div class="card-body p-4 mb-auto">
-	                  <h4 class="card-title lh-1 fw-bold">관광지이름</h4>
-	                  <div class="card-text text-muted">지역이름</div>
-	                  <div class="card-text text-muted">전화번호</div>
-	               </div>
-	            </div>
-	         </div>
-	         
 	         
 	      </div>
 	         
@@ -186,6 +144,14 @@
 		</nav>
 		
 		</div>
+		
+		<script>
+// 			$.ajax({
+// 				method: "POST"
+// 				url: "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=10&listYN=Y&&arrange=A&contentTypeId=12&keyword=%EA%B0%95%EC%9B%90&_type=json"
+				
+// 			});
+		</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

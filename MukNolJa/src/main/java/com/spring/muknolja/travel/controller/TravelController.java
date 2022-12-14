@@ -49,17 +49,12 @@ public class TravelController {
 			
 			JSONArray parseItem = (JSONArray)parseItems.get("item");
 			
+			
 			JSONObject travel;
 			
 			for(int i = 0; i < parseItem.size(); i++) {
 				travel = (JSONObject)parseItem.get(i);
-				String addr = (String)travel.get("addr1");
-				String title = (String)travel.get("title");
-				String tel = (String)travel.get("tel");
-				System.out.println(addr + "/" + title + "/" + tel);
-				model.addAttribute("addr", addr);
-				model.addAttribute("title", title);
-				model.addAttribute("tel", tel);
+				model.addAttribute("travel", travel);
 			}
 			
 			bf.close();
