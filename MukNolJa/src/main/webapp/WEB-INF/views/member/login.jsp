@@ -1,137 +1,135 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
-    	.logBu{
-    		border: 1px solid  #256D85;
-    		height:50px;
-    		width: 117px;
-    		border-radius: 10px;
-    		
-    		margin:2% 0.5%;
-    		box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);
-    	}
-    
-    	 /*  폰트 */
-        @font-face {
-		    font-family: 'HSYuji-Regular';
-		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSYuji-Regular.woff') format('woff');
-		    font-weight: normal;
-		    font-style: normal;
+    	@font-face {
+	    font-family: 'OTWelcomeRA';
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+	    font-weight: normal;
+	    font-style: normal;
 		}
-		@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-	
-	
 
-#loginF {  
-	  animation-name: loginF;
-	  animation-duration: 1s;
-	  animation-fill-mode: both;
-	}
-	@-webkit-keyframes loginF {
-	  0% {
-	    opacity: 0;
-	    transform: translate3d(0, -100%, 0);
-	  }
-	  100% {
-	    opacity: 1;
-	    transform: none;
-	  }
-	}
-	@keyframes loginF {
-	  0% {
-	    opacity: 0;
-	    transform: translate3d(0, -100%, 0);
-	  }
-	  100% {
-	    opacity: 1;
-	    transform: none;
-	  }
-	}
-	.loginFind:hover{
-	
-	font-weight:700}
-	.loginB:hover{
-	
-	font-weight:900}
     </style>
   </head>
-  <body style="margin-top:25vh; font-family: 'HSYuji-Regular';">
-  <jsp:include page="menubar.jsp"></jsp:include>
+  <body style="background: white; float: left; font-family: 'OTWelcomeRA';">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-   
-   
-     <div class="container-fluid text-center">
-	  	<div class="row justify-content-center" style="width: 100%">
-            <div class="col">
-            	<div style="display:inLine-block; width:500px; height: 100% ">
+	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
+  
+     <div class="container-fluid text-center" style="font-family: 'OTWelcomeRA';  float: left;">
+	  	<div class="row justify-content-center" >
+            <div class="col" style="width:100vw; height:80px; display:inLine-block; background: white; border-bottom:2px solid lightgrey;" >
+            	<div style="width:800px; height:80px; display:inLine-block; ">
             		
+            			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">로그인</div>
             		
-            		
-            		<form action="${contextPath }/login.me"  method="post" id="loginF" style="border: 1px solid  #256D85; width:500px; height: 100%; border-radius:30px; background: radial-gradient(ellipse, #256D85 0%, #68A7AD 100%); box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); ">
-            		<div class="container-fluid text-center">
-            			<div class="mb-3 row justify-content-center" style="width:100%; margin-top:4%;"  >
-	  		        		<div class="col">
-	  		        		
-            					<div  style="display:inLine-block; width:500px; height: 100%; ">
-            					<div style="font-size: 50px; text-align:center; text-weight:700; color:white; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);">먹놀자</div>
-            						<div style="display:flex; margin-top:10px;">
-						    			<label for="inputId" class="col-form-label " style="font-size:20px; margin-left:50px; color:white; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);">아이디</label>
-						    			<div class="">
-							   				<input type="text" name="id" class="form-control " id="inputId" style="height: 100%;margin-left: 30px; width:290px;" required>
-							   			</div>
-							   		</div>
-						   		</div>
-						   	</div>
-						</div>
-	  		        </div>
-	  		        	<div class="container-fluid text-center">
-	  		        	<div class="mb-3 row justify-content-center" style="width:100%;"  >
-	  		        		<div class="col">
-            					<div  style="display:inLine-block; width:500px; height: 100%;">
-            						<div style="display:flex">
-						    			<label for="inputPassword" class="col-form-label " style="font-size:20px; margin-left:50px; color:white; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);">비밀번호</label>
-						    				<div class="">
-							   				<input type="password" name="pwd" class="form-control " id="inputId" style="height: 100%;margin-left: 22px; width:290px" required >
-							   			</div>
-							   		</div>
-						   		</div>
-						   	</div>
-						</div>
-						
-						<button class="loginB" style="width:80%; border-radius:20px; height:40px; font-size:20px; border:none; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); border: 1px solid  #256D85; color:#256D85" >로그인</button>
-						<div>
-							<button class="logBu">
-							
-							</button>
-							<button class="logBu">
-							
-							</button >
-							<button class="logBu">
-							
-							</button >
-						</div>	
-						<div style="display:flex; text-align:center; margin-left:150px; color: white; margin-top:20px; margin-bottom:0px;">
-						<div class="loginFind">아이디찾기</div>
-						<div style="margin-left:20px;" class="loginFind">비밀번호찾기</div>
-						</div>
-						</div>
-					</form>
-					
-					
-				</div>
-			</div>
-		</div>
-	</div>
-    <script>
-    	
-    </script>
+            	</div>
+            </div>
+          </div>
+          	 <div class="row justify-content-center" >
+            	<div class="col"style="width:1200px; height:100%; ">
+            		<div style="width:1200px; height:100%; background:white;display:inLine-block;">
+          			<div style="width:800px; height:100%; display:inLine-block; ">
+          				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" >MUKNOLJA</div>
+          				
+            				<div style="float:left; margin-left: 150px; margin-top: 4vh;">
+		            			<form action="${ contextPath }/login.me" method="post">
+		            				
+		            				<input type="text" name="id" id="id" class="id" style="width:500px; font-size:20px; padding:10px; padding-top:15px" required>
+		            				<br>
+		            				<div style="margin-top:10px;">
+			            			<input type="password" name="pwd" id="pwd"  style="font-family:Georgia;width:500px; font-size:20px; float:left; padding:10px; padding-top:15px" required>
+			            				
+			            			</div>
+			            			<button  style="width:500px; margin-top:10px; border-radius:10px; height:51px; border: 1px solid lightgrey;padding-top:8px;">로그인</button>
+			            			
+			            	
+		            			</form>
+		            			<div style="padding:10px; float:left;  ">
+		            				<a style="">아이디 찾기</a> <a style="margin-left:20px;">비밀번호 찾기</a> 
+		            			</div>
+		            			<div style="display:flex; margin-top:20px; float:right;">
+		          					<div ><img onclick="kakaoLogin();" alt="1" src="${contextPath }/resources/img/kakao.png" width=50px; height=50px; style="margin-left: 20px" >
+										
+									      <a href="javascript:void(0)">
+									          
+									      </a>
+										
+										
+									</div>
+		          					<div ><img alt="1" src="${contextPath }/resources/img/naver.png" width=53px; height=55px; style="margin-top:-5px; margin-left: 20px;"></div>
+		          				</div>
+		            			
+		          				<div style="display:flex; position:absolute; top:85%; margin-left:0vw; text-align:center; ">
+		          				아직 회원이 아니신가요? <a style="font-size:20px;" href="${contextPath }/enrollE.me">회원가입</a>
+		          				<div style="margin-left: 80px;">사업장등록은 여기<a style="font-size:20px;" href="">호텔등록</a></div>
+		          				</div>
+		            		</div>
+		            		
+            		</div>
+            		</div>
+            	</div>
+            	
+            </div>
+        </div>
+       <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  	
+	<ul>
+	<li onclick="kakaoLogout();">
+      <a href="javascript:void(0)">
+          <span>카카오 로그아웃</span>
+      </a>
+	</li>
+</ul>
+<!-- 카카오 스크립트 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+Kakao.init('d5a279c4301e9b4c3bdaf215dfa378af'); //발급받은 키 중 javascript키를 사용해준다.
+console.log(Kakao.isInitialized()); // sdk초기화여부판단
+//카카오로그인
+function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+        	  console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+//카카오로그아웃  
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+        	console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }  
+</script>
+  	
+    
   </body>
 </html>

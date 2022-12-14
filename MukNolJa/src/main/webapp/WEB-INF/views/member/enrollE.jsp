@@ -20,7 +20,7 @@
 
     </style>
   </head>
-  <body style="background: rgb(185, 224, 255,0.1); float: left; font-family: 'OTWelcomeRA';">
+  <body style="background: white; float: left; ">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
   
@@ -29,15 +29,16 @@
             <div class="col" style="width:100vw; height:80px; display:inLine-block; background: white; border-bottom:2px solid lightgrey;" >
             	<div style="width:800px; height:80px; display:inLine-block; ">
             		
-            			<div style="margin-top: 20px; font-size: 2vw; font-weight:600; text-align:center;">회원가입(1/2)</div>
+            			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">회원가입(1/2)</div>
             		
             	</div>
             </div>
           </div>
           	 <div class="row justify-content-center" >
-            	<div class="col"style="left:0">
-          			<div style="width:800px; height:90vh; display:inLine-block; background: white">
-          				<div style=" margin-top:5vh; font-size: 50px; color:#6BB6EC; width: 800; height:100" >MUKNOLJA</div>
+            	<div class="col"style="width:1200px; height:100%; ">
+            		<div style="width:1200px; height:100%; background:white;display:inLine-block;">
+          			<div style="width:800px; height:100%; display:inLine-block; ">
+          				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" >MUKNOLJA</div>
             				<div style="float:left; margin-left: 150px; margin-top: 4vh;">
 		            			<form >
 		            				<label for="email" style="float:left; font-size:20px;">이메일</label>
@@ -49,20 +50,23 @@
 			            				<button type="button" id="emailBu" style="height:59px; width:145px; float:right; border-radius:10px; border: 1px solid lightgrey; padding-top:8px;">인증번호 전송</button>
 			            			</div>
 			            			
-			            			<div style="margin-left: -200px;margin-top:80px;">인증번호 발송에는 일정 시간이 소요될수 있습니다.</div>
+			            			<div style="margin-left: -200px;margin-top:90px;">인증번호 발송에는 일정 시간이 소요될수 있습니다.</div>
 			            			
-			            			<button type="button" style="width:500px; margin-top:30%; border-radius:10px; height:51px; border: 1px solid lightgrey;padding-top:8px;">다음</button>
-			            			<div style="margin-top:1vh; margin-left:-10px"><i class="bi bi-exclamation-circle-fill" style="color:red;"></i>  회원 가입시 반드시 본인 소유의 연락 가능한 이메일 주소를 사용하여야 합니다.</div>
+			            			<div style="position:absolute; top:85%; margin-left:0vw;">
+			            			<button type="button" style="width:500px;  border-radius:10px; height:51px; border: 1px solid lightgrey;padding-top:8px;">다음</button>
+			            			<div style="margin-top:2vh; margin-left:-10px"><i class="bi bi-exclamation-circle-fill" style="color:red;"></i>  회원 가입시 반드시 본인 소유의 연락 가능한 이메일 주소를 사용하여야 합니다.</div>
+			            			</div>
 		            			</form>
 		            		</div>
-            		
+            		</div>
             		</div>
             	</div>
             	
             </div>
         </div>
+       
   	<script>
-  	
+  		var email = false;
   	window.onload = ()=>{
 		
 		
@@ -99,23 +103,24 @@
 							alert("인증번호가 일치하지 않습니다");
 							
 						} else { // 아니면 중복아님
-							 location.href = "${ contextPath }/enroll.me?email=" + document.getElementById("email").value;
+							
+							location.href = "${ contextPath }/enroll.me?email=" + document.getElementById("email").value;
 						}
 					});
 				}
 					
 				}else if(data.trim() == 'no'){
-					alret("중복된 이메일 입니다");
+					alert("중복된 이메일 입니다");
 				}
 			},
 			error: (data)=>{
-				console.log(data);
+				alert("존재하지 않는 이메일 입니다");
 			}
 			
 		});
   	});
   	}
- 
+ 	
 		
   	</script>
     

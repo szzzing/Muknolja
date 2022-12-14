@@ -23,4 +23,14 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.idsol", id);
 	}
 
+	public int checkNickName(SqlSessionTemplate sqlSession, String nickName) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.checkNickName", nickName);
+	}
+
+	public int insert(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertM", m);
+	}
+
 }

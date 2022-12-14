@@ -23,16 +23,11 @@
   		
   	</resultMap>
   	
-  	<insert id="insertMember">
+  	<insert id="insertM">
   	insert into member
-  	values(#{id}, #{name}, #{pwd}, #{nickName}, #{email}, #{phone}, #{address},#{gender}, #{birthDate}, default, default, sysdate, default)
+  	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, default, default)
   </insert>
-  <select id="checkNickName" resultType="_int">
-  	select count(*)
-  	from member
-  	where nickName=#{nickName}
-  		 
-  	</select>
+  
   	
   	<select id="checkId" resultType="_int">
   	select count(*)
@@ -67,5 +62,11 @@
   		select count(*)
 	  	from member
 	  	where id=#{id}
+  	</select>
+  	
+  	<select id="checkNickName" resultType="_int">
+  		select count(*)
+	  	from member
+	  	where nickname=#{nickName}
   	</select>
   </mapper>

@@ -34,4 +34,16 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.checkId(sqlSession,id);
 	}
 
+	@Override
+	public int checkNickName(String nickName) {
+		// TODO Auto-generated method stub
+		return mDAO.checkNickName(sqlSession,nickName);
+	}
+
+	@Override
+	public int insertMember(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.insert(sqlSession,m);
+	}
+
 }
