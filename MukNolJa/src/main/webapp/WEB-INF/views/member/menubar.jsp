@@ -144,8 +144,6 @@
 		          <a class="nav-link " href="${contextPath }/loginView.me" style="font-size: 1.4vw; ">로그인</a>
 		        </li>
 		        </c:if>	
-	            				
-		     				    
 	            			</div>
 	            		</div>
             		</div>
@@ -154,6 +152,8 @@
     	</div>
     </div>
     </header>
+    
+<!--     채팅 모달 -->
 	 <div id="room_modal">
 		<div id="chatList">
 			<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
@@ -163,14 +163,11 @@
 			</div>
 			<div id="rooms"></div>
 			<div class="row friends" style="padding: 10px 0px;">
-
-           		<div class = "input-group input-group-sm">
-            		<input type = "text" class = "form-control" id="searchNick" placeholder = "닉네임 검색">
-	                <div class = "input-group-btn">
-	                  	<button class="btn btn-outline-secondary" type="button" id="searchNickBtn"><i class="bi bi-search"></i></button>
-	           		</div>
-            	</div>
-
+           		<div class="col text-center" id="createRoom">채팅방 만들기</div>
+				<div class="col text-center" style="border-bottom: 1px solid black"><h4><i class="bi bi-envelope-plus"></i></h4></div>
+				<div class="row text-center invite" style="border-bottom: 1px solid black;">
+					<div class="col"><b style="margin-right: 10px;">채팅방 이름</b> <small>참가</small> <small>거절</small></div>
+				</div>
 			</div>
 			<div id="friends"></div>
 		</div>
@@ -233,24 +230,8 @@
                 var zIndex = 9999;
                 var modal = document.getElementById(id);
 
-                // 모달 div 뒤에 희끄무레한 레이어
-                var bg = document.createElement('div');
-                bg.setStyle({
-                    position: 'fixed',
-                    zIndex: zIndex,
-                    left: '0px',
-                    top: '0px',
-                    width: '100%',
-                    height: '100%',
-                    overflow: 'auto',
-                    // 레이어 색갈은 여기서 바꾸면 됨
-                    backgroundColor: 'rgba(0,0,0,0.4)'
-                });
-                document.body.append(bg);
-
                 // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
                 modal.querySelector('.modal_close_btn').addEventListener('click', function() {
-                    bg.remove();
                     modal.style.display = 'none';
                 });
 
@@ -302,6 +283,7 @@
 						
 						for(const room of chatrooms){
 					        room.addEventListener('click', function() {
+					        	console.log('a');
 					            Modal('chat_modal');
 					            const roomCode = room.querySelector('input[type="hidden"]').value;
 
@@ -369,9 +351,6 @@
 									    			$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
 									    		});
 									            
-									            // 입장 시
-									    		stomp.send('/pub/chat/enter', {}, JSON.stringify({senderId: '${loginUser.id}', roomCode: roomCode, nickName: '${loginUser.nickName}'}));
-									            
 									    		// send 버튼 클릭시
 												document.getElementById('send').addEventListener('click', function() {
 													const message = document.getElementById('message');
@@ -402,6 +381,24 @@
             	$(".friends").hide();
             	$(".nicks").hide();
             	$(".chatRoom").show();
+            	
+            	$.ajax({
+            		url: '${contextPath}/chatRoomList.ch',
+      				success: (data) => {
+      					document.getElementById('rooms').innerHTML = '';
+      					for(const c of data){
+      						let str = '<div class="row chatRoom" style="border-bottom: 1px solid black;">';
+      						str += '<div class="col">';
+      						str += '<b style="padding-left:10px;">' + c.roomName + '</b>';
+      						str += '<div class="messageCheck"></div><br>';
+      						str += '<small style="padding-left:10px;">3분</small>';
+      						str += '<input type="hidden" value="' + c.roomCode + '">';
+      						str += '</div></div>';
+
+      						document.getElementById('rooms').innerHTML += str;
+      					}
+      				}
+            	});
             });
             
             $("#frndBtn").click(function() {
@@ -409,47 +406,64 @@
             	$(".friends").show();
             });
             
-            document.getElementById('searchNickBtn').addEventListener('click', function() {
-            	const nick = document.getElementById('searchNick').value;
+//             document.getElementById('searchNickBtn').addEventListener('click', function() {
+//             	const nick = document.getElementById('searchNick').value;
             	
-            	if(nick != '${loginUser.nickName}'){
-            	$.ajax({
-            		url: 'searchNick.ch',
-            		data: {nick:nick},
-            		success: (data) => {
-            			document.getElementById('friends').innerHTML = '';
-            			if(data != ''){
-            				console.log(data);
-            				let str = '<div class="row nicks" style="border-bottom: 1px solid black;">';
-            				str += '<div class="col">';
-            				str += '<b class="nick">' + data.nickName + '</b> <small id="createRoom">채팅하기</small>';
-            				str += '</div></div>';
+//             	if(nick != '${loginUser.nickName}'){
+//             	$.ajax({
+//             		url: 'searchNick.ch',
+//             		data: {nick:nick},
+//             		success: (data) => {
+//             			document.getElementById('friends').innerHTML = '';
+//             			if(data != ''){
+//             				console.log(data);
+//             				let str = '<div class="row nicks" style="border-bottom: 1px solid black;">';
+//             				str += '<div class="col">';
+//             				str += '<b class="nick">' + data.nickName + '</b> <small id="createRoom">채팅하기</small>';
+//             				str += '</div></div>';
             				
-            				document.getElementById('friends').innerHTML += str;
+//             				document.getElementById('friends').innerHTML += str;
             				
-            				const createRoom = document.getElementById('createRoom');
+//             				const createRoom = document.getElementById('createRoom');
             				
-            				createRoom.addEventListener('click', () => {
+//             				createRoom.addEventListener('click', () => {
                         		
-                        		Modal('createroom_modal');
+//                         		Modal('createroom_modal');
                         		
-                        		document.getElementById('chatRoomBtn').addEventListener('click', function(){
-                        			const roomName = document.getElementById('chatRoomName').value;
-                        			$.ajax({
-                            			url: 'createRoom.ch',
-                            			data: {roomName: roomName, participantID: data.id, hostId: '${loginUser.id}'},
-                            			success: (data) => {
-                            				console.log(data);
-                            				Modal('createRoomSuccess_modal');
-                            			}
-                            		});
-                        		});
-                        	});
-            			}
-            		}
-            	});
-            	}
-            });
+//                         		document.getElementById('chatRoomBtn').addEventListener('click', function(){
+//                         			const roomName = document.getElementById('chatRoomName').value;
+//                         			$.ajax({
+//                             			url: 'createRoom.ch',
+//                             			data: {roomName: roomName, participantID: data.id, hostId: '${loginUser.id}'},
+//                             			success: (data) => {
+//                             				Modal('createRoomSuccess_modal');
+//                             			}
+//                             		});
+//                         		});
+//                         	});
+//             			}
+//             		}
+//             	});
+//             	}
+//             });
+            
+
+	        // 채팅방 생성
+	        document.getElementById('createRoom').addEventListener('click', function(){
+	            Modal('createroom_modal');
+	        });
+	        
+	        document.getElementById('chatRoomBtn').addEventListener('click', function(){
+    			const roomName = document.getElementById('chatRoomName').value;
+    			$.ajax({
+        			url: 'createRoom.ch',
+        			data: {roomName: roomName, hostId: '${loginUser.id}'},
+        			success: (data) => {
+        				Modal('createRoomSuccess_modal');
+        			}
+        		});
+    		});
+
          }
         </script>
   </body>

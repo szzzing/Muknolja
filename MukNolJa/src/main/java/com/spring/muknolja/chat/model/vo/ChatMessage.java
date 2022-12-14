@@ -1,5 +1,7 @@
 package com.spring.muknolja.chat.model.vo;
 
+import java.security.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

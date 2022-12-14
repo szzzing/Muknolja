@@ -13,8 +13,8 @@ import com.spring.muknolja.member.model.vo.Member;
 @Repository("cDAO")
 public class ChatDAO {
 
-	public int createRoom(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
-		return sqlSession.insert("chatmapper.createRoom", map);
+	public int createRoom(SqlSessionTemplate sqlSession, ChatRoom chatRoom) {
+		return sqlSession.insert("chatmapper.createRoom", chatRoom);
 	}
 
 	public ArrayList<ChatRoom> selectChatRoomList(SqlSessionTemplate sqlSession, String id) {

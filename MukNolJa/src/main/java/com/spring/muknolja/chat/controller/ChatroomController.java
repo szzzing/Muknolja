@@ -31,23 +31,15 @@ public class ChatroomController {
 	//채팅방 개설
 	@RequestMapping("createRoom.ch")
 	@ResponseBody
-    public int createRoom(@ModelAttribute ChatRoom chatRoom, @RequestParam("participantID") String participantID){
+    public String createRoom(@ModelAttribute ChatRoom chatRoom){
     	
     	chatRoom.setRoomCode(UUID.randomUUID().toString());
     	
-    	ArrayList<String> participants = new ArrayList<>();
+    	int result = cService.createRoom(chatRoom);
     	
-    	participants.add(participantID);
-    	participants.add(chatRoom.getHostId());
+    	String roomCode = chatRoom.getRoomCode();
     	
-    	HashMap<String, Object> map = new HashMap<>();
-    	
-    	map.put("chatRoom", chatRoom);
-    	map.put("participants", participants);
-    	
-    	int result = cService.createRoom(map);
-    	
-        return result;
+        return roomCode;
     }
     
     // 채팅방 목록
@@ -55,7 +47,6 @@ public class ChatroomController {
     public void chatRoomList(HttpServletResponse response, HttpSession session) {
     	String id = ((Member)session.getAttribute("loginUser")).getId();
     	ArrayList<ChatRoom> list = cService.selectChatRoomList(id);
-    	
     	Gson gson = new Gson();
     	
     	response.setContentType("application/json; charset=UTF-8");

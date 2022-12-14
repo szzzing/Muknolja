@@ -9,7 +9,7 @@ import com.spring.muknolja.member.model.vo.Member;
 
 public interface ChatService {
 
-	int createRoom(HashMap<String, Object> map);
+	int createRoom(ChatRoom chatRoom);
 
 	ArrayList<ChatRoom> selectChatRoomList(String id);
 

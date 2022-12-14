@@ -22,8 +22,8 @@ public class ChatServiceImpl implements ChatService{
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public int createRoom(HashMap<String, Object> map) {
-		return cDAO.createRoom(sqlSession, map);
+	public int createRoom(ChatRoom chatRoom) {
+		return cDAO.createRoom(sqlSession,chatRoom);
 	}
 
 	@Override

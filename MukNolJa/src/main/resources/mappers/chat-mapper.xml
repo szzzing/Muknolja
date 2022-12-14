@@ -2,21 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="chatmapper">
 	<insert id="createRoom">
-		insert all
-		into CHAT_ROOM
-		values(#{chatRoom.roomCode}, #{chatRoom.roomName})
-		<foreach collection="participants" item="participant">
-		into CHAT_USER
-		values(#{chatRoom.roomCode}, #{participant})
-		</foreach>
-		select * from dual
+		insert into CHAT_ROOM
+		values(#{roomCode}, #{roomName})
 	</insert>
 	
 	<select id="selectChatRoomList" resultMap="ChatRoomResultSet">
-		select *
+		select CHAT_ROOM_CODE, CHAT_ROOM_NAME, max(TRANSFER_TIME) max
 		from CHAT_ROOM
 			join CHAT_USER using(CHAT_ROOM_CODE)
+			left join CHAT_MESSAGE using(CHAT_ROOM_CODE)
 		where PARTICIPANT_ID = #{id}
+        group by CHAT_ROOM_CODE, CHAT_ROOM_NAME
+        order by max desc nulls last
 		
 	</select>
 	
@@ -24,6 +21,7 @@
 		<id column="CHAT_ROOM_CODE" property="roomCode"/>
 		<result column="BOARD_ID" property="BoardId"/>
 		<result column="CHAT_ROOM_NAME" property="roomName"/>
+		<result column="max" property="maxTransferTime"/>
 	</resultMap>
 	
 	<select id="selectChatMessage" resultMap="ChatMessageResultSet">
@@ -45,7 +43,7 @@
 	
 	<insert id="insertMessage">
 		insert into CHAT_MESSAGE
-		values(SEQ_CHATID.nextval, #{senderId}, #{roomCode}, #{chatContent}, sysdate)
+		values(SEQ_CHATID.nextval, #{senderId}, #{roomCode}, #{chatContent}, systimestamp)
 	</insert>
 	
 	<resultMap type="Member" id="memberResultSet">
