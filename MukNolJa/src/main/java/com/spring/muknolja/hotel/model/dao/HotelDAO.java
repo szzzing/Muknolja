@@ -49,4 +49,8 @@ public class HotelDAO {
 		return sqlSession.insert("hotelmapper.insertHotel", h);
 	}
 
+	public Room selectRoom(SqlSessionTemplate sqlSession, int roomId) {
+		return sqlSession.selectOne("hotelmapper.selectRoom", roomId);
+	}
+
 }

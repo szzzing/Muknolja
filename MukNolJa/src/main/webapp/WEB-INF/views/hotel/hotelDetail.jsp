@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -17,7 +16,6 @@
 	}
 	
 	.mukRound {border-radius: 10px;}
-	
 	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
@@ -30,13 +28,22 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body>
-	<div class="container mb-5" style="min-width:540px">
+
+	<!-- 예약 전송용 form 시작 -->
+	<form action="writeReservation.ho" method="post">
+		<input type="hidden" name="roomId">
+		<input type="hidden" name="checkinDate">
+		<input type="hidden" name="checkoutDate">
+	</form>
+	<!-- 예약 전송용 form 끝 -->
+	
+	<div class="container mt-5 mb-5" style="min-width:540px">
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start">
 		
-			<div class="col col-lg-auto mt-5">
-				<img src="${ hotelImg }" class="mukRound" style="width:500px; height:300px; background-color:#e9e9e9;">
+			<div class="col col-lg-auto pt-5">
+				<img class="mukRound" style="width:500px; height:300px; background-color:#F9F9F9;">
 			</div>
-			<div class="col-lg-auto mt-5">
+			<div class="col-lg-auto pt-5">
 				<h1 class="fw-bold">${hotel.hotelName } <i class="fa-solid fa-bookmark" style="color:#6BB6EC"></i></h1>
 				<span class="text-muted">${hotel.star }성급</span>
 				<div class="mt-1 mb-1">${hotel.hotelIntro }</div>
@@ -55,13 +62,13 @@
 						</td>
 						<td>
 							${hotel.hotelAddress }
+<!-- 							<div id="map" class="mukRound" style="width:200px;height:150px;"></div> -->
 						</td>
 					</tr>
 				</table>
-				<h4 class="fw-bold"><i class="fa-solid fa-star" style="color:#FFE600"></i> 4.5</h4>
+				<h4 class="fw-bold"><i class="fa-solid fa-star" style="color:#FFD600"></i> 4.5</h4>
 			</div>
 		</div>
-<!-- <div id="map" class="mukRound" style="width:200px;height:150px;"></div> -->
 
 		
 		<table class="table text-center mt-5 mb-5">
@@ -82,8 +89,6 @@
 		<!-- 객실 리스트 시작 -->
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2">
 			<div class="col col-lg-3">
-				<input type="hidden" name="checkInDate">
-				<input type="hidden" name="checkOutDate">
 				<div class="mb-3 form-floating">
 					<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
 					<label for="daterangepicker">1박 2일</label>
@@ -108,9 +113,11 @@
 									<img class="hotelImg mukRound" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="300px" height="200px" style="background: lightgray">
 								</td>
 								<td colspan="2" class="align-top">
-									<h4 class="hotelName lh-1 fw-bold">${r.roomName }</h4>
+									<input type="hidden" class="roomId" value="${r.roomId }">
+									<h4 class="roomName lh-1 fw-bold">${r.roomName }</h4>
 									<span>${r.roomIntro }</span><br>
-									<span>${r.checkinTime }부터 ${r.checkoutTime }까지</span><br>
+									<span class="checkinTime">${r.checkinTime }</span>~
+									<span class="checkoutTime">${r.checkoutTime }</span><br>
 									<small class="text-muted">더 많은 정보</small>
 								</td>
 							</tr>
@@ -121,7 +128,7 @@
 							</tr>
 							<tr>
 								<td colspan="2" class="align-bottom text-end" style="height:40px">
-									<button type="button" class="mukButton" style="width:100%">예약하기</button>
+									<button type="button" class="reserveButton mukButton" style="width:100%">예약하기</button>
 								</td>
 							</tr>
 						</table>
@@ -137,11 +144,30 @@
 		
 		<!-- 리뷰 리스트 시작 -->
 		<div id="reviewList">
-		
 		</div>
 		<!-- 리뷰 리스트 끝 -->
+		
+		<!-- 호텔 정보 시작 -->
+		<div id="hotelInfo">
+		</div>
+		<!-- 호텔 정보 끝 -->
 	</div>
-
+	
+	<!-- 예약 버튼 시작 -->
+	<script>
+		$(".reserveButton").on("click", function(){
+			const roomId = $(this).parent().parent().parent().find(".roomId").val();
+			const checkinTime = $(this).parent().parent().parent().find(".checkinTime").text();
+			const checkoutTime = $(this).parent().parent().parent().find(".checkoutTime").text();
+			
+			$("input[name=roomId]").val(roomId);
+			$("input[name=checkinTime]").val(checkinTime);
+			$("input[name=checkoutTime]").val(checkoutTime);
+			
+			$("form").submit();
+		});
+	</script>
+	<!-- 예약 버튼 끝 -->
 
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4aaeb935cb2fd15933272e12d906ced0&libraries=services"></script>
@@ -155,32 +181,18 @@
 		// 지도를 생성합니다    
 		var map = new kakao.maps.Map(mapContainer, mapOption); 
 		
-		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new kakao.maps.services.Geocoder();
-		
-		// 주소로 좌표를 검색합니다
 		geocoder.addressSearch("${hotel.hotelAddress}", function(result, status) {
 		
-		    // 정상적으로 검색이 완료됐으면 
-		     if (status === kakao.maps.services.Status.OK) {
+			if (status === kakao.maps.services.Status.OK) {
 				
-		        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		
-		        // 결과값으로 받은 위치를 마커로 표시합니다
-		        var marker = new kakao.maps.Marker({
-		            map: map,
-		            position: coords
-		        });
-		
-		        // 인포윈도우로 장소에 대한 설명을 표시합니다
-// 		        var infowindow = new kakao.maps.InfoWindow({
-// 		            content: '<div style="width:150px;text-align:center;padding:6px 0;">${hotel.hotelName}</div>'
-// 		        });
-// 		        infowindow.open(map, marker);
-		
-		        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-		        map.setCenter(coords);
-		    } else {
+				var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+				var marker = new kakao.maps.Marker({
+				    map: map,
+				    position: coords
+				});
+				
+				map.setCenter(coords);
 		    }
 		});
  	</script>
@@ -207,14 +219,20 @@
 			autoApply: false
 		});
 		
+		const inout = $("#daterangepicker").val().split(" - ");
+		$("input[name=checkinDate]").val(inout[0]);
+		$("input[name=checkoutDate]").val(inout[1]);
+		
 		$("#daterangepicker").on("change", function(){
 			const inout = $(this).val().split(" - ");
-			const checkIn = new Date(inout[0]);
-			const checkOut = new Date(inout[1]);
-			$("input[name=checkInDate]").val(checkIn);
-			$("input[name=checkOutDate]").val(checkOut);
+			$("input[name=checkinDate]").val(inout[0]);
+			$("input[name=checkoutDate]").val(inout[1]);
+			const checkin = new Date(inout[0]);
+			const checkout = new Date(inout[1]);
+			console.log($("input[name=checkinDate]").val());
+			console.log($("input[name=checkoutDate]").val());
 			
-			var diff = checkOut - checkIn;
+			var diff = checkout - checkin;
 			var currDay = 24 * 60 * 60 * 1000;
 			const journey = parseInt(diff/currDay);
 			$(this).parent().find("label").text(journey+"박 "+(journey+1)+"일");
