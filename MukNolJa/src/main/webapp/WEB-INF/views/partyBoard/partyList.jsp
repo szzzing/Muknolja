@@ -31,7 +31,7 @@
 	
 	ol.numbered {
 	  list-style: none;
-	  border-left: 3px solid #b3b3b3;
+	  border-left: 3px solid RGB(107, 182, 236,0.7);
 	  counter-reset: numbered-list;
 	  margin-left: 10px;
 	  position: relative;
@@ -47,8 +47,8 @@
 	  margin-left: -3px;
 	}
 	ol.numbered li:before {
-	  background-color: #b3b3b3;
-	  border: 3px solid white;
+	  background-color: #6BB6EC;
+	 
 	  border-radius: 50%;
 	  color: white;
 	  content: counter(numbered-list, decimal);
@@ -57,22 +57,24 @@
 	  font-weight: bold;
 	  width: 30px;
 	  height: 30px;
-	  margin-top: -0.5em;
+	  margin-top: -0.4em;
 	  line-height: 30px;
 	  position: absolute;
 	  left: -17px;
 	  text-align: center;
+	  padding-top:-10px;
+	  
 	}
 	
 	
 	.card img{height: 250px;}
 	.card{margin-bottom: 30px;}
-	.card td{width: 70px; font-size: 14px; color: gray; margin-right: auto;}
+	.card td{width: 80px; font-size: 14px; color: gray; margin-right: auto;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
 </style>
 </head>
-<body>
+<body style="background-color:white;">
 	
 	
 	<jsp:include page="../member/menubar.jsp"/>

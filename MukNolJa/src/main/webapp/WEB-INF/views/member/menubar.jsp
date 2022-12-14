@@ -53,10 +53,10 @@
    	 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
   	 <header id="header"  style="top:0; left:0; position:fixed; ">
      <div class="container-fluid text-center">
-	  	<div class="row justify-content-center" style="width: 100vw; height:80px; background: white; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+	  	<div class="row justify-content-center" style="width: 100vw; height:80px; background: white; box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.3);">
             <div class="col" style="width:1200px; height:80px; ">
             	<div style=" width:1200px; height:80px; display:inLine-block; " >
-            		<div style="display:flex; float:left; ">
+            		<div style="display:flex; float:left; width:1200px;">
             		<div style="font-size:30px; margin-top:15px; color:#6BB6EC; font-weight: 900; ">MUKNOLJA</div>
             			<div class="menum" style="margin-top: 35px; display:flex">
 	            		 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#65647C; margin-left:30px;font-size: 15px;  font-family: 'HSYuji-Regular'; ">
@@ -70,14 +70,17 @@
 		            		<div class="menud" style="margin-left:40px;">호텔</div>
 		            		<div class="menud">후기</div>
 		            		<div class="menud">동행</div>
-	            			<div style="float:right; margin-left:550px; margin-top:-2px; display:flex">
-	            				<h3 id="popup_open_btn"><i class="fa-solid fa-comments"></i></h3>
+	            			<div style="float:right; margin-left:650px; margin-top:-8px; display:flex">
+	            				<h3 id="popup_open_btn" style="color:#6BB6EC; margin-left:-40px;"><i class="fa-solid fa-comments"></i></h3>
 	            			<c:if test="${ empty loginUser }">
-		        <li class="nav-item" style="margin-right:3%; width:40%" >
-		          <a class="nav-link " href="${contextPath }/loginView.me" style="font-size: 1.4vw; ">로그인</a>
-		        </li>
-		        </c:if>	
-	            				
+		         <li class="nav-item" style="margin-right:3%; width:40%" > -->
+		         </li> 
+					           <a class="nav-link " style="color:#6BB6EC; margin-left:40px;" href="${contextPath }/loginView.me" style="font-size: 1.4vw; "><h3><i class="fa-solid fa-circle-user"></i></h3></a>
+					        </c:if>	
+	            			<c:if test="${ !empty loginUser }">	
+	            				<a href="${ contextPath  }/myInfo.me"><h3><i class="bi bi-person-lines-fill" style="color:#6BB6EC;"></i></h3></a>
+	            				<a href="${ contextPath  }/logout.me"><h3><i class="bi bi-box-arrow-right" style="color:#6BB6EC;"></i></h3></a>
+	            			</c:if>
 		     				    
 	            			</div>
 	            		</div>
