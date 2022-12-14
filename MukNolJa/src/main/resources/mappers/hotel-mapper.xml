@@ -74,6 +74,19 @@
 		where room_id=#{roomId}
 	</select>
 	
+	<select id="getCurrentReservationId" resultType="_int">
+		select last_number
+		from user_sequences
+		where sequence_name = 'SEQ_RESERVATIONID'
+	</select>
+	
+	<insert id="insertReservation">
+		insert into reservation
+		values(SEQ_RESERVATIONID.nextval, #{memberId}, #{roomId}, #{checkinDate}, #{checkoutDate}, default, #{paymentMethod}, #{paymentAmount}, sysdate, #{reservationName}, #{reservationPhone})
+	</insert>
+	
+	
+	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>
 		<result column="ENT_ID" property="entId"/>

@@ -25,12 +25,14 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
 </head>
 <body>
 
 	<div class="container mt-5 mb-5">
-		<h1 class="fw-bold pt-5">예약하기</h1>
-		<form id="reservationForm" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 justify-content-between">
+		<form id="reservationForm" action="insertReservation.ho" class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 justify-content-between">
 			
 			<div class="col-md-6 col-lg-6 pt-5">
 			
@@ -38,64 +40,108 @@
 				<h4 class="fw-bold pb-5">예약자 정보</h4>
 				<div class="mb-5">
 					<label for="reservationName" class="form-label mukMutedText">예약자 이름</label>
-					<input type="text" class="form-control" name="reservationName" placeholder="체크인시 필요한 정보입니다." required>
+					<input type="text" class="form-control" name="reservationName" placeholder="체크인시 필요한 정보입니다." value="${loginUser.name }" required>
 				</div>
 				<div class="mb-5">
 					<label for="reservationPhone" class="form-label mukMutedText">휴대폰 번호</label>
-					<input type="tel" class="form-control" name="reservationPhone" placeholder="체크인시 필요한 정보입니다." required>
+					<input type="tel" class="form-control" name="reservationPhone" placeholder="체크인시 필요한 정보입니다." value="${loginUser.phone }" required>
 				</div>
 				<!-- 예약자 정보 끝 -->
 				
 				<!-- 결제수단 선택 시작 -->
 				<h4 class="fw-bold pt-5 pb-3">결제수단 선택</h4>
 				<select class="form-select" name="paymentMethod">
-					<option selected>계좌이체</option>
-					<option>카카오페이</option>
-					<option>토스페이</option>
-					<option>신용카드</option>
+					<option selected value="html5_inicis">신용카드</option>
+					<option value="kakaopay">카카오페이</option>
+					<option value="tosspay">토스페이</option>
 				</select>
 				<!-- 결제수단 선택 끝 -->
 			
 			</div>
 			
 			<div class="col-md-5 col-lg-5 pt-5">
-				<div id="reservationInfo" class="p-5">
-					<div class="mb-3">
-						<div class="mukMutedText mb-1">호텔 이름</div>
-						<h5>${hotel.hotelName }</h5>
-					</div>
-					<div class="mb-3">
-						<div class="mukMutedText mb-1">객실 이름</div>
-						<h5>${room.roomName }</h5>
-					</div>
-					<div class="mb-3">
-						<div class="mukMutedText mb-1">숙박기간</div>
-						<fmt:parseNumber value="${r.checkinDate.time / (1000*60*60*24)}" integerOnly="true" var="checkinDate" scope="request"/>
-						<fmt:parseNumber value="${r.checkoutDate.time / (1000*60*60*24)}" integerOnly="true" var="checkoutDate" scope="request"/>
-						<h5>${checkoutDate - checkinDate }박 ${checkoutDate - checkinDate+1 }일</h5>
-					</div>
-					<div class="mb-3">
-						<div class="mukMutedText mb-1">체크인</div>
-						<h5><fmt:formatDate value="${r.checkinDate }" pattern="MM.dd E" /> ${room.checkinTime }</h5>
-					</div>
-					<div>
-						<div class="mukMutedText mb-1">체크아웃</div>
-						<h5><fmt:formatDate value="${r.checkoutDate }" pattern="MM.dd E" /> ${room.checkoutTime }</h5>
-					</div>
-					<hr class="mukMutedText mt-5 mb-5">
-					<div>
-						<div class="mb-1">
-							<span class="fw-bold">총 결제 금액</span><span>(VAT 포함)</span>
+				<div id="reservationInfo">
+					<div class="p-5">
+						<div class="mb-3">
+							<div class="mukMutedText mb-1">호텔 이름</div>
+							<h5>${hotel.hotelName }</h5>
+							<input type="hidden" name="hotelId" value="${hotel.hotelId }">
+							<input type="hidden" name="hotelName" value="${hotel.hotelName }">
 						</div>
-						<h4 class="fw-bold" style="color:#6BB6EC"><fmt:formatNumber value="${room.roomPrice }" pattern="#,###원"/></h4>
+						<div class="mb-3">
+							<div class="mukMutedText mb-1">객실 이름</div>
+							<h5>${room.roomName }</h5>
+							<input type="hidden" name="roomId" value="${room.roomId }">
+							<input type="hidden" name="roomName" value="${room.roomName }">
+						</div>
+						<div class="mb-3">
+							<div class="mukMutedText mb-1">숙박기간</div>
+							<fmt:parseNumber value="${r.checkinDate.time / (1000*60*60*24)}" integerOnly="true" var="checkinDate" scope="request"/>
+							<fmt:parseNumber value="${r.checkoutDate.time / (1000*60*60*24)}" integerOnly="true" var="checkoutDate" scope="request"/>
+							<h5>${checkoutDate - checkinDate }박 ${checkoutDate - checkinDate+1 }일</h5>
+						</div>
+						<div class="mb-3">
+							<div class="mukMutedText mb-1">체크인</div>
+							<input type="hidden" name="checkinDate" value="${r.checkinDate }">
+							<input type="hidden" name="checkinTime" value="${room.checkinTime }">
+							<h5><fmt:formatDate value="${r.checkinDate }" pattern="MM.dd E" /> ${room.checkinTime }</h5>
+						</div>
+						<div>
+							<div class="mukMutedText mb-1">체크아웃</div>
+							<input type="hidden" name="checkoutDate" value="${r.checkoutDate }">
+							<input type="hidden" name="checkoutTime" value="${room.checkoutTime }">
+							<h5><fmt:formatDate value="${r.checkoutDate }" pattern="MM.dd E" /> ${room.checkoutTime }</h5>
+						</div>
+						<hr class="mukMutedText mt-5 mb-5">
+						<div>
+							<div class="mb-1">
+								<span class="fw-bold">총 결제 금액</span><span>(VAT 포함)</span>
+							</div>
+							<input type="hidden" name="paymentAmount" value="${room.roomPrice }">
+							<h4 class="fw-bold" style="color:#6BB6EC"><fmt:formatNumber value="${room.roomPrice }" pattern="#,###원"/></h4>
+						</div>
 					</div>
+					<button type="button" id="reservationButton" class="mukButton" style="width:100%; height:50px;">결제하기</button>
 				</div>
 			</div>
 		</form>
 	</div>
 
 
-
+	<!-- 아임포트 결제 api 구현 -->
+	<script>
+		var IMP = window.IMP; // 생략 가능
+		IMP.init("imp30848876"); // 예: imp00000000
+		
+		$("#reservationButton").on("click", function(){
+			requestPay();
+		});
+		
+		function requestPay() {
+			// IMP.request_pay(param, callback) 결제창 호출
+			IMP.request_pay({ // param
+				pg: $("select[name=paymentMethod]").val(),
+				merchant_uid: "${currentReservationId}",
+				name: "${hotel.hotelName} "+"${room.roomName}",
+				amount: 100,
+				buyer_email: "gildong@gmail.com",
+				buyer_name: "${loginUser.name}",
+				buyer_tel: "${loginUser.phone}",
+				buyer_addr: "${loginUser.address}",
+				buyer_postcode: "null"
+			}, function(rsp) { // callback
+			  		console.log(rsp);
+				if (rsp.success) {
+					// 결제 성공 시 로직,
+					$("form").submit();
+				} else {
+					// 결제 실패 시 로직,
+					alert(rsp.error_msg);
+				}
+			});
+		}
+	</script>
+	<!-- 아임포트 결제 api 구현 -->
 
 
 	<!-- 전화번호 입력 설정 시작 -->
