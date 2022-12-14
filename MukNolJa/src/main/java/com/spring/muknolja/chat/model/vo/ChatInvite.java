@@ -11,10 +11,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ChatRoom {
-	private String roomCode;
-	private int BoardId;
-	private String roomName;
-	private String hostId;
-	private String maxTransferTime;
+public class ChatInvite {
+	 private String roomCode;
+	 private String recipentId;
+	 private String roomName;
 }
