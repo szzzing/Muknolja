@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.dao.HotelDAO;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Service("hService")
@@ -68,5 +69,15 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public Room selectRoom(int roomId) {
 		return hDAO.selectRoom(sqlSession, roomId);
+	}
+	
+	@Override
+	public int getCurrentReservationId() {
+		return hDAO.getCurrentReservationId(sqlSession);
+	}
+	
+	@Override
+	public int insertReservation(Reservation r) {
+		return hDAO.insertReservation(sqlSession, r);
 	}
 }

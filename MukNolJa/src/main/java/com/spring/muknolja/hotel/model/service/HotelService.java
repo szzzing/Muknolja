@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 public interface HotelService {
@@ -27,4 +28,8 @@ public interface HotelService {
 	int insertHotel(Hotel h);
 	
 	Room selectRoom(int roomId);
+
+	int getCurrentReservationId();
+
+	int insertReservation(Reservation r);
 }

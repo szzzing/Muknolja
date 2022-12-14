@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Repository("hDAO")
@@ -51,6 +52,14 @@ public class HotelDAO {
 
 	public Room selectRoom(SqlSessionTemplate sqlSession, int roomId) {
 		return sqlSession.selectOne("hotelmapper.selectRoom", roomId);
+	}
+
+	public int getCurrentReservationId(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("hotelmapper.getCurrentReservationId");
+	}
+
+	public int insertReservation(SqlSessionTemplate sqlSession, Reservation r) {
+		return sqlSession.insert("hotelmapper.insertReservation", r);
 	}
 
 }

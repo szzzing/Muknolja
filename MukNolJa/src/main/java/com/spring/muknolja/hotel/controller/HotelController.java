@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.muknolja.common.exception.CommonException;
@@ -214,11 +215,25 @@ public class HotelController {
 		
 		Room room = hService.selectRoom(r.getRoomId());
 		Hotel hotel = hService.selectHotel(room.getHotelId());
+		int currentReservationId = hService.getCurrentReservationId();
 		
 		model.addAttribute("hotel", hotel);
 		model.addAttribute("room", room);
 		model.addAttribute("r", r);
+		model.addAttribute("currentReservationId", currentReservationId);
 		
 		return "writeReservation";
+	}
+	
+	@RequestMapping(value="insertReservation.ho")
+	public String insertReservation(@ModelAttribute Reservation r, Model model, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		r.setMemberId(m.getId());
+		
+		int result = hService.insertReservation(r);
+		
+		model.addAttribute("r", r);
+		
+		return "reservation";
 	}
 }
