@@ -64,4 +64,9 @@ public class HotelServiceImpl implements HotelService{
 	public int insertHotel(Hotel h) {
 		return hDAO.insertHotel(sqlSession, h);
 	}
+	
+	@Override
+	public Room selectRoom(int roomId) {
+		return hDAO.selectRoom(sqlSession, roomId);
+	}
 }

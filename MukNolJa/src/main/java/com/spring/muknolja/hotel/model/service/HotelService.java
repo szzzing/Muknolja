@@ -25,5 +25,6 @@ public interface HotelService {
 	AttachedFile selectRoomThumbnail(int roomId);
 
 	int insertHotel(Hotel h);
-
+	
+	Room selectRoom(int roomId);
 }

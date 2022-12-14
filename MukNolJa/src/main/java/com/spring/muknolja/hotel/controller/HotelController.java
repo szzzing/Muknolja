@@ -19,6 +19,7 @@ import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Room;
 import com.spring.muknolja.member.model.vo.Member;
 
@@ -205,4 +206,19 @@ public class HotelController {
 		}
 	}
 	
+	@RequestMapping("writeReservation.ho")
+	public String writeReservation(@ModelAttribute Reservation r, Model model, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		r.setMemberId(m.getId());
+		
+		Room room = hService.selectRoom(r.getRoomId());
+		Hotel hotel = hService.selectHotel(room.getHotelId());
+		
+		model.addAttribute("hotel", hotel);
+		model.addAttribute("room", room);
+		model.addAttribute("r", r);
+		
+		return "writeReservation";
+	}
 }

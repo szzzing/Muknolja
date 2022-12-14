@@ -40,7 +40,7 @@
 				<label for="roomPrice">등급</label>
 			</div>
 			<div class="col form-floating mb-3 mt-3">
-				<input type="tel" class="form-control m-input" name="hotelPhone" id="telInput" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13"/>
+				<input type="tel" class="form-control m-input" name="hotelPhone" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13"/>
 				<label for="hotelPhone">전화번호</label>
 			</div>
 			<div class="col form-floating mb-3 mt-3">

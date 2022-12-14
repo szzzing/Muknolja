@@ -68,6 +68,12 @@
 		select * from dual
 	</insert>
 	
+	<select id="selectRoom" resultMap="roomResultSet">
+		select *
+		from room
+		where room_id=#{roomId}
+	</select>
+	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>
 		<result column="ENT_ID" property="entId"/>
@@ -111,5 +117,24 @@
 		<result column="FILE_LINK" property="fileLink"/>
 		<result column="FILE_STATUS" property="fileStatus"/>
 		<result column="FILE_THUMBNAIL" property="fileThumbnail"/>
+	</resultMap>
+	
+	<resultMap type="Reservation" id="reservationResultSet">
+		<id column="RESERVATION_ID" property="reservationId"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="HOTEL_ID" property="hotelId"/>
+		<result column="ROOM_ID" property="roomId"/>
+		<result column="HOTEL_NAME" property="hotelName"/>
+		<result column="ROOM_NAME" property="roomName"/>
+		<result column="CHECKIN_DATE" property="checkinDate"/>
+		<result column="CHECKOUT_DATE" property="checkoutDate"/>
+		<result column="RESERVATION_STATUS" property="reservationStatus"/>
+		<result column="PAYMENT_METHOD" property="paymentMethod"/>
+		<result column="PAYMENT_AMOUNT" property="paymentAmount"/>
+		<result column="PAYMENT_DATE" property="paymentDate"/>
+		<result column="RESERVATION_NAME" property="reservationName"/>
+		<result column="RESERVATION_PHONE" property="reservationPhone"/>
+		<result column="CHECKIN_TIME" property="checkinTime"/>
+		<result column="CHECKOUT_TIME" property="checkoutTime"/>
 	</resultMap>
 </mapper>
