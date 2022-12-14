@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="chatmapper">
 	<insert id="createRoom">
-		insert into CHAT_ROOM
-		values(#{roomCode}, #{roomName})
+		insert all
+		into CHAT_ROOM
+		values(#{chatRoom.roomCode}, #{chatRoom.roomName})
+		into CHAT_USER
+		values(#{chatRoom.roomCode}, #{id})
+		select * from dual
 	</insert>
 	
 	<select id="selectChatRoomList" resultMap="ChatRoomResultSet">
@@ -62,8 +66,47 @@
   	<select id="selectUser" resultMap="memberResultSet">
   		select *
   		from member
-  		where NICKNAME = #{ncik}
+  		where NICKNAME = #{nick}
   	</select>
+  	
+  	<select id="selectChatRoom" resultMap="ChatRoomResultSet">
+  		select *
+  		from CHAT_ROOM
+  		where CHAT_ROOM_CODE = #{roomCode}
+  	</select>
+  	
+  	<insert id="inviteChat">
+  		insert into CHAT_INVITE
+  		values(#{roomCode}, #{recipentId}, default)
+  	</insert>
 	
+	<select id="selectInvite" resultMap="ChatInviteResultSet">
+		select *
+		from CHAT_INVITE
+			join CHAT_ROOM using(CHAT_ROOM_CODE)
+		where RECIPIENT_ID = #{id} and APPROVAL_YN = 'N'
+	</select>
+	
+	<resultMap type="ChatInvite" id="ChatInviteResultSet">
+		<id column="CHAT_ROOM_CODE" property="roomCode"/>
+		<result column="RECIPIENT_ID" property="recipentId"/>
+		<result column="CHAT_ROOM_NAME" property="roomName"/>
+	</resultMap>
+	
+	<insert id="participate">
+		insert into CHAT_USER
+		values(#{roomCode}, #{id})
+	</insert>
+	
+	<update id="consentInvite">
+		update CHAT_INVITE
+		set APPROVAL_YN = 'Y'
+		where CHAT_ROOM_CODE = #{roomCode} and RECIPIENT_ID = #{id}
+	</update>
+	
+	<delete id="refusalInvite">
+		delete from CHAT_INVITE
+		where CHAT_ROOM_CODE = #{roomCode} and RECIPIENT_ID = #{id}
+	</delete>
 	
 </mapper>

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.muknolja.chat.model.vo.ChatInvite;
 import com.spring.muknolja.chat.model.vo.ChatMessage;
 import com.spring.muknolja.chat.model.vo.ChatRoom;
 import com.spring.muknolja.member.model.vo.Member;
@@ -13,8 +14,8 @@ import com.spring.muknolja.member.model.vo.Member;
 @Repository("cDAO")
 public class ChatDAO {
 
-	public int createRoom(SqlSessionTemplate sqlSession, ChatRoom chatRoom) {
-		return sqlSession.insert("chatmapper.createRoom", chatRoom);
+	public int createRoom(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("chatmapper.createRoom", map);
 	}
 
 	public ArrayList<ChatRoom> selectChatRoomList(SqlSessionTemplate sqlSession, String id) {
@@ -31,6 +32,30 @@ public class ChatDAO {
 
 	public Member selectUser(SqlSessionTemplate sqlSession, String nick) {
 		return sqlSession.selectOne("chatmapper.selectUser", nick);
+	}
+
+	public ChatRoom selectChatRoom(SqlSessionTemplate sqlSession, String roomCode) {
+		return sqlSession.selectOne("chatmapper.selectChatRoom", roomCode);
+	}
+
+	public int inviteChat(SqlSessionTemplate sqlSession, ChatInvite i) {
+		return sqlSession.insert("chatmapper.inviteChat", i);
+	}
+
+	public ArrayList<ChatInvite> selectInvite(SqlSessionTemplate sqlSession, String id) {
+		return (ArrayList)sqlSession.selectList("chatmapper.selectInvite", id);
+	}
+
+	public int participate(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.insert("chatmapper.participate", map);
+	}
+
+	public void consentInvite(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		sqlSession.update("chatmapper.consentInvite", map);
+	}
+
+	public int refusalInvite(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.delete("chatmapper.refusalInvite", map);
 	}
 
 }

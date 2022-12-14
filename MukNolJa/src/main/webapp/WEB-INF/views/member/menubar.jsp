@@ -18,10 +18,20 @@
     	 font-size: 15px;
     	 margin-left:50px;
     	 color:#65647C;}
-    	 #room_modal, #loginCheck_modal, #createroom_modal, #createRoomSuccess_modal{
+    	 #room_modal, #createroom_modal, #invite_modal{
                 display: none;
                 width: 300px;
                 height: 400px;
+                padding: 20px 20px;
+                background-color: #fefefe;
+                border: 1px solid #888;
+                border-radius: 3px;
+            }
+            
+            #success_modal,#loginCheck_modal{
+            	display: none;
+                width: 300px;
+                height: 200px;
                 padding: 20px 20px;
                 background-color: #fefefe;
                 border: 1px solid #888;
@@ -89,12 +99,8 @@
             }
             .messageCheck{
             	display: inline-block;
-            	width:10px;
-  				height:10px;
-  				border-radius: 50%;
-  				background: green;
   				float: right;
-  				margin-top: 20px;
+  				margin-top: 10px;
   				margin-right: 20px;
             }
             .createRoom{
@@ -107,7 +113,7 @@
             .chatNcik{
             	font-size: 5px;
             }
-            #createRoom:hover{
+            #invite:hover, #createRoom:hover{
             	text-decoration: underline;
             	cursor: pointer;
             }
@@ -165,18 +171,18 @@
 			<div class="row friends" style="padding: 10px 0px;">
            		<div class="col text-center" id="createRoom">채팅방 만들기</div>
 				<div class="col text-center" style="border-bottom: 1px solid black"><h4><i class="bi bi-envelope-plus"></i></h4></div>
-				<div class="row text-center invite" style="border-bottom: 1px solid black;">
-					<div class="col"><b style="margin-right: 10px;">채팅방 이름</b> <small>참가</small> <small>거절</small></div>
+				<div id="inviteList">
 				</div>
 			</div>
-			<div id="friends"></div>
 		</div>
      </div>
      
      <div id="chat_modal">
      	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
      	<div class="row">
-     		<div class="col text-center" style="border-bottom: 1px solid black; padding: 10px;"><b>채팅방 이름</b></div>
+     		<div class="col text-center" style="border-bottom: 1px solid black; padding: 10px;">
+     			<b id="chatTitle">채팅방 이름</b>
+     		</div>
      	</div>
      	<div id="chatBoxs">
      		<div id="chat">
@@ -185,6 +191,7 @@
             	<input type = "text" class = "form-control" id="message" placeholder = "message">
 	            <div class = "input-group-btn">
 	               	<button class="btn btn-outline-secondary" type="button" id="send"><i class="bi bi-chat-square-text"></i></button>
+	               	<button class="btn btn-outline-secondary" type="button" id="inviteBtn"><i class="bi bi-person-plus"></i></button>
 	           	</div>
             </div>
      	</div>
@@ -212,11 +219,25 @@
     	</div>
     </div>
     
-    <div id="createRoomSuccess_modal">
+    <div id="invite_modal">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
-    		<div class="col text-center">
-    			채팅방 생성 완료
+    		<div class="col">
+    			<div class = "input-group input-group-sm">
+    				<input type = "text" class = "form-control" id="searchNick" placeholder = "닉네임">
+	  				<div class = "input-group-btn">
+	  		  			<button class="btn btn-outline-secondary" type="button" id="searchNickBtn"><i class="bi bi-search"></i></button>
+	  				</div>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div id="friends"></div>
+    </div>
+    
+    <div id="success_modal">
+    	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
+    	<div class="row">
+    		<div class="col text-center" id="text">
     		</div>
     	</div>
     </div>
@@ -225,6 +246,8 @@
          <script>
          window.onload = () => {
         	 let stomp = '';
+        	 let roomCode ='';
+        	 let sockJs = '';
         	 
             function Modal(id) {
                 var zIndex = 9999;
@@ -233,6 +256,9 @@
                 // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
                 modal.querySelector('.modal_close_btn').addEventListener('click', function() {
                     modal.style.display = 'none';
+                    if(sockJs != ''){
+                    	sockJs.close();
+                    }
                 });
 
                 modal.setStyle({
@@ -263,17 +289,121 @@
             	if(${loginUser != null}){
             	// 모달창 띄우기
                 Modal('room_modal');
+                chat();
+            	} else{
+            		Modal("loginCheck_modal");
+            	}
+            });
+            
+            // send 버튼 클릭시
+			document.getElementById('send').addEventListener('click', function() {
+				const message = document.getElementById('message');
+				console.log("반복2");
+				console.log("socketRoomCode2 : " + roomCode);
+				if(message.value != ''){
+					console.log("socketRoomCode3 : " + roomCode);
+					stomp.send('/pub/chat/message', {}, JSON.stringify({senderId: '${loginUser.id}', chatContent: message.value, roomCode: roomCode, nickName: '${loginUser.nickName}'}));
+					message.value = '';
+				}
+			});
+            
+            $("#roomBtn").click(function() {
+            	$(".friends").hide();
+            	$(".nicks").hide();
+            	$(".chatRoom").show();
             	
+            	chat();
+            });
+            
+            $("#frndBtn").click(function() {
+            	$(".chatRoom").hide();
+            	$(".friends").show();
+            	
+            	$.ajax({
+            		url: 'selectInvite.ch',
+            		success: (data) => {
+            			document.getElementById('inviteList').innerHTML = '';
+            			for(const i of data){
+            				let str = '<div class="row text-center invite" style="border-bottom: 1px solid black;">';
+         					str += '<div class="col invites"><b style="margin-right: 10px;">' + i.roomName + '</b> <small>참가</small> <small>거절</small></div>';
+         					str += '</div>';
+         					document.getElementById('inviteList').innerHTML += str;
+            			}
+            			
+            			const invites = document.getElementsByClassName('invites');
+            			console.log(invites);
+            			for(const i in data){
+            				const invite = invites[i];
+            				console.log(invite);
+            				
+            				const smalls = invite.querySelectorAll('small');
+            				
+            				for(const small of smalls){
+	            				small.addEventListener('mouseover', function(){
+	            					small.style.cursor = 'pointer';
+	            					small.style.textDecoration = 'underline';
+	            				});
+	            				small.addEventListener('mouseout', function(){
+	            					small.style.textDecoration = 'none';
+	            				});
+            				}
+            				
+            				smalls[0].addEventListener('click', function(){
+            					$.ajax({
+            						url: 'participate.ch',
+            						data: {roomCode: data[i].roomCode},
+            						success: (data) => {
+            							Modal("success_modal");
+            							document.getElementById('text').innerText = '채팅에 참가하셨습니다.';
+            						}
+            					});
+            				});
+            				
+            				smalls[1].addEventListener('click', function(){
+            					$.ajax({
+            						url: 'refusalInvite.ch',
+            						data: {roomCode: data[i].roomCode},
+            						success: (data) => {
+            							Modal("success_modal");
+            							document.getElementById('text').innerText = '초대를 거절하셨습니다.';
+            						}
+            					})
+            				});
+            			}
+            		}
+            	});
+            });      
+
+	        // 채팅방 생성
+	        document.getElementById('createRoom').addEventListener('click', function(){
+	            Modal('createroom_modal');
+	        });
+	        
+	        document.getElementById('chatRoomBtn').addEventListener('click', function(){
+    			const roomName = document.getElementById('chatRoomName').value;
+    			$.ajax({
+        			url: 'createRoom.ch',
+        			data: {roomName: roomName, hostId: '${loginUser.id}'},
+        			success: (data) => {
+        				Modal('success_modal');
+        				document.getElementById('text').innerText = '채팅방 생성 완료.';
+        			}
+        		});
+    		});
+	        
+	        function chat(){
+	        	// 채팅방 리스트 불러오기
       			$.ajax({
       				url: '${contextPath}/chatRoomList.ch',
       				success: (data) => {
       					document.getElementById('rooms').innerHTML = '';
       					for(const c of data){
+      						console.log(c);
       						let str = '<div class="row chatRoom" style="border-bottom: 1px solid black;">';
       						str += '<div class="col">';
       						str += '<b style="padding-left:10px;">' + c.roomName + '</b>';
-      						str += '<div class="messageCheck"></div><br>';
-      						str += '<small style="padding-left:10px;">3분</small>';
+      						str += '<div class="messageCheck"><i class="bi bi-chat-dots"></i></div><br>';
+      						str += '<small style="padding-left:10px;">' + c.maxTransferTime +'</small>';
       						str += '<input type="hidden" value="' + c.roomCode + '">';
       						str += '</div></div>';
 
@@ -282,17 +412,18 @@
 						const chatrooms = document.getElementsByClassName('chatRoom');
 						
 						for(const room of chatrooms){
+							// 채팅방 선택시
 					        room.addEventListener('click', function() {
-					        	console.log('a');
 					            Modal('chat_modal');
-					            const roomCode = room.querySelector('input[type="hidden"]').value;
-
+					            roomCode = this.querySelector('input[type="hidden"]').value;
+								
+					            // 과거 채팅 불러오기
 								$.ajax({
 									url: 'chatRoom.ch',
 									data: {roomCode:roomCode},
 									success: (data) => {
-										const roomCode = data.roomCode;
 										document.getElementById('chat').innerHTML = '';
+										document.getElementById('chatTitle').innerText = data.room.roomName;
 										
 										for(const c of data.list){							
 											if(c.senderId != '${ loginUser.id }'){
@@ -314,10 +445,11 @@
 											}
 										}
 										
+										// 채팅 스크롤 아래로 고정
 										$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
 										
 										 // webSocket connect
-							    		const sockJs = new SockJS("${contextPath}/stomp/chat");
+							    		sockJs = new SockJS("${contextPath}/stomp/chat");
 							    		stomp = Stomp.over(sockJs);
 							         	
 							    		if(stomp != ''){
@@ -326,8 +458,6 @@
 									            // subscribe 시
 									    		stomp.subscribe("/sub/chat/room/" + roomCode, function (chat) {
 									    			const content = JSON.parse(chat.body);
-									    			console.log(content);
-									    			
 									    			const chatDiv = document.getElementById('chat');
 									    			
 									    			if(content.senderId != '${ loginUser.id }'){
@@ -350,18 +480,51 @@
 									    			
 									    			$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
 									    		});
-									            
-									    		// send 버튼 클릭시
-												document.getElementById('send').addEventListener('click', function() {
-													const message = document.getElementById('message');
-													if(message.value != ''){
-														stomp.send('/pub/chat/message', {}, JSON.stringify({senderId: '${loginUser.id}', chatContent: message.value, roomCode: roomCode, nickName: '${loginUser.nickName}'}));
-														message.value = '';
-													}
-												});
-									            
 									        });
 							    		}
+							    		
+							    		document.getElementById('inviteBtn').addEventListener('click', function(){
+							    			Modal('invite_modal');
+							    		});
+							    		
+							    		document.getElementById('searchNickBtn').addEventListener('click', function() {
+							            	const nick = document.getElementById('searchNick').value;
+							            	
+							            	if(nick != '${loginUser.nickName}'){
+							            	$.ajax({
+							            		url: 'searchNick.ch',
+							            		data: {nick:nick},
+							            		success: (data) => {
+							            			document.getElementById('friends').innerHTML = '';
+							            			if(data != ''){
+
+							            				let str = '<div class="row nicks" style="border-bottom: 1px solid black;">';
+							            				str += '<div class="col">';
+							            				str += '<b class="nick">' + data.nickName + '</b> <small id="invite">초대하기</small>';
+							            				str += '</div></div>';
+							            				
+							            				document.getElementById('friends').innerHTML += str;
+							            				
+							            				const invite = document.getElementById('invite');
+							            				
+							            				invite.addEventListener('click', () => {
+
+							                        		const roomName = document.getElementById('chatRoomName').value;
+							                        		$.ajax({
+							                            		url: 'inviteChat.ch',
+							                            		data: {roomCode: roomCode, recipentId: data.id},
+							                            		success: (data) => {
+							                            			Modal('success_modal');
+							                            			document.getElementById('text').innerText = '초대 성공';
+							                            		}
+							                            	});
+
+							                        	});
+							            			}
+							            		}
+							            	});
+							            	}
+							            });
 									},
 									error: (data) => {
 										
@@ -371,98 +534,7 @@
 					    }
       				}
       			});
-      			chatrooms = document.getElementsByClassName('chatRoom');
-            	} else{
-            		Modal("loginCheck_modal");
-            	}
-            });
-            
-            $("#roomBtn").click(function() {
-            	$(".friends").hide();
-            	$(".nicks").hide();
-            	$(".chatRoom").show();
-            	
-            	$.ajax({
-            		url: '${contextPath}/chatRoomList.ch',
-      				success: (data) => {
-      					document.getElementById('rooms').innerHTML = '';
-      					for(const c of data){
-      						let str = '<div class="row chatRoom" style="border-bottom: 1px solid black;">';
-      						str += '<div class="col">';
-      						str += '<b style="padding-left:10px;">' + c.roomName + '</b>';
-      						str += '<div class="messageCheck"></div><br>';
-      						str += '<small style="padding-left:10px;">3분</small>';
-      						str += '<input type="hidden" value="' + c.roomCode + '">';
-      						str += '</div></div>';
-
-      						document.getElementById('rooms').innerHTML += str;
-      					}
-      				}
-            	});
-            });
-            
-            $("#frndBtn").click(function() {
-            	$(".chatRoom").hide();
-            	$(".friends").show();
-            });
-            
-//             document.getElementById('searchNickBtn').addEventListener('click', function() {
-//             	const nick = document.getElementById('searchNick').value;
-            	
-//             	if(nick != '${loginUser.nickName}'){
-//             	$.ajax({
-//             		url: 'searchNick.ch',
-//             		data: {nick:nick},
-//             		success: (data) => {
-//             			document.getElementById('friends').innerHTML = '';
-//             			if(data != ''){
-//             				console.log(data);
-//             				let str = '<div class="row nicks" style="border-bottom: 1px solid black;">';
-//             				str += '<div class="col">';
-//             				str += '<b class="nick">' + data.nickName + '</b> <small id="createRoom">채팅하기</small>';
-//             				str += '</div></div>';
-            				
-//             				document.getElementById('friends').innerHTML += str;
-            				
-//             				const createRoom = document.getElementById('createRoom');
-            				
-//             				createRoom.addEventListener('click', () => {
-                        		
-//                         		Modal('createroom_modal');
-                        		
-//                         		document.getElementById('chatRoomBtn').addEventListener('click', function(){
-//                         			const roomName = document.getElementById('chatRoomName').value;
-//                         			$.ajax({
-//                             			url: 'createRoom.ch',
-//                             			data: {roomName: roomName, participantID: data.id, hostId: '${loginUser.id}'},
-//                             			success: (data) => {
-//                             				Modal('createRoomSuccess_modal');
-//                             			}
-//                             		});
-//                         		});
-//                         	});
-//             			}
-//             		}
-//             	});
-//             	}
-//             });
-            
-
-	        // 채팅방 생성
-	        document.getElementById('createRoom').addEventListener('click', function(){
-	            Modal('createroom_modal');
-	        });
-	        
-	        document.getElementById('chatRoomBtn').addEventListener('click', function(){
-    			const roomName = document.getElementById('chatRoomName').value;
-    			$.ajax({
-        			url: 'createRoom.ch',
-        			data: {roomName: roomName, hostId: '${loginUser.id}'},
-        			success: (data) => {
-        				Modal('createRoomSuccess_modal');
-        			}
-        		});
-    		});
+	        }
 
          }
         </script>
