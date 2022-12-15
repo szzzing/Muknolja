@@ -68,37 +68,44 @@ public class ChatroomController {
     	
     	for(ChatRoom c : list) {
     		String time = c.getMaxTransferTime();
-    		int cYear = Integer.parseInt(time.substring(0, 4));
-        	int cMonth = Integer.parseInt(time.substring(5, 7));
-        	int cDay = Integer.parseInt(time.substring(8, 10));
-        	int cH = Integer.parseInt(time.substring(11, 13)); 
-        	int cM = Integer.parseInt(time.substring(14, 16));
     		
-    		if(nYear == cYear) {
-    			if(nMonth == cMonth) {
-    				if(nDay == cDay) {
-    					if(nH == cH) {
-    						if(nM == cM) {
-    							c.setMaxTransferTime("방금");
-            				} else {
-            					int m = nM - cM;
-            					c.setMaxTransferTime(m + "분 전");
-            				}
-        				} else {
-        					int h = nH - cH;
-        					c.setMaxTransferTime(h + "시간 전");
-        				}
-    				} else {
-    					int d = nDay - cDay;
-    					c.setMaxTransferTime(d + "일 전");
-    				}
-    			} else {
-    				int m = nMonth - cMonth;
-    				c.setMaxTransferTime(m + "달 전");
-    			}
+    		if(time != null) {
+    		
+	    		int cYear = Integer.parseInt(time.substring(0, 4));
+	        	int cMonth = Integer.parseInt(time.substring(5, 7));
+	        	int cDay = Integer.parseInt(time.substring(8, 10));
+	        	int cH = Integer.parseInt(time.substring(11, 13)); 
+	        	int cM = Integer.parseInt(time.substring(14, 16));
+	    		
+	    		if(nYear == cYear) {
+	    			if(nMonth == cMonth) {
+	    				if(nDay == cDay) {
+	    					if(nH == cH) {
+	    						if(nM == cM) {
+	    							c.setMaxTransferTime("방금");
+	            				} else {
+	            					int m = nM - cM;
+	            					c.setMaxTransferTime(m + "분 전");
+	            				}
+	        				} else {
+	        					int h = nH - cH;
+	        					c.setMaxTransferTime(h + "시간 전");
+	        				}
+	    				} else {
+	    					int d = nDay - cDay;
+	    					c.setMaxTransferTime(d + "일 전");
+	    				}
+	    			} else {
+	    				int m = nMonth - cMonth;
+	    				c.setMaxTransferTime(m + "달 전");
+	    			}
+	    		} else {
+	    			int y = nYear - cYear;
+	    			c.setMaxTransferTime(y + "년 전");
+	    		}
+    		
     		} else {
-    			int y = nYear - cYear;
-    			c.setMaxTransferTime(y + "년 전");
+    			c.setMaxTransferTime("메세지가 없습니다");
     		}
     		
     	}
