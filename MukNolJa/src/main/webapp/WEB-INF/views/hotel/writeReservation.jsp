@@ -13,7 +13,6 @@
 	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.mukMutedText {color:#B9B9B9;}
-	
 	#reservationInfo {
 		background: #F9F9F9;
 		border-radius: 20px;
@@ -37,7 +36,7 @@
 			<div class="col-md-6 col-lg-6 pt-5">
 			
 				<!-- 예약자 정보 시작 -->
-				<h4 class="fw-bold pb-5">예약자 정보</h4>
+				<h4 class="fw-bold pb-3">예약자 정보</h4>
 				<div class="mb-5">
 					<label for="reservationName" class="form-label mukMutedText">예약자 이름</label>
 					<input type="text" class="form-control" name="reservationName" placeholder="체크인시 필요한 정보입니다." value="${loginUser.name }" required>
@@ -49,14 +48,40 @@
 				<!-- 예약자 정보 끝 -->
 				
 				<!-- 결제수단 선택 시작 -->
-				<h4 class="fw-bold pt-5 pb-3">결제수단 선택</h4>
-				<select class="form-select" name="paymentMethod">
-					<option selected value="html5_inicis">신용카드</option>
-					<option value="kakaopay">카카오페이</option>
-					<option value="tosspay">토스페이</option>
-				</select>
+				<div class="mt-5 mb-5">
+					<h4 class="fw-bold pb-3">결제수단 선택</h4>
+					<select class="form-select" name="paymentMethod">
+						<option selected value="html5_inicis">신용카드</option>
+						<option value="kakaopay">카카오페이</option>
+						<option value="tosspay">토스페이</option>
+					</select>
+				</div>
 				<!-- 결제수단 선택 끝 -->
-			
+				
+				<!-- 약관 동의 시작 -->
+				<table>
+					<tr class="pb-1">
+						<td>
+							<div class="mukCheckBox text-center" style="width:24px; height:24px; border-radius:3px; border:1px solid #e9e9e9;">
+								<i class="checkIcon fa-solid fa-check" style="color:white; vertical-align:baseline; display:none;"></i>
+							</div>
+						</td>
+						<td class="fw-bold" style="padding-left:0.5em">
+							전체 동의
+						</td>
+					</tr>
+					<tr class="pb-1">
+						<td>
+							<div class="mukCheckBox text-center" style="width:24px; height:24px; border-radius:3px; border:1px solid #e9e9e9;">
+								<i class="checkIcon fa-solid fa-check" style="color:white; vertical-align:baseline; display:none;"></i>
+							</div>
+						</td>
+						<td class="mukMutedText" style="padding-left:0.5em">
+							숙소이용규칙 및 취소/환불규정 동의
+						</td>
+					</tr>
+				</table>
+				<!-- 약관 동의 끝 -->
 			</div>
 			
 			<div class="col-md-5 col-lg-5 pt-5">
