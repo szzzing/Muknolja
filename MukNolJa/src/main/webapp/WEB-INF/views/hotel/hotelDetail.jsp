@@ -159,7 +159,51 @@
 		
 		<!-- 리뷰 리스트 시작 -->
 		<div id="reviewList" style="display:none">
-			리뷰
+			<div class="text-center pt-5 pb-5" style="border-bottom: 1px solid #e9e9e9">
+				<h2 class="fw-bold">최고예요!</h2>
+				<div style="display:inline-block">
+					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
+					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
+					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
+					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
+					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
+				</div>
+				<h2 class="fw-bold" style="display:inline-block">4.5</h2>
+				<h4 class="pt-3">10개의 리뷰</h4>
+			</div>
+			<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
+				<div class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9">
+					<table class="table table-borderless">
+						<tr>
+							<td rowspan="4" style="width:60px;"><span style="font-size:60px">😀</span></td>
+							<td>
+								<h5 class="fw-bold">전체적으로 만족스러웠어요.</h5>
+								<span>
+									<i class="fa-solid fa-star" style="color:#FFD600"></i>
+									<i class="fa-solid fa-star" style="color:#FFD600"></i>
+									<i class="fa-solid fa-star" style="color:#FFD600"></i>
+									<i class="fa-solid fa-star" style="color:#FFD600"></i>
+									<i class="fa-solid fa-star" style="color:#FFD600"></i>
+								</span>
+								<span>5.0</span>
+							</td>
+						</tr>
+						<tr>
+							<td class="mukMutedText">
+								닉네임 · 디럭스 트윈 객실 이용
+							</td>
+						</tr>
+						<tr>
+							<td>
+								1박 머물었는데 당일 도착 피곤해서 손만 씻고 잠자리에 들었네요.아침에 서둘러 일어나 샤워하다 벽틈에서 찌든 곰팡때가 이루 말할수 없이 끼여 있는데다 더러운 이물질이 흘러내려 깜짝 놀랬습니다.베게쪽 시트에서도 잘잘한 머릿카락과 먼지가 장난 아니였습니다.쇼파엔 얼룩이 져있고 ᆢ 음 1박 더 머물려다 다른 호텔로 옮겼습니다.<br>전에 하얏트 호텔에서 머물었을땐 쾌적 청결했는데 ᆢ롯데호텔 객실 청소하는 분들은 대충??청소상태 검열은 안하는건지?ᆢ청결,위생면에서는 저급하네요. 일찍 벗어나고 싶어 이른 아침에 체크아웃했습니다.프론트에서 직원분들은 친절했습니다.그리고 창가쪽에도 커튼 치다보니 컵자국인지 이물질 얼룩이 선명하게 있더군요
+							</td>
+						</tr>
+						<tr>
+							<td class="mukMutedText">2022.11.13</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 		<!-- 리뷰 리스트 끝 -->
 		
@@ -173,7 +217,44 @@
 			<div id="map" class="mukRound" style="width:540px;height:300px;"></div>
 			
 			<h4 class="fw-bold pt-5 pb-3">편의시설 및 서비스</h4>
-			
+			<div class="row text-center">
+				<div class="col col-auto">
+					<h4 <c:if test="${hotel.wifi=='N' }">style="color:#E9E9E9"</c:if>>
+						<i class="fa-solid fa-wifi"></i>
+					</h4>
+					와이파이
+				</div>
+				<div class="col col-auto">
+					<h4 <c:if test="${hotel.park=='N' }">style="color:#E9E9E9"</c:if>>
+						<i class="fa-solid fa-square-parking"></i>
+					</h4>
+					주차
+				</div>
+				<div class="col col-auto">
+					<h4 <c:if test="${hotel.amenity=='N' }">style="color:#E9E9E9"</c:if>>
+						<i class="fa-solid fa-gift"></i>
+					</h4>
+					어메니티
+				</div>
+				<div class="col col-auto">
+					<h4 <c:if test="${hotel.breakfast=='N' }">style="color:#E9E9E9"</c:if>>
+						<i class="fa-solid fa-utensils"></i>
+					</h4>
+					조식
+				</div>
+				<div class="col col-auto">
+					<h4 <c:if test="${hotel.fitness=='N' }">style="color:#E9E9E9"</c:if>>
+						<i class="fa-solid fa-dumbbell"></i>
+					</h4>
+					피트니스
+				</div>
+				<div class="col col-auto">
+					<h4 <c:if test="${hotel.amenity=='N' }">style="color:#E9E9E9"</c:if>>
+						<i class="fa-solid fa-water-ladder"></i>
+					</h4>
+					수영장
+				</div>
+			</div>
 		</div>
 		<!-- 호텔 정보 끝 -->
 	</div>
@@ -258,7 +339,7 @@
 					});
 				}
 			} else {
-				alert("로그인 후 이용해주세요.");
+				$.viewModal("로그인 후 이용해주세요.");
 			}
 		});
 	</script>
@@ -269,15 +350,19 @@
 	<!-- 예약 버튼 시작 -->
 	<script>
 		$(".reserveButton").on("click", function(){
-			const roomId = $(this).parent().parent().parent().find(".roomId").val();
-			const checkinTime = $(this).parent().parent().parent().find(".checkinTime").text();
-			const checkoutTime = $(this).parent().parent().parent().find(".checkoutTime").text();
-			
-			$("input[name=roomId]").val(roomId);
-			$("input[name=checkinTime]").val(checkinTime);
-			$("input[name=checkoutTime]").val(checkoutTime);
-			
-			$("form").submit();
+			if(${!empty loginUser}) {
+				const roomId = $(this).parent().parent().parent().find(".roomId").val();
+				const checkinTime = $(this).parent().parent().parent().find(".checkinTime").text();
+				const checkoutTime = $(this).parent().parent().parent().find(".checkoutTime").text();
+				
+				$("input[name=roomId]").val(roomId);
+				$("input[name=checkinTime]").val(checkinTime);
+				$("input[name=checkoutTime]").val(checkoutTime);
+				
+				$("form").submit();
+			} else {
+				$.viewModal("로그인 후 이용해주세요.");
+			}
 		});
 	</script>
 	<!-- 예약 버튼 끝 -->
@@ -359,7 +444,27 @@
 		});
 	</script>
 	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->
-
+	
+	
+	<!-- 모달 -->
+	<div class="modal fade modal-sm" id="mukModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog text-center">
+			<div class="modal-content">
+				<div class="modal-body">
+					<p class="modalContent mt-3 mb-3"></p>
+					<button type="button" class="mukButton mb-3" style="width:80%" data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$.viewModal = function(text) {
+			$(".modalContent").text(text);
+			$("#mukModal").modal('show');
+		};
+	</script>
+	
+	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
