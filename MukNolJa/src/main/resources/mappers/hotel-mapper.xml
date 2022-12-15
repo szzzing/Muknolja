@@ -91,6 +91,22 @@
 		select * from dual
 	</insert>
 	
+	<select id="isLikeHotel" resultType="_int">
+		select count(*)
+		from like_hotel
+		where id=#{id} and hotel_id=#{hotelId}
+	</select>
+	
+	<insert id="insertLikeHotel">
+		insert into like_hotel
+		values(#{id}, #{hotelId})
+	</insert>
+	
+	<delete id="deleteLikeHotel">
+		delete from like_hotel
+		where id=#{id} and hotel_id=#{hotelId}
+	</delete>
+	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>
 		<result column="ENT_ID" property="entId"/>
@@ -153,5 +169,10 @@
 		<result column="RESERVATION_PHONE" property="reservationPhone"/>
 		<result column="CHECKIN_TIME" property="checkinTime"/>
 		<result column="CHECKOUT_TIME" property="checkoutTime"/>
+	</resultMap>
+	
+	<resultMap type="LikeHotel" id="likeHotelResultSet">
+		<result column="ID" property="id"/>
+		<result column="HOTEL_ID" property="hotelId"/>
 	</resultMap>
 </mapper>

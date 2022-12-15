@@ -15,12 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.hotel.model.vo.ReserveDate;
@@ -39,7 +41,8 @@ public class HotelController {
 	}
 	
 	@RequestMapping("hotelDetail.ho")
-	public String hotelDetail(@RequestParam("hotelId") int hotelId, Model model) {
+	public String hotelDetail(@RequestParam("hotelId") int hotelId, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
 		Hotel hotel = hService.selectHotel(hotelId);
 		AttachedFile hotelImg = hService.selectHotelImg(hotelId);
 		ArrayList<Room> roomArray = hService.selectAllRoom(hotelId);
@@ -48,6 +51,15 @@ public class HotelController {
 		for(Room r : roomArray) {
 			AttachedFile thumb = hService.selectRoomThumbnail(r.getRoomId());
 			roomThumbnail.add(thumb);
+		}
+		
+		if(m!=null) {
+			LikeHotel l = new LikeHotel();
+			l.setId(m.getId());
+			l.setHotelId(hotel.getHotelId());
+			
+			int isLikeHotel = hService.isLikeHotel(l);
+			model.addAttribute("isLikeHotel", isLikeHotel);
 		}
 		
 		model.addAttribute("hotel", hotel);
@@ -132,7 +144,7 @@ public class HotelController {
 		try {
 			file.transferTo(new File(renamePath));
 		} catch (Exception e) {
-			System.out.println("�뙆�씪 �쟾�넚 �뿉�윭" + e.getMessage());
+			System.out.println("파일 업로드 실패" + e.getMessage());
 		}
 		
 		String[] returnArr = new String[2];
@@ -159,7 +171,6 @@ public class HotelController {
 	
 	@RequestMapping("insertHotel.ho")
 	public String insertHotel(@ModelAttribute Hotel h, @RequestParam("hotelImg") ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
-		System.out.println("컨트롤러");
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		ArrayList<AttachedFile> list = new ArrayList();
@@ -252,13 +263,23 @@ public class HotelController {
 		HashMap map = new HashMap();
 		map.put("r", r);
 		map.put("list", list);
-		System.out.println(map.get("r"));
-		System.out.println(map.get("list"));
 		
 		int reservationResult = hService.insertReservation(map);
 		
 		model.addAttribute("r", r);
 		
 		return "successReservation";
+	}
+	
+	@RequestMapping(value="insertLikeHotel.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void insertLikeHotel(@ModelAttribute LikeHotel l) {
+		int result = hService.insertLikeHotel(l);
+	}
+	
+	@RequestMapping(value="deleteLikeHotel.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void deleteLikeHotel(@ModelAttribute LikeHotel l) {
+		int result = hService.deleteLikeHotel(l);
 	}
 }

@@ -37,7 +37,7 @@
 			<div class="col-md-6 col-lg-6 pt-5">
 			
 				<!-- 예약자 정보 시작 -->
-				<h4 class="fw-bold pb-5">예약자 정보</h4>
+				<h4 class="fw-bold pb-3">예약자 정보</h4>
 				<div class="mb-5">
 					<label for="reservationName" class="form-label mukMutedText">예약자 이름</label>
 					<input type="text" class="form-control" name="reservationName" placeholder="체크인시 필요한 정보입니다." value="${loginUser.name }" required>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.dao.HotelDAO;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Service("hService")
@@ -79,5 +80,20 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public int insertReservation(HashMap map) {
 		return hDAO.insertReservation(sqlSession, map);
+	}
+	
+	@Override
+	public int isLikeHotel(LikeHotel l) {
+		return hDAO.isLikeHotel(sqlSession, l);
+	}
+	
+	@Override
+	public int insertLikeHotel(LikeHotel l) {
+		return hDAO.insertLikeHotel(sqlSession, l);
+	}
+	
+	@Override
+	public int deleteLikeHotel(LikeHotel l) {
+		return hDAO.deleteLikeHotel(sqlSession, l);
 	}
 }

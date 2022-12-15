@@ -33,7 +33,6 @@
 
 	<div class="container text-center mt-5 mb-5">
 		<h2 class="fw-bold">예약이 완료되었습니다.</h2>
-		${r }
 		<button type="button" class="mukButton">메인으로</button>
 	</div>
 	
