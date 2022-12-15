@@ -230,10 +230,11 @@ public class HotelController {
 		Member m = (Member)session.getAttribute("loginUser");
 		r.setMemberId(m.getId());
 		
-		int result = hService.insertReservation(r);
+		int reservationResult = hService.insertReservation(r);
+//		int reserveResult = hService.insertReserve();
 		
 		model.addAttribute("r", r);
 		
-		return "reservation";
+		return "successReservation";
 	}
 }
