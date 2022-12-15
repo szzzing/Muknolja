@@ -97,8 +97,8 @@
 							<div class="mb-1">
 								<span class="fw-bold">총 결제 금액</span><span>(VAT 포함)</span>
 							</div>
-							<input type="hidden" name="paymentAmount" value="${room.roomPrice }">
-							<h4 class="fw-bold" style="color:#6BB6EC"><fmt:formatNumber value="${room.roomPrice }" pattern="#,###원"/></h4>
+							<input type="hidden" name="paymentAmount" value="${r.paymentAmount }">
+							<h4 class="fw-bold" style="color:#6BB6EC"><fmt:formatNumber value="${r.paymentAmount }" pattern="#,###원"/></h4>
 						</div>
 					</div>
 					<button type="button" id="reservationButton" class="mukButton" style="width:100%; height:50px;">결제하기</button>
@@ -129,14 +129,13 @@
 				buyer_tel: "${loginUser.phone}",
 				buyer_addr: "${loginUser.address}",
 				buyer_postcode: "null"
-			}, function(rsp) { // callback
+			}, function(rsp) {
 			  		console.log(rsp);
 				if (rsp.success) {
-					// 결제 성공 시 로직,
+					// 결제 성공 시 로직
 					$("form").submit();
 				} else {
-					// 결제 실패 시 로직,
-					alert(rsp.error_msg);
+					// 결제 실패 시 로직
 				}
 			});
 		}

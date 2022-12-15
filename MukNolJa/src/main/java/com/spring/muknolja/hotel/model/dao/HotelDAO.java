@@ -1,13 +1,13 @@
 package com.spring.muknolja.hotel.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.vo.Hotel;
-import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Repository("hDAO")
@@ -58,8 +58,8 @@ public class HotelDAO {
 		return sqlSession.selectOne("hotelmapper.getCurrentReservationId");
 	}
 
-	public int insertReservation(SqlSessionTemplate sqlSession, Reservation r) {
-		return sqlSession.insert("hotelmapper.insertReservation", r);
+	public int insertReservation(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.insert("hotelmapper.insertReservation", map);
 	}
 
 }
