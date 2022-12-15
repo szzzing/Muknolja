@@ -81,11 +81,15 @@
 	</select>
 	
 	<insert id="insertReservation">
-		insert into reservation
-		values(SEQ_RESERVATIONID.nextval, #{memberId}, #{roomId}, #{checkinDate}, #{checkoutDate}, default, #{paymentMethod}, #{paymentAmount}, sysdate, #{reservationName}, #{reservationPhone})
+		insert all
+			into reservation
+			values(SEQ_RESERVATIONID.nextval, #{r.memberId}, #{r.roomId}, #{r.checkinDate}, #{r.checkoutDate}, default, #{r.paymentMethod}, #{r.paymentAmount}, sysdate, #{r.reservationName}, #{r.reservationPhone})
+		<foreach collection="list" item="re">
+			into reserve
+			values(#{re.reservationDate}, #{re.roomId}, SEQ_RESERVATIONID.currval)
+		</foreach>
+		select * from dual
 	</insert>
-	
-	
 	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>

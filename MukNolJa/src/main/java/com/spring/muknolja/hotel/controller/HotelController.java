@@ -1,7 +1,9 @@
 package com.spring.muknolja.hotel.controller;
 
 import java.io.File;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.muknolja.common.exception.CommonException;
@@ -21,6 +22,8 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
+import com.spring.muknolja.hotel.model.vo.Reserve;
+import com.spring.muknolja.hotel.model.vo.ReserveDate;
 import com.spring.muknolja.hotel.model.vo.Room;
 import com.spring.muknolja.member.model.vo.Member;
 
@@ -217,6 +220,9 @@ public class HotelController {
 		Hotel hotel = hService.selectHotel(room.getHotelId());
 		int currentReservationId = hService.getCurrentReservationId();
 		
+		int dates = ReserveDate.dateDif(r.getCheckinDate(), r.getCheckoutDate());
+		r.setPaymentAmount((room.getRoomPrice())*dates);
+		
 		model.addAttribute("hotel", hotel);
 		model.addAttribute("room", room);
 		model.addAttribute("r", r);
@@ -230,8 +236,26 @@ public class HotelController {
 		Member m = (Member)session.getAttribute("loginUser");
 		r.setMemberId(m.getId());
 		
-		int reservationResult = hService.insertReservation(r);
-//		int reserveResult = hService.insertReserve();
+		// Reserve 테이블 삽입
+		ArrayList<Reserve> list = new ArrayList();
+		int dates = ReserveDate.dateDif(r.getCheckinDate(), r.getCheckoutDate());
+		
+		for(int i=0;i<dates;i++) {
+			Date d = ReserveDate.datePlus(r.getCheckinDate(), i);
+			Reserve reserve = new Reserve();
+			reserve.setReservationDate(d);
+			reserve.setRoomId(r.getRoomId());
+			
+			list.add(reserve);
+		}
+		
+		HashMap map = new HashMap();
+		map.put("r", r);
+		map.put("list", list);
+		System.out.println(map.get("r"));
+		System.out.println(map.get("list"));
+		
+		int reservationResult = hService.insertReservation(map);
 		
 		model.addAttribute("r", r);
 		

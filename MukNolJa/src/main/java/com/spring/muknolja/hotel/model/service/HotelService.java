@@ -1,10 +1,10 @@
 package com.spring.muknolja.hotel.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.vo.Hotel;
-import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 public interface HotelService {
@@ -31,5 +31,6 @@ public interface HotelService {
 
 	int getCurrentReservationId();
 
-	int insertReservation(Reservation r);
+	int insertReservation(HashMap map);
+
 }
