@@ -32,4 +32,5 @@ public class Hotel {
 	private double hotelGeoY;
 	private String hotelInfo;
 	private String hotelIntro;
+	private String hotelStatus;
 }

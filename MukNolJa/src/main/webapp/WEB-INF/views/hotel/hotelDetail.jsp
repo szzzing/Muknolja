@@ -52,10 +52,8 @@
 	.star-rating label:hover ~ label {
 	  -webkit-text-fill-color: #FFD600;
 	}
-
-
-	.mukRound {border-radius: 10px;}
-	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukRound {border-radius: 8px;}
+	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
@@ -100,7 +98,7 @@
 	</form>
 	<!-- 예약 전송용 form 끝 -->
 	
-	<div class="container mt-5 mb-5" style="min-width:540px">
+	<div class="container mt-5 mb-5">
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start">
 		
 			<div class="col col-lg-auto pt-5">
@@ -121,16 +119,12 @@
 					<tr>
 						<td>
 							<i class="fa-solid fa-phone"></i>
-						</td>
-						<td>
 							${hotel.hotelPhone }
 						</td>
 					</tr>
 					<tr>
 						<td class="align-top">
 							<i class="fa-solid fa-location-dot"></i>
-						</td>
-						<td>
 							${hotel.hotelAddress }
 						</td>
 					</tr>
@@ -174,7 +168,7 @@
 			</div>
 			<div class="col col-lg-9">
 				<c:forEach items="${ roomArray }" var="r">
-					<div class="col">
+					<div class="col mt-3 mb-3" style="border-bottom:1px solid #e9e9e9">
 						<table class="table table-borderless">
 							<tr>
 								<td style="width:300px" rowspan="3">
@@ -183,10 +177,10 @@
 								<td colspan="2" class="align-top">
 									<input type="hidden" class="roomId" value="${r.roomId }">
 									<h4 class="roomName lh-1 fw-bold">${r.roomName }</h4>
-									<span>${r.roomIntro }</span><br>
-									<span class="checkinTime">${r.checkinTime }</span>~
-									<span class="checkoutTime">${r.checkoutTime }</span><br>
-									<small class="text-muted">더 많은 정보</small>
+									<span class="mukMutedText">${r.roomIntro }</span><br>
+									<span class="mukMutedText checkinTime">${r.checkinTime }</span>
+									<span class="mukMutedText">-</span>
+									<span class="checkoutTime mukMutedText">${r.checkoutTime }</span><br>
 								</td>
 							</tr>
 							<tr>
@@ -265,45 +259,6 @@
 			<p>${hotel.hotelAddress } <span id="searchMap">길찾기</span></p>
 			<div id="map" class="mukRound" style="width:540px;height:300px;"></div>
 			
-			<h4 class="fw-bold pt-5 pb-3">편의시설 및 서비스</h4>
-			<div class="row text-center">
-				<div class="col col-auto">
-					<h4 <c:if test="${hotel.wifi=='N' }">style="color:#E9E9E9"</c:if>>
-						<i class="fa-solid fa-wifi"></i>
-					</h4>
-					와이파이
-				</div>
-				<div class="col col-auto">
-					<h4 <c:if test="${hotel.park=='N' }">style="color:#E9E9E9"</c:if>>
-						<i class="fa-solid fa-square-parking"></i>
-					</h4>
-					주차
-				</div>
-				<div class="col col-auto">
-					<h4 <c:if test="${hotel.amenity=='N' }">style="color:#E9E9E9"</c:if>>
-						<i class="fa-solid fa-gift"></i>
-					</h4>
-					어메니티
-				</div>
-				<div class="col col-auto">
-					<h4 <c:if test="${hotel.breakfast=='N' }">style="color:#E9E9E9"</c:if>>
-						<i class="fa-solid fa-utensils"></i>
-					</h4>
-					조식
-				</div>
-				<div class="col col-auto">
-					<h4 <c:if test="${hotel.fitness=='N' }">style="color:#E9E9E9"</c:if>>
-						<i class="fa-solid fa-dumbbell"></i>
-					</h4>
-					피트니스
-				</div>
-				<div class="col col-auto">
-					<h4 <c:if test="${hotel.amenity=='N' }">style="color:#E9E9E9"</c:if>>
-						<i class="fa-solid fa-water-ladder"></i>
-					</h4>
-					수영장
-				</div>
-			</div>
 		</div>
 		<!-- 호텔 정보 끝 -->
 	</div>

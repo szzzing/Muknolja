@@ -130,7 +130,7 @@ public class HotelController {
 	}
 	
 	@RequestMapping("insertRoom.ho")
-	public String insertRoom(@ModelAttribute Room r, @RequestParam("roomImg") ArrayList<MultipartFile> files, HttpServletRequest request) {
+	public String insertRoom(@ModelAttribute Room r, @RequestParam("roomImg") ArrayList<MultipartFile> files, HttpSession session, HttpServletRequest request) {
 		
 		ArrayList<AttachedFile> list = new ArrayList();
 		for(MultipartFile file : files) {
