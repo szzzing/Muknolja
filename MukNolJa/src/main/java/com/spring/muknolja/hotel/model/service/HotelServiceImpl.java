@@ -11,6 +11,8 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.dao.HotelDAO;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
+import com.spring.muknolja.hotel.model.vo.Review;
+import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Service("hService")
@@ -95,5 +97,15 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public int deleteLikeHotel(LikeHotel l) {
 		return hDAO.deleteLikeHotel(sqlSession, l);
+	}
+	
+	@Override
+	public ArrayList<Reservation> writableReview(HashMap map) {
+		return hDAO.writableReview(sqlSession, map);
+	}
+	
+	@Override
+	public int insertReview(Review review) {
+		return hDAO.insertReview(sqlSession, review);
 	}
 }

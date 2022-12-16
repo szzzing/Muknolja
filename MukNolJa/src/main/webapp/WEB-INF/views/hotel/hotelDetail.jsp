@@ -24,7 +24,36 @@
 	#searchMap:hover {
 		text-decoration: underline;
 	}
+	.writableReview {
+		cursor: pointer;
+	}
+	.writableReview:hover {
+		text-decoration: underline;
+	}
 	
+/* 	별점 관련 */
+	.star-rating {
+		color:#e9e9e9;
+		display: flex;
+		width: 5em;
+		flex-direction: row-reverse;
+		justify-content: space-around;
+	}
+	.star-rating input {
+		display: none;
+	}
+	.star-rating label {
+		cursor: pointer;
+	}
+	.star-rating :checked ~ label {
+		-webkit-text-fill-color: #FFD600;
+	}
+	.star-rating label:hover,
+	.star-rating label:hover ~ label {
+	  -webkit-text-fill-color: #FFD600;
+	}
+
+
 	.mukRound {border-radius: 10px;}
 	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
@@ -89,13 +118,13 @@
 
 		
 		<div class="row row-cols-4 justify-content-start text-center mt-5 mb-5" style="border-bottom:1px solid #e9e9e9">
-			<div class="col col-auto p-2 mukMutedText" id="roomListButton" scope="col" style="border-bottom:3px solid #6BB6EC; color:#6BB6EC; font-weight:bold">
+			<div class="col col-auto p-2 mukMutedText" id="roomListButton" scope="col" style="border-bottom:3px solid #6BB6EC; color:#6BB6EC; font-weight:bold; cursor:pointer">
 				예약하기
 			</div>
-			<div class="col col-auto p-2 mukMutedText" id="hotelInfoButton" scope="col">
+			<div class="col col-auto p-2 mukMutedText" id="hotelInfoButton" scope="col" style="cursor:pointer">
 				호텔 정보
 			</div>
-			<div class="col col-auto p-2 mukMutedText" id="reviewListButton" scope="col">
+			<div class="col col-auto p-2 mukMutedText" id="reviewListButton" scope="col" style="cursor:pointer">
 				리뷰
 			</div>
 			<div class="col"></div>
@@ -171,6 +200,13 @@
 				<h2 class="fw-bold" style="display:inline-block">4.5</h2>
 				<h4 class="pt-3">10개의 리뷰</h4>
 			</div>
+			
+<!-- 			<div id="writableReviewDiv" class="pt-5 pb-5" style="border-bottom: 1px solid #e9e9e9; display:none"> -->
+<!-- 				<h4 class="fw-bold">리뷰를 작성해주세요.</h4> -->
+<!-- 				<div id="writableReviewList"> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+			
 			<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
 				<div class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9">
 					<table class="table table-borderless">
@@ -190,7 +226,7 @@
 						</tr>
 						<tr>
 							<td class="mukMutedText">
-								닉네임 · 디럭스 트윈 객실 이용
+								닉네임 · 디럭스 트윈 객실
 							</td>
 						</tr>
 						<tr>
@@ -260,51 +296,9 @@
 	</div>
 	
 	
-	<!-- 리스트 버튼 시작 -->
-	<script>
-		$("#roomListButton").on("click", function(){
-			$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
-			$("#reviewListButton").prop("style").removeProperty("border-bottom");
-			$("#reviewListButton").prop("style").removeProperty("color");
-			$("#reviewListButton").prop("style").removeProperty("font-weight");
-			$("#hotelInfoButton").prop("style").removeProperty("border-bottom");
-			$("#hotelInfoButton").prop("style").removeProperty("color");
-			$("#hotelInfoButton").prop("style").removeProperty("font-weight");
-			
-			$("#roomList").prop("style").removeProperty("display");
-			$("#reviewList").css("display", "none");
-			$("#hotelInfo").css("display", "none");
-		});
-		$("#reviewListButton").on("click", function(){
-			$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
-			$("#roomListButton").prop("style").removeProperty("border-bottom");
-			$("#roomListButton").prop("style").removeProperty("color");
-			$("#roomListButton").prop("style").removeProperty("font-weight");
-			$("#hotelInfoButton").prop("style").removeProperty("border-bottom");
-			$("#hotelInfoButton").prop("style").removeProperty("color");
-			$("#hotelInfoButton").prop("style").removeProperty("font-weight");
-			
-			$("#reviewList").prop("style").removeProperty("display");
-			$("#roomList").css("display", "none");
-			$("#hotelInfo").css("display", "none");
-		});
-		$("#hotelInfoButton").on("click", function(){
-			$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
-			$("#reviewListButton").prop("style").removeProperty("border-bottom");
-			$("#reviewListButton").prop("style").removeProperty("color");
-			$("#reviewListButton").prop("style").removeProperty("font-weight");
-			$("#roomListButton").prop("style").removeProperty("border-bottom");
-			$("#roomListButton").prop("style").removeProperty("color");
-			$("#roomListButton").prop("style").removeProperty("font-weight");
-			
-			$("#hotelInfo").prop("style").removeProperty("display");
-			$("#reviewList").css("display", "none");
-			$("#roomList").css("display", "none");
-			
-			$.viewMap();
-		});
-	</script>
-	<!-- 리스트 버튼 끝 -->
+	
+	
+	
 	
 	
 	
@@ -316,7 +310,7 @@
 				if($(this).css("color")=="rgb(233, 233, 233)") {
 					$(this).css("color", "#6BB6EC");
 					$.ajax({
-						url: "insertLikeHotel.ho",
+						url: "${contextPath}/insertLikeHotel.ho",
 						data: {
 							id: "${loginUser.id}",
 							hotelId: ${hotel.hotelId}
@@ -366,8 +360,161 @@
 		});
 	</script>
 	<!-- 예약 버튼 끝 -->
+	
+	
+	
+	
+	<!-- 작성 가능한 리뷰 시작 -->
+	<script>
+		$.writableReview = function(){
+			if(${!empty loginUser}) {
+				$("#writableReviewList").html("");
+				$.ajax({
+					url: "${contextPath}/writableReview.ho",
+					data: {
+						id: "${loginUser.id}",
+						hotelId: ${hotel.hotelId}
+					},
+					success: (data)=>{
+						if(data.length>0) {
+							for(const i of data) {
+								$("#writableReviewModal").modal('show');
+// 								$("#writableReviewDiv").prop("style").removeProperty("display");
+								$("#writableReviewList").html(
+										$("#writableReviewList").html()
+										+"<div class='writableReview'>"+i.roomName + " · " + i.checkinDate + "-" + i.checkoutDate + " 방문"
+										+"<input type='hidden' name='reservationId' value='" + i.reservationId + "'>"
+										+"</div>");
+							}
+						} else {
+							$("#writableReviewDiv").css("display", "none");
+						}
+					},
+					error: (data)=>{
+						console.log(data);
+					}
+				});
+			}
+			$(document).on('click', ".writableReview", function() {
+				const reservationId = $("input[name=reservationId]").val();
+				$.writeReviewModal(reservationId);
+			});
+		}
+	</script>
+	<div class="modal fade" id="writableReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered text-center">
+			<div class="modal-content">
+				<div class="modal-body mt-3 mb-3">
+					<h4 class="fw-bold pb-3" style="color:#6BB6EC">${loginUser.nickName }님의 리뷰를 기다리고 있어요</h4>
+					<div id="writableReviewList" class="mukMutedText">
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 작성 가능한 리뷰 끝 -->
+	
+	<!-- 리뷰 작성 모달 시작 -->
+	<div class="modal fade" id="writeReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered text-center">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="text-center mt-3 mb-3">
+						<div class="star-rating space-x-4 mx-auto">
+							<input type="hidden" name="rating" required>
+							<input type="radio" id="5-star" value="5" name="starRating" v-model="ratings"/>
+							<label for="5-star" class="star pr-4"><h2 class="fa-solid fa-star"></h2></label>
+							<input type="radio" id="4-star" value="4" name="starRating" v-model="ratings"/>
+							<label for="4-star" class="star"><h2 class="fa-solid fa-star"></h2></label>
+							<input type="radio" id="3-star" value="3" name="starRating" v-model="ratings"/>
+							<label for="3-star" class="star"><h2 class="fa-solid fa-star"></h2></label>
+							<input type="radio" id="2-star" value="2" name="starRating" v-model="ratings"/>
+							<label for="2-star" class="star"><h2 class="fa-solid fa-star"></h2></label>
+							<input type="radio" id="1-star" value="1" name="starRating" v-model="ratings" />
+							<label for="1-star" class="star"><h2 class="fa-solid fa-star"></h2></label>
+						</div>
+						<span id="ratingInfo" class="mukMutedText">별점을 채워주세요.</span>
+					</div>
+					<input type="hidden" name="memberId" value="${loginUser.id }">
+					<input type="hidden" name="reservationId">
+					<textarea class="form-control mb-3" name="reviewContent" rows="5" style="height:200px; resize:none" placeholder="내용" required></textarea>
+					<button id="insertReviewButton" class="mukButton mb-3" style="width:80%" data-bs-dismiss="modal" aria-label="Close">작성하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$.writeReviewModal = function(reservationId) {
+			$("#writeReviewModal").modal('show');
+			$("#writeReviewModal").find('input[name=reservationId]').val(reservationId);
+		};
+		var nowRating="별점을 채워주세요.";
+		$("label").on("mouseleave", function(){
+			$("#ratingInfo").text(nowRating);
+		});
+		$("label").on("mouseover", function(){
+			if($(this).prev().val()==5) {
+				$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
+			} else if($(this).prev().val()==4) {
+				$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
+			} else if($(this).prev().val()==3) {
+				$("#ratingInfo").text("기대 이상이네요.");
+			} else if($(this).prev().val()==2) {
+				$("#ratingInfo").text("조금만 더 신경 써 주세요.");
+			} else {
+				$("#ratingInfo").text("별로예요.");
+			}
+		});
+		$("input[type=radio]").on("click", function(){
+			if($(this).val()==5) {
+				$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
+				nowRating="여기만한 곳은 어디에도 없을 거예요.";
+			} else if($(this).val()==4) {
+				$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
+				nowRating="여기라면 다음에 또 이용할 거예요.";
+			} else if($(this).val()==3) {
+				$("#ratingInfo").text("기대 이상이네요.");
+				nowRating="기대 이상이네요.";
+			} else if($(this).val()==2) {
+				$("#ratingInfo").text("조금만 더 신경 써 주세요.");
+				nowRating="조금만 더 신경 써 주세요.";
+			} else {
+				$("#ratingInfo").text("별로예요.");
+				nowRating="별로예요.";
+			}
+		});
+		// 리뷰 작성 버튼
+		$("#insertReviewButton").on("click", function(){
+			for(var i=1;i<=5;i++) {
+				if($("#"+i+"-star").is(":checked")) {
+					$("input[name=rating]").val(i);
+				}
+			}
+			var content = $("textarea[name=reviewContent]").val();
+			content = content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			$("textarea[name=reviewContent]").val(content);
 
-
+			$.ajax({
+				url: "${contextPath}/insertReview.ho",
+				data: {
+					memberId: "${loginUser.id}",
+					reservationId: $("input[name=reservationId]").val(),
+					rating: $("input[name=rating]").val(),
+					reviewContent: $("textarea[name=reviewContent]").val()
+				},
+				success: (data)=>{
+					console.log(data);
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			});
+		});
+	</script>
+	<!-- 리뷰 작성 모달 끝 -->
+	
+	
+	
+	<!-- 지도 시작 -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4aaeb935cb2fd15933272e12d906ced0&libraries=services"></script>
 	<script>
 		$.viewMap = function() {
@@ -396,12 +543,13 @@
 					// 길찾기
 					const url = "https://map.kakao.com/link/to/${hotel.hotelName},"+result[0].y+","+result[0].x;
 					$("#searchMap").on("click", function(){
-						window.open(url, "_blank", "width=500", true);
+						window.open(url, "_blank", "width=800, height=400", true);
 					});
 			    }
 			});
 		}
  	</script>
+ 	<!-- 지도 끝 -->
 
 
 	<!-- daterangepicker 기본설정, 날짜 기입 시작 -->
@@ -446,9 +594,58 @@
 	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->
 	
 	
-	<!-- 모달 -->
+	<!-- 리스트 버튼 시작 -->
+	<script>
+		$("#roomListButton").on("click", function(){
+			$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
+			$("#reviewListButton").prop("style").removeProperty("border-bottom");
+			$("#reviewListButton").prop("style").removeProperty("color");
+			$("#reviewListButton").prop("style").removeProperty("font-weight");
+			$("#hotelInfoButton").prop("style").removeProperty("border-bottom");
+			$("#hotelInfoButton").prop("style").removeProperty("color");
+			$("#hotelInfoButton").prop("style").removeProperty("font-weight");
+			
+			$("#roomList").prop("style").removeProperty("display");
+			$("#reviewList").css("display", "none");
+			$("#hotelInfo").css("display", "none");
+		});
+		$("#reviewListButton").on("click", function(){
+			$.writableReview();
+			$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
+			$("#roomListButton").prop("style").removeProperty("border-bottom");
+			$("#roomListButton").prop("style").removeProperty("color");
+			$("#roomListButton").prop("style").removeProperty("font-weight");
+			$("#hotelInfoButton").prop("style").removeProperty("border-bottom");
+			$("#hotelInfoButton").prop("style").removeProperty("color");
+			$("#hotelInfoButton").prop("style").removeProperty("font-weight");
+			
+			$("#reviewList").prop("style").removeProperty("display");
+			$("#roomList").css("display", "none");
+			$("#hotelInfo").css("display", "none");
+		});
+		$("#hotelInfoButton").on("click", function(){
+			$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
+			$("#reviewListButton").prop("style").removeProperty("border-bottom");
+			$("#reviewListButton").prop("style").removeProperty("color");
+			$("#reviewListButton").prop("style").removeProperty("font-weight");
+			$("#roomListButton").prop("style").removeProperty("border-bottom");
+			$("#roomListButton").prop("style").removeProperty("color");
+			$("#roomListButton").prop("style").removeProperty("font-weight");
+			
+			$("#hotelInfo").prop("style").removeProperty("display");
+			$("#reviewList").css("display", "none");
+			$("#roomList").css("display", "none");
+			
+			$.viewMap();
+		});
+	</script>
+	<!-- 리스트 버튼 끝 -->
+	
+	
+	
+	<!-- 모달 시작 -->
 	<div class="modal fade modal-sm" id="mukModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog text-center">
+		<div class="modal-dialog modal-dialog-centered text-center">
 			<div class="modal-content">
 				<div class="modal-body">
 					<p class="modalContent mt-3 mb-3"></p>
@@ -463,7 +660,7 @@
 			$("#mukModal").modal('show');
 		};
 	</script>
-	
+	<!-- 모달 끝 -->
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
