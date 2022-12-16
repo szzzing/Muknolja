@@ -67,7 +67,7 @@
 	}
 	
 	
-	.card img{height: 250px;}
+ 	.card img{height: 250px;}
 	.card{margin-bottom: 30px;}
 	.card td{width: 80px; font-size: 14px; color: gray; margin-right: auto;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
@@ -113,9 +113,9 @@
 				<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 			</div>
 			
-			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="clear: both; margin-top: 20px;">
-				<div class="col-md-3">
-					<div class="card h-90" style="width: 18rem;">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;">
+				<div class="col">
+					<div id="card" class="card card-cover h-95 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
 						  <ol class="numbered">
@@ -136,8 +136,8 @@
 					</div>
 				</div>
 				
-				<div class="col-md-3">
-					<div class="card h-90" style="width: 18rem;">
+				<div class="col">
+					<div id="card" class="card card-cover h-95 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
 						  <ol class="numbered">
@@ -157,8 +157,8 @@
 					</div>
 				</div>
 				
-				<div class="col-md-3">
-					<div class="card h-90" style="width: 18rem;">
+				<div class="col">
+					<div id="card" class="card card-cover h-95 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
 						  <ol class="numbered">
@@ -178,8 +178,8 @@
 					</div>
 				</div>
 				
-				<div class="col-md-3">
-					<div class="card h-90" style="width: 18rem;">
+				<div class="col">
+					<div id="card" class="card card-cover h-95 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
 						  <ol class="numbered">
@@ -199,8 +199,8 @@
 					</div>
 				</div>
 				
-				<div class="col-md-3">
-					<div class="card h-90" style="width: 18rem;">
+				<div class="col">
+					<div id="card" class="card card-cover h-95 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
 						  <ol class="numbered">
@@ -220,8 +220,8 @@
 					</div>
 				</div>
 				
-				<div class="col-md-3">
-					<div class="card h-90" style="width: 18rem;">
+				<div class="col">
+					<div id="card" class="card card-cover h-95 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
 						  <ol class="numbered">
