@@ -5,9 +5,12 @@
 	<typeAliases>
 		<typeAlias type="com.spring.muknolja.chat.model.vo.ChatRoom" alias="ChatRoom"/>
 		<typeAlias type="com.spring.muknolja.chat.model.vo.ChatMessage" alias="ChatMessage"/>
+		<typeAlias type="com.spring.muknolja.chat.model.vo.ChatInvite" alias="ChatInvite"/>
 		<typeAlias type="com.spring.muknolja.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.spring.muknolja.hotel.model.vo.Hotel" alias="Hotel"/>
 		<typeAlias type="com.spring.muknolja.hotel.model.vo.Room" alias="Room"/>
+		<typeAlias type="com.spring.muknolja.hotel.model.vo.Reservation" alias="Reservation"/>
+		<typeAlias type="com.spring.muknolja.hotel.model.vo.LikeHotel" alias="LikeHotel"/>
 		<typeAlias type="com.spring.muknolja.common.model.vo.AttachedFile" alias="AttachedFile"/>
 	</typeAliases>
 

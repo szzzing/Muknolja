@@ -3,6 +3,7 @@ package com.spring.muknolja.travel.controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,10 +18,13 @@ public class TravelController {
 	@RequestMapping("travelList.tr")
 	public String travelList(Model model) {
 		
-		String serviceKey = "yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D";
-		String urlStr = "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=" + serviceKey + "&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=10&listYN=Y&&arrange=A&contentTypeId=12&keyword=%EA%B0%95%EC%9B%90&_type=json";
-		
 		try {
+			
+			String serviceKey = "yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D";
+			int pageNo = 1;
+			String keyword = URLEncoder.encode("서울", "UTF-8");
+			String urlStr = "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=" + serviceKey + "&MobileApp=AppTest&MobileOS=ETC&pageNo=" + pageNo + "&numOfRows=10&listYN=Y&&arrange=A&contentTypeId=12&keyword=" + keyword + "&_type=json";
+			
 			URL url = new URL(urlStr);
 			BufferedReader bf;
 			String line = "";
@@ -49,17 +53,12 @@ public class TravelController {
 			
 			JSONArray parseItem = (JSONArray)parseItems.get("item");
 			
+			
 			JSONObject travel;
 			
 			for(int i = 0; i < parseItem.size(); i++) {
 				travel = (JSONObject)parseItem.get(i);
-				String addr = (String)travel.get("addr1");
-				String title = (String)travel.get("title");
-				String tel = (String)travel.get("tel");
-				System.out.println(addr + "/" + title + "/" + tel);
-				model.addAttribute("addr", addr);
-				model.addAttribute("title", title);
-				model.addAttribute("tel", tel);
+				model.addAttribute("travel", travel);
 			}
 			
 			bf.close();

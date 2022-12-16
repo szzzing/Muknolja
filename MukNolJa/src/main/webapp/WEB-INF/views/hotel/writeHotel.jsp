@@ -15,8 +15,8 @@
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <style>
-	.mukButton {background: #6BB6EC; color:white; border-color: #6BB6EC;}
-	.mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC;}
+	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 </style>
 </head>
 <body>
@@ -40,7 +40,7 @@
 				<label for="roomPrice">등급</label>
 			</div>
 			<div class="col form-floating mb-3 mt-3">
-				<input type="tel" class="form-control m-input" name="hotelPhone" id="telInput" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13"/>
+				<input type="tel" class="form-control m-input" name="hotelPhone" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13"/>
 				<label for="hotelPhone">전화번호</label>
 			</div>
 			<div class="col form-floating mb-3 mt-3">
@@ -104,7 +104,7 @@
 				</div>
 			</div>
 			<div class="d-grid gap-2">
-				<button type="submit" class="mukButton btn btn-outline-primary" style="align:bottom !important">작성하기</button>
+				<button type="submit" class="mukButton" style="width:100%; align:bottom !important">등록하기</button>
 			</div>
 		</form>
 	</div>

@@ -1,12 +1,14 @@
 package com.spring.muknolja.hotel.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Repository("hDAO")
@@ -47,6 +49,30 @@ public class HotelDAO {
 
 	public int insertHotel(SqlSessionTemplate sqlSession, Hotel h) {
 		return sqlSession.insert("hotelmapper.insertHotel", h);
+	}
+
+	public Room selectRoom(SqlSessionTemplate sqlSession, int roomId) {
+		return sqlSession.selectOne("hotelmapper.selectRoom", roomId);
+	}
+
+	public int getCurrentReservationId(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("hotelmapper.getCurrentReservationId");
+	}
+
+	public int insertReservation(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.insert("hotelmapper.insertReservation", map);
+	}
+
+	public int isLikeHotel(SqlSessionTemplate sqlSession, LikeHotel l) {
+		return sqlSession.selectOne("hotelmapper.isLikeHotel", l);
+	}
+
+	public int insertLikeHotel(SqlSessionTemplate sqlSession, LikeHotel l) {
+		return sqlSession.insert("hotelmapper.insertLikeHotel", l);
+	}
+
+	public int deleteLikeHotel(SqlSessionTemplate sqlSession, LikeHotel l) {
+		return sqlSession.delete("hotelmapper.deleteLikeHotel", l);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.spring.muknolja.hotel.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class RoomImg {
-	private int roomId;
-	private String fileName;
+public class LikeHotel {
+	private String id;
+	private int hotelId;
 }
