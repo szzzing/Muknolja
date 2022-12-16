@@ -11,6 +11,7 @@
 		<typeAlias type="com.spring.muknolja.hotel.model.vo.Room" alias="Room"/>
 		<typeAlias type="com.spring.muknolja.hotel.model.vo.Reservation" alias="Reservation"/>
 		<typeAlias type="com.spring.muknolja.hotel.model.vo.LikeHotel" alias="LikeHotel"/>
+		<typeAlias type="com.spring.muknolja.hotel.model.vo.Review" alias="Review"/>
 		<typeAlias type="com.spring.muknolja.common.model.vo.AttachedFile" alias="AttachedFile"/>
 	</typeAliases>
 

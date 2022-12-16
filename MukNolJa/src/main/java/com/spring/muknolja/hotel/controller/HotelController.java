@@ -1,12 +1,14 @@
 package com.spring.muknolja.hotel.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
+import com.spring.muknolja.hotel.model.vo.Review;
 import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.hotel.model.vo.ReserveDate;
@@ -67,6 +73,36 @@ public class HotelController {
 		model.addAttribute("roomArray", roomArray);
 		model.addAttribute("roomThumbnail", roomThumbnail);
 		return "hotelDetail";
+	}
+	
+	// 작성 가능한 리뷰
+	@RequestMapping("writableReview.ho")
+	@ResponseBody
+	public void reviewWaiting(HttpServletResponse response, @RequestParam("id") String id, @RequestParam("hotelId") int hotelId) {
+		
+		ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+		HashMap map = new HashMap();
+		map.put("memberId", id);
+		map.put("hotelId", hotelId);
+		reservationList = hService.writableReview(map);
+		System.out.println(reservationList);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(reservationList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("insertReview.ho")
+	@ResponseBody
+	public void insertReview(@ModelAttribute Review review) {
+		int result = hService.insertReview(review);
 	}
 	
 	@RequestMapping("writeRoom.ho")

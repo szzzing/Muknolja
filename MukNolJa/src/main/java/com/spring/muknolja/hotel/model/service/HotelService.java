@@ -6,6 +6,8 @@ import java.util.HashMap;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
+import com.spring.muknolja.hotel.model.vo.Review;
+import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 public interface HotelService {
@@ -39,5 +41,9 @@ public interface HotelService {
 	int insertLikeHotel(LikeHotel l);
 
 	int deleteLikeHotel(LikeHotel l);
+
+	ArrayList<Reservation> writableReview(HashMap map);
+
+	int insertReview(Review reply);
 
 }

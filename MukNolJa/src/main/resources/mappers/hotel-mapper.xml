@@ -107,6 +107,19 @@
 		where id=#{id} and hotel_id=#{hotelId}
 	</delete>
 	
+	<select id="writableReview" resultMap="reservationResultSet">
+		select *
+		from reservation
+			join room using(room_id)
+		where member_id=#{memberId} and hotel_id=#{hotelId} and <![CDATA[checkout_date+1<sysdate]]>
+			and (select count(*) from review where review.reservation_id=reservation.reservation_id)=0
+	</select>
+	
+	<insert id="insertReview">
+		insert into review
+		values(SEQ_REPLYID.nextval, #{memberId}, #{reservationId}, #{rating}, #{reviewContent}, default, null)
+	</insert>
+	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>
 		<result column="ENT_ID" property="entId"/>
@@ -174,5 +187,20 @@
 	<resultMap type="LikeHotel" id="likeHotelResultSet">
 		<result column="ID" property="id"/>
 		<result column="HOTEL_ID" property="hotelId"/>
+	</resultMap>
+	
+	<resultMap type="Review" id="reviewResultSet">
+		<result column="REVIEW_ID" property="reviewId"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="NICKNAME" property="nickName"/>
+		<result column="RESERVATION_ID" property="ReservationId"/>
+		<result column="HOTEL_NAME" property="hotelName"/>
+		<result column="ROOM_NAME" property="roomName"/>
+		<result column="CHECKIN_DATE" property="checkinDate"/>
+		<result column="CHECKOUT_DATE" property="checkoutDate"/>
+		<result column="RATING" property="rating"/>
+		<result column="REVIEW_CONTENT" property="reviewContent"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="BUSINESS_REPLY" property="businessReply"/>
 	</resultMap>
 </mapper>
