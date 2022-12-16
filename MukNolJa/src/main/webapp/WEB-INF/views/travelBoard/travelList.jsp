@@ -7,8 +7,8 @@
 	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<style>
-		#carouselExampleInterval{height: 480px; margin-top: 80px;}
-		#carouselExampleInterval img{height:480px;}
+		#carouselExampleInterval{height: 550px; margin-top: 80px;}
+		#carouselExampleInterval img{height:550px;}
 		#category{
 	 		width: 90%;
 			height: 150px;
@@ -23,7 +23,7 @@
 	    	clear: both;
 		}
 		#category td{text-align: center;}
-		.page-link:focus, .page-link:hover {color: #fff; background-color: #3C988D;}
+		.page-link:focus, .page-link:hover {color: #fff; background-color: #6BB6EC;}
 		.travelInfo a{color: black; font-size: 25px; text-decoration: none;}
 		.travelInfo p{color: gray; font-size: 15px; margin-top: 20px;}
 		hr{margin: auto;}
@@ -32,37 +32,41 @@
 		#num td:first-child{text-align:right;}
 		#num td:nth-child(2){text-align:right;}
 		#num button::after{content: "|"}
-		#number{color: #3C988D;}
+		#number{color: #6BB6EC;}
 		#btn button{border: none; background: #fff; color: gray;}
 		#btn button:hover{color: black; font-weight: 700;}
-		#card{margin-bottom: 25px;}
+		.allCard{margin-bottom: 35px; cursor: pointer;}
+		.card-text{font-size: 13px;}
+		#input{width: 400px;}
+		#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
+		#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
 	</style>
 	
 </head>
 <body>
 	<jsp:include page="../member/menubar.jsp"/>
 	
-	<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-	  <div class="carousel-inner">
-	    <div class="carousel-item active" data-bs-interval="10000">
-	      <img src="https://search.pstatic.net/common?type=o&size=352x196&quality=75&direct=true&src=https%3A%2F%2Fg-grafolio.pstatic.net%2F20220130_97%2F1643543618449ELxOz_PNG%2FADBE82CC-2827-423F-8700-97641FDE75DF.png%3Ftype%3Df804_452" class="d-block w-100" alt="...">
-	    </div>
-	    <div class="carousel-item" data-bs-interval="2000">
-	      <img src="https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-texture-black-background-simple-image_556931.jpg" class="d-block w-100" alt="...">
-	    </div>
-	    <div class="carousel-item">
-	      <img src="https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-texture-black-background-simple-image_556931.jpg" class="d-block w-100" alt="...">
-	    </div>
-	  </div>
-	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Previous</span>
-	  </button>
-	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Next</span>
-	  </button>
-	</div>
+		<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+		  <div class="carousel-inner">
+		    <div class="carousel-item active" data-bs-interval="10000">
+		      <img src="https://cdn.visitkorea.or.kr/img/call?cmd=VIEW&id=c7497830-2689-4247-aa32-23861352d422" class="d-block w-100" alt="...">
+		    </div>
+		    <div class="carousel-item" data-bs-interval="2000">
+		      <img src="https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-texture-black-background-simple-image_556931.jpg" class="d-block w-100" alt="...">
+		    </div>
+		    <div class="carousel-item">
+		      <img src="https://png.pngtree.com/thumb_back/fh260/background/20210207/pngtree-texture-black-background-simple-image_556931.jpg" class="d-block w-100" alt="...">
+		    </div>
+		  </div>
+		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Previous</span>
+		  </button>
+		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Next</span>
+		  </button>
+		</div>
 	
 	<div class="container">
 	
@@ -91,35 +95,41 @@
 			</tr>
 		</table>
 		
+		<div class="input-group" id="input">
+			<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+			<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+		</div>
+		
 		<hr id="hr1">
 		
 		<div id="num">
-			<span>총 <span id="number">10000</span>건</span>
+			<span>총 <span id="number">${ pi.listCount }</span>건</span>
 		</div>
 		<div id="btn">
 			<button>최신순</button>
 			<button>인기순</button>
 		</div>
 		
-		${travel}
-		${travel.get("addr1")}
 		<hr id="hr2" >
 		<br>
 		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start">
-			<c:forEach items="${ travel }">
-				 <div class="col">
-		            <div id="card" class="card card-cover h-95 overflow-hidden\">
-		               <img class="card-img-top"  style="height:300px;"  src=${travel.get("firstimage")}>
+			<c:forEach items="${ list }" var="t">
+				 <div class="allCard col">
+		            <div class="card card-cover h-100 overflow-hidden\">
+		               <c:if test="${ t.firstImage == '' }">
+		               	  <img class="card-img-top"  style="height:300px;"  src="${ contextPath }/resources/img/basicImage.png">
+		               </c:if>
+		               <c:if test="${ t.firstImage != '' }">
+		               <img class="card-img-top"  style="height:300px;"  src="${ t.firstImage }">
+		               </c:if>
 		               <div class="card-body p-4 mb-auto">
-		                  <h4 class="card-title lh-1 fw-bold">${ travel.get("title") }</h4>
-		                  <div class="card-text text-muted">${ travel.get("addr1") }</div>
-		                  <div class="card-text text-muted">${ travel.get("tel") }</div>
+		                  <h5 class="card-title lh-1 fw-bold">${ t.title }</h5>
+		                  <div class="card-text text-muted">${ t.addr }</div>
+		                  <input class="contentId" type="hidden" name="contentId" value="${ t.contentId }">
 		               </div>
 		            </div>
 		         </div>
 	         </c:forEach>
-			
-	         
 	      </div>
 	         
 		
@@ -128,17 +138,28 @@
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination d-flex justify-content-center">
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
+		    	<c:url var="goBack" value="${ loc }">
+	            	<c:param name="page" value="${ pi.currentPage-1 }"/>
+	        	</c:url>
+	        	<a class="page-link" href="${ goBack }" aria-label="Previous">
+	        		<span aria-hidden="true">&laquo;</span>
+	        	</a>
 		    </li>
-		    <li class="page-item"><a class="page-link" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link" href="#">3</a></li>
+		    
+		    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+		    	<c:url var="goNum" value="${ loc }">
+		    		<c:param name="page" value="${ p }"/>
+		    	</c:url>
+		    	 <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
+		    </c:forEach>
+		    
 		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
+		    	<c:url var="goNext" value="${ loc }">
+			    	<c:param name="page" value="${ pi.currentPage+1 }"/>
+		    	</c:url>
+			    <a class="page-link" href="${ goNext }" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			    </a>
 		    </li>
 		  </ul>
 		</nav>
@@ -146,11 +167,12 @@
 		</div>
 		
 		<script>
-// 			$.ajax({
-// 				method: "POST"
-// 				url: "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=10&listYN=Y&&arrange=A&contentTypeId=12&keyword=%EA%B0%95%EC%9B%90&_type=json"
-				
-// 			});
+// 			const allCards = document.getElementsByClassName('allCard');
+// 			for(const allCard of allCards){
+// 				allCard.addEventListener('click', function(){
+					
+// 				});
+// 			}
 		</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
