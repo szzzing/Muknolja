@@ -17,7 +17,7 @@
 			left join CHAT_MESSAGE using(CHAT_ROOM_CODE)
 		where PARTICIPANT_ID = #{id}
         group by CHAT_ROOM_CODE, CHAT_ROOM_NAME
-        order by max desc nulls last
+        order by max desc nulls first
 		
 	</select>
 	

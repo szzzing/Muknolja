@@ -193,7 +193,7 @@
      		<div id="chat">
      		</div>
      		<div class = "input-group input-group-sm" id="sendMessage">
-            	<input type = "text" class = "form-control" id="message" placeholder = "message">
+            	<input type = "text" class = "form-control" id="message" placeholder = "message" onkeyup="onKeyUp()">
 	            <div class = "input-group-btn">
 	               	<button class="btn btn-outline-secondary" type="button" id="send"><i class="bi bi-chat-square-text"></i></button>
 	               	<button class="btn btn-outline-secondary" type="button" id="inviteBtn"><i class="bi bi-person-plus"></i></button>
@@ -248,8 +248,7 @@
     </div>
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-         <script>
-         window.onload = () => {
+    <script>
         	 let stomp = '';
         	 let roomCode ='';
         	 let sockJs = '';
@@ -261,7 +260,7 @@
                 // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
                 modal.querySelector('.modal_close_btn').addEventListener('click', function() {
                     modal.style.display = 'none';
-                    if(sockJs != ''){
+                    if(sockJs != '' && id != 'invite_modal'){
                     	sockJs.close();
                     }
                 });
@@ -302,15 +301,24 @@
             
             // send 버튼 클릭시
 			document.getElementById('send').addEventListener('click', function() {
+				send();
+			});
+            
+			// send버튼 엔터
+	         function onKeyUp(){
+				if (window.event.keyCode == 13){
+					send();
+				}
+			}
+            
+			function send(){
 				const message = document.getElementById('message');
-				console.log("반복2");
-				console.log("socketRoomCode2 : " + roomCode);
+				
 				if(message.value != ''){
-					console.log("socketRoomCode3 : " + roomCode);
 					stomp.send('/pub/chat/message', {}, JSON.stringify({senderId: '${loginUser.id}', chatContent: message.value, roomCode: roomCode, nickName: '${loginUser.nickName}'}));
 					message.value = '';
 				}
-			});
+			}
             
             $("#roomBtn").click(function() {
             	$(".friends").hide();
@@ -336,10 +344,9 @@
             			}
             			
             			const invites = document.getElementsByClassName('invites');
-            			console.log(invites);
+
             			for(const i in data){
             				const invite = invites[i];
-            				console.log(invite);
             				
             				const smalls = invite.querySelectorAll('small');
             				
@@ -360,6 +367,12 @@
             						success: (data) => {
             							Modal("success_modal");
             							document.getElementById('text').innerText = '채팅에 참가하셨습니다.';
+            							
+            							$(".friends").hide();
+            			            	$(".nicks").hide();
+            			            	$(".chatRoom").show();
+            			            	
+            			            	chat();
             						}
             					});
             				});
@@ -371,6 +384,12 @@
             						success: (data) => {
             							Modal("success_modal");
             							document.getElementById('text').innerText = '초대를 거절하셨습니다.';
+            							
+            							$(".friends").hide();
+            			            	$(".nicks").hide();
+            			            	$(".chatRoom").show();
+            			            	
+            			            	chat();
             						}
             					})
             				});
@@ -392,6 +411,9 @@
         			success: (data) => {
         				Modal('success_modal');
         				document.getElementById('text').innerText = '채팅방 생성 완료.';
+        				
+        				document.getElementById('chatRoomName').value = '';
+        				document.getElementById('createroom_modal').style.display = 'none';
         			}
         		});
     		});
@@ -403,7 +425,6 @@
       				success: (data) => {
       					document.getElementById('rooms').innerHTML = '';
       					for(const c of data){
-      						console.log(c);
       						let str = '<div class="row chatRoom" style="border-bottom: 1px solid black;">';
       						str += '<div class="col">';
       						str += '<b style="padding-left:10px;">' + c.roomName + '</b>';
@@ -521,6 +542,9 @@
 							                            		success: (data) => {
 							                            			Modal('success_modal');
 							                            			document.getElementById('text').innerText = '초대 성공';
+							                            			
+							                            			document.getElementById('friends').innerHTML = '';
+							                            			document.getElementById('searchNick').value = '';
 							                            		}
 							                            	});
 
@@ -541,7 +565,7 @@
       			});
 	        }
 
-         }
-        </script>
+
+   </script>
   </body>
 </html>
