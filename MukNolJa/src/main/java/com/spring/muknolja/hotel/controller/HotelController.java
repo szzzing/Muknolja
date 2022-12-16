@@ -85,7 +85,6 @@ public class HotelController {
 		map.put("memberId", id);
 		map.put("hotelId", hotelId);
 		reservationList = hService.writableReview(map);
-		System.out.println(reservationList);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
@@ -102,10 +101,21 @@ public class HotelController {
 	//리뷰 전체보기
 	@RequestMapping(value="reviewList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void reviewList(@RequestParam("hotelId") int hotelId) {
+	public void reviewList(@RequestParam("hotelId") int hotelId, HttpServletResponse response) {
 		ArrayList<Review> reviewList = new ArrayList();
 		
 		reviewList = hService.selectReviewList(hotelId);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(reviewList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value="insertReview.ho", produces="application/json; charset=UTF-8")

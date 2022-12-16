@@ -113,6 +113,7 @@
 			join room using(room_id)
 		where member_id=#{memberId} and hotel_id=#{hotelId} and <![CDATA[checkout_date+1<sysdate]]>
 			and (select count(*) from review where review.reservation_id=reservation.reservation_id)=0
+		order by reservation.reservation_id desc
 	</select>
 	
 	<insert id="insertReview">
@@ -128,6 +129,7 @@
 			join hotel using(hotel_id)
 			join member on(review.member_id=id)
 		where hotel_id=#{hotelId}
+		order by review_id desc
 	</select>
 	
 	<resultMap type="Hotel" id="hotelResultSet">

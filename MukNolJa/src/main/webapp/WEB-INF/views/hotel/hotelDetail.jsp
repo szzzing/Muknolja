@@ -61,6 +61,7 @@
 	.mukMutedText {color:#B9B9B9;}
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -68,7 +69,29 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body>
-
+	<!-- 모달 시작 -->
+	<div id="mukModal" class="modal fade modal-sm" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered text-center">
+			<div class="modal-content">
+				<div class="modal-body">
+					<p class="modalContent mt-3 mb-3"></p>
+					<button type="button" class="mukButton mb-3" style="width:80%" data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script>
+		$.viewModal = function(text) {
+			$(".modalContent").text(text);
+			$("#mukModal").modal('show');
+		};
+	</script>
+	<!-- 모달 끝 -->
+	
+	
+	
+	
 	<!-- 예약 전송용 form 시작 -->
 	<form action="writeReservation.ho" method="post">
 		<input type="hidden" name="roomId">
@@ -201,35 +224,31 @@
 				<h4 class="pt-3">10개의 리뷰</h4>
 			</div>
 			
-			<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
-				<div class="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9">
+			<div id="reviewListRow" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
+				<div id="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9; display:none">
+					<input type="hidden" name="reviewId">
 					<table class="table table-borderless">
 						<tr>
 							<td rowspan="4" style="width:60px;"><span style="font-size:60px">😀</span></td>
 							<td>
-								<h5 class="fw-bold">전체적으로 만족스러웠어요.</h5>
-								<span>
-									<i class="fa-solid fa-star" style="color:#FFD600"></i>
-									<i class="fa-solid fa-star" style="color:#FFD600"></i>
-									<i class="fa-solid fa-star" style="color:#FFD600"></i>
-									<i class="fa-solid fa-star" style="color:#FFD600"></i>
-									<i class="fa-solid fa-star" style="color:#FFD600"></i>
+								<h5 class="ratingInfo fw-bold">전체적으로 만족스러웠어요.</h5>
+								<span class="ratingStar">
 								</span>
-								<span>5.0</span>
+								<span class="rating">5.0</span>
 							</td>
 						</tr>
 						<tr>
 							<td class="mukMutedText">
-								닉네임 · 디럭스 트윈 객실
+								<span class="nickName">닉네임</span>
+								·
+								<span class="roomName">디럭스 트윈 객실</span>
 							</td>
 						</tr>
 						<tr>
-							<td class="reviewContent">
-								1박 머물었는데 당일 도착 피곤해서 손만 씻고 잠자리에 들었네요.아침에 서둘러 일어나 샤워하다 벽틈에서 찌든 곰팡때가 이루 말할수 없이 끼여 있는데다 더러운 이물질이 흘러내려 깜짝 놀랬습니다.베게쪽 시트에서도 잘잘한 머릿카락과 먼지가 장난 아니였습니다.쇼파엔 얼룩이 져있고 ᆢ 음 1박 더 머물려다 다른 호텔로 옮겼습니다.<br>전에 하얏트 호텔에서 머물었을땐 쾌적 청결했는데 ᆢ롯데호텔 객실 청소하는 분들은 대충??청소상태 검열은 안하는건지?ᆢ청결,위생면에서는 저급하네요. 일찍 벗어나고 싶어 이른 아침에 체크아웃했습니다.프론트에서 직원분들은 친절했습니다.그리고 창가쪽에도 커튼 치다보니 컵자국인지 이물질 얼룩이 선명하게 있더군요
-							</td>
+							<td class="reviewContent">리뷰 내용</td>
 						</tr>
 						<tr>
-							<td class="mukMutedText">2022.11.13</td>
+							<td class="createDate mukMutedText">2022.11.13</td>
 						</tr>
 					</table>
 				</div>
@@ -295,6 +314,9 @@
 	<script>
 		$.reviewList = function(){
 			// 리뷰 불러오기
+			var reviewDiv = $("#review").clone();
+			console.log(reviewDiv);
+			
 			$.ajax({
 				url: "${contextPath}/reviewList.ho",
 				data: {
@@ -302,6 +324,42 @@
 				},
 				success: (data)=>{
 					console.log(data);
+					for(const i of data) {
+						reviewDiv.prop("style").removeProperty("display");
+						reviewDiv.find("input[name=reviewId]").val(i.reviewId);
+						reviewDiv.find(".nickName").html(i.nickName);
+						reviewDiv.find(".roomName").html(i.roomName);
+						reviewDiv.find(".reviewContent").html(i.reviewContent);
+						reviewDiv.find(".rating").html(i.rating+".0");
+						reviewDiv.find(".createDate").html(i.createDate);
+						
+						var ratingStar="";
+						console.log("점수"+i.rating+i.roomName);
+						for(var j=1;j<=5;j++) {
+							if(j<=i.rating) {
+								console.log(j);
+								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#FFD600"></i>';
+							} else {
+								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#e9e9e9"></i>';
+							}
+						}
+						console.log(ratingStar);
+						reviewDiv.find(".ratingStar").html(ratingStar);
+						
+						if(i.rating==5) {
+							reviewDiv.find(".ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
+						} else if(i.rating==4) {
+							reviewDiv.find(".ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
+						} else if(i.rating==3) {
+							reviewDiv.find(".ratingInfo").text("기대 이상이네요.");
+						} else if(i.rating==2) {
+							reviewDiv.find(".ratingInfo").text("조금만 더 신경 써 주세요.");
+						} else {
+							reviewDiv.find(".ratingInfo").text("별로예요.");
+						}
+						
+						$("#reviewListRow").append('<div id="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9">'+reviewDiv.html()+'</div>');
+					}
 				},
 				error: (data)=>{
 					console.log(data);
@@ -414,7 +472,7 @@
 			});
 		}
 	</script>
-	<div class="modal fade" id="writableReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="writableReviewModal" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered text-center">
 			<div class="modal-content">
 				<div class="modal-body mt-3 mb-3">
@@ -427,7 +485,7 @@
 	<!-- 작성 가능한 리뷰 끝 -->
 	
 	<!-- 리뷰 작성 모달 시작 -->
-	<div class="modal fade" id="writeReviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="writeReviewModal" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered text-center">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -450,7 +508,7 @@
 					<input type="hidden" name="memberId" value="${loginUser.id }">
 					<input type="hidden" name="reservationId">
 					<textarea class="form-control mb-3" name="reviewContent" rows="5" style="height:200px; resize:none" placeholder="내용" required></textarea>
-					<button id="insertReviewButton" class="mukButton mb-3" style="width:80%" data-bs-dismiss="modal" aria-label="Close">작성하기</button>
+					<button id="insertReviewButton" class="mukButton mb-3" style="width:80%" data-bs-dismiss="modal">작성하기</button>
 				</div>
 			</div>
 		</div>
@@ -524,6 +582,10 @@
 		});
 	</script>
 	<!-- 리뷰 작성 모달 끝 -->
+	
+	
+	
+	
 	
 	
 	
@@ -654,27 +716,7 @@
 	</script>
 	<!-- 리스트 버튼 끝 -->
 	
+
 	
-	
-	<!-- 모달 시작 -->
-	<div class="modal fade modal-sm" id="mukModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered text-center">
-			<div class="modal-content">
-				<div class="modal-body">
-					<p class="modalContent mt-3 mb-3"></p>
-					<button type="button" class="mukButton mb-3" style="width:80%" data-bs-dismiss="modal">닫기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script>
-		$.viewModal = function(text) {
-			$(".modalContent").text(text);
-			$("#mukModal").modal('show');
-		};
-	</script>
-	<!-- 모달 끝 -->
-	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
