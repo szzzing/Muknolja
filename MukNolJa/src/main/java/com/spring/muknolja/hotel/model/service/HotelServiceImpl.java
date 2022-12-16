@@ -108,4 +108,9 @@ public class HotelServiceImpl implements HotelService{
 	public int insertReview(Review review) {
 		return hDAO.insertReview(sqlSession, review);
 	}
+	
+	@Override
+	public ArrayList<Review> selectReviewList(int hotelId) {
+		return hDAO.selectReviewList(sqlSession, hotelId);
+	}
 }

@@ -120,6 +120,16 @@
 		values(SEQ_REPLYID.nextval, #{memberId}, #{reservationId}, #{rating}, #{reviewContent}, default, null)
 	</insert>
 	
+	<select id="selectReviewList" resultMap="reviewResultSet">
+		select *
+		from review
+			join reservation using(reservation_id)
+			join room using(room_id)
+			join hotel using(hotel_id)
+			join member on(review.member_id=id)
+		where hotel_id=#{hotelId}
+	</select>
+	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>
 		<result column="ENT_ID" property="entId"/>

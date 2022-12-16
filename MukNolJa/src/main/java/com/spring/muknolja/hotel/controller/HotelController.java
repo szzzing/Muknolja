@@ -99,7 +99,16 @@ public class HotelController {
 		}
 	}
 	
-	@RequestMapping("insertReview.ho")
+	//리뷰 전체보기
+	@RequestMapping(value="reviewList.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void reviewList(@RequestParam("hotelId") int hotelId) {
+		ArrayList<Review> reviewList = new ArrayList();
+		
+		reviewList = hService.selectReviewList(hotelId);
+	}
+	
+	@RequestMapping(value="insertReview.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public void insertReview(@ModelAttribute Review review) {
 		int result = hService.insertReview(review);

@@ -201,14 +201,8 @@
 				<h4 class="pt-3">10개의 리뷰</h4>
 			</div>
 			
-<!-- 			<div id="writableReviewDiv" class="pt-5 pb-5" style="border-bottom: 1px solid #e9e9e9; display:none"> -->
-<!-- 				<h4 class="fw-bold">리뷰를 작성해주세요.</h4> -->
-<!-- 				<div id="writableReviewList"> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-			
 			<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
-				<div class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9">
+				<div class="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9">
 					<table class="table table-borderless">
 						<tr>
 							<td rowspan="4" style="width:60px;"><span style="font-size:60px">😀</span></td>
@@ -230,7 +224,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td>
+							<td class="reviewContent">
 								1박 머물었는데 당일 도착 피곤해서 손만 씻고 잠자리에 들었네요.아침에 서둘러 일어나 샤워하다 벽틈에서 찌든 곰팡때가 이루 말할수 없이 끼여 있는데다 더러운 이물질이 흘러내려 깜짝 놀랬습니다.베게쪽 시트에서도 잘잘한 머릿카락과 먼지가 장난 아니였습니다.쇼파엔 얼룩이 져있고 ᆢ 음 1박 더 머물려다 다른 호텔로 옮겼습니다.<br>전에 하얏트 호텔에서 머물었을땐 쾌적 청결했는데 ᆢ롯데호텔 객실 청소하는 분들은 대충??청소상태 검열은 안하는건지?ᆢ청결,위생면에서는 저급하네요. 일찍 벗어나고 싶어 이른 아침에 체크아웃했습니다.프론트에서 직원분들은 친절했습니다.그리고 창가쪽에도 커튼 치다보니 컵자국인지 이물질 얼룩이 선명하게 있더군요
 							</td>
 						</tr>
@@ -297,6 +291,26 @@
 	
 	
 	
+	<!-- 리뷰리스트 보기 시작 -->
+	<script>
+		$.reviewList = function(){
+			// 리뷰 불러오기
+			$.ajax({
+				url: "${contextPath}/reviewList.ho",
+				data: {
+					hotelId: ${hotel.hotelId}
+				},
+				success: (data)=>{
+					console.log(data);
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			});
+		}
+		$.reviewList();
+	</script>
+	<!-- 리뷰리스트 보기 끝 -->
 	
 	
 	
@@ -379,7 +393,6 @@
 						if(data.length>0) {
 							for(const i of data) {
 								$("#writableReviewModal").modal('show');
-// 								$("#writableReviewDiv").prop("style").removeProperty("display");
 								$("#writableReviewList").html(
 										$("#writableReviewList").html()
 										+"<div class='writableReview'>"+i.roomName + " · " + i.checkinDate + "-" + i.checkoutDate + " 방문"

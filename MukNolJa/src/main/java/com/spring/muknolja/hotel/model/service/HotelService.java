@@ -46,4 +46,6 @@ public interface HotelService {
 
 	int insertReview(Review reply);
 
+	ArrayList<Review> selectReviewList(int hotelId);
+
 }
