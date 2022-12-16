@@ -136,4 +136,8 @@ public class MemberController {
 			
 			
 		}
+		@RequestMapping("pra.me")
+		public String prao() {
+			return"pra";
+		}
 }

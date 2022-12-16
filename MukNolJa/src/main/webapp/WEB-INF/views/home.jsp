@@ -39,6 +39,7 @@
    <a href="${ contextPath }/travelDetail.tr">여행 상세보기</a>
    
    <a href="${ contextPath }/enrollE.me">회원가입1</a>
+    <a href="${ contextPath }/pra.me">연습</a>
      <div class="container-fluid text-center">
 	  	<div class="row justify-content-center" style="width: 100%">
             <div class="col">

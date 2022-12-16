@@ -69,7 +69,7 @@
 				          </ul>
 		            		<div class="menud" style="margin-left:40px;">호텔</div>
 		            		<div class="menud">후기</div>
-		            		<div class="menud">동행</div>
+		            		<div class="menud">동행</div>sdfjgkldfsjgklsjgjs
 	            			<div style="float:right; margin-left:650px; margin-top:-8px; display:flex">
 	            				<h3 id="popup_open_btn" style="color:#6BB6EC; margin-left:-40px;"><i class="fa-solid fa-comments"></i></h3>
 	            			<c:if test="${ empty loginUser }">

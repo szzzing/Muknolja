@@ -599,12 +599,13 @@
 	$(document).ready(function () 
     		{	
     	 $('.we').hide();
-			
+				
     		    $('#a10').hover(function(){
     		    	$('#ttt').empty();
     		    	$('tbody').empty();
-    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=35.8219&lon=127.1489&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
+    		    	var i = 0;
+    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=35.8219&lon=127.1489&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric[i]',function(
+    		    			result){for
     		    		var ctime1 = result.list[0].dt
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
