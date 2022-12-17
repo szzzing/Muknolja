@@ -13,7 +13,7 @@
   background: #f2f2f2;
 }
 
-ul {
+ .ur{
   margin-top:5%;
   box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.3);
   margin-left:0px;
@@ -21,8 +21,9 @@ ul {
   
   
 }
+li{list-style:none;}
 
-  li{
+  .ll{
   font-size: 20px;
   font-weight: 600;
   width:100%;
@@ -40,7 +41,7 @@ ul {
   box-shadow: 0em 1.5em 0 ,lightgrey;
   transition: all .25s linear;
   }
-  li:hover {
+  .ll:hover {
     background: #6BB6EC;
     color: #fffcfb;
     transform: translate(-.9em, -.9em);
@@ -48,7 +49,7 @@ ul {
     box-shadow: 0.5em 2em 0 #e1e1e1;
     }
     
-    li{ 
+    .ll{
       transition: all .25s linear; 
 }
     
@@ -72,109 +73,386 @@ ul {
 	    
 	  }
 	}
-	.po1 {
-	  transform: rotateY(40deg);
-	  animation-name: fadeInDown;
-	  animation-duration: 1s;
-	  animation-fill-mode: both;
-	}
-	.po2 {
-	 
-	  animation-name: fadeInDown;
-	  animation-duration: 2s;
-	  animation-fill-mode: both;
-	}
-	.po3 {
 	
-	  animation-name: fadeInDown;
-	  animation-duration: 3s;
-	  animation-fill-mode: both;
-	}
-	.po4 {
-	 
-	  animation-name: fadeInDown;
-	  animation-duration: 4s;
-	  animation-fill-mode: both;
-	}
-	.po5 {
-	 
-	  animation-name: fadeInDown;
-	  animation-duration: 4s;
-	  animation-fill-mode: both;
-	}
-	.po{transform: rotateY(40deg);
-    box-shadow: 70px 20px 10px 0px rgba(0,0,0,0.3);
-    width:20%;
-    height:20%;
-    }
-    
-	.po:hover{
-	 transform:  rotateY(360deg) ; 
-	  box-shadow: 70px 20px 10px 0px rgba(0,0,0,0);
-	 
-	}
+	
+	
+	.im{
+		height:200px;
+		width:200px;
+		margin-right:20px;
+		box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.3);
+		
+		
+		}
+	.slide_wrapper{
+		paddinf-left:0px;
+		position: relative;
+		margin-top:20px;
+		
+		height: 220px;
+		overflow:hidden;
+		display:flex;
+		background:#F2F2F2;
+		}
+		.slides{
+		  position: absolute;
+		  display:flex;
+		  transition:left 0.5s ease-out;
+		  padding-left:0px;
+		  left:0px;
+		  width:2200px;
+		 }
+		 .slides li{
+		 float:left;
+		 margin-right: 30px;
+		 }
+		 .slides li:not(:last-child){
+		 	float:left;
+		 	margin-right: 30px;
+		 }
+		 .
+		 .controls{
+		 text-laign: center;
+		 
+		 }
+		 
+		 .slide_wrapper1{
+		paddinf-left:0px;
+		position: relative;
+		
+		
+		height: 220px;
+		overflow:hidden;
+		display:flex;
+	
+		}
+		.slides1{
+		  position: absolute;
+		  display:flex;
+		  transition:left 0.5s ease-out;
+		  padding-left:0px;
+		  left:0px;
+		  width:2200px;
+		 }
+		 .slides1 li{
+		 float:left;
+		 margin-right: 30px;
+		 }
+		 .slides1 li:not(:last-child){
+		 	float:left;
+		 	margin-right: 30px;
+		 }
+		 .
+		 .controls1{
+		 text-laign: center;
+		 
+		 }
+		
+		
+		.slide_wrapper2{
+		paddinf-left:0px;
+		position: relative;
+		
+		
+		height: 220px;
+		overflow:hidden;
+		display:flex;
+	
+		}
+		.slides2{
+		  position: absolute;
+		  display:flex;
+		  transition:left 0.5s ease-out;
+		  padding-left:0px;
+		  left:0px;
+		  width:2200px;
+		 }
+		 .slides2 li{
+		 float:left;
+		 margin-right: 30px;
+		 }
+		 .slides2 li:not(:last-child){
+		 	float:left;
+		 	margin-right: 30px;
+		 }
+		 .
+		 .controls2{
+		 text-laign: center;
+		 
+		 }
     </style>
   </head>
-  <body style="margin-top:8% ">
+  <body style="">
    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <jsp:include page="menubar.jsp"/>
    	
-     <div class="container">
-     	<div class="row">
-		<div class="col" style="display:inLine-block">
+     <div class="container-fluid text-center">
+	  	<div class="row justify-content-center shadow" style="min-width: 100vw;  min-height:100vh;">
+            <div class="col-xl-9 col-lg-12" style=" min-height:100vh;">
 		<br><br><br>
 	  	
 	  		
             <br><br>
-            			<ul >
-					    	<div style="display:flex; ">
-						    	<li>서울</li>
-						    	<li>인천</li>
-						    	<li>대전</li>
-						    	<li>대구</li>
-						    	<li>광주</li>
-						    	<li>부산</li>
-						    	<li>울산</li>
-						    	<li>세종</li>
-						    	<li>경기</li>
+            			<ul class="ur" >
+					    	<div style="display:flex;" lass="ur1">
+						    	<li class="ll">서울</li>
+						    	<li class="ll">인천</li>
+						    	<li class="ll">대전</li>
+						    	<li class="ll">대구</li>
+						    	<li class="ll">광주</li>
+						    	<li class="ll">부산</li>
+						    	<li class="ll">울산</li>
+						    	<li class="ll">세종</li>
+						    	<li class="ll">경기</li>
 						    	</div>
 						    	<div style="display:flex;">
-						    	<li>강원</li>
-						    	<li>충북</li>
-						    	<li>충남</li>
-						    	<li>경북</li>
-						    	<li>경남</li>
-						    	<li>전북</li>
-						    	<li>전남</li>
-						    	<li>제주</li>
-						    	<li>전체</li>
+						    	<li class="ll">강원</li>
+						    	<li class="ll">충북</li>
+						    	<li class="ll">충남</li>
+						    	<li class="ll">경북</li>
+						    	<li class="ll">경남</li>
+						    	<li class="ll">전북</li>
+						    	<li class="ll">전남</li>
+						    	<li class="ll">제주</li>
+						    	<li class="ll">전체</li>
 						    </div>
 					    </ul>
 					   <br>
-					    
-            	<div style="display:flex; margin-top:13%">
-            	<h1 style="margin-top:10%;font-size:80px; float:left;"><i class="bi bi-caret-left"></i></h3>
-            	<div class="po po1"style=" position:absolute; margin-left:12%;"><img alt="1" src="${contextPath }/resources/img/1.jpg" class="one" style="height:300px; width:100%; border-radius:4%;  background: blue; border: 1px solid lightgrey;"></div>
-            	<div class="po po2"style="transform:  rotateY(40deg); margin-left:9%; position:absolute; z-index:-1"><img alt="1" src="${contextPath }/resources/img/2.jpg" class="two" style="height:300px; width:100%; border-radius:4%;  background: skyblue; border: 1px solid lightgrey;"></div>
-            	<div class="po po3"style="transform:  rotateY(40deg); margin-left:6%;position:absolute;  z-index:-2;"><img alt="1" src="${contextPath }/resources/img/3.jpg" class="three" style="height:300px; width:100%; border-radius:4%;  background: green;  border: 1px solid lightgrey;"></div>
-            	<div class="po po4"style="transform:  rotateY(40deg); margin-left:3%;position:absolute; z-index:-3;"><img alt="1" src="${contextPath }/resources/img/4.jpg" class="four" style="height:300px; width:100%; border-radius:4%;  background: red; border: 1px solid lightgrey;"></div>
-            	
-            	<div class="po po5"style="transform:  rotateY(40deg); margin-left:15%;position:absolute; ;z-index:-1;"><img alt="1" src="${contextPath }/resources/img/5.jpg" class="six" style="height:300px; width:100%; border-radius:4%;  background: red; border: 1px solid lightgrey;"></div>
-            	<div class="po po6"style="transform:  rotateY(40deg); margin-left:18%;position:absolute; ;z-index:-2;"><img alt="1" src="${contextPath }/resources/img/5.jpg" class="six" style="height:300px; width:100%; border-radius:4%;  background: red; border: 1px solid lightgrey;"></div>
-            	<div class="po po7"style="transform:  rotateY(40deg); margin-left:21%;position:absolute; ;z-index:-3;"><img alt="1" src="${contextPath }/resources/img/5.jpg" class="six" style="height:300px; width:100%; border-radius:4%;  background: red; border: 1px solid lightgrey;"></div>
-            	<div class="po po8"style="transform:  rotateY(40deg); margin-left:24%;position:absolute; ;z-index:-4;"><img alt="1" src="${contextPath }/resources/img/5.jpg" class="six" style="height:300px; width:100%; border-radius:4%;  background: red; border: 1px solid lightgrey;"></div>
-            	
-            	<h1 style="float:center; right:0px; margin-right:0px;"><i style="float:center; right:0px; margin-right:0px;" class="bi bi-caret-right"></i></h3>
+					   <div class="row justify-content-center" >
+					   	<div class="col-10">
+					   <div style="font-size:30px; margin-top:50px; font-weight:600; float: left; margin-l">관광지</div>
+					   </div>
+					   </div>
+				<div class="row justify-content-center" style="margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+					
+					<div class="col-1">
+						<p class="controls">
+            			<h3 class="prev" style="margin-top:70px;"><i class="bi bi-chevron-compact-left"></i></h3>
+					</div>
+					<div class="col-10" style="float: left;">   
+					 
+		            	<div class="slide_wrapper" >
+		            		<ul class="slides">
+		            			<li style="display:flex;">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im im1 " style="">
+		            				<img alt="1" src="${contextPath }/resources/img/1.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/3.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/4.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/5.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            			</li>
+		            		</ul>
+		            		
+		            		</div>
+		            		</div>	 
+		            		<div class="col-1">
+            		<p class="controls">
+            			
+            			<h3 class="next" style="margin-top:70px;"><i class="bi bi-chevron-compact-right"></i></h3>
+            		</p>
+            		</div>
             	</div>
+            	
+            	<div class="row justify-content-center"  >
+					   	<div class="col-10">
+					   <div style="font-size:30px; margin-top:50px; font-weight:600; float: left; margin-l">맛집</div>
+					   </div>
+					   </div>
+            	
+            	<div class="row justify-content-center" style="margin-top:10px;">
+					<div class="col-1">
+						<p class="controls1">
+            			<h3 class="prev1" style="margin-top:70px;"><i class="bi bi-chevron-compact-left"></i></h3>
+					</div>
+					<div class="col-10" style="float: left;">    
+		            	<div class="slide_wrapper1" >
+		            		<ul class="slides1">
+		            			<li style="display:flex;">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im " style="">
+		            				<img alt="1" src="${contextPath }/resources/img/1.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/3.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/4.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/5.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            			</li>
+		            		</ul>
+		            		
+		            		</div>
+		            		</div>	 
+		            		<div class="col-1">
+            		<p class="controls1">
+            			
+            			<h3 class="next1" style="margin-top:70px;"><i class="bi bi-chevron-compact-right"></i></h3>
+            		</p>
+            		</div>
+            	</div>
+            	<div class="row justify-content-center"  >
+					   	<div class="col-10">
+					   <div style="font-size:30px; margin-top:50px; font-weight:600; float: left; margin-l">축제</div>
+					   </div>
+					   </div>
+            	
+            	<div class="row justify-content-center" style="margin-top:10px;">
+					<div class="col-1">
+						<p class="controls2">
+            			<h3 class="prev2" style="margin-top:70px;"><i class="bi bi-chevron-compact-left"></i></h3>
+					</div>
+					<div class="col-10" style="float: left;">    
+		            	<div class="slide_wrapper2" >
+		            		<ul class="slides2">
+		            			<li style="display:flex;">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im " style="">
+		            				<img alt="1" src="${contextPath }/resources/img/1.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/3.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/4.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/5.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            			</li>
+		            		</ul>
+		            		
+		            		</div>
+		            		</div>	 
+		            		<div class="col-1">
+            		<p class="controls2">
+            			
+            			<h3 class="next2" style="margin-top:70px;"><i class="bi bi-chevron-compact-right"></i></h3>
+            		</p>
+            		</div>
             	</div>
             </div>
-       
        </div>
-  
-    
+    </div>
     <script>
-  
+  		var slides = document.querySelector('.slides'),
+  			slide =  document.querySelectorAll('.slides img'),
+  			currentIdx = 0,
+  			slideCount = slide.length,
+  			prevBtn = document.querySelector('.prev');
+  			nextBtn = document.querySelector('.next');
+  			
+  			
+  			function moveSlide(num){
+  				slides.style.left = -num * 220 + 'px';
+  				currentIdx = num;
+  			}
+  			nextBtn.addEventListener('click',function(){
+  				
+  				if(currentIdx < slideCount - 1){
+  					moveSlide(currentIdx + 1);
+  					
+  				}else{
+  					moveSlide(0);
+  				}
+  				
+  				
+  			});
+  			prevBtn.addEventListener('click',function(){
+  				
+  				if(currentIdx > 0){
+  					moveSlide(currentIdx - 1);
+  					
+  				}else{
+  					moveSlide(slideCount - 1);
+  				}
+  				
+  				
+  			});
+  			
+  			var slides1 = document.querySelector('.slides1'),
+  			slide1 =  document.querySelectorAll('.slides1 img'),
+  			currentIdx1 = 0,
+  			slideCount1 = slide1.length,
+  			prevBtn1 = document.querySelector('.prev1');
+  			nextBtn1 = document.querySelector('.next1');
+  			
+  			
+  			function moveSlide1(num){
+  				slides1.style.left = -num * 220 + 'px';
+  				currentIdx1 = num;
+  			}
+  			nextBtn1.addEventListener('click',function(){
+  				
+  				if(currentIdx1 < slideCount1 - 1){
+  					moveSlide1(currentIdx1 + 1);
+  					
+  				}else{
+  					moveSlide1(0);
+  				}
+  				
+  				
+  			});
+  			prevBtn1.addEventListener('click',function(){
+  				
+  				if(currentIdx1 > 0){
+  					moveSlide1(currentIdx1 - 1);
+  					
+  				}else{
+  					moveSlide1(slideCount1 - 1);
+  				}
+  				
+  				
+  			});
+  			
+  			var slides2 = document.querySelector('.slides2'),
+  			slide2 =  document.querySelectorAll('.slides2 img'),
+  			currentIdx2 = 0,
+  			slideCount2 = slide.length,
+  			prevBtn2 = document.querySelector('.prev2');
+  			nextBtn2 = document.querySelector('.next2');
+  			
+  			
+  			function moveSlide2(num){
+  				slides2.style.left = -num * 220 + 'px';
+  				currentIdx2 = num;
+  			}
+  			nextBtn2.addEventListener('click',function(){
+  				
+  				if(currentIdx < slideCount2 - 1){
+  					moveSlide2(currentIdx2 + 1);
+  					
+  				}else{
+  					moveSlide2(0);
+  				}
+  				
+  				
+  			});
+  			prevBtn2.addEventListener('click',function(){
+  				
+  				if(currentIdx2 > 0){
+  					moveSlide2(currentIdx2 - 1);
+  					
+  				}else{
+  					moveSlide2(slideCount2 - 1);
+  				}
+  				
+  				
+  			});
+  			
+  			$('.im1').click(function(){
+  				$('.slide_wrapper').css('overflow','visible');
+  				 $('.im1').css('transform','scale(15,15)');
+  				$('.im1').css('z-index','99999999999');
+  				$('.im1').css('transition','.2s ease-out' );
+  				$('.slides').css('transition','scale 2s ease-out');
+  				 
+  				setTimeout(function() {
+  	    			location = "${ contextPath}/home.do";
+  	    			}, 300);
+  			});
+  			
     </script>
   </body>
 </html>

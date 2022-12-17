@@ -203,7 +203,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=37.5683&lon=126.9778&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -249,7 +249,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=37.2911&lon=127.0089&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -293,7 +293,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?lat=36.8065&lon=127.1522&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -338,7 +338,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?lat=37.7556&lon=128.8961&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -382,7 +382,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=36.6372&lon=127.4897&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -426,7 +426,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=35.8428&lon=129.2117&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -471,7 +471,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?lat=35.5372&lon=129.3167&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -517,7 +517,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?lat=33.5097&lon=126.5219&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -561,7 +561,7 @@
     		    	$('tbody').empty();
     		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=34.7546&lon=127.6599&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
     		    			result){
-    		    		var ctime1 = result.list[0].dt
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
@@ -605,8 +605,8 @@
     		    	$('tbody').empty();
     		    	var i = 0;
     		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=35.8219&lon=127.1489&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric[i]',function(
-    		    			result){for
-    		    		var ctime1 = result.list[0].dt
+    		    			result){
+    		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;

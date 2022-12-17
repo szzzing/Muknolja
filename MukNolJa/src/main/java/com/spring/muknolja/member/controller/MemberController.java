@@ -38,6 +38,7 @@ public class MemberController {
 		System.out.println(m);
 		System.out.println(m.getPwd());
 		Member loginUser = mService.login(m);
+		System.out.println(m);
 		System.out.println(loginUser);
 		System.out.println(bcrypt);
 		String encPwd = bcrypt.encode(m.getPwd());

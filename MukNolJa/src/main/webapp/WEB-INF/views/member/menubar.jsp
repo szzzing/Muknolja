@@ -11,6 +11,7 @@
      <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <style>
+    
     	 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
     	 .menul{
     	 font-size: 10px;}
@@ -117,52 +118,88 @@
             	text-decoration: underline;
             	cursor: pointer;
             }
+            .ba{
+            width:200px;font-size:30px; margin-top:15px; color:#6BB6EC; font-weight: 900;
+            }
+            @media (max-width: 650px) {
+			  .ba{
+			  	margin-top:30px;
+			    width: 100px;
+			    font-size:15px;
+			    
+			  }
+}
+			
+		.ch{font-size:30px;}
+		 @media (max-width: 650px) {
+			  .ch{
+			  	font-size:15px;
+			  	margin-top:13px;
+			  	
+			  }
+}
+			.coco{width:70px;}
+			 @media (max-width: 650px) {
+			  .coco{
+			  width:55px;
+			  }
+			  }
     </style>
   </head>
   <body>
 	
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    
    	 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
    	 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
   	 <header id="header"  style="top:0; left:0; position:fixed; z-index:99999">
      <div class="container-fluid text-center">
-	  	<div class="row justify-content-center shadow" style="width: 100vw; height:80px; background: white;">
-            <div class="col" style="width:1200px; height:80px; ">
-            	<div style=" width:1200px; height:80px; display:inLine-block; " >
-            		<div style="display:flex; float:left; width:1200px;">
-            		<div style="font-size:30px; margin-top:15px; color:#6BB6EC; font-weight: 900; ">MUKNOLJA</div>
-            			<div class="menum" style="margin-top: 35px; display:flex">
-	            		 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#65647C; margin-left:30px;font-size: 15px;  font-family: 'HSYuji-Regular'; ">
-			           	 여행
-			          	</a>
-				          <ul class="dropdown-menu">
-				            <li><a class="dropdown-item menul" href="#">관광지</a></li>
-				            <li><a class="dropdown-item menul" href="#">맛집</a></li>
-				            <li><a class="dropdown-item menul" href="#">축제</a></li>
-				          </ul>
-		            		<div class="menud" style="margin-left:40px;">호텔</div>
-		            		<div class="menud">후기</div>
-		            		<div class="menud">동행</div>sdfjgkldfsjgklsjgjs
-	            			<div style="float:right; margin-left:650px; margin-top:-8px; display:flex">
-	            				<h3 id="popup_open_btn" style="color:#6BB6EC; margin-left:-40px;"><i class="fa-solid fa-comments"></i></h3>
-	            			<c:if test="${ empty loginUser }">
-		         <li class="nav-item" style="margin-right:3%; width:40%" > -->
-		         </li> 
-					           <a class="nav-link " style="color:#6BB6EC; margin-left:40px;" href="${contextPath }/loginView.me" style="font-size: 1.4vw; "><h3><i class="fa-solid fa-circle-user"></i></h3></a>
-					        </c:if>	
-	            			<c:if test="${ !empty loginUser }">	
-	            				<a href="${ contextPath  }/myInfo.me"><h3><i class="bi bi-person-lines-fill" style="color:#6BB6EC;"></i></h3></a>
-	            				<a href="${ contextPath  }/logout.me"><h3><i class="bi bi-box-arrow-right" style="color:#6BB6EC;"></i></h3></a>
-	            			</c:if>
-		     				    
-	            			</div>
-	            		</div>
+	  	<div class="row justify-content-center shadow" style="min-width: 100vw; height:80px; background: white;">
+            <div class="col-xl-9 col-lg-12" style=" height:80px; font-family: 'HSYuji-Regular';  ">
+            	<div  style=" height:80px; "> 
+            		<div class="row row-cols-9" style=height:80px;>
+            		<div class="col-5 ba"style=" ">MUKNOLJA</div>
+            		<div class="col-1 coco" style="font-size:10px; font-weight:600; margin-top:32px;"><div class="dropdown">
+						  <button class="" style="background:none; margin-left:-15px;width:70px;font-size:15px;padding-top:0px; padding-left:-10px;font-align:center;font-weight:600; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						   여행
+						  </button>
+						  <ul class="dropdown-menu" >
+						    <li><a class="dropdown-item" style="font-size:14px;font-weight:600;  href="#">관광지</a></li>
+						    <li><a class="dropdown-item" style="font-size:14px;font-weight:600; href="#">맛집</a></li>
+						    <li><a class="dropdown-item" style="font-size:14px;font-weight:600; href="#">축제</a></li>
+						  </ul>
+						</div>				
+					</div>
+            		<div class="col-1 coco" style=" font-size:15px; font-weight:600;margin-top:32px;">호텔</div>
+            		<div class="col-1 coco" style=" font-size:15px; font-weight:600;margin-top:32px;">동행</div>
+            		<div class="col-1 coco" style=" font-size:15px; font-weight:600;margin-top:32px;">후기</div>
+            		<div class="col "></div>
+            		<div class="col-1 co" style="font-size:25px; margin-top:22px; ">
+            			<h3 id="popup_open_btn" class="ch"style="color:#6BB6EC; "><i class="fa-solid fa-comments ic"></i></h3>
+            		</div>
+            		<div class="col-1 co" style=" font-size:15px; margin-top:22px; margin-right:20px;">
+            		 <c:if test="${ empty loginUser }">
+					     <a class="nav-link" style="color:#6BB6EC; font-size: 15px;" href="${contextPath }/loginView.me"><h3 class="ch"style=""><i class="fa-solid fa-circle-user ic"></i></h3></a>
+					</c:if>		
+					<c:if test="${ !empty loginUser }">
+	            		<button class="buu" style="background:white;color:#6BB6EC; width:50px; font-size:15px;padding-top:0px;font-weight:600; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							   <h3 class="ch"style=""><i class="bi bi-person-lines-fill ic" style="color:#6BB6EC;"></i></h3>
+							  </button>
+							  <ul class="dropdown-menu">
+							    <li><a class="dropdown-item" style="font-size:15px;font-weight:600;"  href="${ contextPath  }/myInfo.me">마이페이지</a></li>
+							    <li><a class="dropdown-item" style="font-size:15px;font-weight:600;" href="${ contextPath  }/logout.me">로그아웃</a></li>
+							  </ul>
+					</c:if>
+							</div>	
+							
+            		</div>
             		</div>
             	</div>
     		</div>
     	</div>
-    </div>
+   
     </header>
+    
+    
     
 <!--     채팅 모달 -->
 	 <div id="room_modal">
