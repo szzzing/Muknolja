@@ -3,7 +3,7 @@
 <mapper namespace="hotelmapper">
 	<insert id="insertRoom">
 		insert into ROOM
-		values(SEQ_ROOMID.nextval, 4, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo}, #{roomIntro})
+		values(SEQ_ROOMID.nextval, #{hotelId}, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo}, #{roomIntro}, default)
 	</insert>
 	
 	<insert id="insertRoomAttm">
@@ -20,7 +20,7 @@
 	<select id="selectHotel" resultMap="hotelResultSet">
 		select *
 		from hotel
-		where hotel_id=#{hotelId}
+		where hotel_id=#{hotelId} and hotel_status='Y'
 	</select>
 	
 	<select id="selectHotelImg" resultMap="hotelResultSet">
@@ -33,7 +33,17 @@
 	<select id="selectAllRoom" resultMap="roomResultSet">
 		select *
 		from room
-		where hotel_id=#{hotelId}
+		where hotel_id=#{hotelId} and room_status='Y'
+		order by room_id desc
+	</select>
+	
+	<select id="selectAllRoomThumbnail" resultMap="attachedFileResultSet">
+		select *
+		from room_img
+			join attached_file using(file_id)
+			join room using(room_id)
+		where hotel_id=#{hotelId} and room_status='Y' and file_thumbnail='Y'
+		order by room_id desc
 	</select>
 	
 	<select id="selectRoomImg" resultMap="attachedFileResultSet">
@@ -53,7 +63,7 @@
 	<insert id="insertHotel">
 		insert into hotel
 		values(
-			SEQ_HID.nextval, #{entId}, #{hotelName}, #{hotelPhone}, #{hotelAddress}, #{wifi}, #{breakfast}, #{amenity}, #{park}, #{swim}, #{fitness}, null, null, default, sysdate, #{star}, #{hotelInfo}, #{hotelIntro}
+			SEQ_HID.nextval, #{entId}, #{hotelName}, #{hotelPhone}, #{hotelAddress}, #{wifi}, #{breakfast}, #{amenity}, #{park}, #{swim}, #{fitness}, null, null, default, sysdate, #{star}, #{hotelInfo}, #{hotelIntro}, default
 		)
 	</insert>
 	
@@ -113,12 +123,49 @@
 			join room using(room_id)
 		where member_id=#{memberId} and hotel_id=#{hotelId} and <![CDATA[checkout_date+1<sysdate]]>
 			and (select count(*) from review where review.reservation_id=reservation.reservation_id)=0
+		order by reservation.reservation_id desc
 	</select>
 	
 	<insert id="insertReview">
 		insert into review
-		values(SEQ_REPLYID.nextval, #{memberId}, #{reservationId}, #{rating}, #{reviewContent}, default, null)
+		values(SEQ_REPLYID.nextval, #{memberId}, #{reservationId}, #{rating}, #{reviewContent}, default, null, default)
 	</insert>
+	
+	<select id="selectReviewList" resultMap="reviewResultSet">
+		select *
+		from review
+			join reservation using(reservation_id)
+			join room using(room_id)
+			join hotel using(hotel_id)
+			join member on(review.member_id=id)
+		where hotel_id=#{hotelId} and review_status='Y'
+		order by review_id desc
+	</select>
+	
+	<select id="selectAvgRating" resultType="_int">
+		select round(avg(rating), 1)
+		from review
+			join reservation using(reservation_id)
+			join room using(room_id)
+		where hotel_id=#{hotelId} and review_status='Y'
+	</select>
+	
+	<select id="selectReviewCount" resultType="_int">
+		select count(*)
+		from review
+			join reservation using(reservation_id)
+			join room using(room_id)
+		where hotel_id=#{hotelId} and review_status='Y'
+	</select>
+	
+	<select id="selectHotelById" resultMap="hotelResultSet">
+		select *
+		from hotel
+		where ent_id=#{id}
+	</select>
+	
+	
+	
 	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>
@@ -139,6 +186,7 @@
 		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
 		<result column="HOTEL_INFO" property="hotelInfo"/>
 		<result column="HOTEL_INTRO" property="hotelIntro"/>
+		<result column="HOTEL_STATUS" property="hotelStatus"/>
 	</resultMap>
 	
 	<resultMap type="Room" id="roomResultSet">
@@ -152,6 +200,7 @@
 		<result column="TOTAL_NUMBER" property="totalNumber"/>
 		<result column="ROOM_INFO" property="roomInfo"/>
 		<result column="ROOM_INTRO" property="roomIntro"/>
+		<result column="ROOM_STATUS" property="roomStatus"/>
 	</resultMap>
 	
 	<resultMap type="AttachedFile" id="attachedFileResultSet">
@@ -202,5 +251,6 @@
 		<result column="REVIEW_CONTENT" property="reviewContent"/>
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="BUSINESS_REPLY" property="businessReply"/>
+		<result column="REVIEW_STATUS" property="reviewStatus"/>
 	</resultMap>
 </mapper>

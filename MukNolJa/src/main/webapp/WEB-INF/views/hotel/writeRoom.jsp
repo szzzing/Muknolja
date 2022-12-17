@@ -23,6 +23,7 @@
 		<h2 class="fw-bold p-5" style="text-align:center;">객실 등록</h2>
 		
 		<form action="${ contextPath }/insertRoom.ho" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="hotelId" value="${hotel.hotelId }">
 			<div class="col form-floating mb-3 mt-3">
 				<input type="text" class="form-control" name="roomName" required>
 				<label for="roomName">객실명</label>

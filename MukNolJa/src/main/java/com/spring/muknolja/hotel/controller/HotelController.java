@@ -41,6 +41,19 @@ public class HotelController {
 	@Autowired
 	private HotelService hService;
 	
+	@RequestMapping("hotelAdmin.ho")
+	public String hotelAdmin(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m.getMemberType().equals("H")) {
+			Hotel hotel = hService.selectHotelbyId(m.getId());
+			model.addAttribute("hotel", hotel);
+			
+			return "hotelAdmin";
+		} else {
+			throw new CommonException("호텔 사업자가 아닙니다.");
+		}
+	}
+	
 	@RequestMapping("hotelList.ho")
 	public String hotelList() {
 		return "hotelList";
@@ -49,15 +62,11 @@ public class HotelController {
 	@RequestMapping("hotelDetail.ho")
 	public String hotelDetail(@RequestParam("hotelId") int hotelId, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");
+		
 		Hotel hotel = hService.selectHotel(hotelId);
 		AttachedFile hotelImg = hService.selectHotelImg(hotelId);
 		ArrayList<Room> roomArray = hService.selectAllRoom(hotelId);
-		ArrayList<AttachedFile> roomThumbnail = new ArrayList<AttachedFile>();
-		
-		for(Room r : roomArray) {
-			AttachedFile thumb = hService.selectRoomThumbnail(r.getRoomId());
-			roomThumbnail.add(thumb);
-		}
+		ArrayList<AttachedFile> roomThumbnail = hService.selectAllRoomThumbnail(hotelId);
 		
 		if(m!=null) {
 			LikeHotel l = new LikeHotel();
@@ -85,7 +94,6 @@ public class HotelController {
 		map.put("memberId", id);
 		map.put("hotelId", hotelId);
 		reservationList = hService.writableReview(map);
-		System.out.println(reservationList);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
@@ -99,19 +107,55 @@ public class HotelController {
 		}
 	}
 	
-	@RequestMapping("insertReview.ho")
+	//리뷰 전체보기
+	@RequestMapping(value="reviewList.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void reviewList(@RequestParam("hotelId") int hotelId, HttpServletResponse response) {
+		HashMap map = new HashMap();
+
+		ArrayList<Review> reviewList = hService.selectReviewList(hotelId);
+		int reviewCount = hService.selectReviewCount(hotelId);
+		int avgRating = hService.selectAvgRating(hotelId);
+		
+		map.put("reviewList", reviewList);
+		map.put("reviewCount", reviewCount);
+		map.put("avgRating", avgRating);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="insertReview.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public void insertReview(@ModelAttribute Review review) {
 		int result = hService.insertReview(review);
 	}
 	
 	@RequestMapping("writeRoom.ho")
-	public String insertRoomView() {
+	public String writeRoom(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(!m.getMemberType().equals("H")) {
+			throw new CommonException("사업자 회원이 아닙니다.");
+		}
+		
+		Hotel hotel = hService.selectHotelbyId(m.getId());
+		model.addAttribute("hotel", hotel);
 		return "writeRoom";
 	}
 	
 	@RequestMapping("insertRoom.ho")
-	public String insertRoom(@ModelAttribute Room r, @RequestParam("roomImg") ArrayList<MultipartFile> files, HttpServletRequest request) {
+	public String insertRoom(@ModelAttribute Room r, @RequestParam("roomImg") ArrayList<MultipartFile> files, HttpSession session, HttpServletRequest request) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		int roomResult = hService.insertRoom(r);
 		
 		ArrayList<AttachedFile> list = new ArrayList();
 		for(MultipartFile file : files) {
@@ -145,7 +189,6 @@ public class HotelController {
 		}
 		
 		int attmResult = 0;
-		int roomResult = hService.insertRoom(r);
 		
 		if(!list.isEmpty()) {
 			attmResult = hService.insertRoomAttm(list);
@@ -201,13 +244,19 @@ public class HotelController {
 	}
 	
 	@RequestMapping("writeHotel.ho")
-	public String writeHotel() {
+	public String writeHotel(HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(!m.getMemberType().equals("H")) {
+			throw new CommonException("사업자 회원이 아닙니다.");
+		}
 		return "writeHotel";
 	}
 	
 	@RequestMapping("insertHotel.ho")
 	public String insertHotel(@ModelAttribute Hotel h, @RequestParam("hotelImg") ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
 		Member m = (Member)session.getAttribute("loginUser");
+		
+		h.setEntId(m.getId());
 		
 		ArrayList<AttachedFile> list = new ArrayList();
 		for(MultipartFile file : files) {
@@ -261,6 +310,9 @@ public class HotelController {
 	public String writeReservation(@ModelAttribute Reservation r, Model model, HttpSession session) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
+		if(!m.getMemberType().equals("H")) {
+			throw new CommonException("사업자 회원이 아닙니다.");
+		}
 		r.setMemberId(m.getId());
 		
 		Room room = hService.selectRoom(r.getRoomId());

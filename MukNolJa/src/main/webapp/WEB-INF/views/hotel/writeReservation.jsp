@@ -9,14 +9,12 @@
 <title>예약하기</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
-	.mukRound {border-radius: 10px;}
-	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukRound {border-radius: 8px;}
+	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
-	#reservationInfo {
-		background: #F9F9F9;
-		border-radius: 20px;
-	}
+	
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -59,28 +57,8 @@
 				<!-- 결제수단 선택 끝 -->
 				
 				<!-- 약관 동의 시작 -->
-				<table>
-					<tr class="pb-1">
-						<td>
-							<div class="mukCheckBox text-center" style="width:24px; height:24px; border-radius:3px; border:1px solid #e9e9e9;">
-								<i class="checkIcon fa-solid fa-check" style="color:white; vertical-align:baseline; display:none;"></i>
-							</div>
-						</td>
-						<td class="fw-bold" style="padding-left:0.5em">
-							전체 동의
-						</td>
-					</tr>
-					<tr class="pb-1">
-						<td>
-							<div class="mukCheckBox text-center" style="width:24px; height:24px; border-radius:3px; border:1px solid #e9e9e9;">
-								<i class="checkIcon fa-solid fa-check" style="color:white; vertical-align:baseline; display:none;"></i>
-							</div>
-						</td>
-						<td class="mukMutedText" style="padding-left:0.5em">
-							숙소이용규칙 및 취소/환불규정 동의
-						</td>
-					</tr>
-				</table>
+				<div class="form-check">
+				</div>
 				<!-- 약관 동의 끝 -->
 			</div>
 			

@@ -24,4 +24,5 @@ public class Room {
 	private int totalNumber;
 	private String roomInfo;
 	private String roomIntro;
+	private String roomStatus;
 }

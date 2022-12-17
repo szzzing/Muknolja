@@ -46,4 +46,14 @@ public interface HotelService {
 
 	int insertReview(Review reply);
 
+	ArrayList<Review> selectReviewList(int hotelId);
+
+	ArrayList<AttachedFile> selectAllRoomThumbnail(int hotelId);
+
+	int selectReviewCount(int hotelId);
+
+	int selectAvgRating(int hotelId);
+
+	Hotel selectHotelbyId(String id);
+
 }

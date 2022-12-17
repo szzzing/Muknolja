@@ -17,8 +17,11 @@
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 </head>
 <style>
-    .mukButton {background: #6BB6EC; color:white; border-color: #6BB6EC;}
-	.mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC;}
+    .mukRound {border-radius: 8px;}
+	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
+	.mukMutedText {color:#B9B9B9;}
 </style>
 <body>
 
@@ -109,7 +112,7 @@
 						<table class="col table table-borderless">
 							<tr>
 								<td style="width:200px" rowspan="4">
-									<img class="hotelImg rounded-5" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="200px" height="200px" style="background: lightgray">
+									<img class="hotelImg mukRound" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="200px" height="200px" style="background: lightgray">
 								</td>
 								<td colspan="2" class="align-top">
 									<h4 class="hotelName lh-1 fw-bold">롯데호텔 부산</h4>

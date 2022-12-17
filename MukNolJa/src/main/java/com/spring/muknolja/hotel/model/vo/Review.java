@@ -26,4 +26,5 @@ public class Review {
 	private String reviewContent;
 	private Date createDate;
 	private String businessReply;
+	private String reviewStatus;
 }
