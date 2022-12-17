@@ -113,4 +113,24 @@ public class HotelServiceImpl implements HotelService{
 	public ArrayList<Review> selectReviewList(int hotelId) {
 		return hDAO.selectReviewList(sqlSession, hotelId);
 	}
+	
+	@Override
+	public ArrayList<AttachedFile> selectAllRoomThumbnail(int hotelId) {
+		return hDAO.selectAllRoomThumbnail(sqlSession, hotelId);
+	}
+	
+	@Override
+	public int selectAvgRating(int hotelId) {
+		return hDAO.selectAvgRating(sqlSession, hotelId);
+	}
+	
+	@Override
+	public int selectReviewCount(int hotelId) {
+		return hDAO.selectReviewCount(sqlSession, hotelId);
+	}
+	
+	@Override
+	public Hotel selectHotelbyId(String id) {
+		return hDAO.selectHotelById(sqlSession, id);
+	}
 }

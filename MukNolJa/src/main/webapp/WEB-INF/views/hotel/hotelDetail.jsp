@@ -98,7 +98,7 @@
 	</form>
 	<!-- 예약 전송용 form 끝 -->
 	
-	<div class="container mt-5 mb-5">
+	<div class="container-sm mt-5 mb-5">
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start">
 		
 			<div class="col col-lg-auto pt-5">
@@ -129,7 +129,10 @@
 						</td>
 					</tr>
 				</table>
-				<h4 class="fw-bold"><i class="fa-solid fa-star" style="color:#FFD600"></i> 4.5</h4>
+				<h4 class="fw-bold">
+					<i class="fa-solid fa-star" style="color:#FFD600"></i>
+					<span class="avgRating"></span>
+				</h4>
 			</div>
 		</div>
 
@@ -167,12 +170,12 @@
 				</div>
 			</div>
 			<div class="col col-lg-9">
-				<c:forEach items="${ roomArray }" var="r">
+				<c:forEach items="${ roomArray }" var="r" varStatus="t">
 					<div class="col mt-3 mb-3" style="border-bottom:1px solid #e9e9e9">
 						<table class="table table-borderless">
 							<tr>
 								<td style="width:300px" rowspan="3">
-									<img class="hotelImg mukRound" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="300px" height="200px" style="background: lightgray">
+									<img class="hotelImg mukRound" src="${contextPath }/resources/uploadFiles/${roomThumbnail[t.index].fileModifyName}" width="300px" height="200px" style="background: lightgray">
 								</td>
 								<td colspan="2" class="align-top">
 									<input type="hidden" class="roomId" value="${r.roomId }">
@@ -208,14 +211,10 @@
 			<div class="text-center pt-5 pb-5" style="border-bottom: 1px solid #e9e9e9">
 				<h2 class="fw-bold">최고예요!</h2>
 				<div style="display:inline-block">
-					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
-					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
-					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
-					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
-					<h2 class="fa-solid fa-star" style="color:#FFD600"></h2>
+					<h2 id="ratingStar"></h2>
 				</div>
-				<h2 class="fw-bold" style="display:inline-block">4.5</h2>
-				<h4 class="pt-3">10개의 리뷰</h4>
+				<h2 class="fw-bold avgRating" style="display:inline-block">4.5</h2>
+				<h4 class="pt-3"><span class="reviewCount"></span>개의 리뷰</h4>
 			</div>
 			
 			<div id="reviewListRow" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
@@ -223,26 +222,25 @@
 					<input type="hidden" name="reviewId">
 					<table class="table table-borderless">
 						<tr>
-							<td rowspan="4" style="width:60px;"><span style="font-size:60px">😀</span></td>
+							<td rowspan="5" style="width:60px;"><span class="ratingEmoji" style="font-size:60px"></span></td>
 							<td>
-								<h5 class="ratingInfo fw-bold">전체적으로 만족스러웠어요.</h5>
-								<span class="ratingStar">
-								</span>
-								<span class="rating">5.0</span>
+								<h5 class="ratingInfo fw-bold"></h5>
+								<span class="ratingStar"></span>
+								<span class="rating"></span>
 							</td>
 						</tr>
 						<tr>
 							<td class="mukMutedText">
-								<span class="nickName">닉네임</span>
+								<span class="nickName"></span>
 								·
-								<span class="roomName">디럭스 트윈 객실</span>
+								<span class="roomName"></span>
 							</td>
 						</tr>
 						<tr>
-							<td class="reviewContent">리뷰 내용</td>
+							<td class="reviewContent"></td>
 						</tr>
 						<tr>
-							<td class="createDate mukMutedText">2022.11.13</td>
+							<td class="createDate mukMutedText"></td>
 						</tr>
 					</table>
 				</div>
@@ -270,7 +268,7 @@
 		$.reviewList = function(){
 			// 리뷰 불러오기
 			var reviewDiv = $("#review").clone();
-			console.log(reviewDiv);
+			$("#reviewListRow").html("");
 			
 			$.ajax({
 				url: "${contextPath}/reviewList.ho",
@@ -278,39 +276,57 @@
 					hotelId: ${hotel.hotelId}
 				},
 				success: (data)=>{
-					console.log(data);
-					for(const i of data) {
+					const reviewList = data.reviewList;
+					const avgRating = data.avgRating;
+					const reviewCount = data.reviewCount;
+					
+					$(".avgRating").text(avgRating.toFixed(1));
+					$(".reviewCount").text(reviewCount);
+					
+					var ratingStar="";
+					for(var j=1;j<=5;j++) {
+						if(j<=avgRating) {
+							ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#FFD600"></i>';
+						} else {
+							ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#e9e9e9"></i>';
+						}
+					}
+					$("#ratingStar").html(ratingStar);
+					
+					for(const r of reviewList) {
 						reviewDiv.prop("style").removeProperty("display");
-						reviewDiv.find("input[name=reviewId]").val(i.reviewId);
-						reviewDiv.find(".nickName").html(i.nickName);
-						reviewDiv.find(".roomName").html(i.roomName);
-						reviewDiv.find(".reviewContent").html(i.reviewContent);
-						reviewDiv.find(".rating").html(i.rating+".0");
-						reviewDiv.find(".createDate").html(i.createDate);
+						reviewDiv.find("input[name=reviewId]").val(r.reviewId);
+						reviewDiv.find(".nickName").html(r.nickName);
+						reviewDiv.find(".roomName").html(r.roomName);
+						reviewDiv.find(".reviewContent").html(r.reviewContent);
+						reviewDiv.find(".rating").html(r.rating.toFixed(1));
+						reviewDiv.find(".createDate").html(r.createDate);
 						
-						var ratingStar="";
-						console.log("점수"+i.rating+i.roomName);
+						ratingStar="";
 						for(var j=1;j<=5;j++) {
-							if(j<=i.rating) {
-								console.log(j);
+							if(j<=r.rating) {
 								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#FFD600"></i>';
 							} else {
 								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#e9e9e9"></i>';
 							}
 						}
-						console.log(ratingStar);
 						reviewDiv.find(".ratingStar").html(ratingStar);
 						
-						if(i.rating==5) {
+						if(r.rating==5) {
 							reviewDiv.find(".ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
-						} else if(i.rating==4) {
+							reviewDiv.find(".ratingEmoji").text("😍");
+						} else if(r.rating==4) {
 							reviewDiv.find(".ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
-						} else if(i.rating==3) {
+							reviewDiv.find(".ratingEmoji").text("😀");
+						} else if(r.rating==3) {
 							reviewDiv.find(".ratingInfo").text("기대 이상이네요.");
-						} else if(i.rating==2) {
+							reviewDiv.find(".ratingEmoji").text("🙂");
+						} else if(r.rating==2) {
 							reviewDiv.find(".ratingInfo").text("조금만 더 신경 써 주세요.");
+							reviewDiv.find(".ratingEmoji").text("😐");
 						} else {
 							reviewDiv.find(".ratingInfo").text("별로예요.");
+							reviewDiv.find(".ratingEmoji").text("🙁");
 						}
 						
 						$("#reviewListRow").append('<div id="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9">'+reviewDiv.html()+'</div>');
@@ -408,7 +424,7 @@
 								$("#writableReviewModal").modal('show');
 								$("#writableReviewList").html(
 										$("#writableReviewList").html()
-										+"<div class='writableReview'>"+i.roomName + " · " + i.checkinDate + "-" + i.checkoutDate + " 방문"
+										+"<div class='writableReview' data-bs-target=''#writeReviewModal' data-bs-toggle='modal'>"+i.roomName + " · " + i.checkinDate + "-" + i.checkoutDate + " 방문"
 										+"<input type='hidden' name='reservationId' value='" + i.reservationId + "'>"
 										+"</div>");
 							}
@@ -427,12 +443,12 @@
 			});
 		}
 	</script>
-	<div class="modal fade" id="writableReviewModal" tabindex="-1" aria-hidden="true">
+	<div class="modal fade" id="writableReviewModal" aria-hidden="true" tabindex="-1">
 		<div class="modal-dialog modal-dialog-centered text-center">
 			<div class="modal-content">
 				<div class="modal-body mt-3 mb-3">
 					<h4 class="fw-bold pb-3" style="color:#6BB6EC">${loginUser.nickName }님의 리뷰를 기다리고 있어요</h4>
-					<div id="writableReviewList" class="mukMutedText">
+					<div id="writableReviewList" class="mukMutedText"></div>
 				</div>
 			</div>
 		</div>
@@ -528,7 +544,7 @@
 					reviewContent: $("textarea[name=reviewContent]").val()
 				},
 				success: (data)=>{
-					console.log(data);
+					$.reviewList();
 				},
 				error: (data)=>{
 					console.log(data);

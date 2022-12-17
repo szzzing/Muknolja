@@ -48,4 +48,12 @@ public interface HotelService {
 
 	ArrayList<Review> selectReviewList(int hotelId);
 
+	ArrayList<AttachedFile> selectAllRoomThumbnail(int hotelId);
+
+	int selectReviewCount(int hotelId);
+
+	int selectAvgRating(int hotelId);
+
+	Hotel selectHotelbyId(String id);
+
 }

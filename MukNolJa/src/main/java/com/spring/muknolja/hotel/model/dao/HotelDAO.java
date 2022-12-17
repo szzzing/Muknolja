@@ -89,4 +89,20 @@ public class HotelDAO {
 		return (ArrayList)sqlSession.selectList("hotelmapper.selectReviewList", hotelId);
 	}
 
+	public ArrayList<AttachedFile> selectAllRoomThumbnail(SqlSessionTemplate sqlSession, int hotelId) {
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectAllRoomThumbnail", hotelId);
+	}
+
+	public int selectAvgRating(SqlSessionTemplate sqlSession, int hotelId) {
+		return sqlSession.selectOne("hotelmapper.selectAvgRating", hotelId);
+	}
+
+	public int selectReviewCount(SqlSessionTemplate sqlSession, int hotelId) {
+		return sqlSession.selectOne("hotelmapper.selectReviewCount", hotelId);
+	}
+
+	public Hotel selectHotelById(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("hotelmapper.selectHotelById", id);
+	}
+
 }

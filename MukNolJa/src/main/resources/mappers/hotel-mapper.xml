@@ -3,7 +3,7 @@
 <mapper namespace="hotelmapper">
 	<insert id="insertRoom">
 		insert into ROOM
-		values(SEQ_ROOMID.nextval, 4, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo}, #{roomIntro}, default)
+		values(SEQ_ROOMID.nextval, #{hotelId}, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo}, #{roomIntro}, default)
 	</insert>
 	
 	<insert id="insertRoomAttm">
@@ -34,6 +34,15 @@
 		select *
 		from room
 		where hotel_id=#{hotelId} and room_status='Y'
+		order by room_id desc
+	</select>
+	
+	<select id="selectAllRoomThumbnail" resultMap="attachedFileResultSet">
+		select *
+		from room_img
+			join attached_file using(file_id)
+			join room using(room_id)
+		where hotel_id=#{hotelId} and room_status='Y' and file_thumbnail='Y'
 		order by room_id desc
 	</select>
 	
@@ -132,6 +141,31 @@
 		where hotel_id=#{hotelId} and review_status='Y'
 		order by review_id desc
 	</select>
+	
+	<select id="selectAvgRating" resultType="_int">
+		select round(avg(rating), 1)
+		from review
+			join reservation using(reservation_id)
+			join room using(room_id)
+		where hotel_id=#{hotelId} and review_status='Y'
+	</select>
+	
+	<select id="selectReviewCount" resultType="_int">
+		select count(*)
+		from review
+			join reservation using(reservation_id)
+			join room using(room_id)
+		where hotel_id=#{hotelId} and review_status='Y'
+	</select>
+	
+	<select id="selectHotelById" resultMap="hotelResultSet">
+		select *
+		from hotel
+		where ent_id=#{id}
+	</select>
+	
+	
+	
 	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>
