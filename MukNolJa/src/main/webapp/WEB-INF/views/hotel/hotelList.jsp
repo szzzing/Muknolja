@@ -122,8 +122,8 @@
 								<h4 class="hotelName lh-1 fw-bold"></h4>
 								<div class="hotelAddress mukMutedText"></span>
 							</td></tr>
-							<tr><td class="align-bottom pt-3">
-								<h4 class="minPrice lh-1 fw-bold pb-3"></h4>
+							<tr><td class="align-bottom text-right">
+								<h4 class="minPrice lh-1 fw-bold text-right"></h4>
 							</td></tr>
 						</table>
 					</div>
@@ -152,7 +152,7 @@
 						console.log(hotelList[i].minPrice);
 						hotelDiv.find(".hotelId").val(hotelList[i].hotelId);
 						hotelDiv.find(".hotelName").html(hotelList[i].hotelName);
-						hotelDiv.find(".hotelAddress").html(hotelList[i].address);
+						hotelDiv.find(".hotelAddress").html(hotelList[i].hotelAddress);
 						hotelDiv.find(".minPrice").html(hotelList[i].minPrice.toLocaleString()+"원~");
 						hotelDiv.find(".hotelImg").prop("src", "${contextPath }/resources/uploadFiles/"+hotelImgList[i].fileModifyName);
 						$("#hotelList").append('<div class="hotel col pb-3" style="border-bottom:1px solid #e9e9e9">'+hotelDiv.html()+'</div>');

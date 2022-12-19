@@ -491,10 +491,10 @@
 				$("#writeReviewModal").find('input[name=reservationId]').val(reservationId);
 			};
 			var nowRating="별점을 채워주세요.";
-			$("starLabel").on("mouseleave", function(){
+			$(".starLabel").on("mouseleave", function(){
 				$("#ratingInfo").text(nowRating);
 			});
-			$("starLabel").on("mouseover", function(){
+			$(".starLabel").on("mouseover", function(){
 				if($(this).prev().val()==5) {
 					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
 				} else if($(this).prev().val()==4) {
@@ -708,7 +708,7 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-body m-3">
-					<div class="row mb-3">
+					<div class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 g-3">
 						<div class="col col-7">
 							<div class="row">
 								<div class="col">
@@ -728,7 +728,7 @@
 							<div id="roomDetailModal_checkout"></div>
 						</div>
 					</div>
-					<button type="button" class="mukButton" style="width:100%" data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="mukButton mt-3" style="width:100%" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
