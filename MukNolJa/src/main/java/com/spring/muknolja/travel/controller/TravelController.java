@@ -24,7 +24,7 @@ public class TravelController {
 	private String serviceKey = "yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D";
 	
 	@RequestMapping("travelList.tr")
-	public String travelList(Model model, @RequestParam(value="page", required=false) Integer page) {
+	public String travelList(Model model, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="areaCode", required=false) Integer areaCode) {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -33,8 +33,6 @@ public class TravelController {
 		
 		try {
 			int pageNo = currentPage;
-//			String keyword = URLEncoder.encode("경복궁", "UTF-8");
-//			String urlStr = "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=C&keyword=" + keyword;
 			String urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12";
 			
 			URL url = new URL(urlStr);
@@ -63,14 +61,6 @@ public class TravelController {
 			JSONObject parseItems = (JSONObject)parseBody.get("items");
 			
 			JSONArray parseItem = (JSONArray)parseItems.get("item");
-			
-			System.out.println();
-			System.out.println("--------------------------");
-			System.out.println();
-			System.out.println(parseBody.get("totalCount"));
-			System.out.println();
-			System.out.println("--------------------------");
-			System.out.println();
 			
 			ArrayList<Travel> list = new ArrayList<Travel>();
 			for(Object arr : parseItem) {
@@ -117,7 +107,6 @@ public class TravelController {
 			
 			while((line=bf.readLine())!=null) {
 				result= result.concat(line);
-				System.out.println(result);
 			}
 			
 			JSONParser parser = new JSONParser();
@@ -147,23 +136,18 @@ public class TravelController {
 			model.addAttribute("mapx", mapx);
 			model.addAttribute("mapy", mapy);
 			model.addAttribute("page", page);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		try {
+			
+			
 			String urlStr2 = "http://apis.data.go.kr/B551011/KorService/detailImage?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=" + contentId + "&imageYN=Y&subImageYN=Y&_type=json";
 			URL url2 = new URL(urlStr2);
-			BufferedReader bf;
+			BufferedReader bf2;
 			String line2 = "";
 			String result2 = "";
 			
-			bf = new BufferedReader(new InputStreamReader(url2.openStream()));
+			bf2 = new BufferedReader(new InputStreamReader(url2.openStream()));
 			
-			while((line2=bf.readLine())!=null) {
+			while((line2=bf2.readLine())!=null) {
 				result2= result2.concat(line2);
-				System.out.println(result2);
 			}
 			
 			JSONParser parser2 = new JSONParser();
@@ -180,7 +164,7 @@ public class TravelController {
 				String originPhoto = tPhoto.get("originimgurl").toString();
 				tList.add(originPhoto);
 			}
-//			model.addAttribute("tList", tList);
+			model.addAttribute("tList", tList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

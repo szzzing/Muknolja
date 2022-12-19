@@ -165,14 +165,14 @@
 						   여행
 						  </button>
 						  <ul class="dropdown-menu" >
-						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600;  href="#">관광지</a></li>
+						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600;"  href="${ contextPath }/travelList.tr">관광지</a></li>
 						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600; href="#">맛집</a></li>
 						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600; href="#">축제</a></li>
 						  </ul>
 						</div>				
 					</div>
             		<div class="col-1 coco" style="  font-weight:600;">호텔</div>
-            		<div class="col-1 coco" style="  font-weight:600;">동행</div>
+            		<div class="col-1 coco" style="  font-weight:600;"><a href="${ contextPath }/partyList.pa">동행</a></div>
             		<a href="${ contextPath }/reviewList.re"class="col-1 coco" style="  font-weight:600;">후기</a>
             		<div class="col d-none d-sm-block"></div>
             		<div class="col-1 co" style="font-size:25px; margin-top:22px; ">

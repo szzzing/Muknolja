@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,6 @@
 			<h1>${title}</h1>
 			
 			<br>
-<%-- 			${tList} --%>
 			
 			<h6>${addr}</h6>
 			
@@ -57,11 +57,25 @@
 		</table>
 		
 		<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-		  <div class="carousel-inner carouselImg">
-		    <div class="carousel-item active" data-bs-interval="2000">
-		      <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MDhfNTkg%2FMDAxNjIwNDQ1NDEzMjMy.5MU5M5KGbrMq6NqH0nwDuT_aoLCLbm8YCU_XgDpqxN0g.xl4oeCee3CUuHTlOLPXFRsvxk4bFSqgG657ck29xcYMg.JPEG.number1khj%2F20140503_171748.jpg%234096x2304" class="d-block w-100" alt="...">
-		    </div>
-		  </div>
+		  <c:if test="${ tList != null }">
+			  <div class="carousel-inner carouselImg">
+				    <div class="carousel-item active" data-bs-interval="5000">
+				      <img src="${ tList[0] }" class="d-block w-100" alt="...">
+				    </div>
+			  	<c:forEach items="${ tList }" var="t" begin="1">
+			  		<div class="carousel-item" data-bs-interval="4000">
+				      <img src="${ t }" class="d-block w-100" alt="...">
+				    </div>
+			    </c:forEach>
+			  </div>
+		  </c:if>
+		  <c:if test="${ tList == null }">
+		  	<div class="carousel-inner carouselImg">
+				    <div class="carousel-item active" data-bs-interval="5000">
+				      <img src="${ contextPath }/resources/img/basicImage.png" class="d-block w-100" alt="...">
+				    </div>
+			 </div>
+		  </c:if>
 		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
 		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		    <span class="visually-hidden">Previous</span>
