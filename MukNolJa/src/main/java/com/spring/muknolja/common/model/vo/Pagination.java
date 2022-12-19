@@ -1,6 +1,4 @@
-package com.spring.muknolja.common;
-
-import com.spring.muknolja.common.model.vo.PageInfo;
+package com.spring.muknolja.common.model.vo;
 
 public class Pagination {
 	public static PageInfo getPageInfo(int currentPage, int listCount) {
