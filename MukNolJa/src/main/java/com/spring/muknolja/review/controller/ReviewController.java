@@ -12,8 +12,12 @@ public class ReviewController {
 	@Autowired
 	private ReviewService rService;
 	
-	@RequestMapping("reviewList")
+	@RequestMapping("reviewList.re")
 	public String reviewList() {
-		return "reveiwList";
+		return "reviewList";
+	}
+	@RequestMapping("reviewDetail.re")
+	public String reviewDetail() {
+		return "reviewDetail";
 	}
 }

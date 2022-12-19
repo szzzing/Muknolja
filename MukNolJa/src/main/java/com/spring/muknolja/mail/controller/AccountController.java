@@ -15,7 +15,7 @@ public class AccountController {
 	@Autowired
 	private RegisterMail rm;
 
-	// 이메일 인증
+	
 	// 이메일 인증
 	@RequestMapping("pleaseMail.me")
 	@ResponseBody

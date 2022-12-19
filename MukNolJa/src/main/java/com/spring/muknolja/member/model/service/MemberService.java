@@ -1,4 +1,4 @@
-package com.spring.muknolja.member.model.service;
+﻿package com.spring.muknolja.member.model.service;
 
 import java.util.ArrayList;
 
@@ -16,6 +16,10 @@ public interface MemberService {
 	int checkNickName(String nickName);
 
 	int insertMember(Member m);
+
+	
+
+	String findId(String email);
 
 	void visitCount(String id);
 

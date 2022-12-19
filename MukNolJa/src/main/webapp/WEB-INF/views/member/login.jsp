@@ -27,7 +27,7 @@
      <div class="container-fluid text-center" style="font-family: 'OTWelcomeRA';  float: left;">
 	  	<div class="row justify-content-center" >
             <div class="col" style="width:100vw; height:80px; display:inLine-block; background: white; border-bottom:2px solid lightgrey;" >
-            	<div style="width:800px; height:80px; display:inLine-block; ">
+            	<div style=" height:80px; display:inLine-block; ">
             		
             			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">로그인</div>
             		
@@ -35,12 +35,12 @@
             </div>
           </div>
           	 <div class="row justify-content-center" >
-            	<div class="col"style="width:1200px; height:100%; ">
-            		<div style="width:1200px; height:100%; background:white;display:inLine-block;">
-          			<div style="width:800px; height:100%; display:inLine-block; ">
+            	<div class="col"style=" height:100%; padding-left:0px;">
+            		<div style="width: height:100%; background:white;display:inLine-block;">
+          			<div style="width: height:100%; display:inLine-block; ">
           				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" >MUKNOLJA</div>
           				
-            				<div style="float:left; margin-left: 150px; margin-top: 4vh;">
+            				<div style="float:left;  margin-top: 4vh; ">
 		            			<form action="${ contextPath }/login.me" method="post">
 		            				
 		            				<input type="text" name="id" id="id" class="id" style="width:500px; font-size:20px; padding:10px; padding-top:15px" required>
@@ -54,7 +54,7 @@
 			            	
 		            			</form>
 		            			<div style="padding:10px; float:left;  ">
-		            				<a style="">아이디 찾기</a> <a style="margin-left:20px;">비밀번호 찾기</a> 
+		            				<a href="${contextPath}/findId.me">아이디 찾기</a> <a style="margin-left:22px;">비밀번호 찾기</a> 
 		            			</div>
 		            			<div style="display:flex; margin-top:20px; float:right;">
 		          					<div ><img onclick="kakaoLogin();" alt="1" src="${contextPath }/resources/img/kakao.png" width=50px; height=50px; style="margin-left: 20px" >
@@ -65,12 +65,12 @@
 										
 										
 									</div>
-		          					<div ><img alt="1" src="${contextPath }/resources/img/naver.png" width=53px; height=55px; style="margin-top:-5px; margin-left: 20px;"></div>
+		          					
 		          				</div>
 		            			
 		          				<div style="display:flex; position:absolute; top:85%; margin-left:0vw; text-align:center; ">
-		          				아직 회원이 아니신가요? <a style="font-size:20px;" href="${contextPath }/enrollE.me">회원가입</a>
-		          				<div style="margin-left: 80px;">사업장등록은 여기<a style="font-size:20px;" href="">호텔등록</a></div>
+		          				아직 회원이 아니신가요? <a style="font-size:18px;" href="${contextPath }/enrollE.me">회원가입</a>
+		          				<div style="margin-left: 120px;">사업장등록은 여기<a style="font-size:18px;" href="">호텔등록</a></div>
 		          				</div>
 		            		</div>
 		            		

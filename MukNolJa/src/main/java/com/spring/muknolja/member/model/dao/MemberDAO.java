@@ -1,4 +1,4 @@
-package com.spring.muknolja.member.model.dao;
+﻿package com.spring.muknolja.member.model.dao;
 
 import java.util.ArrayList;
 
@@ -31,6 +31,9 @@ public class MemberDAO {
 		return sqlSession.insert("memberMapper.insertM", m);
 	}
 
+	public String findId(SqlSessionTemplate sqlSession, String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.findId", email);
 	public void visitCount(SqlSessionTemplate sqlSession, String id) {
 		sqlSession.insert("memberMapper.visitCount", id);
 	}

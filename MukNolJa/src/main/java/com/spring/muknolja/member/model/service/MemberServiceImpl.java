@@ -1,4 +1,4 @@
-package com.spring.muknolja.member.model.service;
+﻿package com.spring.muknolja.member.model.service;
 
 import java.util.ArrayList;
 
@@ -43,6 +43,11 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMember(Member m) {
 		return mDAO.insert(sqlSession,m);
 	}
+
+	@Override
+	public String findId(String email) {
+		// TODO Auto-generated method stub
+		return mDAO.findId(sqlSession,email);
 
 	@Override
 	public void visitCount(String id) {
