@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,7 +84,7 @@
             <a class="nav-link active" aria-current="page" href="#">
               <i class="bi bi-house-door"></i>
               <span data-feather="home" class="align-text-bottom"></span>
-              대시보드
+              방문자 통계
             </a>
           </li>
           <li class="nav-item">
@@ -113,138 +114,34 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2">방문자 통계</h1>
       </div>
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-      
-      ${ today }
 
-      <h2>Section title</h2>
+      <h2>금일 방문자</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
-              <th scope="col">Header</th>
+              <th scope="col">아이디</th>
+              <th scope="col">닉네임</th>
+              <th scope="col">이름</th>
+              <th scope="col">전화번호</th>
+              <th scope="col">가입일</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>data</td>
-              <td>rich</td>
-              <td>dashboard</td>
-              <td>tabular</td>
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td>illustrative</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,004</td>
-              <td>text</td>
-              <td>random</td>
-              <td>layout</td>
-              <td>dashboard</td>
-            </tr>
-            <tr>
-              <td>1,005</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td>text</td>
-              <td>placeholder</td>
-            </tr>
-            <tr>
-              <td>1,006</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td>rich</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,007</td>
-              <td>placeholder</td>
-              <td>tabular</td>
-              <td>information</td>
-              <td>irrelevant</td>
-            </tr>
-            <tr>
-              <td>1,008</td>
-              <td>random</td>
-              <td>data</td>
-              <td>placeholder</td>
-              <td>text</td>
-            </tr>
-            <tr>
-              <td>1,009</td>
-              <td>placeholder</td>
-              <td>irrelevant</td>
-              <td>visual</td>
-              <td>layout</td>
-            </tr>
-            <tr>
-              <td>1,010</td>
-              <td>data</td>
-              <td>rich</td>
-              <td>dashboard</td>
-              <td>tabular</td>
-            </tr>
-            <tr>
-              <td>1,011</td>
-              <td>information</td>
-              <td>placeholder</td>
-              <td>illustrative</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,012</td>
-              <td>text</td>
-              <td>placeholder</td>
-              <td>layout</td>
-              <td>dashboard</td>
-            </tr>
-            <tr>
-              <td>1,013</td>
-              <td>dashboard</td>
-              <td>irrelevant</td>
-              <td>text</td>
-              <td>visual</td>
-            </tr>
-            <tr>
-              <td>1,014</td>
-              <td>dashboard</td>
-              <td>illustrative</td>
-              <td>rich</td>
-              <td>data</td>
-            </tr>
-            <tr>
-              <td>1,015</td>
-              <td>random</td>
-              <td>tabular</td>
-              <td>information</td>
-              <td>text</td>
-            </tr>
+          	
+          	<c:forEach items="${ today }" var="m">
+	            <tr>
+	              <td>${ m.id }</td>
+	              <td>${ m.nickName }</td>
+	              <td>${ m.name }</td>
+	              <td>${ m.phone }</td>
+	              <td>${ m.enrollDate }</td>
+	            </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>
@@ -254,6 +151,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
 <script type="text/javascript">
+
             var context = document
                 .getElementById('myChart')
                 .getContext('2d');
@@ -262,14 +160,14 @@
                 data: { // 차트에 들어갈 데이터
                     labels: [
                         //x 축
-                        '1','2','3','4','5','6','7'
+                    	'${ visitList[0].VISIT_DATE }','${ visitList[1].VISIT_DATE }','${ visitList[2].VISIT_DATE }','${ visitList[3].VISIT_DATE }','${ visitList[4].VISIT_DATE }','${ visitList[5].VISIT_DATE }','${ visitList[6].VISIT_DATE }'
                     ],
                     datasets: [
                         { //데이터
-                            label: 'test1', //차트 제목
+                            label: '방문자', //차트 제목
                             fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                             data: [
-                                21,19,25,20,23,26,25 //x축 label에 대응되는 데이터 값
+                            	'${ visitList[0].VISIT_COUNT }','${ visitList[1].VISIT_COUNT }','${ visitList[2].VISIT_COUNT }','${ visitList[3].VISIT_COUNT }','${ visitList[4].VISIT_COUNT }','${ visitList[5].VISIT_COUNT }','${ visitList[6].VISIT_COUNT }'
                             ],
                             backgroundColor: [
                                 //색상

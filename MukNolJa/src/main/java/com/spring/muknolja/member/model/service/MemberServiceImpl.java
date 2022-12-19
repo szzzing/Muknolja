@@ -1,6 +1,8 @@
 ﻿package com.spring.muknolja.member.model.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,14 +58,17 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ArrayList<Visit> selectVisitToday() {
+	public ArrayList<Member> selectVisitToday() {
 		return mDAO.selectVisitToday(sqlSession);
 	}
 
 	@Override
 	public String findId(String email) {
 		// TODO Auto-generated method stub
-		return null;
+
+	@Override
+	public ArrayList<Map<String, Integer>> selectVisitList() {
+		return mDAO.selectVisitList(sqlSession);
 	}
 
 }

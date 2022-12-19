@@ -16,6 +16,4 @@ import lombok.ToString;
 public class Visit {
 	private String id;
 	private Date VisitTime;
-	private String nickName;
-	private String mType;
 }

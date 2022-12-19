@@ -1,6 +1,8 @@
 ﻿package com.spring.muknolja.member.model.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
@@ -25,6 +27,8 @@ public interface MemberService {
 
 	Visit selectVisitCounter(String id);
 
-	ArrayList<Visit> selectVisitToday();
+	ArrayList<Member> selectVisitToday();
+
+	ArrayList<Map<String, Integer>> selectVisitList();
 
 }
