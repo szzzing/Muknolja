@@ -9,20 +9,6 @@
 	<style>
 		#carouselExampleInterval{height: 550px; margin-top: 80px;}
 		#carouselExampleInterval img{height:550px;}
-		#category{
-	 		width: 90%;
-			height: 150px;
-			border-radius: 5px;
-			border-style: hidden;
-			box-shadow: 0 0 0 1px #d3d3d3;
-			table-layout: fixed;
-			margin-left:auto; 
-	    	margin-right:auto;
-			margin-top: 30px;
-	    	margin-bottom: 30px;
-	    	clear: both;
-		}
-		#category td{text-align: center;}
 		.page-link:focus, .page-link:hover {color: #fff; background-color: #6BB6EC;}
 		.travelInfo a{color: black; font-size: 25px; text-decoration: none;}
 		.travelInfo p{color: gray; font-size: 15px; margin-top: 20px;}
@@ -40,6 +26,50 @@
 		#input{width: 400px;}
 		#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 		#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
+		
+		
+		
+		.ur{
+		  margin-top:5%;
+		  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.3);
+		  margin-left:0px;
+		  margin-top: 50px;
+	      margin-bottom: 50px;
+	      margin-left:auto; 
+	      margin-right:auto;
+	      cursor: pointer;
+		}
+		li{list-style:none;}
+		
+		  .ll{
+		  font-size: 18px;
+		  font-weight: 600;
+		  width:100%;
+		  background: white;
+		  color: #575757;
+		  text-align: center;
+		  height: 60px;
+		  float:left;
+		  vertical-align: middle;
+		  line-height: 3em;
+		  border-bottom: 1px solid skyblue;
+		  position: relative;
+		  display: block;
+		  text-decoration: none;
+		  box-shadow: 0em 1.5em 0 ,lightgrey;
+		  transition: all .25s linear;
+		  }
+		  .ll:hover {
+		    background: #6BB6EC;
+		    color: #fffcfb;
+		    transform: translate(-.9em, -.9em);
+		    transition: all .25s linear;
+		    box-shadow: 0.5em 2em 0 #e1e1e1;
+		    }
+		    
+		    .ll{
+		      transition: all .25s linear; 
+		}
 	</style>
 	
 </head>
@@ -68,109 +98,122 @@
 		  </button>
 		</div>
 	
-	<div class="container">
-	
-		<table id="category" class="table table-bordered align-middle">
-			<tr>
-				<td>서울</td>			
-				<td>인천</td>			
-				<td>대전</td>			
-				<td>대구</td>			
-				<td>광주</td>			
-				<td>부산</td>			
-				<td>울산</td>			
-				<td>세종</td>			
-				<td>경기</td>			
-			</tr>
-			<tr>
-				<td>강원</td>			
-				<td>충북</td>			
-				<td>충남</td>			
-				<td>경북</td>			
-				<td>경남</td>			
-				<td>전북</td>			
-				<td>전남</td>			
-				<td>제주</td>			
-				<td>전체보기</td>			
-			</tr>
-		</table>
+		<div class="container">
+			<ul id="category" class="ur" >
+				<div style="display:flex;" lass="ur1">
+					<li class="ll">서울</li>
+					<li class="ll">인천</li>
+					<li class="ll">대전</li>
+					<li class="ll">대구</li>
+					<li class="ll">광주</li>
+					<li class="ll">부산</li>
+					<li class="ll">울산</li>
+					<li class="ll">세종</li>
+					<li class="ll">경기</li>
+				</div>
+				<div style="display:flex;">
+					<li class="ll">강원</li>
+					<li class="ll">충북</li>
+					<li class="ll">충남</li>
+					<li class="ll">경북</li>
+					<li class="ll">경남</li>
+					<li class="ll">전북</li>
+					<li class="ll">전남</li>
+					<li class="ll">제주</li>
+					<li class="ll">전체</li>
+				</div>
+			</ul>
 		
-		<div class="input-group" id="input">
-			<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
-			<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
-		</div>
-		
-		<hr id="hr1">
-		
-		<div id="num">
-			<span>총 <span id="number">${ pi.listCount }</span>건</span>
-		</div>
-		<div id="btn">
-			<button>최신순</button>
-			<button>인기순</button>
-		</div>
-		
-		<hr id="hr2" >
-		<br>
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start">
-			<c:forEach items="${ list }" var="t">
-				 <div class="allCard col">
-		            <div class="card card-cover h-100 overflow-hidden\">
-		               <c:if test="${ t.firstImage == '' }">
-		               	  <img class="card-img-top"  style="height:300px;"  src="${ contextPath }/resources/img/basicImage.png">
-		               </c:if>
-		               <c:if test="${ t.firstImage != '' }">
-		               <img class="card-img-top"  style="height:300px;"  src="${ t.firstImage }">
-		               </c:if>
-		               <div class="card-body p-4 mb-auto">
-		                  <h5 class="card-title lh-1 fw-bold">${ t.title }</h5>
-		                  <div class="card-text text-muted">${ t.addr }</div>
-		                  <input class="contentId" type="hidden" name="contentId" value="${ t.contentId }">
-		               </div>
-		            </div>
-		         </div>
-	         </c:forEach>
-	      </div>
-	         
-		
-		<br>
-		
-		<nav aria-label="Page navigation example">
-		  <ul class="pagination d-flex justify-content-center">
-		    <li class="page-item">
-		    	<c:url var="goBack" value="${ loc }">
-	            	<c:param name="page" value="${ pi.currentPage-1 }"/>
-	        	</c:url>
-	        	<a class="page-link" href="${ goBack }" aria-label="Previous">
-	        		<span aria-hidden="true">&laquo;</span>
-	        	</a>
-		    </li>
-		    
-		    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-		    	<c:url var="goNum" value="${ loc }">
-		    		<c:param name="page" value="${ p }"/>
-		    	</c:url>
-		    	 <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
-		    </c:forEach>
-		    
-		    <li class="page-item">
-		    	<c:url var="goNext" value="${ loc }">
-			    	<c:param name="page" value="${ pi.currentPage+1 }"/>
-		    	</c:url>
-			    <a class="page-link" href="${ goNext }" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			    </a>
-		    </li>
-		  </ul>
-		</nav>
+			<div class="input-group" id="input">
+				<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+				<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+			</div>
+			
+			<hr id="hr1">
+			
+			<div id="num">
+				<span>총 <span id="number">${ pi.listCount }</span>건</span>
+			</div>
+			<div id="btn">
+				<button>최신순</button>
+				<button>인기순</button>
+			</div>
+			
+			<hr id="hr2" >
+			<br>
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start">
+				<c:forEach items="${ list }" var="t">
+					 <div class="allCard col">
+			            <div class="card card-cover h-100 overflow-hidden\">
+			               <c:if test="${ t.firstImage == '' }">
+			               	  <img class="card-img-top"  style="height:300px;"  src="${ contextPath }/resources/img/basicImage.png">
+			               </c:if>
+			               <c:if test="${ t.firstImage != '' }">
+			               <img class="card-img-top"  style="height:300px;"  src="${ t.firstImage }">
+			               </c:if>
+			               <div class="card-body p-4 mb-auto">
+			                  <h5 class="card-title lh-1 fw-bold">${ t.title }</h5>
+			                  <div class="card-text text-muted">${ t.addr }</div>
+			               </div>
+			            </div>
+			            <input class="contentId" type="hidden" name="contentId" value="${ t.contentId }">
+			            <input class="mapx" type="hidden" name="mapx" value="${ t.mapx }">
+			            <input class="mapy" type="hidden" name="mapy" value="${ t.mapy }">
+			         </div>
+		         </c:forEach>
+		      </div>
+		         
+			
+			<br>
+			
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination d-flex justify-content-center">
+			    <li class="page-item">
+			    	<c:url var="goBack" value="${ loc }">
+		            	<c:param name="page" value="${ pi.currentPage-1 }"/>
+		        	</c:url>
+		        	<a class="page-link" href="${ goBack }" aria-label="Previous">
+		        		<span aria-hidden="true">&laquo;</span>
+		        	</a>
+			    </li>
+			    
+			    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+			    	<c:url var="goNum" value="${ loc }">
+			    		<c:param name="page" value="${ p }"/>
+			    	</c:url>
+			    	 <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
+			    </c:forEach>
+			    
+			    <li class="page-item">
+			    	<c:url var="goNext" value="${ loc }">
+				    	<c:param name="page" value="${ pi.currentPage+1 }"/>
+			    	</c:url>
+				    <a class="page-link" href="${ goNext }" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				    </a>
+			    </li>
+			  </ul>
+			</nav>
 		
 		</div>
 		
 		<script>
-// 			const allCards = document.getElementsByClassName('allCard');
-// 			for(const allCard of allCards){
-// 				allCard.addEventListener('click', function(){
+			const allCards = document.getElementsByClassName('allCard');
+			for(const allCard of allCards){
+				allCard.addEventListener('click', function(){
+					const contentId = this.querySelector('.contentId').value;
+					const mapx = this.querySelector('.mapx').value;
+					const mapy = this.querySelector('.mapy').value;
 					
+					location.href='${contextPath}/travelDetail.tr?contentId=' + contentId + '&mapx=' + mapx + '&mapy=' + mapy + '&page=' + ${pi.currentPage};
+				});
+			}
+			
+// 			const categorys = document.getElementsByClassName('ll');
+// 			for(const category of categorys){
+// 				category.addEventListener('click', function(){
+// 					if()
+// 					category.innerText
 // 				});
 // 			}
 		</script>
