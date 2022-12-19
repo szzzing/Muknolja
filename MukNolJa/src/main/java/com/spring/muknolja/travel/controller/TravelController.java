@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.spring.muknolja.common.Pagination;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.travel.model.vo.Travel;
 
 @Controller

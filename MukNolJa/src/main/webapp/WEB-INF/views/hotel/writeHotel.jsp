@@ -82,7 +82,7 @@
 			</div>
 			
 			<div class="form-floating mb-3 mt-3">
-				<textarea class="form-control" name="roomInfo" rows="2" style="height:60px; resize:none" required></textarea>
+				<textarea class="form-control" name="hotelIntro" rows="2" style="height:60px; resize:none" required></textarea>
 				<label for="roomInfo" class="form-label">호텔 한줄소개</label>
 			</div>
 			
@@ -93,6 +93,12 @@
 			
 			<div class="col mb-3 mt-3">
 				<h5 class="fw-bold">호텔 사진을 등록하세요.</h5>
+				<div class="mb-3">
+					<input type="file" class="form-control" name="hotelImg">
+				</div>
+				<div class="mb-3">
+					<input type="file" class="form-control" name="hotelImg">
+				</div>
 				<div class="mb-3">
 					<input type="file" class="form-control" name="hotelImg">
 				</div>

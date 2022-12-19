@@ -20,7 +20,7 @@ public interface HotelService {
 
 	Hotel selectHotel(int hotelId);
 
-	AttachedFile selectHotelImg(int hotelId);
+	ArrayList<AttachedFile> selectHotelImg(int hotelId);
 
 	ArrayList<Room> selectAllRoom(int hotelId);
 

@@ -23,7 +23,7 @@
 		where hotel_id=#{hotelId} and hotel_status='Y'
 	</select>
 	
-	<select id="selectHotelImg" resultMap="hotelResultSet">
+	<select id="selectHotelImg" resultMap="attachedFileResultSet">
 		select *
 		from hotel_img
 			join attached_file using(file_id)

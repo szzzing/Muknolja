@@ -54,6 +54,12 @@ public class HotelController {
 		}
 	}
 	
+	
+	
+	
+	
+	
+	
 	@RequestMapping("hotelList.ho")
 	public String hotelList() {
 		return "hotelList";
@@ -64,8 +70,8 @@ public class HotelController {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		Hotel hotel = hService.selectHotel(hotelId);
-		AttachedFile hotelImg = hService.selectHotelImg(hotelId);
-		ArrayList<Room> roomArray = hService.selectAllRoom(hotelId);
+		ArrayList<AttachedFile> hotelImgList = hService.selectHotelImg(hotelId);
+		ArrayList<Room> roomList = hService.selectAllRoom(hotelId);
 		ArrayList<AttachedFile> roomThumbnail = hService.selectAllRoomThumbnail(hotelId);
 		
 		if(m!=null) {
@@ -78,10 +84,32 @@ public class HotelController {
 		}
 		
 		model.addAttribute("hotel", hotel);
-		model.addAttribute("hotelImg", hotelImg);
-		model.addAttribute("roomArray", roomArray);
+		model.addAttribute("hotelImgList", hotelImgList);
+		model.addAttribute("roomList", roomList);
 		model.addAttribute("roomThumbnail", roomThumbnail);
 		return "hotelDetail";
+	}
+	
+	@RequestMapping(value="roomDetail.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void roomDetail(@RequestParam int roomId, HttpServletResponse response) {
+		HashMap map = new HashMap();
+		Room room = hService.selectRoom(roomId);
+		ArrayList<AttachedFile> roomImgList = hService.selectRoomImg(roomId);
+		
+		map.put("room", room);
+		map.put("roomImgList", roomImgList);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// 작성 가능한 리뷰
@@ -257,6 +285,7 @@ public class HotelController {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		h.setEntId(m.getId());
+		int hotelResult = hService.insertHotel(h);
 		
 		ArrayList<AttachedFile> list = new ArrayList();
 		for(MultipartFile file : files) {
@@ -290,7 +319,6 @@ public class HotelController {
 		}
 		
 		int attmResult = 0;
-		int hotelResult = hService.insertHotel(h);
 		
 		if(!list.isEmpty()) {
 			attmResult = hService.insertHotelAttm(list);
@@ -310,9 +338,6 @@ public class HotelController {
 	public String writeReservation(@ModelAttribute Reservation r, Model model, HttpSession session) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
-		if(!m.getMemberType().equals("H")) {
-			throw new CommonException("사업자 회원이 아닙니다.");
-		}
 		r.setMemberId(m.getId());
 		
 		Room room = hService.selectRoom(r.getRoomId());
@@ -370,4 +395,5 @@ public class HotelController {
 	public void deleteLikeHotel(@ModelAttribute LikeHotel l) {
 		int result = hService.deleteLikeHotel(l);
 	}
+	
 }
