@@ -44,10 +44,6 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.insert(sqlSession,m);
 	}
 
-	@Override
-	public String findId(String email) {
-		// TODO Auto-generated method stub
-		return mDAO.findId(sqlSession,email);
 
 	@Override
 	public void visitCount(String id) {
@@ -62,6 +58,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public ArrayList<Visit> selectVisitToday() {
 		return mDAO.selectVisitToday(sqlSession);
+	}
+
+	@Override
+	public String findId(String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

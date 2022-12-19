@@ -121,11 +121,11 @@ public class MemberController {
 		@RequestMapping("insertm.me")
 		public String insert(@ModelAttribute Member m, @RequestParam("gender")String gender) {
 			System.out.println(gender);
-			if(gender.trim().equals("����")) {
+			if(gender.trim().equals("성별")) {
 				m.setGender(null);	
-			}else if(gender.trim().equals("����")) {
+			}else if(gender.trim().equals("남자")) {
 				m.setGender("M");	
-			}else if(gender.trim().equals("����")) {
+			}else if(gender.trim().equals("여자")) {
 				m.setGender("F");	
 			}
 			
