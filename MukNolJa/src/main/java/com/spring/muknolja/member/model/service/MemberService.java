@@ -1,6 +1,9 @@
 package com.spring.muknolja.member.model.service;
 
+import java.util.ArrayList;
+
 import com.spring.muknolja.member.model.vo.Member;
+import com.spring.muknolja.member.model.vo.Visit;
 
 public interface MemberService {
 
@@ -13,5 +16,11 @@ public interface MemberService {
 	int checkNickName(String nickName);
 
 	int insertMember(Member m);
+
+	void visitCount(String id);
+
+	Visit selectVisitCounter(String id);
+
+	ArrayList<Visit> selectVisitToday();
 
 }

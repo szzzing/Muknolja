@@ -48,8 +48,6 @@
 		    join member m on b.USER_ID = m.USER_ID
 		where m.USER_ID = #{id}
 		order by b.BOARD_ID DESC
-  	
-  	
   	</select>
   	
   	<select id="checkEmail" resultType="_int">
@@ -68,5 +66,30 @@
   		select count(*)
 	  	from member
 	  	where nickname=#{nickName}
+  	</select>
+  	
+  	<insert id="visitCount">
+  		insert into visit
+  		values(#{id}, SYSDATE)
+  	</insert>
+  	
+  	<select id="selectVisitCounter" resultMap="VisitResutSet">
+  		select *
+  		from visit
+  		where ID = #{id} and to_char(VISIT_TIME, 'yyyymmdd') = to_char(SYSDATE, 'yyyymmdd')
+  	</select>
+  	
+  	<resultMap type="Visit" id="VisitResutSet">
+  		<id column="ID" property="id"/>
+  		<result column="VISIT_TIME" property="VisitTime"/>
+  		<result column="NICKNAME" property="nickName"/>
+  		<result column="MEMBER_TYPE" property="mType"/>
+  	</resultMap>
+  	
+  	<select id="selectVisitToday" resultMap="VisitResutSet">
+  		select *
+  		from visit
+  			join member using(id)
+  		where to_char(VISIT_TIME, 'yyyymmdd') = to_char(SYSDATE, 'yyyymmdd')
   	</select>
   </mapper>
