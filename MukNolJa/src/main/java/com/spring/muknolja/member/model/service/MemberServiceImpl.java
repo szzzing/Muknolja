@@ -63,12 +63,14 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String findId(String email) {
-		// TODO Auto-generated method stub
-
-	@Override
 	public ArrayList<Map<String, Integer>> selectVisitList() {
 		return mDAO.selectVisitList(sqlSession);
+	}
+
+	@Override
+	public String findId(String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

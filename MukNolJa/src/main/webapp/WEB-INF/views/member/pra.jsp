@@ -350,6 +350,23 @@ li{list-style:none;}
        </div>
     </div>
     <script>
+    var serviceKey = "53PIgLInS%2B6lI57LYYEbd%2B4daak52bqwGs1s160gtU3hu09KJjsPN%2FWFFlkkOXi%2BwIrqVdEMUeICmQ0fTXFfZA%3D%3D";
+    var site= "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12";
+    $.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=37.5683&lon=126.9778&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
+			result){
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
   		var slides = document.querySelector('.slides'),
   			slide =  document.querySelectorAll('.slides img'),
   			currentIdx = 0,
