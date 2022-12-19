@@ -1,4 +1,6 @@
-package com.spring.muknolja.member.controller;
+ï»¿package com.spring.muknolja.member.controller;
+
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.spring.muknolja.member.model.service.MemberService;
 import com.spring.muknolja.member.model.vo.Member;
+import com.spring.muknolja.member.model.vo.Visit;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -26,8 +29,6 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 	
-	
-	
 	@RequestMapping(value = "loginView.me", method = RequestMethod.GET)
 	public String loginView() {
 	
@@ -35,16 +36,21 @@ public class MemberController {
 	}
 	@RequestMapping(value = "login.me", method = RequestMethod.POST)
 	public String login(Member m, Model model, HttpSession session) {
-		System.out.println(m);
-		System.out.println(m.getPwd());
+
 		Member loginUser = mService.login(m);
-		System.out.println(m);
-		System.out.println(loginUser);
-		System.out.println(bcrypt);
+
 		String encPwd = bcrypt.encode(m.getPwd());
-		System.out.println(encPwd);
+
 		if (bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
 			session.setAttribute("loginUser", loginUser);
+			
+			if(loginUser.getMemberType().equals("A")) {
+				ArrayList<Visit> today = mService.selectVisitToday();
+				
+				model.addAttribute("today", today);
+				
+				return "adminPage";
+			}
 			return "redirect:home.do";
 
 		} else {
@@ -115,20 +121,20 @@ public class MemberController {
 		@RequestMapping("insertm.me")
 		public String insert(@ModelAttribute Member m, @RequestParam("gender")String gender) {
 			System.out.println(gender);
-			if(gender.trim().equals("¼ºº°")) {
+			if(gender.trim().equals("ï¿½ï¿½ï¿½ï¿½")) {
 				m.setGender(null);	
-			}else if(gender.trim().equals("³²ÀÚ")) {
+			}else if(gender.trim().equals("ï¿½ï¿½ï¿½ï¿½")) {
 				m.setGender("M");	
-			}else if(gender.trim().equals("¿©ÀÚ")) {
+			}else if(gender.trim().equals("ï¿½ï¿½ï¿½ï¿½")) {
 				m.setGender("F");	
 			}
 			
-			System.out.println("³ª´Â" + m);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½" + m);
 			String encPwd = bcrypt.encode(m.getPwd());
 
 			m.setPwd(encPwd);
 			int result = mService.insertMember(m);
-			System.out.println("¼ýÀÚ" + result);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½" + result);
 			if (result > 0) {
 				return "login";
 			} else {
