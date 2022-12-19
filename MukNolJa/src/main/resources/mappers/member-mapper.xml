@@ -82,14 +82,21 @@
   	<resultMap type="Visit" id="VisitResutSet">
   		<id column="ID" property="id"/>
   		<result column="VISIT_TIME" property="VisitTime"/>
-  		<result column="NICKNAME" property="nickName"/>
-  		<result column="MEMBER_TYPE" property="mType"/>
   	</resultMap>
   	
-  	<select id="selectVisitToday" resultMap="VisitResutSet">
+  	<select id="selectVisitToday" resultMap="memberResultSet">
   		select *
-  		from visit
-  			join member using(id)
+  		from member
+  			join visit using(id)
   		where to_char(VISIT_TIME, 'yyyymmdd') = to_char(SYSDATE, 'yyyymmdd')
+  	</select>
+  	
+  	<select id="selectVisitList" resultType="map">
+  		select visit_date, visit_count
+		from (select to_char(visit_time, 'mm-dd') visit_date, count(*) visit_count
+		      from visit
+		      GROUP by to_char(visit_time, 'mm-dd')
+		      order by visit_date)
+		where rownum <![CDATA[<=]]> 7
   	</select>
   </mapper>

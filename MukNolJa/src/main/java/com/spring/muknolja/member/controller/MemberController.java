@@ -1,6 +1,8 @@
 ﻿package com.spring.muknolja.member.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,7 +20,6 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.spring.muknolja.member.model.service.MemberService;
 import com.spring.muknolja.member.model.vo.Member;
-import com.spring.muknolja.member.model.vo.Visit;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -36,7 +37,8 @@ public class MemberController {
 	}
 	@RequestMapping(value = "login.me", method = RequestMethod.POST)
 	public String login(Member m, Model model, HttpSession session) {
-
+		
+		System.out.println(m);
 		Member loginUser = mService.login(m);
 
 		String encPwd = bcrypt.encode(m.getPwd());
@@ -45,9 +47,11 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 			
 			if(loginUser.getMemberType().equals("A")) {
-				ArrayList<Visit> today = mService.selectVisitToday();
+				ArrayList<Member> today = mService.selectVisitToday();
+				ArrayList<Map<String, Integer>> visitList = mService.selectVisitList();
 				
 				model.addAttribute("today", today);
+				model.addAttribute("visitList", visitList);
 				
 				return "adminPage";
 			}

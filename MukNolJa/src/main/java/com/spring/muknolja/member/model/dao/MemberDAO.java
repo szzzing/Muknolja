@@ -1,6 +1,8 @@
 package com.spring.muknolja.member.model.dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -39,8 +41,12 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.selectVisitCounter", id);
 	}
 
-	public ArrayList<Visit> selectVisitToday(SqlSessionTemplate sqlSession) {
+	public ArrayList<Member> selectVisitToday(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitToday");
+	}
+
+	public ArrayList<Map<String, Integer>> selectVisitList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitList");
 	}
 
 }
