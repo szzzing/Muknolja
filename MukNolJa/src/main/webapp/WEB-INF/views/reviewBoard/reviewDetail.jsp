@@ -24,17 +24,17 @@
 	            	<div class="col" style="padding-left:0px; padding-right:0px;"  >
 	    				<img alt="1" src="${contextPath }/resources/img/1.jpg" width=100%; height=400px; style="border-radius:10px" >
 	    				
-	    				<div style="float:left; font-size:30px; margin-top:30px; font-weight:600">00산</div>
+	    				<div style="float:left; font-size:30px; margin-top:30px; font-weight:500">00산</div>
 	    			</div>
 				</div>
 	    					<div class="row justify-content-center " style=" border-radius:10px; ">
 	            				<div class="col-lg-8" style="padding-left:0px"  >
-	            					<div style="float:left; padding:20px; font-weight:600; margin-bottom:30px;box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); border-radius:10px;height:500px; width:99%; text-align:left" >
+	            					<div style="float:left; padding:20px; font-weight:500; margin-bottom:30px;border:1px solid lightgray;  border-radius:10px;height:500px; width:99%; text-align:left" >
 	            					왜
 	            					</div>
 	            				
 								</div>
-								<div class="col" style="margin-top:0px; margin-bottom:30px; padding-:0px; background:; height:500px; border-radius:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);"   >
+								<div class="col" style="margin-top:0px; margin-bottom:30px; padding-:0px; background:; height:500px; border-radius:10px;  border:1px solid lightgray;"   >
 								아하
 							</div>
 						</div>
