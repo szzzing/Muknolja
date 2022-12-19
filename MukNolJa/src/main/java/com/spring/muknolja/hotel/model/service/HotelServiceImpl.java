@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
+import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.hotel.model.dao.HotelDAO;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
@@ -132,5 +133,20 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public Hotel selectHotelbyId(String id) {
 		return hDAO.selectHotelById(sqlSession, id);
+	}
+	
+	@Override
+	public int getListCount() {
+		return hDAO.getListCount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Hotel> selectHotelList(PageInfo pi) {
+		return hDAO.selectHotelList(sqlSession, pi);
+	}
+	
+	@Override
+	public ArrayList<AttachedFile> selectHotelImgList(PageInfo pi) {
+		return hDAO.selectHotelImgList(sqlSession, pi);
 	}
 }

@@ -3,14 +3,16 @@ package com.spring.muknolja.hotel.model.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
+import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
-import com.spring.muknolja.hotel.model.vo.Review;
 import com.spring.muknolja.hotel.model.vo.Reservation;
+import com.spring.muknolja.hotel.model.vo.Review;
 import com.spring.muknolja.hotel.model.vo.Room;
 
 @Repository("hDAO")
@@ -103,6 +105,22 @@ public class HotelDAO {
 
 	public Hotel selectHotelById(SqlSessionTemplate sqlSession, String id) {
 		return sqlSession.selectOne("hotelmapper.selectHotelById", id);
+	}
+
+	public int getListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("hotelmapper.getListCount");
+	}
+
+	public ArrayList<Hotel> selectHotelList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectHotelList", null, rowBounds);
+	}
+
+	public ArrayList<AttachedFile> selectHotelImgList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectHotelImgList", null, rowBounds);
 	}
 
 }

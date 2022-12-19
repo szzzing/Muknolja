@@ -18,7 +18,8 @@
 	</insert>
 	
 	<select id="selectHotel" resultMap="hotelResultSet">
-		select *
+		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status,
+		(select min(room_price) from hotel join room using(hotel_id) where hotel_id=hotel_id) as min_Price
 		from hotel
 		where hotel_id=#{hotelId} and hotel_status='Y'
 	</select>
@@ -164,6 +165,29 @@
 		where ent_id=#{id}
 	</select>
 	
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from hotel
+		where hotel_status='Y'
+	</select>
+	
+	<select id="selectHotelList" resultMap="hotelResultSet">
+		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status,
+		(select min(room_price) from hotel join room using(hotel_id) where hotel_id=hotel_id) as min_price
+		from hotel
+		where hotel_status='Y'
+		order by hotel_id desc
+	</select>
+	
+	<select id="selectHotelImgList" resultMap="attachedFileResultSet">
+		select *
+		from hotel_img
+			join attached_file using(file_id)
+			join hotel using(hotel_id)
+		where hotel_status='Y' and file_thumbnail='Y'
+		order by hotel_id desc
+	</select>
+	
 	
 	
 	
@@ -182,11 +206,10 @@
 		<result column="FITNESS" property="fitness"/>
 		<result column="ENT_APPROVAL" property="entApproval"/>
 		<result column="MODIFY_DATE" property="modifyDate"/>
-		<result column="HOTEL_GEO_X" property="hotelGeoX"/>
-		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
 		<result column="HOTEL_INFO" property="hotelInfo"/>
 		<result column="HOTEL_INTRO" property="hotelIntro"/>
 		<result column="HOTEL_STATUS" property="hotelStatus"/>
+		<result column="MIN_PRICE" property="minPrice"/>
 	</resultMap>
 	
 	<resultMap type="Room" id="roomResultSet">

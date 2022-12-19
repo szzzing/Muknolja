@@ -168,7 +168,7 @@
 				</div>
 			</div>
 			<div class="col col-lg-9">
-				<div class="row g-5">
+				<div class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 g-5">
 				<c:forEach items="${ roomList }" var="r" varStatus="t">
 					<div class="col pb-3" style="border-bottom:1px solid #e9e9e9">
 						<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 g-3">

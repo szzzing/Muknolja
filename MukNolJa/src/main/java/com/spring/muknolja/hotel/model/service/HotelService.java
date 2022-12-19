@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
+import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Review;
@@ -55,5 +56,11 @@ public interface HotelService {
 	int selectAvgRating(int hotelId);
 
 	Hotel selectHotelbyId(String id);
+
+	int getListCount();
+
+	ArrayList<Hotel> selectHotelList(PageInfo pi);
+
+	ArrayList<AttachedFile> selectHotelImgList(PageInfo pi);
 
 }

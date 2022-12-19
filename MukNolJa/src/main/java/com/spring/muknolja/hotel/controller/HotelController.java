@@ -25,13 +25,15 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
+import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
-import com.spring.muknolja.hotel.model.vo.Review;
 import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.hotel.model.vo.ReserveDate;
+import com.spring.muknolja.hotel.model.vo.Review;
 import com.spring.muknolja.hotel.model.vo.Room;
 import com.spring.muknolja.member.model.vo.Member;
 
@@ -64,6 +66,35 @@ public class HotelController {
 	public String hotelList() {
 		return "hotelList";
 	}
+	
+	@RequestMapping(value="selectHotelList.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void selectHotelList(@RequestParam(value="page", required=false) Integer page, HttpServletResponse response) {
+		int listCount = hService.getListCount();
+		int currentPage = 1;
+		if(page!=null) {
+			currentPage = page;
+		}
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		ArrayList<Hotel> hotelList = hService.selectHotelList(pi);
+		ArrayList<AttachedFile> hotelImgList = hService.selectHotelImgList(pi);
+		
+		HashMap map = new HashMap();
+		map.put("hotelList", hotelList);
+		map.put("hotelImgList", hotelImgList);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	@RequestMapping("hotelDetail.ho")
 	public String hotelDetail(@RequestParam("hotelId") int hotelId, HttpSession session, Model model) {

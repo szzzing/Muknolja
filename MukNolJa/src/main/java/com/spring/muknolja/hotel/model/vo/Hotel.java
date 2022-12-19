@@ -28,9 +28,8 @@ public class Hotel {
 	private int star;
 	private String entApproval;
 	private Date modifyDate;
-	private double hotelGeoX;
-	private double hotelGeoY;
 	private String hotelInfo;
 	private String hotelIntro;
 	private String hotelStatus;
+	private int minPrice;
 }

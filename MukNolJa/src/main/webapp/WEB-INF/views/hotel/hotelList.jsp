@@ -17,6 +17,10 @@
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 </head>
 <style>
+	#hotelTable td {
+		margin:0px;
+		padding:0px;
+	}
     .mukRound {border-radius: 8px;}
 	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
@@ -26,7 +30,6 @@
 <body>
 
 	<div class="container mt-5 mb-5">
-		<h1 class="fw-bold p-5" style="text-align:center;">호텔게시판</h1>
 		<form class="row g-2">
 			<div class="col mb-3 form-floating">
 				<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
@@ -106,51 +109,63 @@
 				</table>
 		</form>
 		
-		<div class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 justify-content-start mt-4 mb-4">
-			<div class="hotel col mb-4">
-				<div class="row">
-						<table class="col table table-borderless">
-							<tr>
-								<td style="width:200px" rowspan="4">
-									<img class="hotelImg mukRound" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMTlfMTYy%2FMDAxNjY2MTc4MTIyNzky.aXnPx9QwmchutQ7kHiWYYxGSZbZ9LRetTeUPgIaTJbkg.YEphq3iONv1O2z9kjPZo-tl_gUzLazQljGyLSvpxExAg.JPEG.abcd5z%2FIMG_2083.jpg&type=sc960_832" width="200px" height="200px" style="background: lightgray">
-								</td>
-								<td colspan="2" class="align-top">
-									<h4 class="hotelName lh-1 fw-bold">롯데호텔 부산</h4>
-									<small class="bi bi-geo-alt-fill text-muted overflow-hidden"></small><small id="hotelAddress" class="text-muted">부산 부산진구 가야대로 772</small><br>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2" style="padding-top:0px">
-									<small class="star">5성급</small><br>
-									<small>
-										<i class="fa-solid fa-wifi"></i>
-										<i class="fa-solid fa-square-parking"></i>
-										<i class="fa-solid fa-gift"></i>
-										<i class="fa-solid fa-utensils"></i>
-										<i class="fa-solid fa-dumbbell"></i>
-										<i class="fa-solid fa-water-ladder"></i>
-									</small><br>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h5 class="fa-solid fa-star"></h5><b>4.5</b>/5
-								</td>
-								<td class="text-end">
-									<i class="fa-solid fa-heart"></i>10
-									<i class="fa-solid fa-star"></i>10
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2" class="align-bottom text-end" style="padding-top:0px">
-									<h5 class="lh-1 fw-bold" style="margin:0px">80,000원~</h5>
-								</td>
-							</tr>
+		<div id="hotelList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-2 justify-content-start mt-4 mb-4 g-3">
+			<div id="hotelDiv" class="hotel col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
+				<div class="row g-3">
+					<div class="col">
+						<img class="hotelImg img-fluid mukRound" data-bs-toggle="modal" data-bs-target="#roomDetailModal" src="#" style="background: lightgray">
+					</div>
+					<div class="col">
+						<table id="hotelTable" class="table table-borderless" style="margin-bottom:0px; height:100%">
+							<tr><td>
+								<input type="hidden" class="hotelId">
+								<h4 class="hotelName lh-1 fw-bold"></h4>
+								<div class="hotelAddress mukMutedText"></span>
+							</td></tr>
+							<tr><td class="align-bottom pt-3">
+								<h4 class="minPrice lh-1 fw-bold pb-3"></h4>
+							</td></tr>
 						</table>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	
+	<script>
+		$(document).ready(function(){
+			var page = 1;
+			$.ajax({
+				url: "${contextPath}/selectHotelList.ho",
+				data: {
+					page: page
+				},
+				success: (data)=>{
+					console.log(data);
+					const hotelList = data.hotelList;
+					const hotelImgList = data.hotelImgList;
+					
+					var hotelDiv = $("#hotelDiv").clone();
+					hotelDiv.prop("style").removeProperty("display");
+					for(var i=0;i<hotelList.length;i++) {
+						console.log(hotelList[i].minPrice);
+						hotelDiv.find(".hotelId").val(hotelList[i].hotelId);
+						hotelDiv.find(".hotelName").html(hotelList[i].hotelName);
+						hotelDiv.find(".hotelAddress").html(hotelList[i].address);
+						hotelDiv.find(".minPrice").html(hotelList[i].minPrice.toLocaleString()+"원~");
+						hotelDiv.find(".hotelImg").prop("src", "${contextPath }/resources/uploadFiles/"+hotelImgList[i].fileModifyName);
+						$("#hotelList").append('<div class="hotel col pb-3" style="border-bottom:1px solid #e9e9e9">'+hotelDiv.html()+'</div>');
+					}
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			});
+		});
+	</script>
+	
+	
 	
 	<!-- daterangepicker 기본설정, 날짜 기입 시작 -->
 	<script>
@@ -203,9 +218,8 @@
 	<!-- 호텔 옵션 선택 끝 -->
 	
 	<script>
-		$(".hotel").on("click", function(){
-// 			location.href="${contextPath}/hotelDetail.ho?hotelId="+$("input[name=hotelId]").val();
-			location.href="${contextPath}/hotelDetail.ho?hotelId=4";
+		$(document).on('click', '.hotel', function(){
+			location.href="${contextPath}/hotelDetail.ho?hotelId="+$(this).find(".hotelId").val();
 		});
 	</script>
 </body>
