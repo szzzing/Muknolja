@@ -46,4 +46,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.insert(sqlSession,m);
 	}
 
+	@Override
+	public String findId(String email) {
+		// TODO Auto-generated method stub
+		return mDAO.findId(sqlSession,email);
+	}
+
 }

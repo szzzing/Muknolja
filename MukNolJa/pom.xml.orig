@@ -12,7 +12,7 @@
 		<org.springframework-version>5.3.23</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
-	</properties>
+	</properties>5
 	<dependencies>
 		<!-- Spring -->
 		<dependency>
@@ -136,7 +136,7 @@
 		
 		
 		
-		<!-- DataSource등록에 BasicDataSource : commons-dbcp -->
+		<!-- DataSource�벑濡앹뿉 BasicDataSource : commons-dbcp -->
 		<!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -152,7 +152,7 @@
 		    <version>3.5.7</version>
 		</dependency>
 		
-		<!-- mybatis와 spring 연결 : mybatis-spring -->
+		<!-- mybatis�� spring �뿰寃� : mybatis-spring -->
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
 		<dependency>
 		    <groupId>org.mybatis</groupId>
@@ -202,7 +202,7 @@
 		    <version>5.6.1</version>
 		</dependency>
 		
-		<!-- 파일 업로드 -->
+		<!-- �뙆�씪 �뾽濡쒕뱶 -->
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 		    <groupId>commons-io</groupId>
@@ -278,7 +278,7 @@
 		
 =======
 		
-		<!--  메일 -->
+		<!--  硫붿씪 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
@@ -299,7 +299,7 @@
 		    <artifactId>spring-messaging</artifactId>
 		    <version>5.3.23</version>
 		</dependency>
->>>>>>> 회원가입
+>>>>>>> �쉶�썝媛��엯
 	</dependencies>
     <build>
         <plugins>

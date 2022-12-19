@@ -33,4 +33,9 @@ public class MemberDAO {
 		return sqlSession.insert("memberMapper.insertM", m);
 	}
 
+	public String findId(SqlSessionTemplate sqlSession, String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.findId", email);
+	}
+
 }

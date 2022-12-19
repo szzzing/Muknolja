@@ -14,8 +14,9 @@
 }
 
  .ur{
-  margin-top:5%;
-  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.3);
+ box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);
+ padding-left:0px;
+  padding-bottom:0px;
   margin-left:0px;
   
   
@@ -27,7 +28,7 @@ li{list-style:none;}
   font-size: 20px;
   font-weight: 600;
   width:100%;
-  background: white;
+  
   color: #575757;
   text-align: center;
   height: 60px;
@@ -53,6 +54,11 @@ li{list-style:none;}
       transition: all .25s linear; 
 }
     
+    
+    
+    
+    
+    
 	.five:hover{
 	font-size:30px;
 	 width:50vw;
@@ -77,9 +83,9 @@ li{list-style:none;}
 	
 	
 	.im{
-		height:200px;
-		width:200px;
-		margin-right:20px;
+		height:250px;
+		width:260px;
+		margin-right:40px;
 		box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.3);
 		
 		
@@ -87,9 +93,9 @@ li{list-style:none;}
 	.slide_wrapper{
 		paddinf-left:0px;
 		position: relative;
-		margin-top:20px;
+		margin-top:30px;
 		
-		height: 220px;
+		height: 280px;
 		overflow:hidden;
 		display:flex;
 		background:#F2F2F2;
@@ -100,7 +106,8 @@ li{list-style:none;}
 		  transition:left 0.5s ease-out;
 		  padding-left:0px;
 		  left:0px;
-		  width:2200px;
+		  width:3070px;
+		 
 		 }
 		 .slides li{
 		 float:left;
@@ -119,9 +126,9 @@ li{list-style:none;}
 		 .slide_wrapper1{
 		paddinf-left:0px;
 		position: relative;
+		margin-top:30px;
 		
-		
-		height: 220px;
+		height: 280px;
 		overflow:hidden;
 		display:flex;
 	
@@ -132,7 +139,7 @@ li{list-style:none;}
 		  transition:left 0.5s ease-out;
 		  padding-left:0px;
 		  left:0px;
-		  width:2200px;
+		  width:3070px;
 		 }
 		 .slides1 li{
 		 float:left;
@@ -152,9 +159,9 @@ li{list-style:none;}
 		.slide_wrapper2{
 		paddinf-left:0px;
 		position: relative;
+		margin-top:30px;
 		
-		
-		height: 220px;
+		height: 280px;
 		overflow:hidden;
 		display:flex;
 	
@@ -165,7 +172,7 @@ li{list-style:none;}
 		  transition:left 0.5s ease-out;
 		  padding-left:0px;
 		  left:0px;
-		  width:2200px;
+		 width:3070px;
 		 }
 		 .slides2 li{
 		 float:left;
@@ -188,12 +195,14 @@ li{list-style:none;}
     <jsp:include page="menubar.jsp"/>
    	
      <div class="container-fluid text-center">
-	  	<div class="row justify-content-center shadow" style="min-width: 100vw;  min-height:100vh;">
+	  	<div class="row justify-content-center shadow" style="min-width: 100vw;  min-height:100vh;   box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
             <div class="col-xl-9 col-lg-12" style=" min-height:100vh;">
 		<br><br><br>
 	  	
 	  		
             <br><br>
+            <div class="row justify-content-center " style="  ">
+            <div class="col" style="padding-left:0px; padding-right:0px;"  >
             			<ul class="ur" >
 					    	<div style="display:flex;" lass="ur1">
 						    	<li class="ll">서울</li>
@@ -219,6 +228,8 @@ li{list-style:none;}
 						    </div>
 					    </ul>
 					   <br>
+					   </div>
+					   </div>
 					   <div class="row justify-content-center" >
 					   	<div class="col-10">
 					   <div style="font-size:30px; margin-top:50px; font-weight:600; float: left; margin-l">관광지</div>
@@ -245,6 +256,8 @@ li{list-style:none;}
 		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
 		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
 		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				<img alt="1" src="${contextPath }/resources/img/1.jpg" class="im " style="">
+		            				<img alt="1" src="${contextPath }/resources/img/3.jpg" class="im " style="">
 		            			</li>
 		            		</ul>
 		            		
@@ -264,7 +277,7 @@ li{list-style:none;}
 					   </div>
 					   </div>
             	
-            	<div class="row justify-content-center" style="margin-top:10px;">
+            	<div class="row justify-content-center" style="margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
 					<div class="col-1">
 						<p class="controls1">
             			<h3 class="prev1" style="margin-top:70px;"><i class="bi bi-chevron-compact-left"></i></h3>
@@ -301,7 +314,7 @@ li{list-style:none;}
 					   </div>
 					   </div>
             	
-            	<div class="row justify-content-center" style="margin-top:10px;">
+            	<div class="row justify-content-center" style="margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
 					<div class="col-1">
 						<p class="controls2">
             			<h3 class="prev2" style="margin-top:70px;"><i class="bi bi-chevron-compact-left"></i></h3>
@@ -320,6 +333,7 @@ li{list-style:none;}
 		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
 		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
 		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            				
 		            			</li>
 		            		</ul>
 		            		
@@ -339,13 +353,13 @@ li{list-style:none;}
   		var slides = document.querySelector('.slides'),
   			slide =  document.querySelectorAll('.slides img'),
   			currentIdx = 0,
-  			slideCount = slide.length,
+  			slideCount = 9,
   			prevBtn = document.querySelector('.prev');
   			nextBtn = document.querySelector('.next');
   			
   			
   			function moveSlide(num){
-  				slides.style.left = -num * 220 + 'px';
+  				slides.style.left = -num * 290 + 'px';
   				currentIdx = num;
   			}
   			nextBtn.addEventListener('click',function(){
@@ -380,7 +394,7 @@ li{list-style:none;}
   			
   			
   			function moveSlide1(num){
-  				slides1.style.left = -num * 220 + 'px';
+  				slides1.style.left = -num * 290 + 'px';
   				currentIdx1 = num;
   			}
   			nextBtn1.addEventListener('click',function(){
@@ -415,7 +429,7 @@ li{list-style:none;}
   			
   			
   			function moveSlide2(num){
-  				slides2.style.left = -num * 220 + 'px';
+  				slides2.style.left = -num * 290 + 'px';
   				currentIdx2 = num;
   			}
   			nextBtn2.addEventListener('click',function(){
@@ -441,17 +455,7 @@ li{list-style:none;}
   				
   			});
   			
-  			$('.im1').click(function(){
-  				$('.slide_wrapper').css('overflow','visible');
-  				 $('.im1').css('transform','scale(15,15)');
-  				$('.im1').css('z-index','99999999999');
-  				$('.im1').css('transition','.2s ease-out' );
-  				$('.slides').css('transition','scale 2s ease-out');
-  				 
-  				setTimeout(function() {
-  	    			location = "${ contextPath}/home.do";
-  	    			}, 300);
-  			});
+  			
   			
     </script>
   </body>

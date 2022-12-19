@@ -16,7 +16,7 @@ public class MailConfig {
 			
 			javaMailSender.setHost("smtp.naver.com");// 도매인
 			javaMailSender.setUsername("rlwo5454");//네이버 아이디
-			javaMailSender.setPassword("Junegemini11");//네이버 비밀번호
+			javaMailSender.setPassword("Junegemini11..");//네이버 비밀번호
 			
 			javaMailSender.setPort(465); // 서버 포트
 			

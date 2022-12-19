@@ -29,7 +29,7 @@
             <div class="col" style="width:100vw; height:80px; display:inLine-block; background: white; border-bottom:2px solid lightgrey;" >
             	<div style="width:height:80px; display:inLine-block; ">
             		
-            			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">회원가입(1/2)</div>
+            			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">아이디찾기</div>
             		
             	</div>
             </div>
@@ -54,7 +54,7 @@
 			            			
 			            			<div style="position:absolute; top:85%; margin-left:0vw;">
 			            			<button type="button" style="width:500px;  border-radius:10px; height:51px; border: 1px solid lightgrey;padding-top:8px;">다음</button>
-			            			<div style="margin-top:2vh; margin-left:-10px"><i class="bi bi-exclamation-circle-fill" style="color:red;"></i>  회원 가입시 반드시 본인 소유의 연락 가능한 이메일 주소를 사용하여야 합니다.</div>
+			            			<div style="margin-top:2vh; margin-left:-10px"><i class="bi bi-exclamation-circle-fill" style="color:red;"></i>회원가입시 등록한 이메일을 이용해주세요</div>
 			            			</div>
 		            			</form>
 		            		</div>
@@ -104,7 +104,7 @@
 							
 						} else { // 아니면 중복아님
 							
-							location.href = "${ contextPath }/enroll.me?email=" + document.getElementById("email").value;
+							location.href = "${ contextPath }/findId.me?email=" + document.getElementById("email").value;
 						}
 					});
 				}

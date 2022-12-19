@@ -121,27 +121,29 @@
             .ba{
             width:200px;font-size:30px; margin-top:15px; color:#6BB6EC; font-weight: 900;
             }
-            @media (max-width: 650px) {
+            @media (max-width: 840px) {
 			  .ba{
 			  	margin-top:30px;
-			    width: 100px;
+			    width: 80px;
 			    font-size:15px;
 			    
 			  }
 }
 			
 		.ch{font-size:30px;}
-		 @media (max-width: 650px) {
+		 @media (max-width: 840px) {
 			  .ch{
 			  	font-size:15px;
 			  	margin-top:13px;
 			  	
 			  }
 }
-			.coco{width:70px;}
-			 @media (max-width: 650px) {
+			.coco{width:70px; font-size:15px; margin-top:32px;}
+			 @media (max-width: 840px) {
 			  .coco{
-			  width:55px;
+			  width:45px;
+			   font-size:9px;
+			   margin-top:35px;
 			  }
 			  }
     </style>
@@ -154,25 +156,25 @@
   	 <header id="header"  style="top:0; left:0; position:fixed; z-index:99999">
      <div class="container-fluid text-center">
 	  	<div class="row justify-content-center shadow" style="min-width: 100vw; height:80px; background: white;">
-            <div class="col-xl-9 col-lg-12" style=" height:80px; font-family: 'HSYuji-Regular';  ">
+            <div class="col-9 " style=" height:80px; font-family: 'HSYuji-Regular';  ">
             	<div  style=" height:80px; "> 
             		<div class="row row-cols-9" style=height:80px;>
             		<div class="col-5 ba"style=" ">MUKNOLJA</div>
-            		<div class="col-1 coco" style="font-size:10px; font-weight:600; margin-top:32px;"><div class="dropdown">
-						  <button class="" style="background:none; margin-left:-15px;width:70px;font-size:15px;padding-top:0px; padding-left:-10px;font-align:center;font-weight:600; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            		<div class="col-1 coco" style=" font-weight:600; "><div class="dropdown">
+						  <button class="" style="background:none; margin-left:-15px;width:70px;padding-top:0px; padding-left:-10px;font-align:center;font-weight:600; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						   여행
 						  </button>
 						  <ul class="dropdown-menu" >
-						    <li><a class="dropdown-item" style="font-size:14px;font-weight:600;  href="#">관광지</a></li>
-						    <li><a class="dropdown-item" style="font-size:14px;font-weight:600; href="#">맛집</a></li>
-						    <li><a class="dropdown-item" style="font-size:14px;font-weight:600; href="#">축제</a></li>
+						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600;  href="#">관광지</a></li>
+						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600; href="#">맛집</a></li>
+						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600; href="#">축제</a></li>
 						  </ul>
 						</div>				
 					</div>
-            		<div class="col-1 coco" style=" font-size:15px; font-weight:600;margin-top:32px;">호텔</div>
-            		<div class="col-1 coco" style=" font-size:15px; font-weight:600;margin-top:32px;">동행</div>
-            		<div class="col-1 coco" style=" font-size:15px; font-weight:600;margin-top:32px;">후기</div>
-            		<div class="col "></div>
+            		<div class="col-1 coco" style="  font-weight:600;">호텔</div>
+            		<div class="col-1 coco" style="  font-weight:600;">동행</div>
+            		<a href="${ contextPath }/reviewList.re"class="col-1 coco" style="  font-weight:600;">후기</a>
+            		<div class="col d-none d-sm-block"></div>
             		<div class="col-1 co" style="font-size:25px; margin-top:22px; ">
             			<h3 id="popup_open_btn" class="ch"style="color:#6BB6EC; "><i class="fa-solid fa-comments ic"></i></h3>
             		</div>

@@ -29,7 +29,7 @@
             <div class="col" style="width:100vw; height:80px; display:inLine-block; background: white; border-bottom:2px solid lightgrey;" >
             	<div style="width:height:80px; display:inLine-block; ">
             		
-            			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">회원가입(1/2)</div>
+            			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">아이디찾기</div>
             		
             	</div>
             </div>
@@ -54,7 +54,7 @@
 			            			
 			            			<div style="position:absolute; top:85%; margin-left:0vw;">
 			            			<button type="button" style="width:500px;  border-radius:10px; height:51px; border: 1px solid lightgrey;padding-top:8px;">다음</button>
-			            			<div style="margin-top:2vh; margin-left:-10px"><i class="bi bi-exclamation-circle-fill" style="color:red;"></i>  회원 가입시 반드시 본인 소유의 연락 가능한 이메일 주소를 사용하여야 합니다.</div>
+			            			<div style="margin-top:2vh; margin-left:-10px"><i class="bi bi-exclamation-circle-fill" style="color:red;"></i>회원가입시 등록한 이메일을 이용해주세요</div>
 			            			</div>
 		            			</form>
 		            		</div>
@@ -65,64 +65,7 @@
             </div>
         </div>
        
-  	<script>
-  		var email = false;
-  	window.onload = ()=>{
-		
-		
-		var $checkEmail = $("#emailBu"); // 인증번호 발송 버튼
-		var $memailconfirm = $("#word"); // 인증번호 확인input
-		var $memailconfirmTxt = $("#memailconfirmTxt"); // 인증번호 확인 txt
-		var $button = $("button");
-	// 이메일 인증번호
-	$checkEmail.click(function() {
-		console.log(document.getElementById("email").value);
-		$.ajax({
-			url: '${ contextPath}/checkEmail.me',
-			data: {"email" : document.getElementById("email").value},
-			success: (data)=>{
-				console.log(data);
-				if(data.trim() == 'yes'){
-					$.ajax({
-						type : "POST",
-						url : '${ contextPath}/pleaseMail.me',
-						data : {
-							"email" : document.getElementById("email").value
-						},
-						success : function(data){
-							alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
-							console.log("data : "+data);
-							chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt);
-						}
-					});
-			
-				function chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt){
-					$button.click(function(){
-						if (data != $memailconfirm.val()) { //
-							emconfirmchk = false;
-							alert("인증번호가 일치하지 않습니다");
-							
-						} else { // 아니면 중복아님
-							
-							location.href = "${ contextPath }/enroll.me?email=" + document.getElementById("email").value;
-						}
-					});
-				}
-					
-				}else if(data.trim() == 'no'){
-					alert("중복된 이메일 입니다");
-				}
-			},
-			error: (data)=>{
-				alert("존재하지 않는 이메일 입니다");
-			}
-			
-		});
-  	});
-  	}
- 	
-		
-  	</script>
+  	
     
   </body>
 </html>

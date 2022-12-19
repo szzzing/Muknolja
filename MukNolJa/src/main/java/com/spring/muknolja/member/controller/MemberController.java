@@ -141,4 +141,5 @@ public class MemberController {
 		public String prao() {
 			return"pra";
 		}
+		
 }

@@ -69,4 +69,6 @@
 	  	from member
 	  	where nickname=#{nickName}
   	</select>
+  	
+  	
   </mapper>
