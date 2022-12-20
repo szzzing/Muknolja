@@ -33,7 +33,13 @@ public class TravelController {
 		
 		try {
 			int pageNo = currentPage;
-			String urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12";
+			String urlStr;
+			
+			if(areaCode ==null) {
+				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12";
+			}else {
+				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12&areaCode=" + areaCode;
+			}
 			
 			URL url = new URL(urlStr);
 			BufferedReader bf;

@@ -31,13 +31,14 @@
 		
 		.ur{
 		  margin-top:5%;
-		  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.3);
+		  box-shadow: 0px 8px 8px 8px rgba(0,0,0,0.1);
 		  margin-left:0px;
 		  margin-top: 50px;
 	      margin-bottom: 50px;
 	      margin-left:auto; 
 	      margin-right:auto;
 	      cursor: pointer;
+	      padding-left: 0;
 		}
 		li{list-style:none;}
 		
@@ -69,7 +70,7 @@
 		    
 		    .ll{
 		      transition: all .25s linear; 
-		}
+			}
 	</style>
 	
 </head>
@@ -101,25 +102,25 @@
 		<div class="container">
 			<ul id="category" class="ur" >
 				<div style="display:flex;" lass="ur1">
-					<li class="ll">서울</li>
-					<li class="ll">인천</li>
-					<li class="ll">대전</li>
-					<li class="ll">대구</li>
-					<li class="ll">광주</li>
-					<li class="ll">부산</li>
-					<li class="ll">울산</li>
-					<li class="ll">세종</li>
-					<li class="ll">경기</li>
+					<li class="ll 1">서울</li>
+					<li class="ll 2">인천</li>
+					<li class="ll 3">대전</li>
+					<li class="ll 4">대구</li>
+					<li class="ll 5">광주</li>
+					<li class="ll 6">부산</li>
+					<li class="ll 7">울산</li>
+					<li class="ll 8">세종</li>
+					<li class="ll 31">경기</li>
 				</div>
 				<div style="display:flex;">
-					<li class="ll">강원</li>
-					<li class="ll">충북</li>
-					<li class="ll">충남</li>
-					<li class="ll">경북</li>
-					<li class="ll">경남</li>
-					<li class="ll">전북</li>
-					<li class="ll">전남</li>
-					<li class="ll">제주</li>
+					<li class="ll 32">강원</li>
+					<li class="ll 33">충북</li>
+					<li class="ll 34">충남</li>
+					<li class="ll 35">경북</li>
+					<li class="ll 36">경남</li>
+					<li class="ll 37">전북</li>
+					<li class="ll 38">전남</li>
+					<li class="ll 38">제주</li>
 					<li class="ll">전체</li>
 				</div>
 			</ul>
@@ -209,13 +210,13 @@
 				});
 			}
 			
-// 			const categorys = document.getElementsByClassName('ll');
-// 			for(const category of categorys){
-// 				category.addEventListener('click', function(){
-// 					if()
-// 					category.innerText
-// 				});
-// 			}
+			const categorys = document.getElementsByClassName('ll');
+			for(const category of categorys){
+				category.addEventListener('click', function(){
+					const areaCode = category.className.substr(2);
+					location.href='${contextPath}/travelList.tr?areaCode=' + areaCode;
+				});
+			}
 		</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
