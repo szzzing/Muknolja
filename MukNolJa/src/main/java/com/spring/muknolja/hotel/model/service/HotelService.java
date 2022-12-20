@@ -53,7 +53,7 @@ public interface HotelService {
 
 	int selectReviewCount(int hotelId);
 
-	int selectAvgRating(int hotelId);
+	double selectAvgRating(int hotelId);
 
 	Hotel selectHotelbyId(String id);
 

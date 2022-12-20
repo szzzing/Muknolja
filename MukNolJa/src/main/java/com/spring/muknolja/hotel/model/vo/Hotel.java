@@ -32,4 +32,7 @@ public class Hotel {
 	private String hotelIntro;
 	private String hotelStatus;
 	private int minPrice;
+	private double avgRating;
+	private double hotelGeoX;
+	private double hotelGeoY;
 }

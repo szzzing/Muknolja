@@ -148,14 +148,13 @@
   </head>
   <body>
 	
-    
    	 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
    	 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
   	 <header id="header"  style="top:0; left:0; position:fixed; z-index:99999">
-     <div class="container-fluid text-center">
+     <div class="container container-fluid text-center">
 	  	<div class="row justify-content-center shadow" style="min-width: 100vw; height:80px; background: white;">
             <div class="col-xl-9 col-lg-12" style=" height:80px; font-family: 'HSYuji-Regular';  ">
-            	<div  style=" height:80px; "> 
+            	<div style=" height:80px; "> 
             		<div class="row row-cols-9" style=height:80px;>
             		<div class="col-5 ba"style=" ">MUKNOLJA</div>
             		<div class="col-1 coco" style="font-size:10px; font-weight:600; margin-top:32px;"><div class="dropdown">
@@ -182,7 +181,7 @@
 					</c:if>		
 					<c:if test="${ !empty loginUser }">
 	            		<button class="buu" style="background:white;color:#6BB6EC; width:50px; font-size:15px;padding-top:0px;font-weight:600; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-							   <h3 class="ch"style=""><i class="bi bi-person-lines-fill ic" style="color:#6BB6EC;"></i></h3>
+							   <h3 class="ch" style=""><i class="bi bi-person-lines-fill ic" style="color:#6BB6EC;"></i></h3>
 							  </button>
 							  <ul class="dropdown-menu">
 							    <li><a class="dropdown-item" style="font-size:15px;font-weight:600;"  href="${ contextPath  }/myInfo.me">마이페이지</a></li>

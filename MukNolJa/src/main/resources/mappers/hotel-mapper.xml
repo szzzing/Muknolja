@@ -18,8 +18,9 @@
 	</insert>
 	
 	<select id="selectHotel" resultMap="hotelResultSet">
-		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status,
-		(select min(room_price) from hotel join room using(hotel_id) where hotel_id=hotel_id) as min_Price
+		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y,
+		(select min(room_price) from hotel join room using(hotel_id) where hotel_id=hotel_id) as min_Price,
+		(select round(avg(rating), 1) from review join reservation using(reservation_id) join room using(room_id) where hotel_id=hotel.hotel_id and review_status='Y') as avg_Rating
 		from hotel
 		where hotel_id=#{hotelId} and hotel_status='Y'
 	</select>
@@ -29,6 +30,7 @@
 		from hotel_img
 			join attached_file using(file_id)
 		where hotel_id=#{hotelId}
+		order by file_id
 	</select>
 	
 	<select id="selectAllRoom" resultMap="roomResultSet">
@@ -64,7 +66,7 @@
 	<insert id="insertHotel">
 		insert into hotel
 		values(
-			SEQ_HID.nextval, #{entId}, #{hotelName}, #{hotelPhone}, #{hotelAddress}, #{wifi}, #{breakfast}, #{amenity}, #{park}, #{swim}, #{fitness}, null, null, default, sysdate, #{star}, #{hotelInfo}, #{hotelIntro}, default
+			SEQ_HID.nextval, #{entId}, #{hotelName}, #{hotelPhone}, #{hotelAddress}, #{wifi}, #{breakfast}, #{amenity}, #{park}, #{swim}, #{fitness}, default, default, #{star}, #{hotelInfo}, #{hotelIntro}, default, #{hotelGeoX}, #{hotelGeoY}
 		)
 	</insert>
 	
@@ -143,8 +145,8 @@
 		order by review_id desc
 	</select>
 	
-	<select id="selectAvgRating" resultType="_int">
-		select round(avg(rating), 1)
+	<select id="selectAvgRating" resultType="_double">
+		select nvl(round(avg(rating), 1), 0)
 		from review
 			join reservation using(reservation_id)
 			join room using(room_id)
@@ -172,10 +174,14 @@
 	</select>
 	
 	<select id="selectHotelList" resultMap="hotelResultSet">
-		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status,
-		(select min(room_price) from hotel join room using(hotel_id) where hotel_id=hotel_id) as min_price
+		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y,
+			nvl(min(room_price), 0) as min_price, nvl(round(avg(rating), 1),0) as avg_rating
 		from hotel
+		    left outer join room using(hotel_id)
+		    left outer join reservation using(room_id)
+		    left outer join review using(reservation_id)
 		where hotel_status='Y'
+		group by hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y
 		order by hotel_id desc
 	</select>
 	
@@ -210,6 +216,9 @@
 		<result column="HOTEL_INTRO" property="hotelIntro"/>
 		<result column="HOTEL_STATUS" property="hotelStatus"/>
 		<result column="MIN_PRICE" property="minPrice"/>
+		<result column="AVG_RATING" property="avgRating"/>
+		<result column="HOTEL_GEO_X" property="hotelGeoX"/>
+		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
 	</resultMap>
 	
 	<resultMap type="Room" id="roomResultSet">

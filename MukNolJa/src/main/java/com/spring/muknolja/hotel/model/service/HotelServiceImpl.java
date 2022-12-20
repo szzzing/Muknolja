@@ -121,7 +121,7 @@ public class HotelServiceImpl implements HotelService{
 	}
 	
 	@Override
-	public int selectAvgRating(int hotelId) {
+	public double selectAvgRating(int hotelId) {
 		return hDAO.selectAvgRating(sqlSession, hotelId);
 	}
 	

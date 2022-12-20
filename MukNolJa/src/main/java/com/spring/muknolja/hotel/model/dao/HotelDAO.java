@@ -95,7 +95,7 @@ public class HotelDAO {
 		return (ArrayList)sqlSession.selectList("hotelmapper.selectAllRoomThumbnail", hotelId);
 	}
 
-	public int selectAvgRating(SqlSessionTemplate sqlSession, int hotelId) {
+	public double selectAvgRating(SqlSessionTemplate sqlSession, int hotelId) {
 		return sqlSession.selectOne("hotelmapper.selectAvgRating", hotelId);
 	}
 
