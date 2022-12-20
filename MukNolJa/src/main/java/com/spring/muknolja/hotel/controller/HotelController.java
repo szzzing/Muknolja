@@ -43,21 +43,56 @@ public class HotelController {
 	@Autowired
 	private HotelService hService;
 	
-	@RequestMapping("hotelAdmin.ho")
+	@RequestMapping("admin.ho")
 	public String hotelAdmin(HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");
 		if(m.getMemberType().equals("H")) {
 			Hotel hotel = hService.selectHotelbyId(m.getId());
-			model.addAttribute("hotel", hotel);
+			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
 			
-			return "hotelAdmin";
+			model.addAttribute("hotel", hotel);
+			model.addAttribute("hotelImgList", hotelImg);
+			
+			return "admin";
+		} else {
+			throw new CommonException("호텔 사업자가 아닙니다.");
+		}
+	}
+	
+	@RequestMapping("manageHotel.ho")
+	public String manageHotel(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m.getMemberType().equals("H")) {
+			Hotel hotel = hService.selectHotelbyId(m.getId());
+			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
+			
+			model.addAttribute("hotel", hotel);
+			model.addAttribute("hotelImgList", hotelImg);
+			
+			return "manageHotel";
 		} else {
 			throw new CommonException("호텔 사업자가 아닙니다.");
 		}
 	}
 	
 	
-	
+	@RequestMapping("modifyHotel.ho")
+	public String updateHotel(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m.getMemberType().equals("H")) {
+			Hotel hotel = hService.selectHotelbyId(m.getId());
+			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
+			hotel.setHotelInfo(hotel.getHotelInfo().replaceAll("<br>", ""));
+			hotel.setHotelIntro(hotel.getHotelIntro().replaceAll("<br>", ""));
+			
+			model.addAttribute("hotel", hotel);
+			model.addAttribute("hotelImgList", hotelImg);
+			
+			return "modifyHotel";
+		} else {
+			throw new CommonException("호텔 사업자가 아닙니다.");
+		}
+	}
 	
 	
 	
@@ -143,6 +178,8 @@ public class HotelController {
 		}
 	}
 	
+	
+	
 	// 작성 가능한 리뷰
 	@RequestMapping("writableReview.ho")
 	@ResponseBody
@@ -174,7 +211,7 @@ public class HotelController {
 
 		ArrayList<Review> reviewList = hService.selectReviewList(hotelId);
 		int reviewCount = hService.selectReviewCount(hotelId);
-		int avgRating = hService.selectAvgRating(hotelId);
+		double avgRating = hService.selectAvgRating(hotelId);
 		
 		map.put("reviewList", reviewList);
 		map.put("reviewCount", reviewCount);
@@ -192,178 +229,13 @@ public class HotelController {
 		}
 	}
 	
+	// 리뷰 작성
 	@RequestMapping(value="insertReview.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public void insertReview(@ModelAttribute Review review) {
 		int result = hService.insertReview(review);
 	}
 	
-	@RequestMapping("writeRoom.ho")
-	public String writeRoom(HttpSession session, Model model) {
-		Member m = (Member)session.getAttribute("loginUser");
-		if(!m.getMemberType().equals("H")) {
-			throw new CommonException("사업자 회원이 아닙니다.");
-		}
-		
-		Hotel hotel = hService.selectHotelbyId(m.getId());
-		model.addAttribute("hotel", hotel);
-		return "writeRoom";
-	}
-	
-	@RequestMapping("insertRoom.ho")
-	public String insertRoom(@ModelAttribute Room r, @RequestParam("roomImg") ArrayList<MultipartFile> files, HttpSession session, HttpServletRequest request) {
-		Member m = (Member)session.getAttribute("loginUser");
-		
-		int roomResult = hService.insertRoom(r);
-		
-		ArrayList<AttachedFile> list = new ArrayList();
-		for(MultipartFile file : files) {
-			String fileName = file.getOriginalFilename();
-			if(!fileName.equals("")) {
-				String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
-				
-				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
-					String[] returnArr = saveFile(file, request);
-					
-					if(returnArr[1] != null) {
-						AttachedFile attm = new AttachedFile();
-						attm.setFileName(file.getOriginalFilename());
-						attm.setFileModifyName(returnArr[1]);
-						attm.setFileLink(returnArr[0]);
-						
-						list.add(attm);
-					}
-				}
-			}
-		}
-		
-		for(int i = 0; i < list.size(); i++) {
-			AttachedFile a = list.get(i);
-			if(i == 0) {
-				a.setFileThumbnail("Y");
-			} else {
-				a.setFileThumbnail("N");
-			}
-			a.setFileType("H");
-		}
-		
-		int attmResult = 0;
-		
-		if(!list.isEmpty()) {
-			attmResult = hService.insertRoomAttm(list);
-		}
-		
-		if(roomResult + attmResult == list.size()*2+1) {
-			return "hotelList";
-		} else {
-			for(AttachedFile a : list) {
-				deleteFile(a.getFileModifyName(), request);
-			}
-			throw new CommonException("객실 등록 실패");
-		}
-	}
-	
-	private String[] saveFile(MultipartFile file, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\uploadFiles";
-		
-		File folder = new File(savePath);
-		if(!folder.exists()) {
-			folder.mkdir();
-		}
-		
-		String uuid = UUID.randomUUID().toString();
-
-		String originFileName = file.getOriginalFilename();
-		String renameFileName = uuid + originFileName.substring(originFileName.lastIndexOf("."));
-		
-		String renamePath = folder + "\\" + renameFileName;
-		
-		try {
-			file.transferTo(new File(renamePath));
-		} catch (Exception e) {
-			System.out.println("파일 업로드 실패" + e.getMessage());
-		}
-		
-		String[] returnArr = new String[2];
-		returnArr[0] = savePath;
-		returnArr[1] = renameFileName;
-		
-		return returnArr;
-	}
-	
-	public void deleteFile(String fileName, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\uploadFiles";
-		
-		File f = new File(savePath + "\\" + fileName);
-		if(f.exists()) {
-			f.delete();
-		}
-	}
-	
-	@RequestMapping("writeHotel.ho")
-	public String writeHotel(HttpSession session) {
-		Member m = (Member)session.getAttribute("loginUser");
-		if(!m.getMemberType().equals("H")) {
-			throw new CommonException("사업자 회원이 아닙니다.");
-		}
-		return "writeHotel";
-	}
-	
-	@RequestMapping("insertHotel.ho")
-	public String insertHotel(@ModelAttribute Hotel h, @RequestParam("hotelImg") ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
-		Member m = (Member)session.getAttribute("loginUser");
-		
-		h.setEntId(m.getId());
-		int hotelResult = hService.insertHotel(h);
-		
-		ArrayList<AttachedFile> list = new ArrayList();
-		for(MultipartFile file : files) {
-			String fileName = file.getOriginalFilename();
-			if(!fileName.equals("")) {
-				String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
-				
-				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
-					String[] returnArr = saveFile(file, request);
-					
-					if(returnArr[1] != null) {
-						AttachedFile attm = new AttachedFile();
-						attm.setFileName(file.getOriginalFilename());
-						attm.setFileModifyName(returnArr[1]);
-						attm.setFileLink(returnArr[0]);
-						
-						list.add(attm);
-					}
-				}
-			}
-		}
-		
-		for(int i = 0; i < list.size(); i++) {
-			AttachedFile a = list.get(i);
-			if(i == 0) {
-				a.setFileThumbnail("Y");
-			} else {
-				a.setFileThumbnail("N");
-			}
-			a.setFileType("H");
-		}
-		
-		int attmResult = 0;
-		
-		if(!list.isEmpty()) {
-			attmResult = hService.insertHotelAttm(list);
-		}
-		
-		if(hotelResult + attmResult == list.size()*2+1) {
-			return "hotelList";
-		} else {
-			for(AttachedFile a : list) {
-				deleteFile(a.getFileModifyName(), request);
-			}
-			throw new CommonException("호텔 등록 실패");
-		}
-	}
 	
 	@RequestMapping("writeReservation.ho")
 	public String writeReservation(@ModelAttribute Reservation r, Model model, HttpSession session) {
@@ -426,5 +298,141 @@ public class HotelController {
 	public void deleteLikeHotel(@ModelAttribute LikeHotel l) {
 		int result = hService.deleteLikeHotel(l);
 	}
+	
+	
+	
+	
+	@RequestMapping("writeRoom.ho")
+	public String writeRoom(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(!m.getMemberType().equals("H")) {
+			throw new CommonException("사업자 회원이 아닙니다.");
+		}
+		
+		Hotel hotel = hService.selectHotelbyId(m.getId());
+		model.addAttribute("hotel", hotel);
+		return "writeRoom";
+	}
+	
+	@RequestMapping("insertRoom.ho")
+	public String insertRoom(@ModelAttribute Room r, @RequestParam("roomImg") ArrayList<MultipartFile> files, HttpSession session, HttpServletRequest request) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		int roomResult = hService.insertRoom(r);
+		
+		ArrayList<AttachedFile> list = new ArrayList();
+		for(MultipartFile file : files) {
+			String fileName = file.getOriginalFilename();
+			if(!fileName.equals("")) {
+				String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+				
+				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+					String[] returnArr = AttachedFile.saveFile(file, request);
+					
+					if(returnArr[1] != null) {
+						AttachedFile attm = new AttachedFile();
+						attm.setFileName(file.getOriginalFilename());
+						attm.setFileModifyName(returnArr[1]);
+						attm.setFileLink(returnArr[0]);
+						
+						list.add(attm);
+					}
+				}
+			}
+		}
+		
+		for(int i = 0; i < list.size(); i++) {
+			AttachedFile a = list.get(i);
+			if(i == 0) {
+				a.setFileThumbnail("Y");
+			} else {
+				a.setFileThumbnail("N");
+			}
+			a.setFileType("H");
+		}
+		
+		int attmResult = 0;
+		
+		if(!list.isEmpty()) {
+			attmResult = hService.insertRoomAttm(list);
+		}
+		
+		if(roomResult + attmResult == list.size()*2+1) {
+			return "redirect:hotelList.ho";
+		} else {
+			for(AttachedFile a : list) {
+				AttachedFile.deleteFile(a.getFileModifyName(), request);
+			}
+			throw new CommonException("객실 등록 실패");
+		}
+	}
+
+	
+	
+	
+	@RequestMapping("writeHotel.ho")
+	public String writeHotel(HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(!m.getMemberType().equals("H")) {
+			throw new CommonException("사업자 회원이 아닙니다.");
+		}
+		return "writeHotel";
+	}
+	
+	@RequestMapping("insertHotel.ho")
+	public String insertHotel(@ModelAttribute Hotel h, @RequestParam("hotelImg") ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		h.setEntId(m.getId());
+		int hotelResult = hService.insertHotel(h);
+		
+		ArrayList<AttachedFile> list = new ArrayList();
+		for(MultipartFile file : files) {
+			String fileName = file.getOriginalFilename();
+			if(!fileName.equals("")) {
+				String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+				
+				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+					String[] returnArr = AttachedFile.saveFile(file, request);
+					
+					if(returnArr[1] != null) {
+						AttachedFile attm = new AttachedFile();
+						attm.setFileName(file.getOriginalFilename());
+						attm.setFileModifyName(returnArr[1]);
+						attm.setFileLink(returnArr[0]);
+						
+						list.add(attm);
+					}
+				}
+			}
+		}
+		
+		for(int i = 0; i < list.size(); i++) {
+			AttachedFile a = list.get(i);
+			if(i == 0) {
+				a.setFileThumbnail("Y");
+			} else {
+				a.setFileThumbnail("N");
+			}
+			a.setFileType("H");
+		}
+		
+		int attmResult = 0;
+		
+		if(!list.isEmpty()) {
+			attmResult = hService.insertHotelAttm(list);
+		}
+		
+		if(hotelResult + attmResult == list.size()*2+1) {
+			return "redirect:hotelList.ho";
+		} else {
+			for(AttachedFile a : list) {
+				AttachedFile.deleteFile(a.getFileModifyName(), request);
+			}
+			throw new CommonException("호텔 등록 실패");
+		}
+	}
+	
+	
 	
 }

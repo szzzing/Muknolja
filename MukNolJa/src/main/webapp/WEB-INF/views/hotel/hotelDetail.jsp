@@ -37,6 +37,17 @@
 		margin:0px;
 		padding:0px;
 	}
+	.hotelImg {transition: all 0.3s;}
+	.hotelImg:hover {opacity:0.5;}
+	.roomDetailModal_roomImg {transition: all 0.3s;}
+	.roomDetailModal_roomImg:hover { opacity:0.5; }
+	.mukCategory {color:#6BB6EC !important; border-bottom:3px solid #6BB6EC; font-weight:bold;}
+	.mukDisplayNone {display:none !important;}
+	.mukRound {border-radius: 8px;}
+	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
+	.mukMutedText {color:#B9B9B9;}
 	
 /* 	별점 관련 */
 	.star-rating {
@@ -59,22 +70,14 @@
 	.star-rating label:hover ~ label {
 	  -webkit-text-fill-color: #FFD600;
 	}
-	.mukRound {border-radius: 8px;}
-	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
-	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
-	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
-	.mukMutedText {color:#B9B9B9;}
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body>
-	
+	<jsp:include page="../member/menubar.jsp"/>
 	
 	<!-- 예약 전송용 form 시작 -->
 	<form action="writeReservation.ho" method="post">
@@ -84,15 +87,26 @@
 	</form>
 	<!-- 예약 전송용 form 끝 -->
 	
-	<div class="container-sm mt-5 mb-5">
-		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start">
-			<div class="col pt-5">
+	<div id="mukModal" class="modal fade modal-sm" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered text-center">
+			<div class="modal-content">
+				<div class="modal-body m-3">
+					<p class="modalContentmb-3">로그인 후 이용해주세요.</p>
+					<button type="button" class="mukButton" style="width:100%" data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-sm mt-5 mb-5" style="padding-top:80px">
+		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 pb-5 justify-content-start gy-5">
+			<div class="col">
 				<div class="row">
 					<div class="col">
 						<img id="hotelImg" class="img-fluid mukRound" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}" style="background-color:#F9F9F9;">
 					</div>
 				</div>
-				<div class="row mt-3 justify-content-start gx-1 gy-0">
+				<div class="row mt-1 justify-content-start gx-1 gy-0">
 					<c:forEach items="${hotelImgList }" var="i">
 						<div class="col col-2">
 							<img class="hotelImg img-fluid mukRound" src="${contextPath }/resources/uploadFiles/${i.fileModifyName}" style="background-color:#F9F9F9;">
@@ -100,21 +114,23 @@
 					</c:forEach>
 				</div>
 			</div>
-			<div class="col pt-5">
+			<div class="col">
 				<span class="text-center" style="background:#6BB6EC; border-radius:5px; color:white; padding:2px 5px;">
 					${hotel.star }성급
 				</span>
 				<h1 class="fw-bold pb-1">${hotel.hotelName }
-					<i id="likeHotelButton" class="fa-solid fa-bookmark"
-						<c:if test="${empty loginUser }">style="color:#E9E9E9"</c:if>
-						<c:if test="${!empty loginUser && isLikeHotel==0 }">style="color:#E9E9E9"</c:if>
-						<c:if test="${!empty loginUser && isLikeHotel==1 }">style="color:#6BB6EC"</c:if>
-					>
-					</i>
+					<c:if test="${!empty loginUser }">
+						<i id="likeHotelButton" class="fa-solid fa-bookmark"
+							<c:if test="${!empty loginUser && isLikeHotel==0 }">style="color:#E9E9E9"</c:if>
+							<c:if test="${!empty loginUser && isLikeHotel==1 }">style="color:#6BB6EC"</c:if>>
+						</i>
+					</c:if>
+					<c:if test="${empty loginUser }">
+						<i id="likeHotelButton" class="fa-solid fa-bookmark" style="color:#E9E9E9" data-bs-toggle="modal" data-bs-target="#mukModal"></i>
+					</c:if>
 				</h1>
 				<h4 class="fw-bold pb-3">
-					<i class="fa-solid fa-star" style="color:#FFD600"></i>
-					<span class="avgRating"></span>
+					<i class="fa-solid fa-star" style="color:#FFD600"></i><span class="avgRating"></span>
 				</h4>
 				<div class="mt-1 mb-1">${hotel.hotelIntro }</div>
 				<table class="mt-3 mb-3">
@@ -136,7 +152,7 @@
 
 		
 		<div class="row row-cols-4 justify-content-start text-center mt-5 mb-5" style="border-bottom:1px solid #e9e9e9">
-			<div class="col col-auto p-2 mukMutedText" id="roomListButton" scope="col" style="border-bottom:3px solid #6BB6EC; color:#6BB6EC; font-weight:bold; cursor:pointer">
+			<div class="col col-auto p-2 mukMutedText mukCategory" id="roomListButton" scope="col">
 				예약하기
 			</div>
 			<div class="col col-auto p-2 mukMutedText" id="hotelInfoButton" scope="col" style="cursor:pointer">
@@ -187,7 +203,12 @@
 									</td></tr>
 									<tr><td class="align-bottom pt-3">
 										<h4 class="lh-1 fw-bold pb-3"><fmt:formatNumber value="${r.roomPrice }" pattern="#,###원"/></h4>
-										<button type="button" class="reserveButton mukButton" style="width:100%">예약하기</button>
+										<c:if test="${empty loginUser }">
+											<button type="button" class="reserveButton mukButton" style="width:100%" data-bs-toggle="modal" data-bs-target="#mukModal">예약하기</button>
+										</c:if>
+										<c:if test="${!empty loginUser }">
+											<button type="button" class="reserveButton mukButton" style="width:100%">예약하기</button>
+										</c:if>
 									</td></tr>
 								</table>
 							</div>
@@ -203,8 +224,8 @@
 		
 		
 		<!-- 리뷰 리스트 시작 -->
-		<div id="reviewList" style="display:none">
-			<div class="text-center pt-5 pb-5" style="border-bottom: 1px solid #e9e9e9">
+		<div id="reviewList" class="mukDisplayNone">
+			<div class="text-center pb-5" style="border-bottom:1px solid #e9e9e9">
 				<h2 class="fw-bold">최고예요!</h2>
 				<div style="display:inline-block">
 					<h2 id="ratingStar"></h2>
@@ -245,8 +266,8 @@
 		<!-- 리뷰 리스트 끝 -->
 		
 		<!-- 호텔 정보 시작 -->
-		<div id="hotelInfo" style="display:none">
-			<h4 class="fw-bold pt-5 pb-3">기본 정보</h4>
+		<div id="hotelInfo" class="mukDisplayNone">
+			<h4 class="fw-bold pb-3">기본 정보</h4>
 			${hotel.hotelInfo }
 			
 			<h4 class="fw-bold pt-5 pb-3">위치</h4>
@@ -262,11 +283,12 @@
 	<!-- 리뷰리스트 보기 시작 -->
 	<script>
 		$(document).ready(function(){
+			var reviewDiv = $("#review").clone();
+			reviewDiv.prop("style").removeProperty("display");
+			
 			$.reviewList = function(){
 				// 리뷰 불러오기
-				var reviewDiv = $("#review").clone();
 				$("#reviewListRow").html("");
-				
 				$.ajax({
 					url: "${contextPath}/reviewList.ho",
 					data: {
@@ -291,7 +313,6 @@
 						$("#ratingStar").html(ratingStar);
 						
 						for(const r of reviewList) {
-							reviewDiv.prop("style").removeProperty("display");
 							reviewDiv.find("input[name=reviewId]").val(r.reviewId);
 							reviewDiv.find(".nickName").html(r.nickName);
 							reviewDiv.find(".roomName").html(r.roomName);
@@ -418,6 +439,8 @@
 							hotelId: ${hotel.hotelId}
 						},
 						success: (data)=>{
+							console.log("리뷰");
+							console.log(data);
 							if(data.length>0) {
 								for(const i of data) {
 									$("#writableReviewModal").modal('show');
@@ -491,10 +514,10 @@
 				$("#writeReviewModal").find('input[name=reservationId]').val(reservationId);
 			};
 			var nowRating="별점을 채워주세요.";
-			$("starLabel").on("mouseleave", function(){
+			$(".starLabel").on("mouseleave", function(){
 				$("#ratingInfo").text(nowRating);
 			});
-			$("starLabel").on("mouseover", function(){
+			$(".starLabel").on("mouseover", function(){
 				if($(this).prev().val()==5) {
 					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
 				} else if($(this).prev().val()==4) {
@@ -569,32 +592,25 @@
 		$.viewMap = function() {
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		    mapOption = {
-		        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		        center: new kakao.maps.LatLng(${hotel.hotelGeoY}, ${hotel.hotelGeoX}), // 지도의 중심좌표
 		        level: 3 // 지도의 확대 레벨
 		    };  
 	
 			// 지도를 생성합니다    
 			var map = new kakao.maps.Map(mapContainer, mapOption); 
 			
-			var geocoder = new kakao.maps.services.Geocoder();
-			geocoder.addressSearch("${hotel.hotelAddress}", function(result, status) {
+			var coords = new kakao.maps.LatLng(${hotel.hotelGeoY}, ${hotel.hotelGeoX});
+			var marker = new kakao.maps.Marker({
+			    map: map,
+			    position: coords
+			});
 			
-				if (status === kakao.maps.services.Status.OK) {
-					
-					var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-					var marker = new kakao.maps.Marker({
-					    map: map,
-					    position: coords
-					});
-					
-					map.setCenter(coords);
-					
-					// 길찾기
-					const url = "https://map.kakao.com/link/to/${hotel.hotelName},"+result[0].y+","+result[0].x;
-					$("#searchMap").on("click", function(){
-						window.open(url, "_blank", "width=800, height=400", true);
-					});
-			    }
+			map.setCenter(coords);
+
+			// 길찾기
+			const url = "https://map.kakao.com/link/to/${hotel.hotelName},"+${hotel.hotelGeoY}+","+${hotel.hotelGeoX};
+			$("#searchMap").on("click", function(){
+				window.open(url, "_blank", "width=800, height=400", true);
 			});
 		}
  	</script>
@@ -602,6 +618,9 @@
 
 
 	<!-- daterangepicker 기본설정, 날짜 기입 시작 -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	<script>
 		let today = new Date();
 		let startDate = today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
@@ -647,44 +666,32 @@
 	<script>
 		$(document).ready(function(){
 			$("#roomListButton").on("click", function(){
-				$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
-				$("#reviewListButton").prop("style").removeProperty("border-bottom");
-				$("#reviewListButton").prop("style").removeProperty("color");
-				$("#reviewListButton").prop("style").removeProperty("font-weight");
-				$("#hotelInfoButton").prop("style").removeProperty("border-bottom");
-				$("#hotelInfoButton").prop("style").removeProperty("color");
-				$("#hotelInfoButton").prop("style").removeProperty("font-weight");
+				$(this).addClass("mukCategory");
+				$("#reviewListButton").removeClass("mukCategory");
+				$("#hotelInfoButton").removeClass("mukCategory");
 				
-				$("#roomList").prop("style").removeProperty("display");
-				$("#reviewList").css("display", "none");
-				$("#hotelInfo").css("display", "none");
+				$("#roomList").removeClass("mukDisplayNone");
+				$("#reviewList").addClass("mukDisplayNone");
+				$("#hotelInfo").addClass("mukDisplayNone");
 			});
 			$("#reviewListButton").on("click", function(){
-				$.writableReview();
-				$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
-				$("#roomListButton").prop("style").removeProperty("border-bottom");
-				$("#roomListButton").prop("style").removeProperty("color");
-				$("#roomListButton").prop("style").removeProperty("font-weight");
-				$("#hotelInfoButton").prop("style").removeProperty("border-bottom");
-				$("#hotelInfoButton").prop("style").removeProperty("color");
-				$("#hotelInfoButton").prop("style").removeProperty("font-weight");
+				$(this).addClass("mukCategory");
+				$("#roomListButton").removeClass("mukCategory");
+				$("#hotelInfoButton").removeClass("mukCategory");
 				
-				$("#reviewList").prop("style").removeProperty("display");
-				$("#roomList").css("display", "none");
-				$("#hotelInfo").css("display", "none");
+				$("#roomList").addClass("mukDisplayNone");
+				$("#reviewList").removeClass("mukDisplayNone");
+				$("#hotelInfo").addClass("mukDisplayNone");
+				$.writableReview();
 			});
 			$("#hotelInfoButton").on("click", function(){
-				$(this).css({"border-bottom":"3px solid #6BB6EC", "color":"#6BB6EC", "font-weight":"bold"});
-				$("#reviewListButton").prop("style").removeProperty("border-bottom");
-				$("#reviewListButton").prop("style").removeProperty("color");
-				$("#reviewListButton").prop("style").removeProperty("font-weight");
-				$("#roomListButton").prop("style").removeProperty("border-bottom");
-				$("#roomListButton").prop("style").removeProperty("color");
-				$("#roomListButton").prop("style").removeProperty("font-weight");
+				$(this).addClass("mukCategory");
+				$("#roomListButton").removeClass("mukCategory");
+				$("#reviewListButton").removeClass("mukCategory");
 				
-				$("#hotelInfo").prop("style").removeProperty("display");
-				$("#reviewList").css("display", "none");
-				$("#roomList").css("display", "none");
+				$("#roomList").addClass("mukDisplayNone");
+				$("#hotelInfo").removeClass("mukDisplayNone");
+				$("#reviewList").addClass("mukDisplayNone");
 				
 				$.viewMap();
 			});
@@ -708,7 +715,7 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-body m-3">
-					<div class="row mb-3">
+					<div class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 g-3">
 						<div class="col col-7">
 							<div class="row">
 								<div class="col">
@@ -716,8 +723,8 @@
 								</div>
 							</div>
 							<div id="roomDetailModal_roomImgList" class="row justify-content-start mt-1 gx-1 gy-0">
-								<div id="roomDetailModal_roomImgDiv" class="col col-3" style="display:none;">
-									<img class="roomDetailModal_roomImg img-fluid" src="#" style="border-radius:5px;">
+								<div id="roomDetailModal_roomImgDiv" class="roomDetailModal_roomImg col col-3" style="display:none;">
+									<img class="img-fluid" src="#" style="border-radius:5px;">
 								</div>
 							</div>
 						</div>
@@ -728,13 +735,14 @@
 							<div id="roomDetailModal_checkout"></div>
 						</div>
 					</div>
-					<button type="button" class="mukButton" style="width:100%" data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="mukButton mt-3" style="width:100%" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<script>
 		$(document).ready(function(){
+			var roomImgDiv = $("#roomDetailModal_roomImgDiv").clone();
 			$(".roomImg").on("click", function(){
 				$.ajax({
 					url: "${contextPath}/roomDetail.ho",
@@ -747,12 +755,11 @@
 						$("#roomDetailModal_roomName").html(room.roomName);
 						$("#roomDetailModal_roomImg").prop("src", "${contextPath }/resources/uploadFiles/"+roomImgList[0].fileModifyName);
 						
-						var roomImgDiv = $("#roomDetailModal_roomImgDiv").clone();
 						$("#roomDetailModal_roomImgList").html("");
 						for(const i of roomImgList) {
 							roomImgDiv.prop("style").removeProperty("display");
 							roomImgDiv.find("img").prop("src", "${contextPath }/resources/uploadFiles/"+i.fileModifyName);
-							$("#roomDetailModal_roomImgList").append('<div id="roomDetailModal_roomImgDiv" class="col col-3">'+roomImgDiv.html()+'</div>');
+							$("#roomDetailModal_roomImgList").append('<div class="roomDetailModal_roomImg col col-3">'+roomImgDiv.html()+'</div>');
 						}
 						
 						$("#roomDetailModal_roomInfo").html(room.roomInfo);
@@ -760,7 +767,7 @@
 						$("#roomDetailModal_checkout").html("체크아웃 "+room.checkoutTime);
 						
 						$(".roomDetailModal_roomImg").on("click", function(){
-							$("#roomDetailModal_roomImg").prop("src", $(this).prop("src"));
+							$("#roomDetailModal_roomImg").prop("src", $(this).find("img").prop("src"));
 						});
 					},
 					error: (data)=>{
