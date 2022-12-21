@@ -9,78 +9,44 @@
 	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
-    	.load {  
-		  animation-name: load;
-		  animation-duration: 2.5s;
-		  animation-fill-mode: both;
-		  margin-left:2vw;
-		   
-		}
-		
-		@keyframes load {
+    	
+    	
+		@keyframes backgroundChange {
 		  0% {
-		    opacity: 0;
-		    transform: translate3d(100%, -10%, 0);
+		    background-position: 0 33%;
 		  }
-		  100% {
-		    opacity: 1;
-		    transform: none;
+		  50% {
+		   
+		     background-position: 33% 66%;
+		  }
+		  100%{
+		  background-position: 66% 100%;
 		  }
 		}
 		
-	
-		.load.loada{
-		 animation-delay: 0.3s;
-		}
-		.load.loadb{
-		 animation-delay: 0.8s;
-		}
-		.load.loadc{
-		 animation-delay: 1.3s;
-		}
-		
-		
-	  
-		@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-		@keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
-		
-		.fadeIn {
-		  opacity:0;
-		  
-		  animation:fadeIn ease-in 1;
-		  animation-fill-mode:forwards;
-		  animation-duration:0s;
-		  
+		@keyframes backgroundChange1 {
+		  0%{
+		    background-position: 100% 50%;
 		  }
-		.fadeOut {  
-		opacity:0;
-		  animation:fadeOut ease-in 1;
-		  animation-fill-mode:forwards;
-		  animation-duration:1s;
-		  
+		 
+		  100%{
+		  background-position: 50% 0%;
+		  }
 		}
+		.weather{
+		position:absolute; width:100vw; height:100vh; background-size:200% 100%; background-repeat: no-repeat;
+		animation: backgroundChange 30s ease-in-out infinite; overflow:hidden;
 		
-		
-		.fadeOut.f1 {
-		
-		  
-		  animation-delay: 0s;
 		}
-		.fadeOut.f2 {
+		.weather2{
+		position:absolute; width:100vw; height:100vh; background-size:100% 300%; background-repeat: no-repeat;
+		animation: backgroundChange1 30s ease-in-out infinite; overflow:hidden;
 		
-		  animation-delay: 1s;
 		}
-		.fadeOut.f3 {
+		.weather3{
+		position:absolute; width:100vw; height:100vh; background-size:200% 100%; background-repeat: no-repeat;
+		animation: backgroundChange1 30s ease-in-out infinite; overflow:hidden;
 		
-		  animation-delay: 2s;
-		}
-		.fadeOut.f4 {
-		
-		  animation-delay: 3s;
-		}
-		.fadeOut.f5 {
-		
-		  animation-delay: 4s;
 		}
 		@font-face {
     font-family: 'OTWelcomeRA';
@@ -100,25 +66,25 @@
 
     <div style="position:absolute; font-weight:700; color:white; margin-left: 5vw; margin-top:5vh; z-index:1" >MUKNOLJA</div>
   <c:if test="${  weather eq '02d' || weather eq '02n' ||  weather eq '03d' || weather eq '03n' }">
-    <div style="position:absolute; width:100vw; height:100vh; background-size:100vw 100vh; background-image: url('${contextPath }/resources/img/few.jpg'); "></div>
+    <div class="weather" style=" background-image: url('${contextPath }/resources/img/few.jpg'); "></div>
     </c:if> 
     <c:if test="${ weather eq '01d' || weather eq '01n'}">
-    <div style="position:absolute; width:100vw; height:100vh; background-size:100vw 100vh; background-image: url('${contextPath }/resources/img/sun1.jpg'); "></div>
+    <div class="weather"  style="background-image: url('${contextPath }/resources/img/sun1.jpg'); "></div>
     </c:if> 
     <c:if test="${ weather eq '04d' || weather eq '04n' }">
-    <div style="position:absolute; width:100vw; height:100vh; background-size:100vw 100vh; background-image: url('${contextPath }/resources/img/cloud.jpg'); "></div>
+    <div class="weather" style=" background-image: url('${contextPath }/resources/img/cloud.jpg'); "></div>
     </c:if> 
     <c:if test="${ weather eq '10d' || weather eq '10n' ||  weather eq '09d' || weather eq '09n' }">
-    <div style="position:absolute; width:100vw; height:100vh; background-size:100vw 100vh; background-image: url('${contextPath }/resources/img/rain1.jpg'); "></div>
+    <div class="weather2" style=" background-image: url('${contextPath }/resources/img/rain2.jpg'); "></div>
     </c:if> 
     <c:if test="${ weather eq '11d' ||  weather eq '11n' }">
-    <div style="position:absolute; width:100vw; height:100vh; background-size:100vw 100vh; background-image: url('${contextPath }/resources/img/sunder.jpg'); "></div>
+    <div class="weather" style=" background-image: url('${contextPath }/resources/img/sunder.jpg'); "></div>
     </c:if> 
     <c:if test="${ weather eq '13d' ||  weather eq '13n'}">
-    <div style="position:absolute; width:100vw; height:100vh; background-size:100vw 100vh; background-image: url('${contextPath }/resources/img/snow.jpg'); "></div>
+    <div class="weather2" style=" background-image: url('${contextPath }/resources/img/snow.jpg'); "></div>
     </c:if> 
     <c:if test="${ weather eq '50d' || weather eq '50n' }">
-    <div style="position:absolute; width:100vw; height:100vh; background-size:100vw 100vh; background-image: url('${contextPath }/resources/img/mist.jpg'); "></div>
+    <div class="weather" style=" background-image: url('${contextPath }/resources/img/mist.jpg'); "></div>
     </c:if> 
     
 	<div style="opacity:0.4; width:30vw; height:100vh; position:absolute;  margin-left: 70vw;   z-index:1; background:black">
@@ -131,11 +97,8 @@
 	</div>
 	<div id="ttt" style="position:absolute;  margin-left: 5vw; margin-top:85vh; z-index:1"></div> 
 	
- 		<div class="fadeIn fadeOut f1"  style=" position:absolute; font-weight:700; font-size:2rem; margin-left: 46.2vw; margin-top:60.8vh; color:white">5</div>
- 		<div class="fadeIn fadeOut f2"  style=" position:absolute; font-weight:700; font-size:2rem; margin-left: 46.2vw; margin-top:60.8vh; color:white">4</div>
- 		<div class="fadeIn fadeOut f3"  style=" position:absolute; font-weight:700; font-size:2rem; margin-left: 46.2vw; margin-top:60.8vh; color:white">3</div>
- 		<div class="fadeIn fadeOut f4"  style=" position:absolute; font-weight:700; font-size:2rem; margin-left: 46.2vw; margin-top:60.8vh; color:white">2</div>
- 		<div class="fadeIn fadeOut f5"  style=" position:absolute; font-weight:700; font-size:2rem; margin-left: 46.2vw; margin-top:60.8vh; color:white">1</div>
+ 		
+ 		<a href="${contextPath }/home.do" style=" position:absolute; font-weight:700; font-size:1.5rem; margin-left: 46.2vw; margin-top:70.8vh; color:white; text-decoration: none;" >HOME</a>
  		
 	</div>
 	
@@ -494,15 +457,14 @@
 		    	
 		    	});
     		}
-   	
-    		
-    		
-    		
-    		
-    		
-    		setTimeout(function() {
+   	setTimeout(function() {
     			location = "${ contextPath}/home.do";
-    			}, 5000);
+    			}, 20000);
+    		
+    		
+    		
+    		
+    	
     </script> 
   </body>
 </html>

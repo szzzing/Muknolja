@@ -55,6 +55,15 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitList");
 	}
 
+	public String selectPwd(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("memberMapper.selectPwd", id);
+	}
+
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateMember", m);
+	}
+
 	public int memberListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("memberMapper.memberListCount", sqlSession);
 	}

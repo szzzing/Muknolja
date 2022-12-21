@@ -36,11 +36,6 @@
   	where USER_ID=#{id}
   		 
   	</select>
-  	<update id="updateMember">
-  		update member
-  		set PASSWORD=#{pwd} , NICKNAME=#{nickName}, phone=#{phone}, address=#{address}
-  		WHERE USER_ID = #{id}
-  	</update>
   	
   	<select id="selectMyList" resultType="map">
   	select b.BOARD_ID, BOARD_TITLE, CREATE_DATE, BOARD_COUNT
@@ -69,7 +64,11 @@
 	  	where nickname=#{nickName}
   	</select>
   	
-  	
+  	<select id="selectPwd" resultType="String">
+  		select pwd
+	  	from member
+	  	where id=#{id}
+  	</select>
   	<insert id="visitCount">
   		insert into visit
   		values(#{id}, SYSDATE)
@@ -137,6 +136,11 @@
 		where rownum <![CDATA[<=]]> 7
   	</select>
   	
+  	<update id="updateMember">
+  		update member
+  		set pwd=#{pwd} , NICKNAME=#{nickName}, phone=#{phone}, address=#{address}
+  		WHERE ID = #{id}
+  	</update>
   	<update id="waring">
   		update member
   		set report = report + 1

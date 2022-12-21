@@ -22,34 +22,34 @@
             <br><br>
 	            <div class="row justify-content-center " style="  ">
 	            	<div class="col" style="padding-left:0px; padding-right:0px;"  >
-	    				<img alt="1" src="${contextPath }/resources/img/1.jpg" width=100%; height=400px; style="border-radius:10px" >
+	    				<img alt="1" src="${contextPath }/resources/img/1.jpg" width=100%; height=450px; style="border-radius:10px" >
 	    				
 	    				<div style="float:left; font-size:30px; margin-top:30px; font-weight:500">00산</div>
 	    			</div>
 				</div>
 	    					<div class="row justify-content-center " style=" border-radius:10px; ">
-	            				<div class="col-lg-8" style="padding-left:0px"  >
-	            					<div style="float:left; padding:20px; font-weight:500; margin-bottom:30px;border:1px solid lightgray;  border-radius:10px;height:500px; width:99%; text-align:left" >
+	            				<div class="col-xl-8" style="padding-left:0px"  >
+	            					<div style="float:left; padding:20px; font-weight:500; margin-bottom:30px;border:1px solid lightgray;  border-radius:10px;height:450px; width:99.5%; text-align:left" >
 	            					왜
 	            					</div>
 	            				
 								</div>
-								<div class="col" style="margin-top:0px; margin-bottom:30px; padding-:0px; background:; height:500px; border-radius:10px;  border:1px solid lightgray;"   >
-								아하
+								<div class="col" style="margin-top:0px; margin-bottom:30px; padding-:0px; background:; height:450px; border-radius:10px;  border:1px solid lightgray;"   >
+									<img alt="1" src="${contextPath }/resources/img/1.jpg" width=100%; height=300px; style="border-radius:10px; margin-top:10px;" >
 							</div>
 						</div>
 						
 						
-	    					<div class="row  " style=" border-radius:10px; ">
-	            				<div class="col" style="padding:0px; display:flex"  >
-									
-									<h4 class="" style="width:130px;"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h4>
+	    					<div class="row" style=" border-radius:10px; ">
+	            				
+								<div class="col" style="padding:0px; "  >
+									<h4 class="" style=" padding:0px; float:left;"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h4>
 									<div class="input-group ">
 										<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
 										<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
 									</div>
 								
-							</div>
+								</div>
 						</div>
 					</div>
 				</div>
