@@ -18,9 +18,18 @@
 		margin:0px;
 		padding:0px;
 	}
+	.mukRange {
+		width: 100%;
+		background: linear-gradient(to right, #6BB6EC 0%, #6BB6EC 50%, #e9e9e9 50%, #e9e9e9 100%);
+		border-radius: 8px;
+		outline: none;
+		transition: background 450ms ease-in;
+		-webkit-appearance: none;
+		accent-color: #6BB6EC;
+	}
 	.hotel {cursor:pointer}
     .mukRound {border-radius: 8px;}
-	.mukButton {transition: all 1s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton {transition: all 0.5s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
@@ -31,50 +40,38 @@
 	<div class="container mt-5 mb-5" style="padding-top:80px">
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gy-5">
 			<div class="col col-lg-3">
-				<form class="row row-cols-lg-1 g-2">
-					<div class="col form-floating">
-						<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
-						<label for="daterangepicker">1박 2일</label>
-						<input type="hidden" name="checkInDate">
-						<input type="hidden" name="checkOutDate">
+				<div class="row row-cols-lg-1 g-5">
+					<div class="col">
+						<div class="mb-3">
+							<span class="mukMutedText fw-bold">전체검색</span>
+							<input type="text" class="form-control" name="searchValue" placeholder="찾고싶은 호텔을 입력하세요.">
+						</div>
+						<div class="mb-3">
+							<span class="mukMutedText fw-bold">날짜</span>
+							<small class="fw-bold" style="color:#6BB6EC; float:right"><span class="value">1박 2일</span></small>
+							<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
+							<input type="hidden" name="checkinDate">
+							<input type="hidden" name="checkoutDate">
+						</div>
 					</div>
-					<div class="col form-floating">
-						<select class="form-select" name="location">
-							<option selected>전체</option>
-							<option>서울</option>
-							<option>경기</option>
-							<option>인천</option>
-							<option>대전</option>
-							<option>대구</option>
-							<option>광주</option>
-							<option>부산</option>
-							<option>울산</option>
-							<option>충북</option>
-							<option>충남</option>
-							<option>전북</option>
-							<option>전남</option>
-							<option>경북</option>
-							<option>경남</option>
-							<option>강원</option>
-							<option>제주</option>
-						</select>
-						<label for="location">지역</label>
+					<div class="col">
+						<h5 class="fw-bold pb-1">상세조건</h5>
+						<div class="mb-3">
+							<span class="mukMutedText fw-bold">가격</span>
+							<small class="fw-bold" style="color:#6BB6EC; float:right"><span class="value">10</span>만원 이하</small>
+							<input id="maxPrice" name="maxPrice" class="mukRange" value="10" max="100" min="0" step="10" type="range">
+						</div>
+						<div class="mb-3">
+							<span class="mukMutedText fw-bold">거리</span>
+							<small style="color:#6BB6EC; float:right;" class="fw-bold"><span class="value">10</span>km 이하</small>
+							<input id="maxLoc" name="maxLoc" class="mukRange" value="10" max="100" min="0" step="10" type="range">
+						</div>
+						<div class="row gx-2">
+							<div class="col"><button id="searchButton" class="mukButton" style="width:100%; height:36px;">적용</button></div>
+							<div id="noCategoryButton" class="col"><button class="mukButton" style="width:100%; height:36px; background: white; color: #6BB6EC; border: 1px solid #6BB6EC;">초기화</button></div>
+						</div>
 					</div>
-					<div class="col form-floating">
-						<select class="form-select" name="accept">
-							<option selected>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
-						</select>
-						<label for="accept">인원</label>
-					</div>
-					<div class="col form-floating">
-						<input type="text" class="form-control" name="searchValue" placeholder="검색어를 입력하세요.">
-						<label for="searchValue">전체검색</label>
-					</div>
-				</form>
+				</div>
 			</div>
 			
 			<div class="col col-lg-9">
@@ -83,7 +80,7 @@
 					<div id="hotelDiv" class="hotel col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
 						<div class="row g-3">
 							<div class="col col-sm-6 col-lg-5">
-								<img class="hotelImg img-fluid mukRound" data-bs-toggle="modal" data-bs-target="#roomDetailModal" src="#" style="background: lightgray">
+								<img class="hotelImg img-fluid mukRound" src="#" style="background: #e9e9e9">
 							</div>
 							<div class="col col-sm-6 col-lg-7">
 								<table id="hotelTable" class="table table-borderless" style="margin-bottom:0px; height:100%">
@@ -106,14 +103,49 @@
 						</div>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
 	
 	
+	
+	<!-- 호텔 검색 시작 -->
 	<script>
-// 		$(document).ready(function(){
+		$("#searchButton").on("click",function(){
+			var page = 1;
+			var searchValue = $('input[name=searchValue]').val();
+			var checkinDate = $("input[name=checkinDate]").val()+"";
+			var checkoutDate = $("input[name=checkoutDate]").val()+"";
+			var maxPrice = $("input[name=maxPrice]").val();
+			var maxLoc = $("input[name=maxLoc]").val();
+			
+			$.ajax({
+				url: "${contextPath}/searchHotelList.ho",
+				data: {
+					page: page,
+					searchValue: searchValue,
+					checkinDate: checkinDate,
+					checkoutDate: checkoutDate,
+					maxPrice: maxPrice,
+					maxLoc: maxLoc
+				},
+				success: (data)=>{
+					console.log(data);
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			});
+		});
+	</script>
+	<!-- 호텔 검색 끝 -->
+	
+	
+	
+	
+	
+	<script>
+		$(document).ready(function(){
 			var page = 1;
 			$.ajax({
 				url: "${contextPath}/selectHotelList.ho",
@@ -121,7 +153,6 @@
 					page: page
 				},
 				success: (data)=>{
-					console.log(data);
 					const hotelList = data.hotelList;
 					const hotelImgList = data.hotelImgList;
 					
@@ -142,7 +173,7 @@
 					console.log(data);
 				}
 			});
-// 		});
+		});
 	</script>
 	
 	
@@ -156,6 +187,7 @@
 		let today = new Date();
 		let startDate = today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
 		let endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+		
 		$("#daterangepicker").daterangepicker({
 			locale: {
 				"separator": " - ",
@@ -171,26 +203,61 @@
 			autoApply: false
 		});
 		
+		const inout = $("#daterangepicker").val().split(" - ");
+		const checkIn = inout[0];
+		const checkOut = inout[1];
+		$("input[name=checkinDate]").val(checkIn);
+		$("input[name=checkoutDate]").val(checkOut);
+		
+		
 		$("#daterangepicker").on("change", function(){
 			const inout = $(this).val().split(" - ");
-			const checkIn = new Date(inout[0]);
-			const checkOut = new Date(inout[1]);
-			$("input[name=checkInDate]").val(checkIn);
-			$("input[name=checkOutDate]").val(checkOut);
+			const checkin = inout[0];
+			const checkout = inout[1];
+			$("input[name=checkinDate]").val(checkin);
+			$("input[name=checkoutDate]").val(checkout);
 			
-			var diff = checkOut - checkIn;
+			var diff = new Date(checkout) - new Date(checkin);
 			var currDay = 24 * 60 * 60 * 1000;
 			const journey = parseInt(diff/currDay);
-			$(this).parent().find("label").text(journey+"박 "+(journey+1)+"일");
+			$(this).parent().find(".value").text(journey+"박 "+(journey+1)+"일");
 		});
 	</script>
 	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->
 	
+	
 
 	
 	<script>
-		$(document).on('click', '.hotel', function(){
-			location.href="${contextPath}/hotelDetail.ho?hotelId="+$(this).find(".hotelId").val();
+		$(document).ready(function(){
+			$(".mukRange").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 11.75%, #e9e9e9 11.75%, #e9e9e9 100%)");
+	
+			$(document).on('click', '.hotel', function(){
+				location.href="${contextPath}/hotelDetail.ho?hotelId="+$(this).find(".hotelId").val();
+			});
+			
+			$("#noCategoryButton").on("click", function() {
+				$("#maxLoc").val(10);
+				$("#maxPrice").val(10);
+				$("#maxLoc").parent().find(".value").text(10);
+				$("#maxPrice").parent().find(".value").text(10);
+				$("#maxLoc").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 11.75%, #e9e9e9 11.75%, #e9e9e9 100%)");
+				$("#maxPrice").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 11.75%, #e9e9e9 11.75%, #e9e9e9 100%)");
+			});
+			
+			$(".mukRange").on("click", function(){
+				var gradient = 100 / $(this).prop("max");
+				var value = gradient*$(this).val();
+				
+				if(value<50) {
+					event.target.style.background = 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value+(2*(1-value/100)))+'%, #e9e9e9 ' +(value) + '%, #e9e9e9 100%)';
+				} else if(value>50) {
+					event.target.style.background = 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value-(2*(value/100))) +'%, #e9e9e9 ' +(value-(2*(value/100))) + '%, #e9e9e9 100%)';
+				} else {
+					event.target.style.background = 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value) +'%, #e9e9e9 ' +value + '%, #e9e9e9 100%)';
+				}
+				$(this).parent().find(".value").text($(this).val());
+			});
 		});
 	</script>
 </body>

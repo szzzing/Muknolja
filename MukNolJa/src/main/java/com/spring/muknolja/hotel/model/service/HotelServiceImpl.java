@@ -141,6 +141,11 @@ public class HotelServiceImpl implements HotelService{
 	}
 	
 	@Override
+	public int getSearchListCount() {
+		return hDAO.getSearchListCount(sqlSession);
+	}
+	
+	@Override
 	public ArrayList<Hotel> selectHotelList(PageInfo pi) {
 		return hDAO.selectHotelList(sqlSession, pi);
 	}

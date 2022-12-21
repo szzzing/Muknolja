@@ -58,6 +58,8 @@ public interface HotelService {
 	Hotel selectHotelbyId(String id);
 
 	int getListCount();
+	
+	int getSearchListCount();
 
 	ArrayList<Hotel> selectHotelList(PageInfo pi);
 

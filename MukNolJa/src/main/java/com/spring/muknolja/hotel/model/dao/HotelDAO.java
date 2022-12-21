@@ -110,6 +110,10 @@ public class HotelDAO {
 	public int getListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("hotelmapper.getListCount");
 	}
+	
+	public int getSearchListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("hotelmapper.getSearchListCount");
+	}
 
 	public ArrayList<Hotel> selectHotelList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
