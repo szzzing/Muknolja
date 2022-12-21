@@ -159,7 +159,7 @@
             <div class="col-9 " style=" height:80px; font-family: 'HSYuji-Regular';  ">
             	<div  style=" height:80px; "> 
             		<div class="row row-cols-9" style=height:80px;>
-            		<div class="col-5 ba"style=" ">MUKNOLJA</div>
+            		<div onclick= "location.href='${contextPath }/home.do'" class="col-5 ba"style=" ">MUKNOLJA</div>
             		<div class="col-1 coco" style=" font-weight:600; "><div class="dropdown">
 						  <button class="" style="background:none; margin-left:-15px;width:70px;padding-top:0px; padding-left:-10px;font-align:center;font-weight:600; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						   여행
