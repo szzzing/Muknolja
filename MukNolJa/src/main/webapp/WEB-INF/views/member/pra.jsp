@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous"></script>
+	<style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     
     <style>
@@ -14,12 +18,12 @@
 }
 
  .ur{
- box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);
+ box-shadow: 0px 15px 30px 0px rgba(0,0,0,0.3);
  padding-left:0px;
   padding-bottom:0px;
   margin-left:0px;
-  
-  
+   border-radius:10px;
+   border: 2px solid  RGB(107, 182, 236, 0.3);
   
 }
 li{list-style:none;}
@@ -35,7 +39,8 @@ li{list-style:none;}
   float:left;
   vertical-align: middle;
   line-height: 3em;
-  border-bottom: 1px solid skyblue;
+  border: 1px solid #fffcfb;
+  border-radius:10px;
   position: relative;
   display: block;
   text-decoration: none;
@@ -52,33 +57,13 @@ li{list-style:none;}
     
     .ll{
       transition: all .25s linear; 
-}
-    
-    
-    
-    
-    
-    
-	.five:hover{
-	font-size:30px;
-	 width:50vw;
-	 background:black;
-	
-	color:red;}
-	
-	@keyframes fadeInDown {
-	  0% {
-	    opacity: 0;
-	    
-	    
-	       
-	  }
-	  100% {
-	    opacity: 1;
-	   
-	    
-	  }
 	}
+    
+    #39{background: #6BB6EC; color:white;}    
+    
+    
+
+	
 	
 	
 	
@@ -87,7 +72,7 @@ li{list-style:none;}
 		width:260px;
 		margin-right:40px;
 		box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.3);
-		
+		border-radius:10px;
 		
 		}
 	.slide_wrapper{
@@ -98,7 +83,7 @@ li{list-style:none;}
 		height: 280px;
 		overflow:hidden;
 		display:flex;
-		background:#F2F2F2;
+		
 		}
 		.slides{
 		  position: absolute;
@@ -191,12 +176,13 @@ li{list-style:none;}
   </head>
   <body style="">
    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+   
     <jsp:include page="menubar.jsp"/>
-   	
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+   	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>	
      <div class="container-fluid text-center">
-	  	<div class="row justify-content-center shadow" style="min-width: 100vw;  min-height:100vh;   box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
-            <div class="col-xl-9 col-lg-12" style=" min-height:100vh;">
+	  	<div class="row justify-content-center shadow" style=" min-height:100vh; border-radius:30px;   ">
+            <div class="col-9 " style=" min-height:100vh;">
 		<br><br><br>
 	  	
 	  		
@@ -205,26 +191,28 @@ li{list-style:none;}
             <div class="col" style="padding-left:0px; padding-right:0px;"  >
             			<ul class="ur" >
 					    	<div style="display:flex;" lass="ur1">
-						    	<li class="ll">서울</li>
-						    	<li class="ll">인천</li>
-						    	<li class="ll">대전</li>
-						    	<li class="ll">대구</li>
-						    	<li class="ll">광주</li>
-						    	<li class="ll">부산</li>
-						    	<li class="ll">울산</li>
-						    	<li class="ll">세종</li>
-						    	<li class="ll">경기</li>
+					    		<li class="ll" id="0">전체</li>
+						    	<li class="ll" id="1">서울</li>
+						    	<li class="ll" id="2">인천</li>
+						    	<li class="ll" id="3">대전</li>
+						    	<li class="ll" id="4">대구</li>
+						    	<li class="ll" id="5">광주</li>
+						    	<li class="ll" id="6">부산</li>
+						    	<li class="ll" id="7">울산</li>
+						    	<li class="ll" id="8">세종</li>
+						    
 						    	</div>
 						    	<div style="display:flex;">
-						    	<li class="ll">강원</li>
-						    	<li class="ll">충북</li>
-						    	<li class="ll">충남</li>
-						    	<li class="ll">경북</li>
-						    	<li class="ll">경남</li>
-						    	<li class="ll">전북</li>
-						    	<li class="ll">전남</li>
-						    	<li class="ll">제주</li>
-						    	<li class="ll">전체</li>
+						    	<li class="ll" id="31">경기</li>
+						    	<li class="ll" id="32">강원</li>
+						    	<li class="ll" id="33">충북</li>
+						    	<li class="ll" id="34">충남</li>
+						    	<li class="ll" id="35">경북</li>
+						    	<li class="ll" id="36">경남</li>
+						    	<li class="ll" id="37">전북</li>
+						    	<li class="ll" id="38">전남</li>
+						    	<li class="ll" id="39">제주</li>
+						    	
 						    </div>
 					    </ul>
 					   <br>
@@ -232,32 +220,21 @@ li{list-style:none;}
 					   </div>
 					   <div class="row justify-content-center" >
 					   	<div class="col-10">
-					   <div style="font-size:30px; margin-top:50px; font-weight:600; float: left; margin-l">관광지</div>
+					   <div style="font-size:30px; margin-top:20px; font-weight:600; float: left; margin-l">관광지</div>
 					   </div>
 					   </div>
-				<div class="row justify-content-center" style="margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+				<div class="row justify-content-center" style=" margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); border: 2px solid  RGB(107, 182, 236, 0.3); border-radius:10px;">
 					
 					<div class="col-1">
 						<p class="controls">
-            			<h3 class="prev" style="margin-top:70px;"><i class="bi bi-chevron-compact-left"></i></h3>
+            			<h1 class="prev" style="margin-top:130px;"><i class="bi bi-chevron-compact-left"></i></h1>
 					</div>
 					<div class="col-10" style="float: left;">   
 					 
 		            	<div class="slide_wrapper" >
 		            		<ul class="slides">
-		            			<li style="display:flex;">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im im1 " style="">
-		            				<img alt="1" src="${contextPath }/resources/img/1.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/3.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/4.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/5.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/1.jpg" class="im " style="">
-		            				<img alt="1" src="${contextPath }/resources/img/3.jpg" class="im " style="">
+		            			<li id="li1" style="display:flex;">
+		            				
 		            			</li>
 		            		</ul>
 		            		
@@ -266,7 +243,7 @@ li{list-style:none;}
 		            		<div class="col-1">
             		<p class="controls">
             			
-            			<h3 class="next" style="margin-top:70px;"><i class="bi bi-chevron-compact-right"></i></h3>
+            			<h1 class="next" style="margin-top:130px;"><i class="bi bi-chevron-compact-right"></i></h1>
             		</p>
             		</div>
             	</div>
@@ -277,25 +254,16 @@ li{list-style:none;}
 					   </div>
 					   </div>
             	
-            	<div class="row justify-content-center" style="margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+            	<div class="row justify-content-center" style="margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); border: 2px solid  RGB(107, 182, 236, 0.3); border-radius:10px;">
 					<div class="col-1">
 						<p class="controls1">
-            			<h3 class="prev1" style="margin-top:70px;"><i class="bi bi-chevron-compact-left"></i></h3>
+            			<h1 class="prev1" style="margin-top:130px;"><i class="bi bi-chevron-compact-left"></i></h1>
 					</div>
 					<div class="col-10" style="float: left;">    
 		            	<div class="slide_wrapper1" >
 		            		<ul class="slides1">
-		            			<li style="display:flex;">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im " style="">
-		            				<img alt="1" src="${contextPath }/resources/img/1.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/3.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/4.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/5.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            			<li style="display:flex;" id="li2">
+		            				
 		            			</li>
 		            		</ul>
 		            		
@@ -304,7 +272,7 @@ li{list-style:none;}
 		            		<div class="col-1">
             		<p class="controls1">
             			
-            			<h3 class="next1" style="margin-top:70px;"><i class="bi bi-chevron-compact-right"></i></h3>
+            			<h1 class="next1" style="margin-top:130px;"><i class="bi bi-chevron-compact-right"></i></h1>
             		</p>
             		</div>
             	</div>
@@ -314,25 +282,15 @@ li{list-style:none;}
 					   </div>
 					   </div>
             	
-            	<div class="row justify-content-center" style="margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+            	<div class="row justify-content-center" style="margin-top:10px; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); border: 2px solid  RGB(107, 182, 236, 0.3); border-radius:10px;">
 					<div class="col-1">
 						<p class="controls2">
-            			<h3 class="prev2" style="margin-top:70px;"><i class="bi bi-chevron-compact-left"></i></h3>
+            			<h1 class="prev2" style="margin-top:130px;"><i class="bi bi-chevron-compact-left"></i></h1>
 					</div>
 					<div class="col-10" style="float: left;">    
 		            	<div class="slide_wrapper2" >
 		            		<ul class="slides2">
-		            			<li style="display:flex;">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im " style="">
-		            				<img alt="1" src="${contextPath }/resources/img/1.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/3.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/4.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/5.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
-		            				<img alt="1" src="${contextPath }/resources/img/2.jpg" class="im" style="">
+		            			<li style="display:flex;" id="li3">
 		            				
 		            			</li>
 		            		</ul>
@@ -342,23 +300,133 @@ li{list-style:none;}
 		            		<div class="col-1">
             		<p class="controls2">
             			
-            			<h3 class="next2" style="margin-top:70px;"><i class="bi bi-chevron-compact-right"></i></h3>
+            			<h1 class="next2" style="margin-top:130px;"><i class="bi bi-chevron-compact-right"></i></h1>
             		</p>
             		</div>
             	</div>
+            	
             </div>
        </div>
     </div>
     <script>
-    var serviceKey = "53PIgLInS%2B6lI57LYYEbd%2B4daak52bqwGs1s160gtU3hu09KJjsPN%2FWFFlkkOXi%2BwIrqVdEMUeICmQ0fTXFfZA%3D%3D";
-    var site= "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12";
-    $.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=37.5683&lon=126.9778&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-			result){
+    
+	window.onload = () =>{
+    var area = "";
+    var serviceKey = "\yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D";
+    
+    var site1 = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12&arrange=P";
+    var site2 = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=39&arrange=P";
+    var site3 = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=15&arrange=P";
+    var site = site1 + area
+    var site4 = site2 + area
+    var site5 = site3 + area 
+   
+    
+    $('#0').css({'color':'white','background':' #6BB6EC'});
+
+    showResult(site,site4,site5);
+
+    
+    $('.ll').click(function(){
+    	const areaNum = $(this).attr('id');
+    	area = "&areaCode=" + areaNum;
+		if(areaNum.trim() =="0"){
+			
+			area = "";
+		}
+    	site = site1 + area;
+    	site4 = site2 + area;
+    	site5 = site3 + area; 
+    	$('#li1').empty();
+    	$('#li2').empty();
+    	$('#li3').empty();
+    	for(var l=0; l<10; l++){
+    		if(l == areaNum.trim()){
+    			$('#'+ l).css('color','white');
+    		  	$('#'+ l).css('background','#6BB6EC');
+    		} else{
+    			$('#'+l).css('color','black');
+    	    	$('#'+l).css('background','white');
+    		}
+    	}
+    		for(var l=31; l<40; l++){
+        		if(l == areaNum.trim()){
+        			$('#' + l).css('color','white');
+        		  	$('#' + l).css('background','#6BB6EC');
+        		} else{
+        			$('#'+l).css('color','black');
+        	    	$('#'+l).css('background','white');
+        		}
+    	}
+    	
+  		showResult(site,site4,site5);
+  		
+  		
+    });
+    
+    function showResult(site,site4,site5){
+    	
+    	
+    	 $.getJSON(site
+ 	    		,function(result){
+ 	    	
+ 	    	for(var i =0; i < 9; i=i+1){
+ 	    		var img = result.response.body.items.item[i].firstimage;
+ 				var mapx = result.response.body.items.item[i].mapx;
+ 				var mapy = result.response.body.items.item[i].mapy;
+ 				var contentId = result.response.body.items.item[i].contentid;
+ 				
+ 				
+ 				var imgHtml = '<a href="${contextPath}/travelDetail.tr?mapx=' +mapx+'&mapy=' +mapy+'&contentId='+contentId+'"><img  class="im" src="' + img + '" ><a>';
+ 				
+ 				
+ 				$('#li1').append(imgHtml);
+ 				}
+				});
     
     
+    	
+	    $.getJSON(site4
+	    		,function(result){
+	    	
+	    	for(var i =0; i < 9; i=i+1){
+	    		var img = result.response.body.items.item[i].firstimage;
+ 				var mapx = result.response.body.items.item[i].mapx;
+ 				var mapy = result.response.body.items.item[i].mapy;
+ 				var contentId = result.response.body.items.item[i].contentid;
+				
+				var imgHtml = '<a href="${contextPath}/travelDetail.tr?mapx=' +mapx+'&mapy=' +mapy+'&contentId='+contentId+'"><img  class="im" src="' + img + '" ><a>';
+				
+				$('#li2').append(imgHtml);
+				}
+				
+	    		});
+	    
     
+	    $.getJSON(site5
+	    		,function(result){
+	    	
+	    	for(var i =0; i < 9; i=i+1){
+				
+	    		var img = result.response.body.items.item[i].firstimage;
+ 				var mapx = result.response.body.items.item[i].mapx;
+ 				var mapy = result.response.body.items.item[i].mapy;
+ 				var contentId = result.response.body.items.item[i].contentid;
+				var imgHtml = '<a href="${contextPath}/travelDetail.tr?mapx=' +mapx+'&mapy=' +mapy+'&contentId='+contentId+'"><img  class="im" src="' + img + '" ><a>';
+				
+				$('#li3').append(imgHtml);
+				}
+				
+				
+	    		});
+    	
+    	}
+    	
+	}
+	    	
+		
     
-    
+
     
     
     
@@ -376,7 +444,7 @@ li{list-style:none;}
   			
   			
   			function moveSlide(num){
-  				slides.style.left = -num * 290 + 'px';
+  				slides.style.left = -num * 300 + 'px';
   				currentIdx = num;
   			}
   			nextBtn.addEventListener('click',function(){
@@ -405,13 +473,13 @@ li{list-style:none;}
   			var slides1 = document.querySelector('.slides1'),
   			slide1 =  document.querySelectorAll('.slides1 img'),
   			currentIdx1 = 0,
-  			slideCount1 = slide1.length,
+  			slideCount1 = 9,
   			prevBtn1 = document.querySelector('.prev1');
   			nextBtn1 = document.querySelector('.next1');
   			
   			
   			function moveSlide1(num){
-  				slides1.style.left = -num * 290 + 'px';
+  				slides1.style.left = -num * 300 + 'px';
   				currentIdx1 = num;
   			}
   			nextBtn1.addEventListener('click',function(){
@@ -439,19 +507,21 @@ li{list-style:none;}
   			
   			var slides2 = document.querySelector('.slides2'),
   			slide2 =  document.querySelectorAll('.slides2 img'),
+  			
   			currentIdx2 = 0,
-  			slideCount2 = slide.length,
+  			slideCount2 = 9,
   			prevBtn2 = document.querySelector('.prev2');
   			nextBtn2 = document.querySelector('.next2');
-  			
-  			
+  			console.log(slides2);
+  			console.log(slide2);
+  			console.log(slideCount2);
   			function moveSlide2(num){
-  				slides2.style.left = -num * 290 + 'px';
+  				slides2.style.left = -num * 300 + 'px';
   				currentIdx2 = num;
   			}
   			nextBtn2.addEventListener('click',function(){
   				
-  				if(currentIdx < slideCount2 - 1){
+  				if(currentIdx2 < slideCount2 - 1){
   					moveSlide2(currentIdx2 + 1);
   					
   				}else{

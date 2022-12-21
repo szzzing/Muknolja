@@ -151,5 +151,9 @@ public class MemberController {
 		public String prao() {
 			return"pra";
 		}
+		@RequestMapping("findId.me")
+		public String findid() {
+			return"findId";
+		}
 		
 }

@@ -14,11 +14,11 @@ public class MailConfig {
 		public JavaMailSender JavaMailService() {
 			JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 			
-			javaMailSender.setHost("smtp.naver.com");// µµ¸ÅÀÎ
-			javaMailSender.setUsername("rlwo5454");//³×ÀÌ¹ö ¾ÆÀÌµð
-			javaMailSender.setPassword("Junegemini11..");//³×ÀÌ¹ö ºñ¹Ð¹øÈ£
+			javaMailSender.setHost("smtp.naver.com");// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			javaMailSender.setUsername("");//ï¿½ï¿½ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
+			javaMailSender.setPassword("");//ï¿½ï¿½ï¿½Ì¹ï¿½ ï¿½ï¿½Ð¹ï¿½È£
 			
-			javaMailSender.setPort(465); // ¼­¹ö Æ÷Æ®
+			javaMailSender.setPort(465); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®
 			
 			javaMailSender.setJavaMailProperties(getMailProperties());
 			
@@ -26,12 +26,12 @@ public class MailConfig {
 		}
 		private Properties getMailProperties() {
 			Properties properties = new Properties();
-			properties.setProperty("mail.transport.protocol", "smtp");//ÇÁ·ÎÆ®ÄÝ¼³Á¤
-			properties.setProperty("mail.smpt.auth", "true");//smtpÀÎÁõ
+			properties.setProperty("mail.transport.protocol", "smtp");//ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Ý¼ï¿½ï¿½ï¿½
+			properties.setProperty("mail.smpt.auth", "true");//smtpï¿½ï¿½ï¿½ï¿½
 			properties.setProperty("mail.smtp.starttls.enable", "true");//
-			properties.setProperty("mail.debug", "true");//µð¹ö±×»ç¿ë
-			properties.setProperty("mail.smtp.ssl.trust","smtp.naver.com");//sslÀÎÁõ
-			properties.setProperty("mail.smtp.ssl.enable","true");//ssl»ç¿ë
+			properties.setProperty("mail.debug", "true");//ï¿½ï¿½ï¿½ï¿½×»ï¿½ï¿½
+			properties.setProperty("mail.smtp.ssl.trust","smtp.naver.com");//sslï¿½ï¿½ï¿½ï¿½
+			properties.setProperty("mail.smtp.ssl.enable","true");//sslï¿½ï¿½ï¿½
 			return properties;
 		}
 

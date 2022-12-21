@@ -17,49 +17,49 @@ import org.springframework.stereotype.Service;
 public class RegisterMail implements MailServiceInter {
 
 	@Autowired
-	JavaMailSender emailsender; // Bean µî·ÏÇØµÐ MailConfig ¸¦ emailsender ¶ó´Â ÀÌ¸§À¸·Î autowired
+	JavaMailSender emailsender; // Bean ï¿½ï¿½ï¿½ï¿½Øµï¿½ MailConfig ï¿½ï¿½ emailsender ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ autowired
 
-	private String ePw; // ÀÎÁõ¹øÈ£
+	private String ePw; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£
 
-	// ¸ÞÀÏ ³»¿ë ÀÛ¼º
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½
 	@Override
 	public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
-//		System.out.println("º¸³»´Â ´ë»ó : " + to);
-//		System.out.println("ÀÎÁõ ¹øÈ£ : " + ePw);
+//		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ : " + to);
+//		System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ : " + ePw);
 		
 		MimeMessage message = emailsender.createMimeMessage();
 
-		message.addRecipients(RecipientType.TO, to);// º¸³»´Â ´ë»ó
-		message.setSubject("GoodJob È¸¿ø°¡ÀÔ ÀÌ¸ÞÀÏ ÀÎÁõ");// Á¦¸ñ
+		message.addRecipients(RecipientType.TO, to);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		message.setSubject("GoodJob È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");// ï¿½ï¿½ï¿½ï¿½
 
 		String msgg = "";
 		msgg += "<div style='margin:100px;'>";
-		msgg += "<h1> ¾È³çÇÏ¼¼¿ä</h1>";
-		msgg += "<h1> SOLODENT ÀÔ´Ï´Ù</h1>";
+		msgg += "<h1> </h1>";
+		msgg += "<h1> MUKNOLJA</h1>";
 		msgg += "<br>";
-		msgg += "<p>¾Æ·¡ ÄÚµå¸¦ È¸¿ø°¡ÀÔ Ã¢À¸·Î µ¹¾Æ°¡ ÀÔ·ÂÇØÁÖ¼¼¿ä<p>";
+		msgg += "<p>ï¿½Æ·ï¿½ ï¿½Úµå¸¦ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½<p>";
 		msgg += "<br>";
 		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
-		msgg += "<h3 style='color:blue;'>È¸¿ø°¡ÀÔ ÀÎÁõ ÄÚµåÀÔ´Ï´Ù.</h3>";
+		msgg += "<h3 style='color:blue;'>È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½Ô´Ï´ï¿½.</h3>";
 		msgg += "<div style='font-size:130%'>";
 		msgg += "CODE : <strong>";
-		msgg += ePw + "</strong><div><br/> "; // ¸ÞÀÏ¿¡ ÀÎÁõ¹øÈ£ ³Ö±â
+		msgg += ePw + "</strong><div><br/> "; // ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ï¿½Ö±ï¿½
 		msgg += "</div>";
-		message.setText(msgg, "utf-8", "html");// ³»¿ë, charset Å¸ÀÔ, subtype
-		// º¸³»´Â »ç¶÷ÀÇ ÀÌ¸ÞÀÏ ÁÖ¼Ò, º¸³»´Â »ç¶÷ ÀÌ¸§
-		message.setFrom(new InternetAddress("rlwo5454@naver.com", "SOLODENT_Admin"));// º¸³»´Â »ç¶÷
+		message.setText(msgg, "utf-8", "html");// ï¿½ï¿½ï¿½ï¿½, charset Å¸ï¿½ï¿½, subtype
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+		message.setFrom(new InternetAddress("rlwo5454@naver.com", "SOLODENT_Admin"));// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
 		return message;
 	}
 
-	// ·£´ý ÀÎÁõ ÄÚµå Àü¼Û
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public String createKey() {
 		StringBuffer key = new StringBuffer();
 		Random rnd = new Random();
 
-		for (int i = 0; i < 8; i++) { // ÀÎÁõÄÚµå 8ÀÚ¸®
-			int index = rnd.nextInt(3); // 0~2 ±îÁö ·£´ý, rnd °ª¿¡ µû¶ó¼­ ¾Æ·¡ switch ¹®ÀÌ ½ÇÇàµÊ
+		for (int i = 0; i < 8; i++) { // ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ 8ï¿½Ú¸ï¿½
+			int index = rnd.nextInt(3); // 0~2 ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, rnd ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ switch ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 
 			switch (index) {
 			case 0:
@@ -80,18 +80,18 @@ public class RegisterMail implements MailServiceInter {
 		return key.toString();
 	}
 
-	// ¸ÞÀÏ ¹ß¼Û
-	// sendSimpleMessage ÀÇ ¸Å°³º¯¼ö·Î µé¾î¿Â to ´Â °ð ÀÌ¸ÞÀÏ ÁÖ¼Ò°¡ µÇ°í,
-	// MimeMessage °´Ã¼ ¾È¿¡ ³»°¡ Àü¼ÛÇÒ ¸ÞÀÏÀÇ ³»¿ëÀ» ´ã´Â´Ù.
-	// ±×¸®°í bean À¸·Î µî·ÏÇØµÐ javaMail °´Ã¼¸¦ »ç¿ëÇØ¼­ ÀÌ¸ÞÀÏ send!!
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ß¼ï¿½
+	// sendSimpleMessage ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ to ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ö¼Ò°ï¿½ ï¿½Ç°ï¿½,
+	// MimeMessage ï¿½ï¿½Ã¼ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â´ï¿½.
+	// ï¿½×¸ï¿½ï¿½ï¿½ bean ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Øµï¿½ javaMail ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ send!!
 	@Override
 	public String sendSimpleMessage(String to) throws Exception {
 
-		ePw = createKey(); // ·£´ý ÀÎÁõ¹øÈ£ »ý¼º
+		ePw = createKey(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½
 
 		// TODO Auto-generated method stub
-		MimeMessage message = createMessage(to); // ¸ÞÀÏ ¹ß¼Û
-		try {// ¿¹¿ÜÃ³¸®
+		MimeMessage message = createMessage(to); // ï¿½ï¿½ï¿½ï¿½ ï¿½ß¼ï¿½
+		try {// ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
 			emailsender.send(message);
 		} catch (MailException es) {
 			es.printStackTrace();
@@ -99,6 +99,6 @@ public class RegisterMail implements MailServiceInter {
 		}
 
 
-		return ePw; // ¸ÞÀÏ·Î º¸³Â´ø ÀÎÁõ ÄÚµå¸¦ ¼­¹ö·Î ¹ÝÈ¯
+		return ePw; // ï¿½ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 	}
 }
