@@ -39,4 +39,8 @@ public interface MemberService {
 
 	ArrayList<Map<String, Integer>> enrollCount();
 
+	int waring(String id);
+
+	int stop(String id);
+
 }

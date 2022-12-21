@@ -70,4 +70,12 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.enrollCount");
 	}
 
+	public int waring(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.update("memberMapper.waring", id);
+	}
+
+	public int stop(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.update("memberMapper.stop", id);
+	}
+
 }

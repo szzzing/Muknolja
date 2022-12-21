@@ -105,14 +105,14 @@
   	<select id="memberListCount" resultType="_int">
   		select count(*)
   		from member
-  		where status != 'N'
+  		where status = 'Y'
   	</select>
   	
   	<select id="selectMemberList" resultMap="memberResultSet">
 		select id, name, nickname, phone, enroll_date, report, max(to_char(visit_time, 'yy-mm-dd')) LAST_VISIT
 	    from member
 	    left join VISIT using(id)
-	    where status != 'N' and
+	    where status = 'Y' and
 	    <if test="category == 0">
 	    	MEMBER_TYPE = 'N'
 	    </if>
@@ -136,4 +136,16 @@
 		      order by enroll_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
+  	
+  	<update id="waring">
+  		update member
+  		set report = report + 1
+  		where id = #{id}
+  	</update>
+  	
+  	<update id="stop">
+  		update member
+  		set status = 'S'
+  		where id = #{id}
+  	</update>
   </mapper>

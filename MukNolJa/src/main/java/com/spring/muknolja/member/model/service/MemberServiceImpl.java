@@ -90,4 +90,14 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.enrollCount(sqlSession);
 	}
 
+	@Override
+	public int waring(String id) {
+		return mDAO.waring(sqlSession, id);
+	}
+
+	@Override
+	public int stop(String id) {
+		return mDAO.stop(sqlSession, id);
+	}
+
 }

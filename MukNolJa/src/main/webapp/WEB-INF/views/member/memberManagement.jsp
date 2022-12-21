@@ -10,6 +10,7 @@
 <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.104.2">
 
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <meta name="theme-color" content="#712cf9">
@@ -243,11 +244,28 @@
            	for(const m of members){
            		const id = m.querySelector('td').innerText;
            		const buttons = m.querySelectorAll('button');
+           		
            		buttons[0].addEventListener('click', function(){
-           			location.href = 'waring.me?id=' + id;
+           			if(confirm('정말 회원을 경고하시겠습니까?')){
+	           			$.ajax({
+	           				url: 'waring.me',
+	           				data: {id:id},
+	           				success: (data) => {
+	           					alert('회원을 경고하였습니다.');
+	           				}
+	           			});
+           			}
            		});
 				buttons[1].addEventListener('click', function(){
-					location.href = 'stop.me?id=' + id;
+					if(confirm('정말 회원을 정지시키겠습니까?')){
+						$.ajax({
+	           				url: 'stop.me',
+	           				data: {id:id},
+	           				success: (data) => {
+	           					alert('회원을 정지시켰습니다.');
+	           				}
+	           			});
+					}
            		});
            	}
             

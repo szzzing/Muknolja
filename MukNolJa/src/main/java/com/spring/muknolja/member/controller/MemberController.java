@@ -211,5 +211,21 @@ public class MemberController {
 		public String adManagement() {
 			return "adManagement";
 		}
+		
+		@RequestMapping("waring.me")
+		@ResponseBody
+		public int waring(@RequestParam("id") String id) {
+			int result = mService.waring(id);
+			
+			return result;
+		}
+		
+		@RequestMapping("stop.me")
+		@ResponseBody
+		public int stop(@RequestParam("id") String id) {
+			int result = mService.stop(id);
+			
+			return result;
+		}
 			
 }
