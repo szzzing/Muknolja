@@ -135,18 +135,25 @@ public class HotelController {
 	@RequestMapping(value="searchHotelList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public void searchHotelList(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, @RequestParam(value="maxPrice", required=false) Integer maxPrice, @RequestParam(value="maxLoc", required=false) Integer maxLoc, HttpServletResponse response) {
-		System.out.println(page+searchValue+checkinDate+checkoutDate+maxPrice+maxLoc);
 		int listCount = hService.getListCount();
 		int currentPage = 1;
 		if(page!=null) {
 			currentPage = page;
 		}
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-		ArrayList<Hotel> hotelList = hService.searchHotelList(pi);
+		HashMap searchMap = new HashMap();
+		searchMap.put("searchValue", searchValue);
+		searchMap.put("checkinDate", checkinDate);
+		searchMap.put("checkoutDate", checkoutDate);
+		searchMap.put("maxPrice", maxPrice);
+		searchMap.put("maxLoc", maxLoc);
+		
+		System.out.println(searchMap);
+//		ArrayList<Hotel> hotelList = hService.searchHotelList(pi);
 //		ArrayList<AttachedFile> hotelImgList = hService.selectHotelImgList(pi);
 		
 		HashMap map = new HashMap();
-		map.put("hotelList", hotelList);
+//		map.put("hotelList", hotelList);
 //		map.put("hotelImgList", hotelImgList);
 		
 		response.setContentType("application/json; charset=UTF-8");
