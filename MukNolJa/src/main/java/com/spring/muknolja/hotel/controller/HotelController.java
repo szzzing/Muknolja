@@ -110,8 +110,7 @@ public class HotelController {
 		if(page!=null) {
 			currentPage = page;
 		}
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
-//		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
 		ArrayList<Hotel> hotelList = hService.selectHotelList(pi);
 		ArrayList<AttachedFile> hotelImgList = hService.selectHotelImgList(pi);
 		
@@ -140,7 +139,7 @@ public class HotelController {
 		if(page!=null) {
 			currentPage = page;
 		}
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
 		HashMap searchMap = new HashMap();
 		searchMap.put("searchValue", searchValue);
 		searchMap.put("checkinDate", checkinDate);
