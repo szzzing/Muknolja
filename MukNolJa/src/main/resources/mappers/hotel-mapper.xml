@@ -173,7 +173,25 @@
 		where hotel_status='Y'
 	</select>
 	
+	<select id="getSearchListCount" resultType="_int">
+		select count(*)
+		from hotel
+		where hotel_status='Y'
+	</select>
+	
 	<select id="selectHotelList" resultMap="hotelResultSet">
+		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y,
+			nvl(min(room_price), 0) as min_price, nvl(round(avg(rating), 1),0) as avg_rating
+		from hotel
+		    left outer join room using(hotel_id)
+		    left outer join reservation using(room_id)
+		    left outer join review using(reservation_id)
+		where hotel_status='Y'
+		group by hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y
+		order by hotel_id desc
+	</select>
+	
+	<select id="searchHotelList" resultMap="hotelResultSet">
 		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y,
 			nvl(min(room_price), 0) as min_price, nvl(round(avg(rating), 1),0) as avg_rating
 		from hotel

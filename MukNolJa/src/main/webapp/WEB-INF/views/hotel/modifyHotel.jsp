@@ -78,7 +78,7 @@
 </head>
 <body>
 	
-	<div class="container-sm mt-5 mb-5" style="padding-top:80px">
+	<div class="container container-sm mt-5 mb-5" style="max-width:800px;">
 		<form action="${contextPath }/insertHotel.ho" class="row g-2 row-cols-1" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="entId" value="${ loginUser.id }">
 			<div class="col form-floating mb-3 mt-3">
@@ -90,8 +90,8 @@
 				<input type="hidden" class="hotelGeoY" name="hotelGeoY">
 				<input type="text" class="hotelAddress form-control" name="hotelAddress" value="${hotel.hotelAddress }" onclick="sample4_execDaumPostcode()" required>
 				<label for="hotelAddress">주소</label>
+				<div id="map" class="mukRound mt-3" style="width:100%;height:300px;"></div>
 			</div>
-			<div id="map" class="mukRound" style="width:540px;height:300px;"></div>
 			<div class="col form-floating mb-3 mt-3">
 				<input type="number" class="form-control" name="star" value="${hotel.star }" min="1" max="5" required>
 				<label for="roomPrice">등급</label>
@@ -102,40 +102,38 @@
 			</div>
 			<div class="col form-floating mb-3 mt-3">
 				<h5 class="fw-bold">어떤 옵션을 제공할지 선택하세요.</h5>
-				<table class="hotelOptionTable table table-borderless align-middle text-center">
-					<tr>
-						<td>
+				<div class="hotelOptionTable row align-middle text-center">
+						<div class="col col-auto">
 							<input type="hidden" name="wifi" value='Y'>
 							<h2><i class="fa-solid fa-wifi"></i></h2>
 							와이파이
-						</td>
-						<td>
+						</div>
+						<div class="col col-auto">
 							<input type="hidden" name="park" value='Y'>
 							<h2><i class="fa-solid fa-square-parking"></i></h2>
 							주차
-						</td>
-						<td>
+						</div>
+						<div class="col col-auto">
 							<input type="hidden" name="amenity" value='Y'>
 							<h2><i class="fa-solid fa-gift"></i></h2>
 							어메니티
-						</td>
-						<td>
+						</div>
+						<div class="col col-auto">
 							<input type="hidden" name="breakfast" value="Y">
 							<h2><i class="fa-solid fa-utensils"></i></h2>
 							조식
-						</td>
-						<td>
+						</div>
+						<div class="col col-auto">
 							<input type="hidden" name="fitness" value="Y">
 							<h2><i class="fa-solid fa-dumbbell"></i></h2>
 							피트니스
-						</td>
-						<td>
+						</div>
+						<div class="col col-auto">
 							<input type="hidden" name="swim" value="Y">
 							<h2><i class="fa-solid fa-water-ladder"></i></h2>
 							수영장
-						</td>
-					</tr>
-				</table>
+						</div>
+				</div>
 			</div>
 			
 			<div class="form-floating mb-3 mt-3">
@@ -197,7 +195,7 @@
 	
 	<!-- 호텔 옵션 선택 -->
 	<script>
-		$(".hotelOptionTable").find("td").on("click", function(){
+		$(".hotelOptionTable").find(".col").on("click", function(){
 			if($(this).css("color")=="rgb(33, 37, 41)") {
 				$(this).css("color", "lightgray");
 				$(this).find("input[type=hidden]").val("N");
@@ -353,12 +351,6 @@
 	
 	<!-- 호텔 정보 엔터 구현 시작 -->
 	<script>
-		var hotelIntro = "${hotel.hotelIntro}".replace(/<br>/g, '\n'));
-		console.log(hotelIntro);
-		console.log(hotelIntro.replace(/<br>/g, '\n'));
-		$("textarea[name=hotelIntro]").val("${hotel.hotelIntro}".replace(/<br>/g, '\n'));
-		
-		
 		$("button[type=submit]").on("click", function(){
 			var content = $("textarea[name=hotelInfo]").val();
 			content = content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
