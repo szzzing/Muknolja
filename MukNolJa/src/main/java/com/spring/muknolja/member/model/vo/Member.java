@@ -25,7 +25,8 @@ public class Member {
 		private Date enrollDate;
 	    private String memberType;
 	    private String status;
-
+	    private int report;
+	    private String lastVisit;
 
 
 }

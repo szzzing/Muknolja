@@ -1,12 +1,14 @@
 ﻿package com.spring.muknolja.member.model.dao;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
 
@@ -51,6 +53,21 @@ public class MemberDAO {
 
 	public ArrayList<Map<String, Integer>> selectVisitList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitList");
+	}
+
+	public int memberListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.memberListCount", sqlSession);
+	}
+
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, Object> map) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList", map, rowBounds);
+	}
+
+	public ArrayList<Map<String, Integer>> enrollCount(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.enrollCount");
 	}
 
 }

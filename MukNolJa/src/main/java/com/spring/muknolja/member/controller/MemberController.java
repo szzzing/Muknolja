@@ -1,7 +1,7 @@
 ﻿package com.spring.muknolja.member.controller;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.member.model.service.MemberService;
 import com.spring.muknolja.member.model.vo.Member;
 
@@ -156,4 +158,58 @@ public class MemberController {
 			return"findId";
 		}
 		
+		@RequestMapping("adminPage.me")
+		public String adminPage(Model model) {
+			ArrayList<Member> today = mService.selectVisitToday();
+			ArrayList<Map<String, Integer>> visitList = mService.selectVisitList();
+			
+			model.addAttribute("today", today);
+			model.addAttribute("visitList", visitList);
+			
+			return "adminPage";
+		}
+		
+		@RequestMapping("memberManagement.me")
+		public String memberManagement(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="category", required=false) Integer cate,
+									   @RequestParam(value="search", required=false) String search, Model model){
+			
+			int category = 0;
+			if(cate != null && cate > 0 && cate <= 2) {
+				category = cate;
+			}
+			
+			int currentPage = 1;
+			if(page != null && page > 1) {
+				currentPage = page;
+			}
+			
+			ArrayList<Map<String, Integer>> eList = mService.enrollCount();
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("category", category);
+			map.put("search", search);
+			
+			int listCount = mService.memberListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 30);
+			
+			ArrayList<Member> list = mService.selectMemberList(pi, map);
+			
+			model.addAttribute("eList", eList);
+			model.addAttribute("list", list);
+			model.addAttribute("category", category);
+			
+			return "memberManagement";
+		}
+		
+		@RequestMapping("boardManagement.me")
+		public String boardManagement() {
+			return "boardManagement";
+		}
+		
+		@RequestMapping("adManagement.me")
+		public String adManagement() {
+			return "adManagement";
+		}
+			
 }

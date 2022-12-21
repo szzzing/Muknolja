@@ -136,15 +136,15 @@
           </thead>
           <tbody>
           	
-          	<c:forEach items="${ today }" var="m">
-	            <tr>
-	              <td>${ m.id }</td>
-	              <td>${ m.nickName }</td>
-	              <td>${ m.name }</td>
-	              <td>${ m.phone }</td>
-	              <td>${ m.enrollDate }</td>
-	            </tr>
-            </c:forEach>
+<%--           	<c:forEach items="${ today }" var="m"> --%>
+<!-- 	            <tr> -->
+<%-- 	              <td>${ m.id }</td> --%>
+<%-- 	              <td>${ m.nickName }</td> --%>
+<%-- 	              <td>${ m.name }</td> --%>
+<%-- 	              <td>${ m.phone }</td> --%>
+<%-- 	              <td>${ m.enrollDate }</td> --%>
+<!-- 	            </tr> -->
+<%--             </c:forEach> --%>
           </tbody>
         </table>
       </div>
@@ -163,14 +163,12 @@
                 data: { // 차트에 들어갈 데이터
                     labels: [
                         //x 축
-                    	'${ visitList[6].VISIT_DATE }','${ visitList[5].VISIT_DATE }','${ visitList[4].VISIT_DATE }','${ visitList[3].VISIT_DATE }','${ visitList[2].VISIT_DATE }','${ visitList[1].VISIT_DATE }','${ visitList[0].VISIT_DATE }'
                     ],
                     datasets: [
                         { //데이터
                             label: '방문자', //차트 제목
-                            fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                             data: [
-                            	'${ visitList[6].VISIT_COUNT }','${ visitList[5].VISIT_COUNT }','${ visitList[4].VISIT_COUNT }','${ visitList[3].VISIT_COUNT }','${ visitList[2].VISIT_COUNT }','${ visitList[1].VISIT_COUNT }','${ visitList[0].VISIT_COUNT }'
                             ],
                             backgroundColor: [
                                 //색상
