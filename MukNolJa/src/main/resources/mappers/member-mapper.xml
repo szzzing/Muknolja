@@ -109,7 +109,7 @@
   	</select>
   	
   	<select id="selectMemberList" resultMap="memberResultSet">
-		select id, name, nickname, phone, enroll_date, report, max(to_char(visit_time, 'yy-mm-dd')) LAST_VISIT
+		select id, name, nickname, phone, enroll_date, report, member_type, max(to_char(visit_time, 'yy-mm-dd')) LAST_VISIT
 	    from member
 	    left join VISIT using(id)
 	    where status = 'Y' and
@@ -125,7 +125,7 @@
 	    <if test="search != null">
 	    	and id LIKE '%'||#{search}||'%'
 	    </if>
-	    GROUP by (id, name, nickname, phone, enroll_date, report)
+	    GROUP by (id, name, nickname, phone, enroll_date, report, member_type)
   	</select>
   	
   	<select id="enrollCount" resultType="map">

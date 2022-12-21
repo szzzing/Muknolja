@@ -165,8 +165,10 @@
 	              <td>${ m.enrollDate }</td>
 	              <td>${ m.report }</td>
 	              <td>${ m.lastVisit }</td>
-	              <td><button class="mukButton">경고</button></td>
-	              <td><button class="mukButton">정지</button></td>
+	              <c:if test="${ m.memberType != 'A' }">
+		              <td><button class="mukButton">경고</button></td>
+		              <td><button class="mukButton">정지</button></td>
+	              </c:if>
 	            </tr>
 	            </c:forEach>
           </tbody>
