@@ -30,9 +30,9 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcrypt;
 	
-	@RequestMapping(value = "loginView.me", method = RequestMethod.GET)
-	public String loginView() {
-	
+	@RequestMapping(value = "loginView.me")
+	public String loginView(Model model) {
+		 
 		return "login";
 	}
 	@RequestMapping(value = "login.me", method = RequestMethod.POST)
@@ -58,10 +58,9 @@ public class MemberController {
 			return "redirect:home.do";
 
 		} else {
-		return "myInfo";
+			return "myInfo";
 		}
-		
-		
+
 	}
 	// �α׾ƿ� 2
 		@RequestMapping("logout.me")
@@ -155,5 +154,36 @@ public class MemberController {
 		public String findid() {
 			return"findId";
 		}
+		@RequestMapping("findId1.me")
+		public String findid1() {
+			return"findId";
+		}
+		@RequestMapping("myInfo1.me")
+		public String myInfo1() {
+			return "myInfo1";
+		}
+		@RequestMapping("change.me")
+		public String change(@ModelAttribute Member m, Model model, @RequestParam("pwd") String pwd,@RequestParam("id") String idd) {
+			m.setId(idd.trim());
+			String id = m.getId();
+			String password = mService.selectpwd(id);
+			if (pwd.trim().equals("")) {
+				
+				m.setPwd(password);
+			} else {
+				m.setPwd(bcrypt.encode(pwd));
+			}
+			int result = mService.updateMember(m);
+
+			if (result > 0) {
+				Member loginUser = mService.login(m);
+				model.addAttribute("loginUser", loginUser);
+				return "redirect:myInfo.me";
+			} else {
+				return "home.do";
+			}
+
 		
+			
+		}
 }

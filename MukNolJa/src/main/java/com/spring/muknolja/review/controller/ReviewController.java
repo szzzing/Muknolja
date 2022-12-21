@@ -26,4 +26,8 @@ public class ReviewController {
 	public String reviewDetail() {
 		return "reviewDetail";
 	}
+	@RequestMapping("reviewWrite.re")
+	public String reviewWriete() {
+		return "reviewWrite";
+	}
 }

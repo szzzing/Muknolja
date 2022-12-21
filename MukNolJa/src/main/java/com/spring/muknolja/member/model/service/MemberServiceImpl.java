@@ -73,4 +73,16 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	@Override
+	public String selectpwd(String id) {
+		
+		return mDAO.selectPwd(sqlSession, id);
+	}
+
+	@Override
+	public int updateMember(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.updateMember(sqlSession, m);
+	}
+
 }

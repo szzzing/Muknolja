@@ -51,77 +51,7 @@
 		  animation-fill-mode: both;
 		   animation-iteration-count: infinite;
 		}
-		@-webkit-keyframes poin {
-		  0% {
-		    opacity: 0;
-		    transform: translate3d(0, -100%, 0);
-		  }
-		  100% {
-		    opacity: 1;
-		    transform: none;
-		  }
-		}
-		@keyframes poin {
-		  0% {
-		    opacity: 0;
-		    transform: translate3d(0, -100%, 0);
-		  }
-		  100% {
-		    opacity: 1;
-		    transform: none;
-		  }
-		}
 		
-		
-		.ac {  
-		  animation-name: poin;
-		  animation-duration: 1s;
-		  animation-fill-mode: both;
-		   
-		}
-		
-		@keyframes ac {
-		  0% {
-		    opacity: 0;
-		    transform: translate3d(0, -100%, 0);
-		  }
-		  100% {
-		    opacity: 1;
-		    transform: none;
-		  }
-		}
-		
-	
-		.ac.ad2{
-		 animation-delay: 0.3s;
-		}
-		.ac.ad1{
-		 animation-delay: 0.6s;
-		}
-		.ac.ad3{
-		 animation-delay: 0.9s;
-		}
-		.ac.ad4{
-		 animation-delay: 1.2s;
-		}
-		.ac.ad5{
-		 animation-delay: 1.5s;
-		}
-		.ac.ad6{
-		 animation-delay: 1.8s;
-		}
-		.ac.ad7{
-		 animation-delay: 2.1s;
-		}
-		.ac.ad8{
-		 animation-delay: 2.4s;
-		}
-		.ac.ad10{
-		 animation-delay: 2.7s;
-		}
-		.ac.ad9{
-		 animation-delay: 3s;
-		}
 		@font-face {
 	    font-family: 'OTWelcomeRA';
 	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');

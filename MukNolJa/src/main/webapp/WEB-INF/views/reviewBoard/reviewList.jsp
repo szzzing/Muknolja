@@ -9,23 +9,51 @@
 	<style>
 		#carouselExampleInterval{height: 550px; margin-top: 80px;}
 		#carouselExampleInterval img{height:550px;}
-		#category{
-	 		width: 90%;
-			height: 150px;
-			border-radius: 5px;
-			border-style: hidden;
-			box-shadow: 0 0 0 1px #d3d3d3;
-			table-layout: fixed;
-			margin-left:auto; 
-	    	margin-right:auto;
-			margin-top: 30px;
-	    	margin-bottom: 30px;
-	    	clear: both;
+		
+		.ur{
+		 box-shadow: 0px 15px 30px 0px rgba(0,0,0,0.3);
+		 padding-left:0px;
+		 padding-bottom:0px;
+		 margin-left:0px;
+		 border-radius:10px;
+		 border: 2px solid  RGB(107, 182, 236, 0.3);
+		  
 		}
-		#category td{text-align: center;}
-		.page-link:focus, .page-link:hover {color: #fff; background-color: #6BB6EC;}
-		.travelInfo a{color: black; font-size: 25px; text-decoration: none;}
-		.travelInfo p{color: gray; font-size: 15px; margin-top: 20px;}
+		li{list-style:none;}
+		
+		  .ll{
+		  font-size: 20px;
+		  font-weight: 600;
+		  width:100%;
+		  
+		  color: #575757;
+		  text-align: center;
+		  height: 60px;
+		  float:left;
+		  vertical-align: middle;
+		  line-height: 3em;
+		  border: 1px solid #fffcfb;
+		  border-radius:10px;
+		  position: relative;
+		  display: block;
+		  text-decoration: none;
+		  box-shadow: 0em 1.5em 0 ,lightgrey;
+		  transition: all .25s linear;
+		  }
+		  .ll:hover {
+		    background: #6BB6EC;
+		    color: #fffcfb;
+		    transform: translate(-.9em, -.9em);
+		    transition: all .25s linear;
+		    box-shadow: 0.5em 2em 0 #e1e1e1;
+		    }
+		    
+		    .ll{
+		      transition: all .25s linear; 
+			}
+		    
+		    #39{background: #6BB6EC; color:white;}  
+    
 		hr{margin: auto;}
 		#hr1{height: 2px;}
 		#num{margin: auto;}
@@ -37,7 +65,7 @@
 		#btn button:hover{color: black; font-weight: 700;}
 		.allCard{margin-bottom: 35px; cursor: pointer;}
 		.card-text{font-size: 13px;}
-		#input{width: 400px;}
+		
 		#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 		#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
 	</style>
@@ -46,6 +74,10 @@
 <body>
 	<jsp:include page="../member/menubar.jsp"/>
 	
+	 <div class="container-fluid text-center">
+	  	<div class="row justify-content-center shadow" style=" min-height:100vh; border-radius:30px;   ">
+            <div class="col-9 " style=" min-height:100vh;">
+            
 		<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 		  <div class="carousel-inner">
 		    <div class="carousel-item active" data-bs-interval="10000">
@@ -64,39 +96,50 @@
 		    <span class="visually-hidden">Next</span>
 		  </button>
 		</div>
+		 <br><br>
+            <div class="row justify-content-center " style="  ">
+            <div class="col" style="padding-left:0px; padding-right:0px;"  >
+            			<ul class="ur" >
+					    	<div style="display:flex;" lass="ur1">
+					    		<li class="ll" id="0">전체</li>
+						    	<li class="ll" id="1">서울</li>
+						    	<li class="ll" id="2">인천</li>
+						    	<li class="ll" id="3">대전</li>
+						    	<li class="ll" id="4">대구</li>
+						    	<li class="ll" id="5">광주</li>
+						    	<li class="ll" id="6">부산</li>
+						    	<li class="ll" id="7">울산</li>
+						    	<li class="ll" id="8">세종</li>
+						    
+						    	</div>
+						    	<div style="display:flex;">
+						    	<li class="ll" id="31">경기</li>
+						    	<li class="ll" id="32">강원</li>
+						    	<li class="ll" id="33">충북</li>
+						    	<li class="ll" id="34">충남</li>
+						    	<li class="ll" id="35">경북</li>
+						    	<li class="ll" id="36">경남</li>
+						    	<li class="ll" id="37">전북</li>
+						    	<li class="ll" id="38">전남</li>
+						    	<li class="ll" id="39">제주</li>
+						    	
+						    </div>
+					    </ul>
+					   <br>
+					   </div>
+					   </div>
+		 <div class="row justify-content-center " style="  ">
+            <div class="col" style="padding-left:0px; padding-right:0px; display:inLine-block"  >
 	
-	<div class="container">
-	
-		<table id="category" class="table table-bordered align-middle">
-			<tr>
-				<td>서울</td>			
-				<td>인천</td>			
-				<td>대전</td>			
-				<td>대구</td>			
-				<td>광주</td>			
-				<td>부산</td>			
-				<td>울산</td>			
-				<td>세종</td>			
-				<td>경기</td>			
-			</tr>
-			<tr>
-				<td>강원</td>			
-				<td>충북</td>			
-				<td>충남</td>			
-				<td>경북</td>			
-				<td>경남</td>			
-				<td>전북</td>			
-				<td>전남</td>			
-				<td>제주</td>			
-				<td>전체보기</td>			
-			</tr>
-		</table>
 		
-		<div class="input-group" id="input">
-			<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+		
+		<div class="input-group" id="input" style="">
+			<input type="text" style=""" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
 			<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+			
+			<button class="btn btn-outline-secondary" type="button" id="button-addon2" style="width:200px; font-weight:600" onclick="location.href='${contextPath}/reviewWrite.re'">글쓰기</button>
 		</div>
-		
+	
 		<hr id="hr1">
 		
 		<div id="num">
@@ -160,16 +203,13 @@
 		    </li>
 		  </ul>
 		</nav>
-		
 		</div>
-		
+		</div>
+		</div>
+		</div>
+		</div>
 		<script>
-// 			const allCards = document.getElementsByClassName('allCard');
-// 			for(const allCard of allCards){
-// 				allCard.addEventListener('click', function(){
-					
-// 				});
-// 			}
+	
 		</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

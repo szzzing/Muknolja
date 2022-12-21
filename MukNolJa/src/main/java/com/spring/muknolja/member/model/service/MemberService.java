@@ -31,4 +31,8 @@ public interface MemberService {
 
 	ArrayList<Map<String, Integer>> selectVisitList();
 
+	String selectpwd(String id);
+
+	int updateMember(Member m);
+
 }

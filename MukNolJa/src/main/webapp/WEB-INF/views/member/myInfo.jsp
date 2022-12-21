@@ -1,118 +1,69 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
-
-
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
-    
-        /*  폰트 */
-        @font-face {
-		    font-family: 'HSYuji-Regular';
-		    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSYuji-Regular.woff') format('woff');
-		    font-weight: normal;
-		    font-style: normal;
-		}
-		
-    	/* 박스크기 */
-    	.mbox{
-    	
-        width: 58%;
-    	box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    	border-radius: 20%;
-    	height: 100%;  
-    	padding: 14% 0px;
-    	}
-    	
-    	@keyframes mbox { from { opacity:0; } to { opacity:1; } }
-	
-		.mbox {
-		 opacity:0;
-		 animation:mbox ease-in 1;
-		 animation-fill-mode:forwards;
-		 animation-duration:1s;
-		}
-    	
-    	
-    	.mbox.m1 {
-	  	animation-delay: 0.3s;
-		}
-		.mbox.m2 {
-	  	animation-delay: 0.6s;
-		}
-		.mbox.m3 {
-	  	animation-delay: 0.9s;
-		}
-		.mbox.m4 {
-	  	animation-delay: 1.2s;
-		}
-		.mbox.m5 {
-	  	animation-delay: 1.5s;
-		}
-		.mbox.m6 {
-	  	animation-delay: 1.8s;
-		}
-    	
+    .inbu{height:70px;
+          width:25%; 
+          background:none;
+          border:none;
+          border-right: 1px solid RGB(107, 182, 236, 0.3);
+          font-weight:600;
+           }
+         #bu1:hover, #bu2:hover, #bu3:hover, #bu4:hover, #bu5:hover{
+         border-bottom: 10px solid RGB(107, 182, 236);
+         
+         }
     </style>
   </head>
-  <body style="margin-top:10%; background:#F2F2F2">
+  <body style="">
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     
-    
-    <jsp:include page="menubar.jsp"/>
+    <jsp:include page="../member/menubar.jsp"/>
    	
      <div class="container-fluid text-center">
-	  	<div class="row justify-content-center" style="width: 100%;  font-family: 'HSYuji-Regular';">
-	  		<div style="display:flex">
-			<img alt="1" src="${contextPath }/resources/img/men.png" width=7%; height=60%; style="margin-left:8%; margin-top:1%"   >
-	  		<div class="col" style="font-size: 5vw; margin-right:56%; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); font-weight: 900">마이페이지</div>
-	  	</div>
-	  	  
-	  	</div>
-	  	   <div class="row justify-content-center" style="width: 100%; font-family: 'HSYuji-Regular';">
-	  	   
-	  	   
-	  	   <div class=col-sm-1></div>
-	  	   
-	  	  
-            <div class="col-sm-3" style="height: 100%;  ">
-            	<div class=".center-block" style="font-size: 2vw" >
-            		<div class="mbox m1">내정보</div>
-            		
-            		<div class="mbox m4" style=" margin-top:20%;  ">문의내역조회</div>
-            	
-            	</div>
-            </div>
-            <div class="col-sm"></div>
-             <div class="col-sm-3 " style="height: 100%;">
-            	<div class=".center-block " style="font-size: 2vw; " >
-            		<div class="mbox m2" >내가 쓴글 조회</div>
-            		
-            		<div class="mbox m5" style="margin-top:20%;">참여한 여행</div>
-            	
-            	</div>
-            </div>
-            
-            
-           
-            <div class=col-sm></div>
-             <div class="col-sm-3 col-xs-9" style="height: 100%; ">
-            	<div class=".center-block" style="font-size: 2svw; " >
-            		<div class="mbox m3" >찜목록 조회</div>
-            		
-            		<div class="mbox m6" style="margin-top:20%;">예약 현황</div>
-            	
-            	</div>
-            </div>
-            <div class="col-sm-1"></div>
-        </div>
+	  	<div class="row justify-content-center " style="  ">
+            <div class="col-9 " style="">
+		<br><br><br>
+	  	
+	  		
+            <br><br>
+	            <div class="row justify-content-center " style="  ">
+	            	<div class="col" style="padding-left:0px; padding-right:0px; height:100%"  >
+	    				<div style="display:flex;float:left; font-size:40px; font-weight:300;">
+	    					마이페이지
+	    					<div style="font-size:30px; margin-top:15px; margin-left:25px;">${ loginUser.name}님 
+	    					<button onclick="location.href='${contextPath}/myInfo1.me'"style="border: 1px solid RGB(107, 182, 236); font-size:20px; margin-top:-10px; border-radius:10px; background:none ">내정보</button></a></div>
+	    				</div>
+					</div>
+				</div>
+			</div>
+		</div>
+			<br>
+				<div class="row justify-content-center " style="  ">
+	            	<div class="col " style="padding-left:0px; padding-right:0px; height:70px; border:1px solid lightgrey"  >
+	            		<div class="row justify-content-center " style="padding-left:0px; padding-right:0px; height:70px; ">
+	            			<div class="col-xs-12; col-sm-9" style="">
+	            				<div style="display:flex">
+			            		<button class="inbu" id="bu1" style="border-left: 1px solid RGB(107, 182, 236, 0.3);">내가 쓴글</button>
+			            		<button class="inbu" id="bu2">찜목록</button>
+			            		<button class="inbu" id="bu3">문의 내역</button>
+			            		<button class="inbu" id="bu4">동행 확인</button>
+			            		<button class="inbu" id="bu5">예약 확인</button>
+			            		</div>
+			            	</div>
+			      </div>
+			</div>
+		</div>
 	</div>
 	
-    
   </body>
 </html>
+
+    
