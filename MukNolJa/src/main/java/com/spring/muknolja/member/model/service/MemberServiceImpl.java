@@ -2,12 +2,14 @@
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.dao.MemberDAO;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
@@ -71,6 +73,21 @@ public class MemberServiceImpl implements MemberService {
 	public String findId(String email) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int memberListCount() {
+		return mDAO.memberListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectMemberList(PageInfo pi, HashMap<String, Object> map) {
+		return mDAO.selectMemberList(sqlSession, pi, map);
+	}
+
+	@Override
+	public ArrayList<Map<String, Integer>> enrollCount() {
+		return mDAO.enrollCount(sqlSession);
 	}
 
 }

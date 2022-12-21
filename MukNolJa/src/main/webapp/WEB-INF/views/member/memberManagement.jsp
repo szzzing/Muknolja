@@ -73,6 +73,10 @@
       tr, th, td{
       	text-align: center;
       }
+      a{
+      	text-decoration: none;
+      	color: black;
+      }
     </style>
    
 </head>
@@ -117,13 +121,25 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">방문자 통계</h1>
+        <h1 class="h2">회원 관리</h1>
       </div>
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>금일 방문자</h2>
-      <div class="table-responsive">
+      <h2>회원 목록</h2>
+      <div style="float:right; margin: 10px;">
+      	<form action="memberManagement.me">
+      		<div class = "input-group input-group-sm" id="sendMessage" style="margin-top: 10px;">
+      			<input type="hidden" name="category" value="${ category }">
+	            <input type = "text" class = "form-control" id="search" name="search" placeholder = "아이디">
+		        <div class = "input-group-btn">
+		            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+		  		</div>
+     	 	</div>
+     	 </form>
+      <a href="memberManagement.me?category=0"> 일반회원 </a>|<a href="memberManagement.me?category=1"> 호텔사업자 </a>|<a href="memberManagement.me?category=2"> 관리자 </a>
+      </div>
+      <div class="table-responsive" style="clear: both;">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
@@ -132,19 +148,24 @@
               <th scope="col">이름</th>
               <th scope="col">전화번호</th>
               <th scope="col">가입일</th>
+              <th scope="col">경고</th>
+              <th scope="col">최근 접속일</th>
             </tr>
           </thead>
           <tbody>
-          	
-          	<c:forEach items="${ today }" var="m">
+          		<c:forEach items="${ list }" var="m">
 	            <tr>
 	              <td>${ m.id }</td>
 	              <td>${ m.nickName }</td>
 	              <td>${ m.name }</td>
 	              <td>${ m.phone }</td>
 	              <td>${ m.enrollDate }</td>
+	              <td>${ m.report }</td>
+	              <td>${ m.lastVisit }</td>
+	              <td><button>경고</button></td>
+	              <td><button>경고</button></td>
 	            </tr>
-            </c:forEach>
+	            </c:forEach>
           </tbody>
         </table>
       </div>
@@ -163,14 +184,14 @@
                 data: { // 차트에 들어갈 데이터
                     labels: [
                         //x 축
-                    	'${ visitList[6].VISIT_DATE }','${ visitList[5].VISIT_DATE }','${ visitList[4].VISIT_DATE }','${ visitList[3].VISIT_DATE }','${ visitList[2].VISIT_DATE }','${ visitList[1].VISIT_DATE }','${ visitList[0].VISIT_DATE }'
+                    	'${ eList[6].ENROLL_DATE }','${ eList[5].ENROLL_DATE }','${ eList[4].ENROLL_DATE }','${ eList[3].ENROLL_DATE }','${ eList[2].ENROLL_DATE }','${ eList[1].ENROLL_DATE }','${ eList[0].ENROLL_DATE }'
                     ],
                     datasets: [
                         { //데이터
-                            label: '방문자', //차트 제목
+                            label: '가입인원', //차트 제목
                             fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                             data: [
-                            	'${ visitList[6].VISIT_COUNT }','${ visitList[5].VISIT_COUNT }','${ visitList[4].VISIT_COUNT }','${ visitList[3].VISIT_COUNT }','${ visitList[2].VISIT_COUNT }','${ visitList[1].VISIT_COUNT }','${ visitList[0].VISIT_COUNT }'
+                            	'${ eList[6].MEMBER_COUNT }','${ eList[5].MEMBER_COUNT }','${ eList[4].MEMBER_COUNT }','${ eList[3].MEMBER_COUNT }','${ eList[2].MEMBER_COUNT }','${ eList[1].MEMBER_COUNT }','${ eList[0].MEMBER_COUNT }'
                             ],
                             backgroundColor: [
                                 //색상

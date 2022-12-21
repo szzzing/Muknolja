@@ -2,8 +2,10 @@
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
+import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
 
@@ -30,5 +32,11 @@ public interface MemberService {
 	ArrayList<Member> selectVisitToday();
 
 	ArrayList<Map<String, Integer>> selectVisitList();
+
+	int memberListCount();
+
+	ArrayList<Member> selectMemberList(PageInfo pi, HashMap<String, Object> map);
+
+	ArrayList<Map<String, Integer>> enrollCount();
 
 }

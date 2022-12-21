@@ -1,9 +1,8 @@
 package com.spring.muknolja.common.model.vo;
 
 public class Pagination {
-	public static PageInfo getPageInfo(int currentPage, int listCount) {
+	public static PageInfo getPageInfo(int currentPage, int listCount, int boardLimit) {
 		int pageLimit = 10;
-		int boardLimit = 20;
 		int maxPage;
 		int startPage;
 		int endPage;

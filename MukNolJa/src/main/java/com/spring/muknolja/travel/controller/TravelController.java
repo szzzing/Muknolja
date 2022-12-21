@@ -86,7 +86,7 @@ public class TravelController {
 			}
 			
 			int listCount = Integer.parseInt(String.valueOf(parseBody.get("totalCount")));
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 20);
 			
 			model.addAttribute("list", list);
 			model.addAttribute("pi", pi);

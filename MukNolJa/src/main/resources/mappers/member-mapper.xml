@@ -20,12 +20,13 @@
   		<result column="ENROLL_DATE" property="enrollDate"/>
   		<result column="MEMBER_TYPE" property="memberType"/>
   		<result column="STATUS" property="status"/>
-  		
+  		<result column="REPORT" property="report"/>
+  		<result column="LAST_VISIT" property="lastVisit"/>
   	</resultMap>
   	
   	<insert id="insertM">
   	insert into member
-  	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, default, default)
+  	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, default, default, default)
   </insert>
   
   	
@@ -97,7 +98,42 @@
 		from (select to_char(visit_time, 'mm-dd') visit_date, count(*) visit_count
 		      from visit
 		      GROUP by to_char(visit_time, 'mm-dd')
-		      order by visit_date)
+		      order by visit_date desc)
+		where rownum <![CDATA[<=]]> 7
+  	</select>
+  	
+  	<select id="memberListCount" resultType="_int">
+  		select count(*)
+  		from member
+  		where status != 'N'
+  	</select>
+  	
+  	<select id="selectMemberList" resultMap="memberResultSet">
+		select id, name, nickname, phone, enroll_date, report, max(to_char(visit_time, 'yy-mm-dd')) LAST_VISIT
+	    from member
+	    left join VISIT using(id)
+	    where status != 'N' and
+	    <if test="category == 0">
+	    	MEMBER_TYPE = 'N'
+	    </if>
+	    <if test="category == 1">
+	    	MEMBER_TYPE = 'H'
+	    </if>
+	    <if test="category == 2">
+	    	MEMBER_TYPE = 'A'
+	    </if>
+	    <if test="search != null">
+	    	and id LIKE '%'||#{search}||'%'
+	    </if>
+	    GROUP by (id, name, nickname, phone, enroll_date, report)
+  	</select>
+  	
+  	<select id="enrollCount" resultType="map">
+  		select enroll_date, member_count
+		from (select to_char(enroll_date, 'yy-mm-dd') enroll_date, count(*) member_count
+		      from member
+		      group by to_char(enroll_date, 'yy-mm-dd')
+		      order by enroll_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
   </mapper>
