@@ -77,6 +77,8 @@
       	text-decoration: none;
       	color: black;
       }
+      .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
    
 </head>
@@ -154,7 +156,7 @@
           </thead>
           <tbody>
           		<c:forEach items="${ list }" var="m">
-	            <tr>
+	            <tr class="members">
 	              <td>${ m.id }</td>
 	              <td>${ m.nickName }</td>
 	              <td>${ m.name }</td>
@@ -162,8 +164,8 @@
 	              <td>${ m.enrollDate }</td>
 	              <td>${ m.report }</td>
 	              <td>${ m.lastVisit }</td>
-	              <td><button>경고</button></td>
-	              <td><button>경고</button></td>
+	              <td><button class="mukButton">경고</button></td>
+	              <td><button class="mukButton">정지</button></td>
 	            </tr>
 	            </c:forEach>
           </tbody>
@@ -236,6 +238,19 @@
                     }
                 }
             });
+            
+            const members = document.getElementsByClassName('members');
+           	for(const m of members){
+           		const id = m.querySelector('td').innerText;
+           		const buttons = m.querySelectorAll('button');
+           		buttons[0].addEventListener('click', function(){
+           			location.href = 'waring.me?id=' + id;
+           		});
+				buttons[1].addEventListener('click', function(){
+					location.href = 'stop.me?id=' + id;
+           		});
+           	}
+            
         </script>
 </body>
 </html>
