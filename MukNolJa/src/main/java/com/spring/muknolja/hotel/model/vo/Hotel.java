@@ -35,4 +35,6 @@ public class Hotel {
 	private double avgRating;
 	private double hotelGeoX;
 	private double hotelGeoY;
+	private int emptyHotel;
+	private int maxDistance;
 }

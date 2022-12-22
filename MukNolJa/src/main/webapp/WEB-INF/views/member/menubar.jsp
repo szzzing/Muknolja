@@ -13,6 +13,9 @@
     <style>
     
     	 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+    	 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  		
+  		*{font-family: 'Noto Sans KR', sans-serif;}
     	 .menul{
     	 font-size: 10px;}
     	 .menud{

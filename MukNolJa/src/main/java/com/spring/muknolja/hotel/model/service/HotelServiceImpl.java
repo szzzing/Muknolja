@@ -154,4 +154,9 @@ public class HotelServiceImpl implements HotelService{
 	public ArrayList<AttachedFile> selectHotelImgList(PageInfo pi) {
 		return hDAO.selectHotelImgList(sqlSession, pi);
 	}
+	
+	@Override
+	public ArrayList<Hotel> searchHotelList(HashMap searchMap, PageInfo pi) {
+		return hDAO.searchHotelList(sqlSession, searchMap, pi);
+	}
 }
