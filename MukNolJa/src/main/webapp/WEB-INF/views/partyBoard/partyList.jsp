@@ -109,15 +109,16 @@
 		</table>
 			
 			<div class="input-group" id="input">
-				<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+				<input type="text" class="searchInput1 form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
 				<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 			</div>
 			
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;">
-				<div class="col">
-					<div id="card" class="card card-cover h-95 overflow-hidden\">
+				<div class="col" style="margin-bottom: 30px;">
+					<div id="card" class="card card-cover h-100 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
+					  	<h4 style="margin-bottom: 10px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">저랑 같이 강릉가실분😉어이ㅓㄹ매덜미ㅏ러매렂ㄴ</h4>
 						  <ol class="numbered">
 							  <li>List item one</li>
 							  <li>List item two</li>
@@ -136,111 +137,122 @@
 					</div>
 				</div>
 				
-				<div class="col">
-					<div id="card" class="card card-cover h-95 overflow-hidden\">
+				<div class="col" style="margin-bottom: 30px;">
+					<div id="card" class="card card-cover h-100 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
+					  	<h4 style="margin-bottom: 10px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">저랑 같이 강릉가실분😉어이ㅓㄹ매덜미ㅏ러매렂ㄴ</h4>
 						  <ol class="numbered">
 							  <li>List item one</li>
 							  <li>List item two</li>
 							  <li>List item three</li>
 							  <li>List item four</li>
-							</ol>
-							
-							<table>
-							 	<tr>
-							 		<td><i class="fa-solid fa-users"></i> 5/10</td>
-							 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
-							 	</tr>
-							 </table>
+						 </ol>
+						 
+						 <table>
+						 	<tr>
+						 		<td><i class="fa-solid fa-users"></i> 5/10</td>
+						 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
+						 	</tr>
+						 </table>
+						 
 					  </div>
 					</div>
 				</div>
 				
-				<div class="col">
-					<div id="card" class="card card-cover h-95 overflow-hidden\">
+				<div class="col" style="margin-bottom: 30px;">
+					<div id="card" class="card card-cover h-100 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
+					  	<h4 style="margin-bottom: 10px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">저랑 같이 강릉가실분😉어이ㅓㄹ매덜미ㅏ러매렂ㄴ</h4>
 						  <ol class="numbered">
 							  <li>List item one</li>
 							  <li>List item two</li>
 							  <li>List item three</li>
 							  <li>List item four</li>
-							</ol>
-							
-							<table>
-							 	<tr>
-							 		<td><i class="fa-solid fa-users"></i> 5/10</td>
-							 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
-							 	</tr>
-							 </table>
+						 </ol>
+						 
+						 <table>
+						 	<tr>
+						 		<td><i class="fa-solid fa-users"></i> 5/10</td>
+						 		<td><i class="fa-solid fa-heart"></i> 여자만</td>
+						 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
+						 	</tr>
+						 </table>
+						 
 					  </div>
 					</div>
 				</div>
 				
-				<div class="col">
-					<div id="card" class="card card-cover h-95 overflow-hidden\">
+				<div class="col" style="margin-bottom: 30px;">
+					<div id="card" class="card card-cover h-100 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
+					  	<h4 style="margin-bottom: 10px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">저랑 같이 강릉가실분😉어이ㅓㄹ매덜미ㅏ러매렂ㄴ</h4>
 						  <ol class="numbered">
 							  <li>List item one</li>
 							  <li>List item two</li>
 							  <li>List item three</li>
 							  <li>List item four</li>
-							</ol>
-							
-							<table>
-							 	<tr>
-							 		<td><i class="fa-solid fa-users"></i> 5/10</td>
-							 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
-							 	</tr>
-							 </table>
+						 </ol>
+						 
+						 <table>
+						 	<tr>
+						 		<td><i class="fa-solid fa-users"></i> 5/10</td>
+						 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
+						 	</tr>
+						 </table>
+						 
 					  </div>
 					</div>
 				</div>
 				
-				<div class="col">
-					<div id="card" class="card card-cover h-95 overflow-hidden\">
+				<div class="col" style="margin-bottom: 30px;">
+					<div id="card" class="card card-cover h-100 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
+					  	<h4 style="margin-bottom: 10px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">저랑 같이 강릉가실분😉어이ㅓㄹ매덜미ㅏ러매렂ㄴ</h4>
 						  <ol class="numbered">
 							  <li>List item one</li>
 							  <li>List item two</li>
 							  <li>List item three</li>
 							  <li>List item four</li>
-							</ol>
-							
-							<table>
-							 	<tr>
-							 		<td><i class="fa-solid fa-users"></i> 5/10</td>
-							 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
-							 	</tr>
-							 </table>
+						 </ol>
+						 
+						 <table>
+						 	<tr>
+						 		<td><i class="fa-solid fa-users"></i> 5/10</td>
+						 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
+						 	</tr>
+						 </table>
+						 
 					  </div>
 					</div>
 				</div>
 				
-				<div class="col">
-					<div id="card" class="card card-cover h-95 overflow-hidden\">
+				<div class="col" style="margin-bottom: 30px;">
+					<div id="card" class="card card-cover h-100 overflow-hidden\">
 					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
 					  <div class="card-body">
+					  	<h4 style="margin-bottom:10px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">저랑 같이 강릉가실분😉</h4>
 						  <ol class="numbered">
 							  <li>List item one</li>
 							  <li>List item two</li>
 							  <li>List item three</li>
 							  <li>List item four</li>
-							</ol>
-							
-							<table>
-							 	<tr>
-							 		<td><i class="fa-solid fa-users"></i> 5/10</td>
-							 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
-							 	</tr>
-							 </table>
+						 </ol>
+						 
+						 <table>
+						 	<tr>
+						 		<td><i class="fa-solid fa-users"></i> 5/10</td>
+						 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
+						 	</tr>
+						 </table>
+						 
 					  </div>
 					</div>
 				</div>
-			</div>
+				</div>
 			
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination d-flex justify-content-center">
@@ -261,6 +273,11 @@
 			</nav>
 		
 		</div>
+		
+		<script>
+		
+		
+		</script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

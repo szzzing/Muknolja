@@ -15,7 +15,7 @@
 	.title button{background: #6BB6EC; border-color: #6BB6EC;}
 	.title button:hover{background: white; color: #6BB6EC; border-color: #6BB6EC;}
 	#location1, #location2{border: 1px solid lightgray; border-radius: 5px;}
-	#location1{padding-left: 20px; padding-top: 15px; padding-right: 20px; height: 200px; margin-bottom: 30px;}
+	#location1{padding-left: 10px; padding-top: 15px; padding-right: 20px; height: 180px; margin-bottom: 30px;}
 	#location2{height: 400px;}
 	#location1 button{float: right;}
 	#profile img{border-radius: 50%; width: 50px; height: 50px; margin-bottom: 10px;}
@@ -27,10 +27,10 @@
  	
  	ol.numbered {
 	  list-style: none;
-	  border-left: 3px solid #b3b3b3;
+	  border-left: 3px solid RGB(107, 182, 236,0.7);
 	  counter-reset: numbered-list;
-	  margin-left: 100px;
-	  margin-top: 20px;
+	  margin-left: 50px;
+	  margin-top: 25px;
 	  position: relative;
 	}
 	ol.numbered li {
@@ -44,8 +44,8 @@
 	  margin-left: -3px;
 	}
 	ol.numbered li:before {
-	  background-color: #b3b3b3;
-	  border: 3px solid white;
+	  background-color: #6BB6EC;
+	 
 	  border-radius: 50%;
 	  color: white;
 	  content: counter(numbered-list, decimal);
@@ -54,11 +54,12 @@
 	  font-weight: bold;
 	  width: 30px;
 	  height: 30px;
-	  margin-top: -0.5em;
+	  margin-top: -0.4em;
 	  line-height: 30px;
 	  position: absolute;
 	  left: -17px;
 	  text-align: center;
+	  padding-top:-10px;
 	}
 	
 	#travelReply{margin-top: 30px;}
@@ -85,9 +86,24 @@
 				
 				<!-- 선택목록 -->
 				<div id="location1">
-					<p><i class="fa-solid fa-location-dot"></i> 서울</p>
-					<p>모집인원 5/10</p>
-					<p><i class="fa-solid fa-calendar-days"></i> 2022.12.25~2022.12.27</p>
+					<table>
+						<tr>
+							<td width="30px;" style="text-align: center"><i class="fa-solid fa-location-dot"></i></td>
+							<td>서울</td>
+						</tr>
+						<tr>
+							<td style="text-align: center"><i class="fa-solid fa-users"></i></td>
+							<td>5/10</td>
+						</tr>
+						<tr>
+							<td style="text-align: center"><i class="fa-solid fa-heart"></i></td>
+							<td>여자만</td>
+						</tr>
+						<tr>
+							<td style="text-align: center"><i class="fa-solid fa-calendar-days"></i></td>
+							<td>2022.12.25~2022.12.27</td>
+						</tr>
+					</table>
 					<button type="button" class="btn btn-primary btn-lg">동행참여하기</button>
 				</div>
 				
@@ -101,7 +117,6 @@
 				<div id="profile">
 					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
  					<label style="font-weight: bold;">슬픈고양이</label>
- 					<button type="button" class="btn btn-primary btn-sm" style="font-size: 10px; font-weight: 100; border-radius: 10px;">채팅하기</button>
 				</div>
 				<div id="location2">
 					 <ol class="numbered">

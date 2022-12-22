@@ -25,10 +25,10 @@
 		    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
 		    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 		    },
+		    minDate: new Date(),
 		    autoApply: true,                         // 확인/취소 버튼 사용여부
 		    timePicker24Hour: true,                  // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
-		    timePickerSeconds: true,                 // 초 노출 여부
-// 		    singleDatePicker: true                   // 하나의 달력 사용 여부
+		    timePickerSeconds: true                 // 초 노출 여부
 		});
 	});
 </script>
@@ -38,17 +38,43 @@
 	#title{margin-bottom: 30px;}
  	.compDate label{color: #6BB6EC; font-size: 13px;}
 	#gender label{color: #6BB6EC; font-size: 13px;}
+	#location label{color: #6BB6EC; font-size: 13px;}
 	.compNum input{accent-color: #6BB6EC;}
+	.compNum label{color: #6BB6EC; font-size: 13px;}
 	.content{height: 400px; margin-bottom: 30px;}
-	.content label{font-size: 18px; color: #6BB6EC;}
-	#location1{border: 1px solid lightgray; height: 300px; margin-top: 20px; margin-bottom: 20px; border-radius: 5px;}
-	#location2{border: 1px solid lightgray; height: 355px; border-radius: 5px; overflow-x: auto;}
+	.content label{font-size: 17px; color: #6BB6EC;}
+	.location1{border: 1px solid lightgray; height: 300px; margin-top: 20px; margin-bottom: 20px; border-radius: 5px; padding: 10px; overflow-x: auto;}
+	.searchInfo p{color: lightgray; font-size: 12px;}
+	.searchInfo hr{height: 1px;}
+	.location2{border: 1px solid lightgray; height: 355px; border-radius: 5px; overflow-x: auto;}
+	.location1::-webkit-scrollbar {
+	    width: 8px;  /* 스크롤바의 너비 */
+	}
+	.location1::-webkit-scrollbar-thumb {
+	    height: 30%; /* 스크롤바의 길이 */
+	    background: lightgray; /* 스크롤바의 색상 */
+	    border-radius: 10px;
+	}
+	.location1::-webkit-scrollbar-track {
+	    background: rgba(176, 176, 176, .1);  /*스크롤바 뒷 배경 색상*/
+	}
+	.location2::-webkit-scrollbar {
+	    width: 8px;  /* 스크롤바의 너비 */
+	}
+	.location2::-webkit-scrollbar-thumb {
+	    height: 30%; /* 스크롤바의 길이 */
+	    background: lightgray; /* 스크롤바의 색상 */
+	    border-radius: 10px;
+	}
+	.location2::-webkit-scrollbar-track {
+	    background: rgba(176, 176, 176, .1);  /*스크롤바 뒷 배경 색상*/
+	}
 	ol.numbered {
 	  list-style: none;
-	  border-left: 3px solid #b3b3b3;
+	  border-left: 3px solid RGB(107, 182, 236,0.7);
 	  counter-reset: numbered-list;
-	  margin-left: 100px;
-	  margin-top: 20px;
+	  margin-left: 50px;
+	  margin-top: 25px;
 	  position: relative;
 	}
 	ol.numbered li {
@@ -62,8 +88,8 @@
 	  margin-left: -3px;
 	}
 	ol.numbered li:before {
-	  background-color: #b3b3b3;
-	  border: 3px solid white;
+	  background-color: #6BB6EC;
+	 
 	  border-radius: 50%;
 	  color: white;
 	  content: counter(numbered-list, decimal);
@@ -72,11 +98,12 @@
 	  font-weight: bold;
 	  width: 30px;
 	  height: 30px;
-	  margin-top: -0.5em;
+	  margin-top: -0.4em;
 	  line-height: 30px;
 	  position: absolute;
 	  left: -17px;
 	  text-align: center;
+	  padding-top:-10px;
 	}
 	.mukButton {background: #6BB6EC; color:white; border-color: #6BB6EC;}
     .mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC; width: 100%;}
@@ -91,7 +118,6 @@
 	<div class="container">
 	
 	<br><br><br><br><br><br>
-	
 		<img src="${ contextPath }/resources/img/noImage.png" class="img-fluid" alt="..." id="thumbnail">
 		<input id="myFile" type="file" accept="image/*" style="display:none;">
 	
@@ -103,6 +129,31 @@
 		
 		<!-- 선택 -->
 		<div class="row">
+			<div class="col">
+				<div id="location" class="form-floating">
+					<select id="select"class="form-select" aria-label="Default select example">
+						<option selected disabled>지역</option>
+						<option value="1">서울</option>
+						<option value="2">인천</option>
+						<option value="3">대전</option>
+						<option value="4">대구</option>
+						<option value="5">광주</option>
+						<option value="6">부산</option>
+						<option value="7">울산</option>
+						<option value="8">세종</option>
+						<option value="9">경기</option>
+						<option value="10">강원</option>
+						<option value="11">충북</option>
+						<option value="12">충남</option>
+						<option value="13">경북</option>
+						<option value="14">경남</option>
+						<option value="15">전북</option>
+						<option value="16">전남</option>
+						<option value="17">제주</option>
+					</select>
+					<label for="floatingSelect">지역</label>
+				</div>
+			</div>
 			<div class="col">
 				<div class="compDate form-floating mb-3">
 					<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
@@ -134,42 +185,22 @@
 		<div class="row" style="margin-top: 20px;">
 			<div class="col">
 				<div class="row">
-					<div class="col-md-3">
-						<select id="select"class="form-select" aria-label="Default select example">
-							<option selected>지역</option>
-							<option value="1">One</option>
-							<option value="2">Two</option>
-							<option value="3">Three</option>
-						</select>
-					</div>
 					
 					<div class="col">
 						<div class="input-group" id="input">
-							<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
-							<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+							<input type="text" id="searchInput" class="form-control" placeholder="여행지 검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+							<button class="btn btn-outline-secondary" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
 				</div>
 				
-				<div id="location1">
-					
+				<div id="location1" class="location1">
 				</div>
 			</div>
 			
 			<div class="col">
-				<div id="location2">
+				<div class="location2">
 					<ol class="numbered">
-						<li>List item one</li>
-						<li>List item two</li>
-						<li>List item three</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
 					</ol>
 				</div>
 				
@@ -180,12 +211,13 @@
 		
 		<div class="content form-floating">
 		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none;"></textarea>
-		  <label for="floatingTextarea2">Content</label>
+		  <label for="floatingTextarea2">내용</label>
 		</div>
 		
 		<div class="d-grid gap-2">
 			<button type="submit" class="btn btn-outline-secondary mukButton" style="align:bottom !important">작성하기</button>
  		</div>
+ 		
 		
 		<br><br>
 		
@@ -201,7 +233,6 @@
 	    	$('#myFile').click();
 	    });
 
-	    
 	    const myFile = document.querySelector('#myFile');
 	    const thumbnail = document.querySelector('#thumbnail');
 	    
@@ -213,6 +244,59 @@
 		    	};
 		    	reader.readAsDataURL(myFile.files[0]);
 		    });
+		    
+		    
+		const searchButton = document.getElementById('button-addon2');  
+		const locationDiv = document.getElementById('location1');
+	   	const searchInput = document.getElementById('searchInput');
+		
+	   	searchInput.addEventListener('keypress', function(e){
+	   		if (e.keyCode === '13') {
+	   	        event.preventDefault();
+	   	        searchButton.click();
+	   	    }
+			
+			while(locationDiv.firstChild){
+				locationDiv.removeChild(locationDiv.firstChild);
+			}
+			
+			const keyword = searchInput.value;
+			$.ajax({
+				method: "GET",
+				url: "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=20&listYN=Y&&arrange=A&keyword=" + keyword +"&_type=json",
+				data: {},
+				success: (response) =>{
+					let items = response["response"]["body"]["items"]["item"];
+					
+					var all = '';
+					
+					for(let i = 0; i < items.length; i++){
+						
+						let title = items[i]["title"];
+						let addr = items[i]["addr1"];
+						
+						var span = '<span>' + title + '</span>';
+						var p = '<p>' + addr + '</p>';
+						var searchDiv = '<div class="searchInfo" style="cursor: pointer;">' + span + p +'</div><hr>';
+						
+						document.querySelector('.location1').innerHTML += searchDiv;
+					}
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			});
+			
+   		});
+	   	
+	   	$(document).on('click', '.searchInfo', function(){
+	   		var li = '<li class="numberdLi" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
+	   		document.querySelector('.numbered').innerHTML += li;
+	   	});
+	   	
+	   	$(document).on('click', '.numberdLi', function(){
+	   		this.remove(this);
+	   	});
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
