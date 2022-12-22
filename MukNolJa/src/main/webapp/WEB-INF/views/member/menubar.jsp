@@ -13,9 +13,6 @@
     <style>
     
     	 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
-    	 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-  		
-  		*{font-family: 'Noto Sans KR', sans-serif;}
     	 .menul{
     	 font-size: 10px;}
     	 .menud{
@@ -24,8 +21,8 @@
     	 color:#65647C;}
     	 #room_modal, #createroom_modal, #invite_modal{
                 display: none;
-                width: 300px;
-                height: 400px;
+                width: 350px;
+                height: 500px;
                 padding: 20px 20px;
                 background-color: #fefefe;
                 border: 1px solid #888;
@@ -44,11 +41,12 @@
             
             #chat_modal{
             	display: none;
-                width: 300px;
-                height: 400px;
+                width: 350px;
+                height: 500px;
                 background-color: #fefefe;
                 border: 1px solid #888;
                 border-radius: 3px;
+                padding: 0px;
             }
 
             .modal_close_btn{
@@ -58,11 +56,23 @@
                 text-decoration: none;
                 color: black;
             }
-            #chatList{
-            	max-height: 300px;
+            .chatRoom{
+            	margin: 3px;
+            	border-top: 1px solid RGB(160, 160, 160, 0.5);
+            }
+            #chatTitle{
+            	 border-bottom: 1px solid black; padding: 10px;
+            	 width: 100%; font-weight: bold;
+            }
+            #rooms{
+            	max-height: 420px;
             	overflow: auto;
             }
-            #chatList::-webkit-scrollbar{
+/*             #chatList{ */
+/*             	max-height: 450px; */
+/*             	overflow: auto; */
+/*             } */
+            #rooms::-webkit-scrollbar{
             	width: 8px;
             }
             .friends{
@@ -73,7 +83,7 @@
             	background: lightgray;
             }
             #chatBoxs{
-            	max-height: 300px;
+            	max-height: 400px;
             	overflow: auto;
             }
             #chatBoxs::-webkit-scrollbar{
@@ -82,6 +92,7 @@
             .chatBox{
            		display: inline-block;
             	background: #6BB6EC;
+            	color: white;
             	border-radius: 6px;
             	width: auto;
             	height: auto;
@@ -93,7 +104,7 @@
             	margin: 0px;
             }
             .myChat{
-            	background: lightgray;
+            	background: #B0B0B0;
             	float: right;
             	text-align: right;
             }
@@ -178,12 +189,14 @@
             		<div class="col-1 coco" style="  font-weight:600;"><a href="${ contextPath }/partyList.pa">동행</a></div>
             		<a href="${ contextPath }/reviewList.re"class="col-1 coco" style="  font-weight:600;">후기</a>
             		<div class="col d-none d-sm-block"></div>
+            		<c:if test="${ !empty loginUser }">
             		<div class="col-1 co" style="font-size:25px; margin-top:22px; ">
             			<h3 id="popup_open_btn" class="ch"style="color:#6BB6EC; "><i class="fa-solid fa-comments ic"></i></h3>
             		</div>
+            		</c:if>
             		<div class="col-1 co" style=" font-size:15px; margin-top:22px; margin-right:20px;">
             		 <c:if test="${ empty loginUser }">
-					     <a class="nav-link" style="color:#6BB6EC; font-size: 15px;" href="${contextPath }/loginView.me"><h3 class="ch"style=""><i class="fa-solid fa-circle-user ic"></i></h3></a>
+					     <a class="nav-link" style="color:#6BB6EC; font-size: 15px;" href="${contextPath }/loginView.me"><h3 class="ch"><i class="fa-solid fa-circle-user ic"></i></h3></a>
 					</c:if>		
 					<c:if test="${ !empty loginUser }">
 	            		<button class="buu" style="background:white;color:#6BB6EC; width:50px; font-size:15px;padding-top:0px;font-weight:600; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -210,7 +223,7 @@
 	 <div id="room_modal">
 		<div id="chatList">
 			<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
-			<div class="row text-center" style="border-bottom: 1px solid black;">
+			<div class="row text-center">
 				<div class="col" id="roomBtn"><h4><i class="bi bi-chat-dots"></i></h4></div>
 				<div class="col" id="frndBtn"><h4><i class="bi bi-people"></i></h4></div>
 			</div>
@@ -226,8 +239,8 @@
      
      <div id="chat_modal">
      	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
-     	<div class="row">
-     		<div class="col text-center" style="border-bottom: 1px solid black; padding: 10px;">
+     	<div class="row" style="--bs-gutter-x: 0rem;">
+     		<div class="col text-center" id="chatTitle">
      			<b id="chatTitle">채팅방 이름</b>
      		</div>
      	</div>
@@ -269,7 +282,7 @@
     <div id="invite_modal">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
-    		<div class="col">
+    		<div class="col" style="margin-top: 20px;">
     			<div class = "input-group input-group-sm">
     				<input type = "text" class = "form-control" id="searchNick" placeholder = "닉네임">
 	  				<div class = "input-group-btn">
@@ -467,7 +480,7 @@
       				success: (data) => {
       					document.getElementById('rooms').innerHTML = '';
       					for(const c of data){
-      						let str = '<div class="row chatRoom" style="border-bottom: 1px solid black;">';
+      						let str = '<div class="row chatRoom">';
       						str += '<div class="col">';
       						str += '<b style="padding-left:10px;">' + c.roomName + '</b>';
       						str += '<div class="messageCheck"><i class="bi bi-chat-dots"></i></div><br>';

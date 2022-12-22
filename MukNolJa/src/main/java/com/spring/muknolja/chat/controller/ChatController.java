@@ -26,14 +26,12 @@ public class ChatController {
     //"/pub/chat/enter"
     @MessageMapping(value = "/chat/enter")
     public void enter(ChatMessage message){
-    	System.out.println("gegetWriter : " + message.getSenderId());
         message.setChatContent(message.getNickName() + "님이 채팅방에 참여하였습니다.");
         template.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
     }
 
     @MessageMapping(value = "/chat/message")
     public void message(ChatMessage message){
-    	System.out.println("message:"  + message);
     	cService.insertMessage(message);
         template.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
     }

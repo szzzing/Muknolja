@@ -56,7 +56,6 @@ public class ChatroomController {
     	String id = ((Member)session.getAttribute("loginUser")).getId();
     	ArrayList<ChatRoom> list = cService.selectChatRoomList(id);
     	
-    	System.out.println(list);
     	Gson gson = new Gson();
     	
     	String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
