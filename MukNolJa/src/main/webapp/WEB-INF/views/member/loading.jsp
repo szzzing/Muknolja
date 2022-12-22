@@ -48,6 +48,11 @@
 		animation: backgroundChange1 30s ease-in-out infinite; overflow:hidden;
 		
 		}
+		.weather4{
+		position:absolute; width:100vw; height:100vh; background-size:150% 100%; background-repeat: no-repeat;
+		animation: backgroundChange1 30s ease-in-out infinite; overflow:hidden;
+		
+		}
 		@font-face {
     font-family: 'OTWelcomeRA';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
@@ -69,7 +74,7 @@
     <div class="weather" style=" background-image: url('${contextPath }/resources/img/few.jpg'); "></div>
     </c:if> 
     <c:if test="${ weather eq '01d' || weather eq '01n'}">
-    <div class="weather"  style="background-image: url('${contextPath }/resources/img/sun1.jpg'); "></div>
+    <div class="weather4"  style="background-image: url('${contextPath }/resources/img/sun1.jpg'); "></div>
     </c:if> 
     <c:if test="${ weather eq '04d' || weather eq '04n' }">
     <div class="weather" style=" background-image: url('${contextPath }/resources/img/cloud.jpg'); "></div>

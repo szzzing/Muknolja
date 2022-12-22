@@ -40,23 +40,20 @@
           			<div style=" height:100%; display:inLine-block; ">
           				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" onclick= "location.href='${contextPath }/home.do'">MUKNOLJA</div>
             				<div style="float:left;  margin-top: 4vh;">
-		            			<form action="${ contextPath }/findId2.me">
+		            			
 		            				<label for="email" style="float:left; font-size:20px;">이메일</label>
 		            				<br>
-		            				<input type="text" name="email" id="email" class="email" style="width:500px; font-size:20px; padding:10px; padding-top:15px">
+		            				<input type="text" value="${ id }" readonly name="email" id="email" class="email" style="width:500px; font-size:20px; padding:10px; padding-top:15px">
 		            				<br>
-		            				<div style="margin-top:2vh;">
-			            				<input type="text" name="word" id="word"  style="width:350px; font-size:20px; float:left; padding:10px; padding-top:15px">
-			            				<button type="button" id="emailBu" style="height:59px; width:145px; float:right; border-radius:10px; border: 1px solid lightgrey; padding-top:8px;">인증번호 전송</button>
-			            			</div>
+		            	
+			            		
 			            			
-			            			<div style="margin-left: -200px;margin-top:90px;">인증번호 발송에는 일정 시간이 소요될수 있습니다.</div>
+			            			
 			            			
 			            			<div style="position:absolute; top:85%; margin-left:0vw;">
-			            			<button type="button" id="bobo" style="width:500px;  border-radius:10px; height:51px; border: 1px solid lightgrey;padding-top:8px;">다음</button>
-			            			<div style="margin-top:2vh; margin-left:-10px"><i class="bi bi-exclamation-circle-fill" style="color:red;"></i>회원가입시 등록한 이메일을 이용해주세요</div>
+			            			
 			            			</div>
-		            			</form>
+		            			
 		            		</div>
             		</div>
             		</div>
@@ -64,70 +61,7 @@
             	
             </div>
         </div>
-       <script>
-  		var email = false;
-  	window.onload = ()=>{
-		
-		
-		var $checkEmail = $("#emailBu"); // 인증번호 발송 버튼
-		var $memailconfirm = $("#word"); // 인증번호 확인input
-		var $memailconfirmTxt = $("#memailconfirmTxt"); // 인증번호 확인 txt
-		var $button = $("button");
-	// 이메일 인증번호
-	$checkEmail.click(function() {
-		console.log(document.getElementById("email").value);
-		$.ajax({
-			url: '${ contextPath}/checkEmail.me',
-			data: {"email" : document.getElementById("email").value},
-			success: (data)=>{
-				console.log(data);
-				if(data.trim() == 'no'){
-					$.ajax({
-						type : "POST",
-						url : '${ contextPath}/pleaseMail.me',
-						data : {
-							"email" : document.getElementById("email").value
-						},
-						success : function(data){
-							alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
-							console.log("data : "+data);
-							chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt);
-						}
-					});
-			
-				function chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt){
-					$('#word').blur(function(){
-						if (data != $memailconfirm.val()) { //
-							
-							alert("인증번호가 일치하지 않습니다");
-							
-						} else { // 아니면 중복아님
-							console.log(email);
-							email = true;
-						}
-					});
-				}
-					
-				}else if(data.trim() == 'yes'){
-					alert("회원정보에 존재하지 않는 이메일 입니다.");
-				}
-			},
-			error: (data)=>{
-				alert("존재하지 않는 이메일 입니다");
-			}
-			
-		});
-  	});
-  	}
- 	
-	$( '#bobo').click(function(){
-		if(email){
-			$('form').submit();
-		}
-		
-	});
-  	</script>
-    
+     
   	
     
   </body>

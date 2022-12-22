@@ -54,7 +54,7 @@
 			            	
 		            			</form>
 		            			<div style="padding:10px; float:left;  ">
-		            				<a href="${contextPath}/findId.me">아이디 찾기</a> <a style="margin-left:22px;">비밀번호 찾기</a> 
+		            				<a href="${contextPath}/findId.me">아이디 찾기</a> <a href="${contextPath}/findId1.me"style="margin-left:22px;">비밀번호 찾기</a> 
 		            			</div>
 		            			<div style="display:flex; margin-top:20px; float:right;">
 		          					<div ><img onclick="kakaoLogin();" alt="1" src="${contextPath }/resources/img/kakao.png" width=50px; height=50px; style="margin-left: 20px" >
@@ -92,6 +92,9 @@
 <!-- 카카오 스크립트 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
+if("${ noLogin }" == "no"){
+	alert("입력한 회원 정보를 다시 확인해주세요")
+}
 Kakao.init('d5a279c4301e9b4c3bdaf215dfa378af'); //발급받은 키 중 javascript키를 사용해준다.
 console.log(Kakao.isInitialized()); // sdk초기화여부판단
 //카카오로그인
