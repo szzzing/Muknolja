@@ -73,6 +73,12 @@
       tr, th, td{
       	text-align: center;
       }
+      a{
+      	text-decoration: none;
+      	color: black;
+      }
+      .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
    
 </head>
@@ -117,34 +123,43 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">방문자 통계</h1>
+        <h1 class="h2">광고 관리</h1>
       </div>
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>금일 방문자</h2>
-      <div class="table-responsive">
+      <h2>광고 목록</h2>
+      <div style="float:right; margin: 10px;">
+      	<form action="adManagement.me">
+      		<div class = "input-group input-group-sm" id="sendMessage" style="margin-top: 10px;">
+      			<input type="hidden" name="category" value="${ category }">
+	            <input type = "text" class = "form-control" id="search" name="search" placeholder = "제목">
+		        <div class = "input-group-btn">
+		            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+		  		</div>
+     	 	</div>
+     	 </form>
+      <a href="adManagement.me?category=0"> 호텔 </a>|<a href="adManagement.me?category=1"> 후기 </a>|<a href="adManagement.me?category=2"> 동행 </a>|<a href="adManagement.me?category=3"> 여행 </a>
+      </div>
+      <div class="table-responsive" style="clear: both;">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">아이디</th>
-              <th scope="col">닉네임</th>
-              <th scope="col">이름</th>
-              <th scope="col">전화번호</th>
-              <th scope="col">가입일</th>
+              <th scope="col">게시판</th>
+              <th scope="col">광고비</th>
+              <th scope="col">시작일</th>
+              <th scope="col">마감일</th>
             </tr>
           </thead>
           <tbody>
-          	
-<%--           	<c:forEach items="${ today }" var="m"> --%>
-<!-- 	            <tr> -->
-<%-- 	              <td>${ m.id }</td> --%>
-<%-- 	              <td>${ m.nickName }</td> --%>
-<%-- 	              <td>${ m.name }</td> --%>
-<%-- 	              <td>${ m.phone }</td> --%>
-<%-- 	              <td>${ m.enrollDate }</td> --%>
-<!-- 	            </tr> -->
-<%--             </c:forEach> --%>
+          	<c:forEach items="${ aList }" var="a">
+	            <tr>
+	              <td>${ a.boardType }</td>
+	              <td>${ a.price }</td>
+	              <td>${ a.start }</td>
+	              <td>${ a.deadline }</td>
+	            </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>
@@ -163,12 +178,14 @@
                 data: { // 차트에 들어갈 데이터
                     labels: [
                         //x 축
+                    	'${ incomeCount[6].START_DATE }','${ incomeCount[5].START_DATE }','${ incomeCount[4].START_DATE }','${ incomeCount[3].START_DATE }','${ incomeCount[2].START_DATE }','${ incomeCount[1].START_DATE }','${ incomeCount[0].START_DATE }'
                     ],
                     datasets: [
                         { //데이터
-                            label: '방문자', //차트 제목
-                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            label: '광고수입', //차트 제목
+                            fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                             data: [
+                            	'${ incomeCount[6].COUNT }','${ incomeCount[5].COUNT }','${ incomeCount[4].COUNT }','${ incomeCount[3].COUNT }','${ incomeCount[2].COUNT }','${ incomeCount[1].COUNT }','${ incomeCount[0].COUNT }'
                             ],
                             backgroundColor: [
                                 //색상

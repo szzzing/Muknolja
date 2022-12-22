@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.spring.muknolja.common.model.vo.AD;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
@@ -270,7 +271,39 @@ public class MemberController {
 		}
 		
 		@RequestMapping("adManagement.me")
-		public String adManagement() {
+		public String adManagement(@RequestParam(value="category", required=false) Integer cate, @RequestParam(value="search", required=false) String search, Model model) {
+			
+			int category = 0;
+			if(cate != null && cate > 0 && cate <= 3) {
+				category = cate;
+			}
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("category", category);
+			map.put("search", search);
+			
+			ArrayList<AD> aList = mService.selectADList(map);
+			
+			for(AD a : aList) {
+				String boardType = a.getBoardType();
+				
+				if(boardType.equals("H")) {
+					a.setBoardType("호텔");
+				} else if(boardType.equals("R")) {
+					a.setBoardType("후기");
+				} else if(boardType.equals("P")) {
+					a.setBoardType("동행");
+				} else if(boardType.equals("T")) {
+					a.setBoardType("여행");
+				}
+			}
+			
+			ArrayList<Map<String, Integer>> incomeCount = mService.incomeCount();
+			
+			model.addAttribute("aList", aList);
+			model.addAttribute("incomeCount", incomeCount);
+			model.addAttribute("category", category);
+		
 			return "adManagement";
 		}
 		

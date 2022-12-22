@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.spring.muknolja.common.model.vo.AD;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.vo.Member;
@@ -53,5 +54,9 @@ public interface MemberService {
 	int boardListCount();
 
 	ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi);
+
+	ArrayList<Map<String, Integer>> incomeCount();
+
+	ArrayList<AD> selectADList(HashMap<String, Object> map);
 
 }
