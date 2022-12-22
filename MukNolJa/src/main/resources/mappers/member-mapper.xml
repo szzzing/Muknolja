@@ -152,4 +152,47 @@
   		set status = 'S'
   		where id = #{id}
   	</update>
+  	
+  	<select id="bCount" resultType="map">
+  		select *
+		from (select to_char(BOARD_CREATE_DATE, 'mm.dd') create_date, count(*) count
+		      from board
+		      group by to_char(BOARD_CREATE_DATE, 'mm.dd')
+		      order by create_date desc)
+		where rownum <![CDATA[<=]]> 7
+  	</select>
+  	
+  	<select id="boardListCount" resultType="_int">
+  		select count(*)
+  		from board
+  		where board_status = 'Y'
+  	</select>
+  	
+  	<select id="selectBoardList" resultMap="BoardResultSet">
+  		select *
+  		from board
+  		where board_status = 'Y' and
+  		<if test="category == 0">
+  			BOARD_TYPE = 'R'
+  		</if>
+  		<if test="category == 1">
+  			BOARD_TYPE = 'P'
+  		</if>
+  		<if test="search != null">
+	    	and BOARD_TITLE LIKE '%'||#{search}||'%'
+	    </if>
+  	</select>
+  	
+  	<resultMap type="Board" id="BoardResultSet">
+  		<id column="BOARD_ID" property="boardId"/>
+  		<result column="BOARD_WRITER" property="boardWriter"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="BOARD_COURSE" property="boardCourse"/>
+  		<result column="BOARD_TITLE" property="boardTitle"/>
+  		<result column="BOARD_CONTENT" property="boardContent"/>
+  		<result column="BOARD_CREATE_DATE" property="createDate"/>
+  		<result column="BAORD_MODIFY_DATE" property="modifyDate"/>
+  		<result column="BOARD_AREA" property="boardArea"/>
+  		<result column="BOARD_STATUS" property="boardStatus"/>
+  	</resultMap>
   </mapper>

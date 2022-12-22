@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.dao.MemberDAO;
 import com.spring.muknolja.member.model.vo.Member;
@@ -71,7 +72,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String findId(String email) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -83,7 +83,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updateMember(Member m) {
-		// TODO Auto-generated method stub
 		return mDAO.updateMember(sqlSession, m);
 	}
 
@@ -109,6 +108,21 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int stop(String id) {
 		return mDAO.stop(sqlSession, id);
+	}
+
+	@Override
+	public ArrayList<Map<String, Integer>> bCount() {
+		return mDAO.bCount(sqlSession);
+	}
+
+	@Override
+	public int boardListCount() {
+		return mDAO.boardListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi) {
+		return mDAO.selectBoardList(sqlSession, map, pi);
 	}
 
 }

@@ -73,6 +73,12 @@
       tr, th, td{
       	text-align: center;
       }
+      a{
+      	text-decoration: none;
+      	color: black;
+      }
+      .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
    
 </head>
@@ -87,7 +93,7 @@
             <a class="nav-link active" aria-current="page" href="adminPage.me">
               <i class="bi bi-house-door"></i>
               <span data-feather="home" class="align-text-bottom"></span>
-              방문자 통계
+              방문자통계
             </a>
           </li>
           <li class="nav-item">
@@ -101,14 +107,14 @@
             <a class="nav-link" href="boardManagement.me">
               <i class="bi bi-clipboard-data"></i>
               <span data-feather="shopping-cart" class="align-text-bottom"></span>
-              게시글 관리
+              게시글관리
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="adManagement.me">
               <i class="bi bi-camera-video"></i>
               <span data-feather="users" class="align-text-bottom"></span>
-              광고 관리
+              광고관리
             </a>
           </li>
         </ul>
@@ -117,34 +123,48 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">방문자 통계</h1>
+        <h1 class="h2">게시글관리</h1>
       </div>
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>금일 방문자</h2>
-      <div class="table-responsive">
+      <h2>게시글 목록</h2>
+      <div style="float:right; margin: 10px;">
+      	<form action="boardManagement.me">
+      		<div class = "input-group input-group-sm" id="sendMessage" style="margin-top: 10px;">
+      			<input type="hidden" name="category" value="${ category }">
+	            <input type = "text" class = "form-control" id="search" name="search" placeholder = "제목">
+		        <div class = "input-group-btn">
+		            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
+		  		</div>
+     	 	</div>
+     	 </form>
+      <a href="boardManagement.me?category=0"> 동행게시글 </a>|<a href="boardManagement.me?category=1"> 후기게시글 </a>|<a href="boardManagement.me?category=2"> 신고관리 </a>
+      </div>
+      <div class="table-responsive" style="clear: both;">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">아이디</th>
-              <th scope="col">닉네임</th>
-              <th scope="col">이름</th>
-              <th scope="col">전화번호</th>
-              <th scope="col">가입일</th>
+              <th scope="col">번호</th>
+              <th scope="col">제목</th>
+              <th scope="col">작성자</th>
+              <th scope="col">신고</th>
+              <th scope="col">작성일</th>
             </tr>
           </thead>
           <tbody>
           	
-<%--           	<c:forEach items="${ today }" var="m"> --%>
-<!-- 	            <tr> -->
-<%-- 	              <td>${ m.id }</td> --%>
-<%-- 	              <td>${ m.nickName }</td> --%>
-<%-- 	              <td>${ m.name }</td> --%>
-<%-- 	              <td>${ m.phone }</td> --%>
-<%-- 	              <td>${ m.enrollDate }</td> --%>
-<!-- 	            </tr> -->
-<%--             </c:forEach> --%>
+          	<c:forEach items="${ bList }" var="b">
+	            <tr>
+	              <td>${ b.boardId }</td>
+	              <td>${ b.boardTitle }</td>
+	              <td>${ b.boardWriter }</td>
+	              <td>${ b.createDate }</td>
+	              <td>${ b.createDate }</td>
+	              <td><button class="mukButton">삭제</button></td>
+		          <td><button class="mukButton">상세</button></td>
+	            </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>
@@ -163,12 +183,14 @@
                 data: { // 차트에 들어갈 데이터
                     labels: [
                         //x 축
+                    	'${ bCount[6].CREATE_DATE }','${ bCount[5].CREATE_DATE }','${ bCount[4].CREATE_DATE }','${ bCount[3].CREATE_DATE }','${ bCount[2].CREATE_DATE }','${ bCount[1].CREATE_DATE }','${ bCount[0].CREATE_DATE }'
                     ],
                     datasets: [
                         { //데이터
-                            label: '방문자', //차트 제목
-                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            label: '게시글 작성', //차트 제목
+                            fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                             data: [
+                            	'${ bCount[6].COUNT }','${ bCount[5].COUNT }','${ bCount[4].COUNT }','${ bCount[3].COUNT }','${ bCount[2].COUNT }','${ bCount[1].COUNT }','${ bCount[0].COUNT }'
                             ],
                             backgroundColor: [
                                 //색상

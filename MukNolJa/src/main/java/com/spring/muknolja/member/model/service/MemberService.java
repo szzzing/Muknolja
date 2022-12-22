@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
@@ -46,5 +47,11 @@ public interface MemberService {
 	int waring(String id);
 
 	int stop(String id);
+
+	ArrayList<Map<String, Integer>> bCount();
+
+	int boardListCount();
+
+	ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi);
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.member.model.service.MemberService;
@@ -44,6 +45,9 @@ public class MemberController {
 		Member loginUser = mService.login(m);
 
 		String encPwd = bcrypt.encode(m.getPwd());
+		
+		System.out.println(bcrypt);
+		System.out.println(loginUser);
 
 		if (bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
 			session.setAttribute("loginUser", loginUser);
@@ -233,7 +237,35 @@ public class MemberController {
 		}
 		
 		@RequestMapping("boardManagement.me")
-		public String boardManagement() {
+		public String boardManagement(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="category", required=false) Integer cate,
+									  @RequestParam(value="search", required=false) String search, Model model) {
+			
+			int category = 0;
+			if(cate != null && cate > 0 && cate <= 2) {
+				category = cate;
+			}
+			
+			int currentPage = 1;
+			if(page != null && page > 1) {
+				currentPage = page;
+			}
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("category", category);
+			map.put("search", search);
+			
+			int listCount = mService.boardListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 30);
+			
+			ArrayList<Board> bList = mService.selectBoardList(map, pi);
+			
+			ArrayList<Map<String, Integer>> bCount = mService.bCount();
+			
+			model.addAttribute("bCount", bCount);
+			model.addAttribute("bList", bList);
+			model.addAttribute("category", category);
+			
 			return "boardManagement";
 		}
 		
