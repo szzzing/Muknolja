@@ -130,7 +130,8 @@
 					</c:if>
 				</h1>
 				<h4 class="fw-bold pb-3">
-					<i class="fa-solid fa-star" style="color:#FFD600"></i><span class="avgRating"></span>
+					<i class="fa-solid fa-star" style="color:#FFD600"></i>
+					<span class="avgRating"></span>
 				</h4>
 				<div class="mt-1 mb-1">${hotel.hotelIntro }</div>
 				<table class="mt-3 mb-3">

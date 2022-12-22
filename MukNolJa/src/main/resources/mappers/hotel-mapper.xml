@@ -197,16 +197,38 @@
 			min_price(hotel_id) as min_price,
 			avg_rating(hotel_id) as avg_rating,
 			empty_hotel(#{checkinDate}, #{checkoutDate}, hotel_id) as empty_hotel
-			<if test="maxDistance!=null">
+			<if test="maxDistance!=0">
 				, DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), 126.950305407863, 37.5632043013128) as max_distance
 			</if>
 		from hotel
 		where hotel_status='Y'
-		<if test="maxPrice!=null">
+		<if test="maxPrice!=0">
 			and min_price(hotel_id)<![CDATA[<#{maxPrice}]]>
 		</if>
-		<if test="maxDistance!=null">
+		<if test="maxDistance!=0">
 			and DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), 126.950305407863, 37.5632043013128)<![CDATA[<#{maxDistance}]]>
+		</if>
+		<if test="star!=null">
+			and star in
+			<foreach collection="star" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		</if>
+		<if test='wifi.equals("Y")'>
+			and wifi='Y'
+		</if>
+		<if test='breakfast.equals("Y")'>
+			and breakfast='Y'
+		</if>
+		<if test='amenity.equals("Y")'>
+			and amenity='Y'
+		</if>
+		<if test='park.equals("Y")'>
+			and park='Y'
+		</if>
+		<if test='swim.equals("Y")'>
+			and swim='Y'
+		</if>
+		<if test='fitness.equals("Y")'>
+			and fitness='Y'
 		</if>
 		order by hotel_id desc
 	</select>
@@ -217,6 +239,44 @@
 			join attached_file using(file_id)
 			join hotel using(hotel_id)
 		where hotel_status='Y' and file_thumbnail='Y'
+		order by hotel_id desc
+	</select>
+	
+	
+	<select id="searchHotelImgList" resultMap="attachedFileResultSet">
+		select *
+		from hotel_img
+			join attached_file using(file_id)
+			join hotel using(hotel_id)
+		where hotel_status='Y' and file_thumbnail='Y'
+		<if test="maxPrice!=0">
+			and min_price(hotel_id)<![CDATA[<#{maxPrice}]]>
+		</if>
+		<if test="maxDistance!=0">
+			and DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), 126.950305407863, 37.5632043013128)<![CDATA[<#{maxDistance}]]>
+		</if>
+		<if test="star!=null">
+			and star in
+			<foreach collection="star" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		</if>
+		<if test='wifi.equals("Y")'>
+			and wifi='Y'
+		</if>
+		<if test='breakfast.equals("Y")'>
+			and breakfast='Y'
+		</if>
+		<if test='amenity.equals("Y")'>
+			and amenity='Y'
+		</if>
+		<if test='park.equals("Y")'>
+			and park='Y'
+		</if>
+		<if test='swim.equals("Y")'>
+			and swim='Y'
+		</if>
+		<if test='fitness.equals("Y")'>
+			and fitness='Y'
+		</if>
 		order by hotel_id desc
 	</select>
 	

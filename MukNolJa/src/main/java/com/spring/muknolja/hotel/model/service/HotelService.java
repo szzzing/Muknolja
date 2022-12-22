@@ -67,4 +67,6 @@ public interface HotelService {
 
 	ArrayList<Hotel> searchHotelList(HashMap searchMap, PageInfo pi);
 
+	ArrayList<AttachedFile> searchHotelImgList(HashMap searchMap, PageInfo pi);
+
 }
