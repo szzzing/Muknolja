@@ -29,7 +29,7 @@
             <div class="col" style="width:100vw; height:80px; display:inLine-block; background: white; border-bottom:2px solid lightgrey;" >
             	<div style="width:height:80px; display:inLine-block; ">
             		
-            			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">아이디찾기</div>
+            			<div style="margin-top: 20px; font-size: 35px; font-weight:600; text-align:center;">비밀번호 찾기</div>
             		
             	</div>
             </div>
@@ -38,9 +38,14 @@
             	<div class="col"style=" height:100%; ">
             		<div style=" height:100%; background:white;display:inLine-block;">
           			<div style=" height:100%; display:inLine-block; ">
-          				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" >MUKNOLJA</div>
-            				<div style="float:left;  margin-top: 4vh;">
-		            			<form >
+          				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" onclick= "location.href='${contextPath }/home.do'">MUKNOLJA</div>
+            				<div style="float:left;  margin-top: 2vh;">
+		            			<form action="${ contextPath }/changePwd.me">
+		            				<label for="id" style="float:left; font-size:20px;">아이디</label>
+		            				<br>
+		            				<input type="text" name="id" id="id" class="id" style="width:500px; font-size:20px; padding:10px; padding-top:15px">
+		            				<br>
+		            				<br>
 		            				<label for="email" style="float:left; font-size:20px;">이메일</label>
 		            				<br>
 		            				<input type="text" name="email" id="email" class="email" style="width:500px; font-size:20px; padding:10px; padding-top:15px">
@@ -53,7 +58,7 @@
 			            			<div style="margin-left: -200px;margin-top:90px;">인증번호 발송에는 일정 시간이 소요될수 있습니다.</div>
 			            			
 			            			<div style="position:absolute; top:85%; margin-left:0vw;">
-			            			<button type="button" style="width:500px;  border-radius:10px; height:51px; border: 1px solid lightgrey;padding-top:8px;">다음</button>
+			            			<button type="button" id="bobo" style="width:500px;  border-radius:10px; height:51px; border: 1px solid lightgrey;padding-top:8px;">다음</button>
 			            			<div style="margin-top:2vh; margin-left:-10px"><i class="bi bi-exclamation-circle-fill" style="color:red;"></i>회원가입시 등록한 이메일을 이용해주세요</div>
 			            			</div>
 		            			</form>
@@ -64,8 +69,7 @@
             	
             </div>
         </div>
-       
-  	<script>
+   	<script>
   		var email = false;
   	window.onload = ()=>{
 		
@@ -82,7 +86,7 @@
 			data: {"email" : document.getElementById("email").value},
 			success: (data)=>{
 				console.log(data);
-				if(data.trim() == 'yes'){
+				if(data.trim() == 'no'){
 					$.ajax({
 						type : "POST",
 						url : '${ contextPath}/pleaseMail.me',
@@ -97,20 +101,45 @@
 					});
 			
 				function chkEmailConfirm(data, $memailconfirm, $memailconfirmTxt){
-					$button.click(function(){
+					$( '#bobo').click(function(){
 						if (data != $memailconfirm.val()) { //
-							emconfirmchk = false;
+							
 							alert("인증번호가 일치하지 않습니다");
 							
 						} else { // 아니면 중복아님
+							console.log(email);
+							email = true;
+							if(email){
+								$.ajax({
+									type : "POST",
+									url : '${ contextPath}/checkId.me',
+									data : {
+										"id" : document.getElementById("id").value
+									},
+									success : function(data){
+										console.log(data);
+										if(data.trim() == 'no'){
+											$('form').submit();
+										}else{
+											alert('등록되지 않은 아이디 입니다.');
+										}
+										},
+										error: (data)=>{
+											alert("존재하지 않는 이메일 입니다");
+										}
+										
+							});
+							}else{
+								alert('이메일 인증을 해주세요');
+							}
 							
-							location.href = "${ contextPath }/findId.me?email=" + document.getElementById("email").value;
 						}
+						
 					});
 				}
 					
-				}else if(data.trim() == 'no'){
-					alert("중복된 이메일 입니다");
+				}else if(data.trim() == 'yes'){
+					alert("회원정보에 존재하지 않는 이메일 입니다.");
 				}
 			},
 			error: (data)=>{
@@ -118,11 +147,10 @@
 			}
 			
 		});
-  	});
+	});
   	}
- 	
-		
   	</script>
+    
     
   </body>
 </html>

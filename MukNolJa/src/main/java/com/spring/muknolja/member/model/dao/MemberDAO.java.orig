@@ -55,15 +55,7 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitList");
 	}
 
-	public String selectPwd(SqlSessionTemplate sqlSession, String id) {
-		return sqlSession.selectOne("memberMapper.selectPwd", id);
-	}
-
-	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
-		// TODO Auto-generated method stub
-		return sqlSession.update("memberMapper.updateMember", m);
-	}
-
+<<<<<<< HEAD
 	public int memberListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("memberMapper.memberListCount", sqlSession);
 	}
@@ -85,16 +77,15 @@ public class MemberDAO {
 
 	public int stop(SqlSessionTemplate sqlSession, String id) {
 		return sqlSession.update("memberMapper.stop", id);
+=======
+	public String selectPwd(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("memberMapper.selectPwd", id);
 	}
 
-	public int changePassword(SqlSessionTemplate sqlSession, Member m) {
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("memberMapper.changePassword",m);
-	}
-
-	public String selectEid(SqlSessionTemplate sqlSession, String email) {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("memberMapper.selectEid",email);
+		return sqlSession.update("memberMapper.updateMember", m);
+>>>>>>> 찾기
 	}
 
 }

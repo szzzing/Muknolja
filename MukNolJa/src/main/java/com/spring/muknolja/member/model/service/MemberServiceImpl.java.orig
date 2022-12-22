@@ -76,17 +76,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public String selectpwd(String id) {
-		
-		return mDAO.selectPwd(sqlSession, id);
-	}
-
-	@Override
-	public int updateMember(Member m) {
-		// TODO Auto-generated method stub
-		return mDAO.updateMember(sqlSession, m);
-	}
-
+<<<<<<< HEAD
 	public int memberListCount() {
 		return mDAO.memberListCount(sqlSession);
 	}
@@ -109,18 +99,17 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int stop(String id) {
 		return mDAO.stop(sqlSession, id);
+=======
+	public String selectpwd(String id) {
+		
+		return mDAO.selectPwd(sqlSession, id);
 	}
 
 	@Override
-	public int changePassword(Member m) {
+	public int updateMember(Member m) {
 		// TODO Auto-generated method stub
-		return mDAO.changePassword(sqlSession, m);
-	}
-
-	@Override
-	public String selectEid(String email) {
-		// TODO Auto-generated method stub
-		return mDAO.selectEid(sqlSession,email);
+		return mDAO.updateMember(sqlSession, m);
+>>>>>>> 찾기
 	}
 
 }

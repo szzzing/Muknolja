@@ -101,6 +101,7 @@
 		where rownum <![CDATA[<=]]> 7
   	</select>
   	
+<<<<<<< HEAD
   	<select id="memberListCount" resultType="_int">
   		select count(*)
   		from member
@@ -136,11 +137,6 @@
 		where rownum <![CDATA[<=]]> 7
   	</select>
   	
-  	<update id="updateMember">
-  		update member
-  		set pwd=#{pwd} , NICKNAME=#{nickName}, phone=#{phone}, address=#{address}
-  		WHERE ID = #{id}
-  	</update>
   	<update id="waring">
   		update member
   		set report = report + 1
@@ -151,15 +147,11 @@
   		update member
   		set status = 'S'
   		where id = #{id}
-  	</update>
-  	<update id="changePassword">
+=======
+  	<update id="updateMember">
   		update member
-  		set pwd=#{pwd} 
+  		set pwd=#{pwd} , NICKNAME=#{nickName}, phone=#{phone}, address=#{address}
   		WHERE ID = #{id}
+>>>>>>> 찾기
   	</update>
-  	<select id="selectEid">
-  		select id
-  		from member
-  		where email=#{email}
-  	</select>
   </mapper>

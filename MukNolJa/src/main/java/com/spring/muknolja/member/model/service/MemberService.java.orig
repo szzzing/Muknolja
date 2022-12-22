@@ -33,10 +33,7 @@ public interface MemberService {
 
 	ArrayList<Map<String, Integer>> selectVisitList();
 
-	String selectpwd(String id);
-
-	int updateMember(Member m);
-
+<<<<<<< HEAD
 	int memberListCount();
 
 	ArrayList<Member> selectMemberList(PageInfo pi, HashMap<String, Object> map);
@@ -46,9 +43,10 @@ public interface MemberService {
 	int waring(String id);
 
 	int stop(String id);
+=======
+	String selectpwd(String id);
 
-	int changePassword(Member m);
-
-	String selectEid(String email);
+	int updateMember(Member m);
+>>>>>>> 찾기
 
 }
