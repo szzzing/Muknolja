@@ -13,7 +13,7 @@
 		.travelInfo a{color: black; font-size: 25px; text-decoration: none;}
 		.travelInfo p{color: gray; font-size: 15px; margin-top: 20px;}
 		hr{margin: auto;}
-		#hr1{height: 2px;}
+		#hr1, #hr2{height: 1px; color: lightgray;}
 		#num{margin: auto;}
 		#num td:first-child{text-align:right;}
 		#num td:nth-child(2){text-align:right;}
@@ -26,51 +26,51 @@
 		#input{width: 400px;}
 		#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 		#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
-		
-		
-		
-		.ur{
-		  margin-top:5%;
-		  box-shadow: 0px 8px 8px 8px rgba(0,0,0,0.1);
-		  margin-left:0px;
-		  margin-top: 50px;
-	      margin-bottom: 50px;
-	      margin-left:auto; 
-	      margin-right:auto;
-	      cursor: pointer;
-	      padding-left: 0;
+
+	 	.ur{
+			 box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.3);
+			 padding-left:0px;
+			 padding-bottom:0px;
+			 margin-left:0px;
+			 border-radius:10px;
+			 border: 2px solid  RGB(107, 182, 236, 0.3);
+			 margin-top: 30px;
+			 margin-bottom: 30px;
+			 cursor: pointer;
 		}
 		li{list-style:none;}
 		
-		  .ll{
-		  font-size: 18px;
-		  font-weight: 600;
-		  width:100%;
-		  background: white;
-		  color: #575757;
-		  text-align: center;
-		  height: 60px;
-		  float:left;
-		  vertical-align: middle;
-		  line-height: 3em;
-		  border-bottom: 1px solid skyblue;
-		  position: relative;
-		  display: block;
-		  text-decoration: none;
-		  box-shadow: 0em 1.5em 0 ,lightgrey;
-		  transition: all .25s linear;
-		  }
-		  .ll:hover {
-		    background: #6BB6EC;
-		    color: #fffcfb;
-		    transform: translate(-.9em, -.9em);
-		    transition: all .25s linear;
-		    box-shadow: 0.5em 2em 0 #e1e1e1;
-		    }
-		    
-		    .ll{
-		      transition: all .25s linear; 
-			}
+		.ll{
+			font-size: 20px;
+			font-weight: 600;
+			width:100%;
+			
+			color: #575757;
+			text-align: center;
+			height: 60px;
+			float:left;
+			vertical-align: middle;
+			line-height: 3em;
+			border: 1px solid #fffcfb;
+			border-radius:10px;
+			position: relative;
+			display: block;
+			text-decoration: none;
+			box-shadow: 0em 1.5em 0 ,lightgrey;
+			transition: all .25s linear;
+		}
+		.ll:hover {
+			background: #6BB6EC;
+			color: #fffcfb;
+			transform: translate(-.9em, -.9em);
+			transition: all .25s linear;
+			box-shadow: 0.5em 2em 0 #e1e1e1;
+		}
+		  
+		.ll{
+		    transition: all .25s linear; 
+		}
+		  
 	</style>
 	
 </head>
@@ -102,6 +102,7 @@
 		<div class="container">
 			<ul id="category" class="ur" >
 				<div style="display:flex;" lass="ur1">
+					<li class="ll 0">전체</li>
 					<li class="ll 1">서울</li>
 					<li class="ll 2">인천</li>
 					<li class="ll 3">대전</li>
@@ -110,9 +111,9 @@
 					<li class="ll 6">부산</li>
 					<li class="ll 7">울산</li>
 					<li class="ll 8">세종</li>
-					<li class="ll 31">경기</li>
 				</div>
 				<div style="display:flex;">
+					<li class="ll 31">경기</li>
 					<li class="ll 32">강원</li>
 					<li class="ll 33">충북</li>
 					<li class="ll 34">충남</li>
@@ -120,22 +121,21 @@
 					<li class="ll 36">경남</li>
 					<li class="ll 37">전북</li>
 					<li class="ll 38">전남</li>
-					<li class="ll 38">제주</li>
-					<li class="ll">전체</li>
+					<li class="ll 39">제주</li>
 				</div>
 			</ul>
 		
-			<div class="input-group" id="input">
+			<div class="input-group" id="input" style="margin-bottom: 30px;">
 				<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
 				<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 			</div>
 			
 			<hr id="hr1">
 			
-			<div id="num">
+			<div id="num" style="display: inline-block">
 				<span>총 <span id="number">${ pi.listCount }</span>건</span>
 			</div>
-			<div id="btn">
+			<div id="btn" style="float: right;">
 				<button>최신순</button>
 				<button>인기순</button>
 			</div>
@@ -171,6 +171,9 @@
 			  <ul class="pagination d-flex justify-content-center">
 			    <li class="page-item">
 			    	<c:url var="goBack" value="${ loc }">
+		            	<c:if test="${ areaCode != null }">
+		            		<c:param name="areaCode" value="${ areaCode }"/>
+		            	</c:if>
 		            	<c:param name="page" value="${ pi.currentPage-1 }"/>
 		        	</c:url>
 		        	<a class="page-link" href="${ goBack }" aria-label="Previous">
@@ -180,6 +183,9 @@
 			    
 			    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
 			    	<c:url var="goNum" value="${ loc }">
+			    		<c:if test="${ areaCode != null }">
+		            		<c:param name="areaCode" value="${ areaCode }"/>
+		            	</c:if>
 			    		<c:param name="page" value="${ p }"/>
 			    	</c:url>
 			    	 <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
@@ -187,6 +193,9 @@
 			    
 			    <li class="page-item">
 			    	<c:url var="goNext" value="${ loc }">
+			    		<c:if test="${ areaCode != null }">
+		            		<c:param name="areaCode" value="${ areaCode }"/>
+		            	</c:if>
 				    	<c:param name="page" value="${ pi.currentPage+1 }"/>
 			    	</c:url>
 				    <a class="page-link" href="${ goNext }" aria-label="Next">
