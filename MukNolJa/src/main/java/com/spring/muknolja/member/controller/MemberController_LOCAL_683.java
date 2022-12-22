@@ -46,7 +46,6 @@ public class MemberController {
 		Member loginUser = mService.login(m);
 
 		String encPwd = bcrypt.encode(m.getPwd());
-<<<<<<< HEAD
 		
 		System.out.println(bcrypt);
 		System.out.println(loginUser);
@@ -57,32 +56,18 @@ public class MemberController {
 			if(loginUser.getMemberType().equals("A")) {
 				ArrayList<Member> today = mService.selectVisitToday();
 				ArrayList<Map<String, Integer>> visitList = mService.selectVisitList();
-=======
-		if(loginUser != null) {
-			if (bcrypt.matches(m.getPwd(), loginUser.getPwd())) {
-				session.setAttribute("loginUser", loginUser);
->>>>>>> 후기게시판
 				
-				if(loginUser.getMemberType().equals("A")) {
-					ArrayList<Member> today = mService.selectVisitToday();
-					ArrayList<Map<String, Integer>> visitList = mService.selectVisitList();
-					
-					model.addAttribute("today", today);
-					model.addAttribute("visitList", visitList);
-					
-					return "adminPage";
-				}
+				model.addAttribute("today", today);
+				model.addAttribute("visitList", visitList);
 				
-				return "redirect:home.do";
-	
-			} else {
-				model.addAttribute("noLogin","no");
-				return "login";
+				return "adminPage";
 			}
-		}else {
-			model.addAttribute("noLogin","no");
-			return "login";
+			return "redirect:home.do";
+
+		} else {
+			return "myInfo";
 		}
+
 	}
 	// �α׾ƿ� 2
 		@RequestMapping("logout.me")
@@ -178,13 +163,7 @@ public class MemberController {
 		}
 		@RequestMapping("findId1.me")
 		public String findid1() {
-			return"findId1";
-		}
-		@RequestMapping("findId2.me")
-		public String findid2(@RequestParam("email")String email,Model model) {
-			String id = mService.selectEid(email);
-			model.addAttribute("id",id);
-			return"findId2";
+			return"findId";
 		}
 		@RequestMapping("myInfo1.me")
 		public String myInfo1() {
@@ -343,7 +322,6 @@ public class MemberController {
 			
 			return result;
 		}
-<<<<<<< HEAD
 		@RequestMapping("myInfo5.me")
 		@ResponseBody
 		public ArrayList myInfo5(@RequestParam("id")String id) {
@@ -351,18 +329,4 @@ public class MemberController {
 			
 		}
 			
-=======
-		@RequestMapping("changePwd.me")
-		public String changePwd(@RequestParam("id")String id,Model model) {
-			model.addAttribute("id",id);
-			return "changePwd";
-		}
-		@RequestMapping("changePassword.me")
-		public String changePassword(@RequestParam("pwd")String pwd,@RequestParam("id")String id,Member m) {
-			m.setId(id);
-			m.setPwd(bcrypt.encode(pwd));
-			int result = mService.changePassword(m);
-			return "login";
-		}
->>>>>>> 후기게시판
 }

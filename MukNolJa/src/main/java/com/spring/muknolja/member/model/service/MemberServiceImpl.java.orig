@@ -9,6 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.muknolja.common.model.vo.AD;
+import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.dao.MemberDAO;
 import com.spring.muknolja.member.model.vo.Member;
@@ -71,12 +73,20 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public String findId(String email) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-<<<<<<< HEAD
+	public String selectpwd(String id) {
+		
+		return mDAO.selectPwd(sqlSession, id);
+	}
+
+	@Override
+	public int updateMember(Member m) {
+		return mDAO.updateMember(sqlSession, m);
+	}
+
 	public int memberListCount() {
 		return mDAO.memberListCount(sqlSession);
 	}
@@ -99,17 +109,43 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int stop(String id) {
 		return mDAO.stop(sqlSession, id);
-=======
-	public String selectpwd(String id) {
-		
-		return mDAO.selectPwd(sqlSession, id);
 	}
 
 	@Override
-	public int updateMember(Member m) {
+<<<<<<< HEAD
+	public ArrayList<Map<String, Integer>> bCount() {
+		return mDAO.bCount(sqlSession);
+	}
+
+	@Override
+	public int boardListCount() {
+		return mDAO.boardListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi) {
+		return mDAO.selectBoardList(sqlSession, map, pi);
+	}
+
+	@Override
+	public ArrayList<Map<String, Integer>> incomeCount() {
+		return mDAO.incomeCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<AD> selectADList(HashMap<String, Object> map) {
+		return mDAO.selectADList(sqlSession, map);
+=======
+	public int changePassword(Member m) {
 		// TODO Auto-generated method stub
-		return mDAO.updateMember(sqlSession, m);
->>>>>>> 찾기
+		return mDAO.changePassword(sqlSession, m);
+	}
+
+	@Override
+	public String selectEid(String email) {
+		// TODO Auto-generated method stub
+		return mDAO.selectEid(sqlSession,email);
+>>>>>>> 후기게시판
 	}
 
 }
