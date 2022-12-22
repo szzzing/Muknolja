@@ -11,16 +11,19 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 </head>
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  	*{font-family: 'Noto Sans KR', sans-serif;}
 	#hotelTable td {
 		margin:0px;
 		padding:0px;
 	}
 	.mukRange {
 		width: 100%;
-		background: linear-gradient(to right, #6BB6EC 0%, #6BB6EC 50%, #e9e9e9 50%, #e9e9e9 100%);
+		background: linear-gradient(to right, #6BB6EC 0%, #6BB6EC 50%, #f1f1f1 50%, #f1f1f1 100%);
 		border-radius: 8px;
 		outline: none;
 		transition: background 450ms ease-in;
@@ -37,37 +40,36 @@
 <body>
 	<jsp:include page="../member/menubar.jsp"/>
 	
-	<div class="container mt-5 mb-5" style="padding-top:80px">
-		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gy-5">
+	<div class="container" style="margin-top:120px">
+		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gx-5 gy-5">
 			<div class="col col-lg-3">
-				<div class="row row-cols-lg-1 g-5">
+				<div class="row row-cols-lg-1 p-3 pt-4 pb-4" style="border:1px solid #f1f1f1">
 					<div class="col">
 						<div class="mb-3">
-							<span class="mukMutedText fw-bold">전체검색</span>
-							<input type="text" class="form-control" name="searchValue" placeholder="찾고싶은 호텔을 입력하세요.">
-						</div>
-						<div class="mb-3">
-							<span class="mukMutedText fw-bold">날짜</span>
-							<small class="fw-bold" style="color:#6BB6EC; float:right"><span class="value">1박 2일</span></small>
+							<h6 class="fw-bold" style="display:inline-block;">날짜</h6>
+							<small class="fw-bold mukMutedText" style="float:right"><span class="value">1박 2일</span></small>
 							<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
 							<input type="hidden" name="checkinDate">
 							<input type="hidden" name="checkoutDate">
 						</div>
+						<div class="mb-3">
+							<h6 class="fw-bold" style="display:inline-block;">검색</h6>
+							<input type="text" class="form-control" name="searchValue" placeholder="찾고싶은 호텔을 입력하세요.">
+						</div>
 					</div>
 					<div class="col">
-						<h5 class="fw-bold pb-1">상세조건</h5>
+						<h5 id="deepSearch" class="fw-bold pb-1">상세검색</h5>
 						<div class="mb-3">
 							<span class="mukMutedText fw-bold">가격</span>
-							<small class="fw-bold" style="color:#6BB6EC; float:right"><span class="value">10</span>만원 이하</small>
-							<input id="maxPrice" name="maxPrice" class="mukRange" value="10" max="100" min="0" step="10" type="range">
+							<small class="fw-bold value" style="color:#6BB6EC; float:right"><span class="value">10</small>
+							<input id="maxPrice" name="maxPrice" class="mukRange" value="0" max="110" min="10" step="10" type="range">
 						</div>
 						<div class="mb-3">
 							<span class="mukMutedText fw-bold">거리</span>
-							<small style="color:#6BB6EC; float:right;" class="fw-bold"><span class="value">10</span>km 이하</small>
-							<input id="maxLoc" name="maxLoc" class="mukRange" value="10" max="100" min="0" step="10" type="range">
+							<small style="color:#6BB6EC; float:right;" class="value fw-bold">10</small>
+							<input id="maxDistance" name="maxDistance" class="mukRange" value="0" max="110" min="10" step="10" type="range">
 						</div>
 						<div class="row gx-2">
-							<div class="col"><button id="searchButton" class="mukButton" style="width:100%; height:36px;">적용</button></div>
 							<div id="noCategoryButton" class="col"><button class="mukButton" style="width:100%; height:36px; background: white; color: #6BB6EC; border: 1px solid #6BB6EC;">초기화</button></div>
 						</div>
 					</div>
@@ -77,10 +79,10 @@
 			<div class="col col-lg-9">
 			
 				<div id="hotelList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-1 justify-content-start g-3">
-					<div id="hotelDiv" class="hotel col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
+					<div id="hotelDiv" class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1; display:none">
 						<div class="row g-3">
 							<div class="col col-sm-6 col-lg-5">
-								<img class="hotelImg img-fluid mukRound" src="#" style="background: #e9e9e9">
+								<img class="hotelImg img-fluid mukRound" src="#" style="background: #f1f1f1">
 							</div>
 							<div class="col col-sm-6 col-lg-7">
 								<table id="hotelTable" class="table table-borderless" style="margin-bottom:0px; height:100%">
@@ -111,29 +113,72 @@
 	
 	<!-- 호텔 검색 시작 -->
 	<script>
-		$("#searchButton").on("click",function(){
-			var page = 1;
-			var searchValue = $('input[name=searchValue]').val();
-			var checkinDate = $("input[name=checkinDate]").val()+"";
-			var checkoutDate = $("input[name=checkoutDate]").val()+"";
-			var maxPrice = $("input[name=maxPrice]").val();
-			var maxLoc = $("input[name=maxLoc]").val();
+		$(document).ready(function(){
+		
+			$.search = function(){
+				var page = 1;
+				var searchValue = $('input[name=searchValue]').val();
+				var checkinDate = $("input[name=checkinDate]").val()+"";
+				var checkoutDate = $("input[name=checkoutDate]").val()+"";
+				var maxPrice = $("input[name=maxPrice]").val();
+				var maxDistance = $("input[name=maxDistance]").val();
+				
+				$.ajax({
+					url: "${contextPath}/searchHotelList.ho",
+					data: {
+						page: page,
+						searchValue: searchValue,
+						checkinDate: checkinDate,
+						checkoutDate: checkoutDate,
+						maxPrice: maxPrice,
+						maxDistance: maxDistance
+					},
+					success: (data)=>{
+						console.log("상세검색");
+						console.log(data);
+						const hotelList = data.hotelList;
+					},
+					error: (data)=>{
+						console.log(data);
+					}
+				});
+			}
+		
+		
 			
-			$.ajax({
-				url: "${contextPath}/searchHotelList.ho",
-				data: {
-					page: page,
-					searchValue: searchValue,
-					checkinDate: checkinDate,
-					checkoutDate: checkoutDate,
-					maxPrice: maxPrice,
-					maxLoc: maxLoc
-				},
-				success: (data)=>{
-					console.log(data);
-				},
-				error: (data)=>{
-					console.log(data);
+			$("input[name=searchValue]").keyup(function(){
+				$.search();
+			});
+			
+			$("#noCategoryButton").on("click", function() {
+				$("#maxDistance").val(10);
+				$("#maxPrice").val(10);
+				$("#maxDistance").parent().find(".value").text(10);
+				$("#maxPrice").parent().find(".value").text(10);
+				$("#maxDistance").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 0%, #f1f1f1 0%, #f1f1f1 100%)");
+				$("#maxPrice").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 0%, #f1f1f1 0%, #f1f1f1 100%)");
+			});
+			
+			$(".mukRange").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 0%, #f1f1f1 0%, #f1f1f1 100%)");
+			
+			$(".mukRange").on("click", function(){
+				$.search();
+				
+				var value = $(this).val()-10;
+				console.log(value);
+				
+				if(value==100) {
+					$(this).css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 100%, #f1f1f1 100%, #f1f1f1 100%)");
+					$(this).parent().find(".value").text("무관");
+				} else if(value<50) {
+					$(this).css("background", 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value+(2*(1-value/100)))+'%, #f1f1f1 ' +(value) + '%, #f1f1f1 100%)');
+					$(this).parent().find(".value").text($(this).val());
+				} else if(value>50) {
+					$(this).css("background", 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value-(2*(value/100))) +'%, #f1f1f1 ' +(value-(2*(value/100))) + '%, #f1f1f1 100%)');
+					$(this).parent().find(".value").text($(this).val());
+				} else {
+					$(this).css("background", 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value) +'%, #f1f1f1 ' +value + '%, #f1f1f1 100%)');
+					$(this).parent().find(".value").text($(this).val());
 				}
 			});
 		});
@@ -166,13 +211,17 @@
 						hotelDiv.find(".hotelImg").prop("src", "${contextPath }/resources/uploadFiles/"+hotelImgList[i].fileModifyName);
 						hotelDiv.find(".hotelStar").html(hotelList[i].star+"성급");
 						hotelDiv.find(".avgRating").html(hotelList[i].avgRating.toFixed(1));
-						$("#hotelList").append('<div class="hotel col pb-3" style="border-bottom:1px solid #e9e9e9">'+hotelDiv.html()+'</div>');
+						$("#hotelList").append('<div class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1">'+hotelDiv.html()+'</div>');
 					}
 				},
 				error: (data)=>{
 					console.log(data);
 				}
 			});
+		});
+		
+		$(document).on('click', '.hotel', function(){
+			location.href="${contextPath}/hotelDetail.ho?hotelId="+$(this).find(".hotelId").val();
 		});
 	</script>
 	
@@ -221,6 +270,8 @@
 			var currDay = 24 * 60 * 60 * 1000;
 			const journey = parseInt(diff/currDay);
 			$(this).parent().find(".value").text(journey+"박 "+(journey+1)+"일");
+			
+			$.search();
 		});
 	</script>
 	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->
@@ -228,37 +279,5 @@
 	
 
 	
-	<script>
-		$(document).ready(function(){
-			$(".mukRange").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 11.75%, #e9e9e9 11.75%, #e9e9e9 100%)");
-	
-			$(document).on('click', '.hotel', function(){
-				location.href="${contextPath}/hotelDetail.ho?hotelId="+$(this).find(".hotelId").val();
-			});
-			
-			$("#noCategoryButton").on("click", function() {
-				$("#maxLoc").val(10);
-				$("#maxPrice").val(10);
-				$("#maxLoc").parent().find(".value").text(10);
-				$("#maxPrice").parent().find(".value").text(10);
-				$("#maxLoc").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 11.75%, #e9e9e9 11.75%, #e9e9e9 100%)");
-				$("#maxPrice").css("background", "linear-gradient(to right, #6BB6EC 0%, #6BB6EC 11.75%, #e9e9e9 11.75%, #e9e9e9 100%)");
-			});
-			
-			$(".mukRange").on("click", function(){
-				var gradient = 100 / $(this).prop("max");
-				var value = gradient*$(this).val();
-				
-				if(value<50) {
-					event.target.style.background = 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value+(2*(1-value/100)))+'%, #e9e9e9 ' +(value) + '%, #e9e9e9 100%)';
-				} else if(value>50) {
-					event.target.style.background = 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value-(2*(value/100))) +'%, #e9e9e9 ' +(value-(2*(value/100))) + '%, #e9e9e9 100%)';
-				} else {
-					event.target.style.background = 'linear-gradient(to right, #6BB6EC 0%, #6BB6EC '+(value) +'%, #e9e9e9 ' +value + '%, #e9e9e9 100%)';
-				}
-				$(this).parent().find(".value").text($(this).val());
-			});
-		});
-	</script>
 </body>
 </html>

@@ -190,16 +190,24 @@
 		group by hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y
 		order by hotel_id desc
 	</select>
+
 	
 	<select id="searchHotelList" resultMap="hotelResultSet">
 		select hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y,
-			nvl(min(room_price), 0) as min_price, nvl(round(avg(rating), 1),0) as avg_rating
+			min_price(hotel_id) as min_price,
+			avg_rating(hotel_id) as avg_rating,
+			empty_hotel(#{checkinDate}, #{checkoutDate}, hotel_id) as empty_hotel
+			<if test="maxDistance!=null">
+				, DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), 126.950305407863, 37.5632043013128) as max_distance
+			</if>
 		from hotel
-		    left outer join room using(hotel_id)
-		    left outer join reservation using(room_id)
-		    left outer join review using(reservation_id)
 		where hotel_status='Y'
-		group by hotel_id, ent_id, hotel_name, hotel_phone, hotel_address, wifi, breakfast, amenity, park, swim, fitness, ent_approval, modify_date, star, hotel_info, hotel_intro, hotel_status, hotel_geo_x, hotel_geo_y
+		<if test="maxPrice!=null">
+			and min_price(hotel_id)<![CDATA[<#{maxPrice}]]>
+		</if>
+		<if test="maxDistance!=null">
+			and DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), 126.950305407863, 37.5632043013128)<![CDATA[<#{maxDistance}]]>
+		</if>
 		order by hotel_id desc
 	</select>
 	
@@ -237,6 +245,8 @@
 		<result column="AVG_RATING" property="avgRating"/>
 		<result column="HOTEL_GEO_X" property="hotelGeoX"/>
 		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
+		<result column="EMPTY_HOTEL" property="emptyHotel"/>
+		<result column="MAX_DISTANCE" property="maxDistance"/>
 	</resultMap>
 	
 	<resultMap type="Room" id="roomResultSet">
