@@ -322,5 +322,11 @@ public class MemberController {
 			
 			return result;
 		}
+		@RequestMapping("myInfo5.me")
+		@ResponseBody
+		public ArrayList myInfo5(@RequestParam("id")String id) {
+			
+			
+		}
 			
 }
