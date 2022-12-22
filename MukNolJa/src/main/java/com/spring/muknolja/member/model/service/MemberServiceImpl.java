@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.muknolja.common.model.vo.AD;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.dao.MemberDAO;
@@ -123,6 +124,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi) {
 		return mDAO.selectBoardList(sqlSession, map, pi);
+	}
+
+	@Override
+	public ArrayList<Map<String, Integer>> incomeCount() {
+		return mDAO.incomeCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<AD> selectADList(HashMap<String, Object> map) {
+		return mDAO.selectADList(sqlSession, map);
 	}
 
 }

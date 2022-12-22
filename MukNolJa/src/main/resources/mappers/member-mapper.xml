@@ -94,9 +94,9 @@
   	
   	<select id="selectVisitList" resultType="map">
   		select visit_date, visit_count
-		from (select to_char(visit_time, 'mm-dd') visit_date, count(*) visit_count
+		from (select to_char(visit_time, 'mm.dd') visit_date, count(*) visit_count
 		      from visit
-		      GROUP by to_char(visit_time, 'mm-dd')
+		      GROUP by to_char(visit_time, 'mm.dd')
 		      order by visit_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
@@ -129,9 +129,9 @@
   	
   	<select id="enrollCount" resultType="map">
   		select enroll_date, member_count
-		from (select to_char(enroll_date, 'yy-mm-dd') enroll_date, count(*) member_count
+		from (select to_char(enroll_date, 'mm.dd') enroll_date, count(*) member_count
 		      from member
-		      group by to_char(enroll_date, 'yy-mm-dd')
+		      group by to_char(enroll_date, 'mm.dd')
 		      order by enroll_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
@@ -181,6 +181,7 @@
   		<if test="search != null">
 	    	and BOARD_TITLE LIKE '%'||#{search}||'%'
 	    </if>
+	    order by board_id desc
   	</select>
   	
   	<resultMap type="Board" id="BoardResultSet">
@@ -195,4 +196,39 @@
   		<result column="BOARD_AREA" property="boardArea"/>
   		<result column="BOARD_STATUS" property="boardStatus"/>
   	</resultMap>
+  	
+  	<resultMap type="AD" id="ADResultSet">
+  		<id column="FILE_ID" property="fileId"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="AD_PRICE" property="price"/>
+  		<result column="START_DATE" property="start"/>
+  		<result column="DEADLINE" property="deadline"/>
+  	</resultMap>
+  	
+  	<select id="incomeCount" resultType="map">
+  		select start_date, count
+		from (select to_char(start_date, 'mm.dd') start_date, sum(ad_price) count
+		      from AD
+		      group by to_char(start_date, 'mm.dd')
+		      order by start_date desc)
+		where rownum <![CDATA[<=]]> 7
+  	</select>
+  	
+  	<select id="selectADList" resultMap="ADResultSet">
+  		select *
+  		from AD
+  		<if test="category == 0">
+  			where BOARD_TYPE = 'H'
+  		</if>
+  		<if test="category == 1">
+  			where BOARD_TYPE = 'R'
+  		</if>
+  		<if test="category == 2">
+  			where BOARD_TYPE = 'P'
+  		</if>
+  		<if test="category == 3">
+  			where BOARD_TYPE = 'T'
+  		</if>
+  		order by START_DATE desc
+  	</select>
   </mapper>

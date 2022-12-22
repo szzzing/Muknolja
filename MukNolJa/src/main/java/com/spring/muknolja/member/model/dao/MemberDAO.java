@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.muknolja.common.model.vo.AD;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.vo.Member;
@@ -101,6 +102,14 @@ public class MemberDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectBoardList", map, rowBounds);
+	}
+
+	public ArrayList<Map<String, Integer>> incomeCount(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.incomeCount");
+	}
+
+	public ArrayList<AD> selectADList(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectADList", map);
 	}
 
 }
