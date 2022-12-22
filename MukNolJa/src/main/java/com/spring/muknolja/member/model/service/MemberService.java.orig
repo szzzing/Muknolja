@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.spring.muknolja.common.model.vo.AD;
+import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
@@ -33,7 +35,10 @@ public interface MemberService {
 
 	ArrayList<Map<String, Integer>> selectVisitList();
 
-<<<<<<< HEAD
+	String selectpwd(String id);
+
+	int updateMember(Member m);
+
 	int memberListCount();
 
 	ArrayList<Member> selectMemberList(PageInfo pi, HashMap<String, Object> map);
@@ -43,10 +48,21 @@ public interface MemberService {
 	int waring(String id);
 
 	int stop(String id);
-=======
-	String selectpwd(String id);
 
-	int updateMember(Member m);
->>>>>>> 찾기
+<<<<<<< HEAD
+	ArrayList<Map<String, Integer>> bCount();
+
+	int boardListCount();
+
+	ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi);
+
+	ArrayList<Map<String, Integer>> incomeCount();
+
+	ArrayList<AD> selectADList(HashMap<String, Object> map);
+=======
+	int changePassword(Member m);
+
+	String selectEid(String email);
+>>>>>>> 후기게시판
 
 }

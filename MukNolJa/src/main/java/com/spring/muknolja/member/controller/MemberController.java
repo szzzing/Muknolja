@@ -22,6 +22,7 @@ import com.spring.muknolja.common.model.vo.AD;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
+import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.service.MemberService;
 import com.spring.muknolja.member.model.vo.Member;
 
@@ -338,11 +339,12 @@ public class MemberController {
 		public String changePwd(@RequestParam("id")String id,Model model) {
 			model.addAttribute("id",id);
 			return "changePwd";
+		}
 		@RequestMapping("myInfo5.me")
 		@ResponseBody
-		public ArrayList myInfo5(@RequestParam("id")String id) {
+		public ArrayList<Reserve> myInfo5(@RequestParam("id")String id) {
 			
-			
+			return null;
 		}
 		@RequestMapping("changePassword.me")
 		public String changePassword(@RequestParam("pwd")String pwd,@RequestParam("id")String id,Member m) {

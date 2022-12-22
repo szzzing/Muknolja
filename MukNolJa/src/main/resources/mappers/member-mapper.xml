@@ -161,7 +161,7 @@
   		select id
   		from member
   		where email=#{email}
-  	
+  	</select>
   	<select id="bCount" resultType="map">
   		select *
 		from (select to_char(BOARD_CREATE_DATE, 'mm.dd') create_date, count(*) count
