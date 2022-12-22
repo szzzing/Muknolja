@@ -14,6 +14,7 @@
           border:none;
           border-right: 1px solid RGB(107, 182, 236, 0.3);
           font-weight:600;
+          padding-left:0px;
            }
          #bu1:hover, #bu2:hover, #bu3:hover, #bu4:hover, #bu5:hover{
          border-bottom: 10px solid RGB(107, 182, 236);
@@ -49,9 +50,9 @@
 				<div class="row justify-content-center " style="  ">
 	            	<div class="col " style="padding-left:0px; padding-right:0px; height:70px; border:1px solid lightgrey"  >
 	            		<div class="row justify-content-center " style="padding-left:0px; padding-right:0px; height:70px; ">
-	            			<div class="col-xs-12; col-sm-9" style="">
-	            				<div style="display:flex">
-			            		<button class="inbu" id="bu1" style="border-left: 1px solid RGB(107, 182, 236, 0.3);">내가 쓴글</button>
+	            			<div class="col-xs-12; col-sm-9" style="padding-left:0px; padding-right:0px; ">
+	            				<div style="display:flex; padding-left:0px; padding-right:0px; ">
+			            		<button class="inbu" id="bu1" style="padding-left:0px;border-left: 1px solid RGB(107, 182, 236, 0.3);">내가 쓴글</button>
 			            		<button class="inbu" id="bu2">찜목록</button>
 			            		<button class="inbu" id="bu3">문의 내역</button>
 			            		<button class="inbu" id="bu4">동행 확인</button>
@@ -59,10 +60,28 @@
 			            		</div>
 			            	</div>
 			      </div>
+			      <div class="row justify-content-center " style="padding-left:0px; padding-right:0px; height:70px; margin-top:30px; ">
+	            		<div class="col-9" style="box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.1); height:200px;">
+	            		
+	            		</div>
+	            </div>
 			</div>
 		</div>
 	</div>
-	
+	<script>
+		$('#bu5').click(function(){s
+			$.ajax({
+				url: '${ contextPath}/myinfo5.me',
+				data: {"id" : ${ loginUser.id }},
+				success: (data)=>{
+					console.log(data);
+				},
+				error: (data)=>{
+					alert("존재하지 않는 이메일 입니다");
+				}
+			});
+		});
+	</script>
   </body>
 </html>
 

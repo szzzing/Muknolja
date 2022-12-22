@@ -94,13 +94,14 @@
   	
   	<select id="selectVisitList" resultType="map">
   		select visit_date, visit_count
-		from (select to_char(visit_time, 'mm.dd') visit_date, count(*) visit_count
+		from (select to_char(visit_time, 'mm-dd') visit_date, count(*) visit_count
 		      from visit
-		      GROUP by to_char(visit_time, 'mm.dd')
+		      GROUP by to_char(visit_time, 'mm-dd')
 		      order by visit_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
   	
+<<<<<<< HEAD
   	<select id="memberListCount" resultType="_int">
   		select count(*)
   		from member
@@ -129,18 +130,13 @@
   	
   	<select id="enrollCount" resultType="map">
   		select enroll_date, member_count
-		from (select to_char(enroll_date, 'mm.dd') enroll_date, count(*) member_count
+		from (select to_char(enroll_date, 'yy-mm-dd') enroll_date, count(*) member_count
 		      from member
-		      group by to_char(enroll_date, 'mm.dd')
+		      group by to_char(enroll_date, 'yy-mm-dd')
 		      order by enroll_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
   	
-  	<update id="updateMember">
-  		update member
-  		set pwd=#{pwd} , NICKNAME=#{nickName}, phone=#{phone}, address=#{address}
-  		WHERE ID = #{id}
-  	</update>
   	<update id="waring">
   		update member
   		set report = report + 1
@@ -151,93 +147,11 @@
   		update member
   		set status = 'S'
   		where id = #{id}
-  	</update>
-  	<update id="changePassword">
+=======
+  	<update id="updateMember">
   		update member
-  		set pwd=#{pwd} 
+  		set pwd=#{pwd} , NICKNAME=#{nickName}, phone=#{phone}, address=#{address}
   		WHERE ID = #{id}
+>>>>>>> 찾기
   	</update>
-  	<select id="selectEid">
-  		select id
-  		from member
-  		where email=#{email}
-  	
-  	<select id="bCount" resultType="map">
-  		select *
-		from (select to_char(BOARD_CREATE_DATE, 'mm.dd') create_date, count(*) count
-		      from board
-		      group by to_char(BOARD_CREATE_DATE, 'mm.dd')
-		      order by create_date desc)
-		where rownum <![CDATA[<=]]> 7
-  	</select>
-  	
-  	<select id="boardListCount" resultType="_int">
-  		select count(*)
-  		from board
-  		where board_status = 'Y'
-  	</select>
-  	
-  	<select id="selectBoardList" resultMap="BoardResultSet">
-  		select *
-  		from board
-  		where board_status = 'Y' and
-  		<if test="category == 0">
-  			BOARD_TYPE = 'R'
-  		</if>
-  		<if test="category == 1">
-  			BOARD_TYPE = 'P'
-  		</if>
-  		<if test="search != null">
-	    	and BOARD_TITLE LIKE '%'||#{search}||'%'
-	    </if>
-	    order by board_id desc
-  	</select>
-  	
-  	<resultMap type="Board" id="BoardResultSet">
-  		<id column="BOARD_ID" property="boardId"/>
-  		<result column="BOARD_WRITER" property="boardWriter"/>
-  		<result column="BOARD_TYPE" property="boardType"/>
-  		<result column="BOARD_COURSE" property="boardCourse"/>
-  		<result column="BOARD_TITLE" property="boardTitle"/>
-  		<result column="BOARD_CONTENT" property="boardContent"/>
-  		<result column="BOARD_CREATE_DATE" property="createDate"/>
-  		<result column="BAORD_MODIFY_DATE" property="modifyDate"/>
-  		<result column="BOARD_AREA" property="boardArea"/>
-  		<result column="BOARD_STATUS" property="boardStatus"/>
-  	</resultMap>
-  	
-  	<resultMap type="AD" id="ADResultSet">
-  		<id column="FILE_ID" property="fileId"/>
-  		<result column="BOARD_TYPE" property="boardType"/>
-  		<result column="AD_PRICE" property="price"/>
-  		<result column="START_DATE" property="start"/>
-  		<result column="DEADLINE" property="deadline"/>
-  	</resultMap>
-  	
-  	<select id="incomeCount" resultType="map">
-  		select start_date, count
-		from (select to_char(start_date, 'mm.dd') start_date, sum(ad_price) count
-		      from AD
-		      group by to_char(start_date, 'mm.dd')
-		      order by start_date desc)
-		where rownum <![CDATA[<=]]> 7
-  	</select>
-  	
-  	<select id="selectADList" resultMap="ADResultSet">
-  		select *
-  		from AD
-  		<if test="category == 0">
-  			where BOARD_TYPE = 'H'
-  		</if>
-  		<if test="category == 1">
-  			where BOARD_TYPE = 'R'
-  		</if>
-  		<if test="category == 2">
-  			where BOARD_TYPE = 'P'
-  		</if>
-  		<if test="category == 3">
-  			where BOARD_TYPE = 'T'
-  		</if>
-  		order by START_DATE desc
-  	</select>
   </mapper>

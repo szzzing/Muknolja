@@ -156,8 +156,8 @@
 			 @media (max-width: 840px) {
 			  .coco{
 			  width:45px;
-			   font-size:9px;
-			   margin-top:35px;
+			  font-size:9px;
+			  margin-top:35px;
 			  }
 			  }
     </style>

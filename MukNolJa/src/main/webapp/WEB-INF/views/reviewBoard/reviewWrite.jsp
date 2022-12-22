@@ -42,10 +42,25 @@
 	            	
 	    				<div class="col-md-3" style="padding-left:0px; padding-right:0px; ">
 						<select id="select"class="form-select" aria-label="Default select example">
-							<option selected>분류</option>
-							<option value="1">관광지</option>
-							<option value="2">식당</option>
-							<option value="3">축제</option>
+							<option selected>지역</option>
+							<option value="1">서울</option>
+							<option value="2">인천</option>
+							<option value="3">대전</option>
+							<option value="4">대구</option>
+							<option value="5">광주</option>
+							<option value="6">부산</option>
+							<option value="7">울산</option>
+							<option value="8">세종</option>
+							<option value="9">경기</option>
+							<option value="10">강원</option>
+							<option value="12">충북</option>
+							<option value="13">충남</option>
+							<option value="14">경북</option>
+							<option value="15">걍남</option>
+							<option value="16">전북</option>
+							<option value="17">전남</option>
+							<option value="18">제주</option>
+							
 						</select>
 						<div style="float:left; font-size:30px; margin-top:10px; font-weight:500">00산</div>
 					</div>
@@ -74,7 +89,13 @@
 					</div>
 				</div>
 			</div>
-	
+		<script>
+		var select = $("#select option:selected").val();
+		$('#button-addon2').click(function(){
+			console.log($("#select option:selected").val());
+		});
+		
+		</script>
   </body>
 </html>
 
