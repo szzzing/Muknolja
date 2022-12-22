@@ -90,6 +90,7 @@ public class TravelController {
 			
 			model.addAttribute("list", list);
 			model.addAttribute("pi", pi);
+			model.addAttribute("areaCode", areaCode);
 			
 			bf.close();
 			
