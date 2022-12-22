@@ -133,28 +133,43 @@ public class HotelController {
 	
 	@RequestMapping(value="searchHotelList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void searchHotelList(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, @RequestParam(value="maxPrice", required=false) Integer maxPrice, @RequestParam(value="maxDistance", required=false) Integer maxDistance, HttpServletResponse response) {
+	public void searchHotelList(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, @RequestParam(value="maxPrice", required=false) Integer maxPrice, @RequestParam(value="maxDistance", required=false) Integer maxDistance, @RequestParam(value="star", required=false) ArrayList<Integer> star, @RequestParam(value="install", required=false) ArrayList<String> install, HttpServletResponse response) {
 		int listCount = hService.getListCount();
 		int currentPage = 1;
 		if(page!=null) {
 			currentPage = page;
 		}
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
+		System.out.println(install);
+		
+		String wifi=install.get(0);
+		String breakfast=install.get(1);
+		String amenity=install.get(2);
+		String park=install.get(3);
+		String swim=install.get(4);
+		String fitness=install.get(5);
+		
 		HashMap searchMap = new HashMap();
 		searchMap.put("searchValue", searchValue);
 		searchMap.put("checkinDate", checkinDate);
 		searchMap.put("checkoutDate", checkoutDate);
 		searchMap.put("maxPrice", maxPrice*10000);
 		searchMap.put("maxDistance", maxDistance);
+		searchMap.put("star", star);
+		searchMap.put("wifi", wifi);
+		searchMap.put("breakfast", breakfast);
+		searchMap.put("amenity", amenity);
+		searchMap.put("park", park);
+		searchMap.put("swim", swim);
+		searchMap.put("fitness", fitness);
 		
-		System.out.println(searchMap);
-		
-		ArrayList<Hotel> hotelList = hService.searchHotelList(searchMap, pi);
-//		ArrayList<AttachedFile> hotelImgList = hService.selectHotelImgList(pi);
 		
 		HashMap map = new HashMap();
+		
+		ArrayList<Hotel> hotelList = hService.searchHotelList(searchMap, pi);
+		ArrayList<AttachedFile> hotelImgList = hService.searchHotelImgList(searchMap, pi);
 		map.put("hotelList", hotelList);
-//		map.put("hotelImgList", hotelImgList);
+		map.put("hotelImgList", hotelImgList);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
