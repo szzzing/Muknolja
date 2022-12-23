@@ -8,6 +8,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  	*{font-family: 'Noto Sans KR', sans-serif;}
 	.list-group li{width: 100px; height: 70px; text-align: center; padding: 20px;}
 	#list1{margin-top:50px; margin-bottom: 50px;}
 	h1{text-align: center; font-weight: 900;}
@@ -108,7 +110,7 @@
 	<jsp:include page="../member/menubar.jsp"/>
 	
 	<div class="container">
-		<br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br>
 		<h1 class="fw-bold" style="color: #6BB6EC; font-size: 55px;">여행친구찾기</h1>
 		
 		<!-- 카테고리 -->

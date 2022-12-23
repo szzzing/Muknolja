@@ -6,33 +6,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
-<script>
-	$(function(){
-		$('#daterangepicker').daterangepicker();
-		$("#daterangepicker").daterangepicker({
-		    locale: {
-		    "separator": " ~ ",                     // 시작일시와 종료일시 구분자
-		    "format": 'YYYY-MM-DD',     // 일시 노출 포맷
-		    "applyLabel": "확인",                    // 확인 버튼 텍스트
-		    "cancelLabel": "취소",                   // 취소 버튼 텍스트
-		    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-		    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
-		    },
-		    minDate: new Date(),
-		    autoApply: true,                         // 확인/취소 버튼 사용여부
-		    timePicker24Hour: true,                  // 24시간 노출 여부(ex> true : 23:50, false : PM 11:50)
-		    timePickerSeconds: true                 // 초 노출 여부
-		});
-	});
-</script>
+
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  	*{font-family: 'Noto Sans KR', sans-serif;}
 	h1{text-align: center; margin-bottom: 30px;}
 	#datepicker{cursor: pointer;}
 	#title{margin-bottom: 30px;}
@@ -46,7 +25,7 @@
 	.location1{border: 1px solid lightgray; height: 300px; margin-top: 20px; margin-bottom: 20px; border-radius: 5px; padding: 10px; overflow-x: auto;}
 	.searchInfo p{color: lightgray; font-size: 12px;}
 	.searchInfo hr{height: 1px;}
-	.location2{border: 1px solid lightgray; height: 355px; border-radius: 5px; overflow-x: auto;}
+	.location2{border: 1px solid lightgray; height: 358px; border-radius: 5px; overflow-x: auto;}
 	.location1::-webkit-scrollbar {
 	    width: 8px;  /* 스크롤바의 너비 */
 	}
@@ -105,8 +84,8 @@
 	  text-align: center;
 	  padding-top:-10px;
 	}
-	.mukButton {background: #6BB6EC; color:white; border-color: #6BB6EC;}
-    .mukButton:hover {background: white; color: #6BB6EC; border-color: #6BB6EC; width: 100%;}
+	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
  	#select{float: left;}
  	#thumbnail{width: 100%; height: 400px; border-radius: 15px; margin-bottom: 30px; background: lightgray; color: white;}
  	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
@@ -114,60 +93,62 @@
 </style>
 </head>
 <body>
-
+	
+	<jsp:include page="../member/menubar.jsp"/>
+	
+	
 	<div class="container">
 	
 	<br><br><br><br><br><br>
 		<img src="${ contextPath }/resources/img/noImage.png" class="img-fluid" alt="..." id="thumbnail">
-		<input id="myFile" type="file" accept="image/*" style="display:none;">
 	
 		<!-- 제목 -->
 		<div id="title" class="input-group input-group-lg">
 		  <span class="input-group-text" id="inputGroup-sizing-lg" style="background: #6BB6EC; color: white">제목</span>
-		  <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+		  <input type="text" class="title form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" required>
 		</div>
 		
 		<!-- 선택 -->
 		<div class="row">
 			<div class="col">
 				<div id="location" class="form-floating">
-					<select id="select"class="form-select" aria-label="Default select example">
+					<select id="selectLocation"class="form-select" aria-label="Default select example">
 						<option selected disabled>지역</option>
-						<option value="1">서울</option>
-						<option value="2">인천</option>
-						<option value="3">대전</option>
-						<option value="4">대구</option>
-						<option value="5">광주</option>
-						<option value="6">부산</option>
-						<option value="7">울산</option>
-						<option value="8">세종</option>
-						<option value="9">경기</option>
-						<option value="10">강원</option>
-						<option value="11">충북</option>
-						<option value="12">충남</option>
-						<option value="13">경북</option>
-						<option value="14">경남</option>
-						<option value="15">전북</option>
-						<option value="16">전남</option>
-						<option value="17">제주</option>
+						<option value="서울">서울</option>
+						<option value="인천">인천</option>
+						<option value="대전">대전</option>
+						<option value="대구">대구</option>
+						<option value="광주">광주</option>
+						<option value="부산">부산</option>
+						<option value="울산">울산</option>
+						<option value="세종">세종</option>
+						<option value="경기">경기</option>
+						<option value="강원">강원</option>
+						<option value="충북">충북</option>
+						<option value="충남">충남</option>
+						<option value="경북">경북</option>
+						<option value="경남">경남</option>
+						<option value="전북">전북</option>
+						<option value="전남">전남</option>
+						<option value="제주">제주</option>
 					</select>
 					<label for="floatingSelect">지역</label>
 				</div>
 			</div>
 			<div class="col">
 				<div class="compDate form-floating mb-3">
-					<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
+					<input type="text" class="travelDate form-control" id="daterangepicker" name="daterangepicker">
 					<label for="floatingInput">날짜선택</label>
 				</div>
 			</div>
 			
 			<div class="col">
 				<div id="gender" class="form-floating">
-				  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+				  <select class="gender form-select" id="floatingSelect" aria-label="Floating label select example">
 				    <option selected disabled>성별</option>
-				    <option value="F">여자만</option>
-				    <option value="M">남자만</option>
-				    <option value="M">무관</option>
+				    <option value="여자만">여자만</option>
+				    <option value="남자만">남자만</option>
+				    <option value="무관">무관</option>
 				  </select>
 				  <label for="floatingSelect">성별</label>
 				</div>
@@ -175,13 +156,14 @@
 			
 			<div class="col">
 				<div class="compNum form-floating mb-3">
-					<input type="number" class="form-control" min="1" max="20">
-					<label for="floatingInput">동행인원</label>
+					<input type="number" class="partyNum form-control" min="1" max="20">
+					<label for="floatingInput">동행인원(최대 20명)</label>
 				</div>
 			</div>
 		</div>
 		
 		<!-- 코스선택 -->
+		<h3 style="margin-top: 20px; font-weight: 600; color: #6BB6EC;">코스선택</h3>
 		<div class="row" style="margin-top: 20px;">
 			<div class="col">
 				<div class="row">
@@ -203,21 +185,31 @@
 					<ol class="numbered">
 					</ol>
 				</div>
+				<h6 style="text-align: right; color: gray; font-size: 13px; margin-bottom: 15px;"><i class="fa-solid fa-check"></i>클릭시 삭제가능</h6>
 				
 			</div>
 		</div>
 		
 		<!-- 내용 -->
-		
+	<form>
 		<div class="content form-floating">
-		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none;"></textarea>
+		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none;" name="content"></textarea>
 		  <label for="floatingTextarea2">내용</label>
 		</div>
 		
 		<div class="d-grid gap-2">
-			<button type="submit" class="btn btn-outline-secondary mukButton" style="align:bottom !important">작성하기</button>
+			<button type="submit" class="writeButton mukButton" style="width: 100%;" id="writeButton">작성하기</button>
  		</div>
  		
+ 		<!-- hidden값 -->
+ 		<input id="myFile" type="file" accept="image/*" style="display:none;" name="thumbnail">
+ 		<input type="hidden" name="title" id="hiddenTitle">
+ 		<input type="hidden" name="location" id="hiddenLocation">
+ 		<input type="hidden" name="travleDate" id="hiddenDate">
+ 		<input type="hidden" name="gender" id="hiddenGender">
+ 		<input type="hidden" name="partyNum" id="hiddenNum">
+ 		<input type="hidden" name="course" id="hiddenCourse">
+ 	</form>
 		
 		<br><br>
 		
@@ -225,10 +217,56 @@
 	</div>
 	
 	<script>
-	    $("#slider").on('input', function() {
-	    	$("#compRange").html( $(this).val() );
-	    });
-	    
+		
+		<!-- 제목넣기 -->
+		const hiddenTitle = document.getElementById('hiddenTitle');
+		const title = document.getElementsByClassName('title')[0];
+		title.addEventListener('focusout', function(){
+			hiddenTitle.value = title.value;
+			console.log(hiddenTitle.value);
+		});
+		
+		<!-- 지역넣기 -->
+		const hiddenLocation = document.getElementById('hiddenLocation');
+		const selectLocation = document.getElementById('selectLocation');
+		selectLocation.addEventListener('change', function(){
+			hiddenLocation.value = selectLocation.value;
+			console.log(hiddenLocation.value);
+		});
+		
+		<!-- 성별넣기 -->
+		const hiddenGender = document.getElementById('hiddenGender');
+		const gender = document.getElementsByClassName('gender')[0];
+		gender.addEventListener('change', function(){
+			hiddenGender.value = gender.value;
+			console.log(hiddenGender.value);
+		});
+		
+		<!-- 인원수넣기 -->
+		const hiddenNum = document.getElementById('hiddenNum');
+		const partyNum = document.getElementsByClassName('partyNum')[0];
+		partyNum.addEventListener('focusout', function(){
+			if(partyNum.value > 20){
+				partyNum.value = 20;
+			}
+			hiddenNum.value = partyNum.value;
+		});
+		
+		<!-- 코스넣기 -->
+		const writeButton = document.getElementById('writeButton');
+		const numberLis = document.getElementsByClassName('numberLi');
+		const hiddenCourse = document.getElementById('hiddenCourse');
+		var courseTest = "";
+		writeButton.addEventListener('click', function(){
+			for(const numberLi of numberLis){
+				courseTest += numberLi.innerHTML + '/';
+			}
+			hiddenCourse.value = courseTest.slice(0, -1);
+		});
+		
+		
+		
+ 		<!-- 첨부파일 -->
 	    $("#thumbnail").click(function(){
 	    	$('#myFile').click();
 	    });
@@ -245,7 +283,7 @@
 		    	reader.readAsDataURL(myFile.files[0]);
 		    });
 		    
-		    
+ 		<!-- 코스검색API -->
 		const searchButton = document.getElementById('button-addon2');  
 		const locationDiv = document.getElementById('location1');
 	   	const searchInput = document.getElementById('searchInput');
@@ -289,16 +327,69 @@
 			
    		});
 	   	
+ 	   	<!-- 코스선택 후 리스트에 추가 -->
 	   	$(document).on('click', '.searchInfo', function(){
-	   		var li = '<li class="numberdLi" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
-	   		document.querySelector('.numbered').innerHTML += li;
+	   		var li = '<li class="numberLi" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
+	   		var numLi = document.querySelector('.numbered');
+	   		numLi.innerHTML += li;
+
+			const locDiv = document.getElementsByClassName('location2')[0];
+			locDiv.isScrollBottom = true;
+				
+			locDiv.addEventListener("scroll", (event) => {
+				if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
+					locDiv.isScrollBottom = true;
+				} else {
+					locDiv.isScrollBottom = false;
+				}
+			});
+			
+			if (locDiv.isScrollBottom) {
+				locDiv.scrollTop = locDiv.scrollHeight;
+			}
+
+	   		if(numLi.childElementCount > 20){
+	   			alert('20개 까지만 선택할 수 있습니다.');
+	   			numLi.removeChild(numLi.lastChild);
+	   		}
 	   	});
 	   	
-	   	$(document).on('click', '.numberdLi', function(){
+ 	   	<!-- 코스지우기 -->
+	   	$(document).on('click', '.numberLi', function(){
 	   		this.remove(this);
 	   	});
 	</script>
 	
+	<script>
+//  	✔datepicker
+		$(function(){
+			$('#daterangepicker').daterangepicker();
+			$("#daterangepicker").daterangepicker({
+			    locale: {
+			    "separator": " ~ ",                     // 시작일시와 종료일시 구분자
+			    "format": 'YYYY-MM-DD',     // 일시 노출 포맷
+			    "applyLabel": "확인",                    // 확인 버튼 텍스트
+			    "cancelLabel": "취소",                   // 취소 버튼 텍스트
+			    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+			    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+			    },
+			    minDate: new Date(),
+			    autoApply: true,                         // 확인/취소 버튼 사용여부
+			});
+			
+			<!-- 날짜넣기 -->
+			$('.travelDate').change(function(){
+				$('#hiddenDate').val($('.travelDate').val());
+				console.log($('#hiddenDate').val());
+			});
+			
+		});
+		
+	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </body>
 </html>

@@ -19,9 +19,11 @@
 	#carouselExampleInterval{height: 600px; margin-bottom: 10px;}
 	#carouselExampleInterval img{height: 600px;}
 	#detailContent{border-top: 2px solid gray; padding: 10px; margin-bottom: 20px;}
-	#travelReply{margin-top: 30px;}
+	#travelReply{margin-top: 40px;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
+	.travelInfo td{height: 30px;}
+	.travelInfo td:nth-child(2){color: gray;}
 </style>
 </head>
 <body>
@@ -96,6 +98,61 @@
 		
 		<div id="map" style="width:100%;height:350px;"></div>
 		
+		<div class="row" style="margin-top: 30px;">
+			<div class="travelInfo col">
+				<table>
+					<tr>
+						<td width="150px;"> 문의 및 안내</td>
+						<td>${ infoList[0] }</td>
+					</tr>
+					<tr>
+						<td> 주소</td>
+						<td>${ addr }</td>
+					</tr>
+					<tr>
+						<td> 휴일</td>
+						<td>${ infoList[3] }</td>
+					</tr>
+					<tr>
+						<td> 유모차대여정보</td>
+						<td>${ infoList[5] }</td>
+					</tr>
+					<tr>
+						<td> 애완동물동반</td>
+						<td>${ infoList[6] }</td>
+					</tr>
+					<tr>
+						<td> 신용카드가능정보</td>
+						<td>${ infoList[7] }</td>
+					</tr>
+				</table>
+			</div>
+			<div class="travelInfo col">
+				<table>
+					<tr>
+						<td width="130px;"> 개장일</td>
+						<td>${ infoList[1] }</td>
+					</tr>
+					<tr>
+						<td> 이용시간</td>
+						<td>${ infoList[4] }</td>
+					</tr>
+					<tr>
+						<td> 주차</td>
+						<td>${ infoList[2] }</td>
+					</tr>
+					<tr>
+						<td> 체험안내</td>
+						<td>${ infoList[9] }</td>
+					</tr>
+					<tr>
+						<td> 체험가능연령</td>
+						<td>${ infoList[8] }</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+			
 		<div id="travelReply">
 			<h4 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h4>
 			<div class="input-group mb-3">
@@ -104,6 +161,7 @@
 			</div>
 		</div>
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		
 		
 	</div>
 
