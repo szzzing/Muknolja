@@ -18,6 +18,8 @@ import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.travel.model.vo.Travel;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
 @Controller
 public class TravelController {
 	
@@ -172,6 +174,57 @@ public class TravelController {
 				tList.add(originPhoto);
 			}
 			model.addAttribute("tList", tList);
+			
+			String urlStr3 = "http://apis.data.go.kr/B551011/KorService/detailIntro?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileApp=AppTest&MobileOS=ETC&contentId=" + contentId + "&contentTypeId=12&_type=json";
+			URL url3 = new URL(urlStr3);
+			BufferedReader bf3;
+			String line3 = "";
+			String result3 = "";
+			
+			bf3 = new BufferedReader(new InputStreamReader(url3.openStream()));
+			
+			while((line3=bf3.readLine())!=null) {
+				result3= result3.concat(line3);
+			}
+			
+			JSONParser parser3 = new JSONParser();
+			JSONObject obj3 = (JSONObject)parser3.parse(result3);
+			
+			JSONObject parseResponse3 = (JSONObject)obj3.get("response");
+			JSONObject parseBody3 = (JSONObject)parseResponse3.get("body");
+			JSONObject parseItems3 = (JSONObject)parseBody3.get("items");
+			JSONArray parseItem3 = (JSONArray)parseItems3.get("item");
+			
+			List<String> infoList = new ArrayList<String>();
+			for(int i = 0; i < parseItem3.size(); i++) {
+				JSONObject tInfo = (JSONObject)parseItem3.get(i);
+				
+				System.out.println(tInfo);
+				String infocenter = tInfo.get("infocenter").toString();
+				String opendate = tInfo.get("opendate").toString();
+				String parking = tInfo.get("parking").toString();
+				String restdate = tInfo.get("restdate").toString();
+				String usetime = tInfo.get("usetime").toString();
+				String chkbabycarriage = tInfo.get("chkbabycarriage").toString();
+				String chkpet = tInfo.get("chkpet").toString();
+				String chkcreditcard = tInfo.get("chkcreditcard").toString();
+				String expagerange = tInfo.get("expagerange").toString();
+				String expguide = tInfo.get("expguide").toString();
+				
+				infoList.add(infocenter);
+				infoList.add(opendate);
+				infoList.add(parking);
+				infoList.add(restdate);
+				infoList.add(usetime);
+				infoList.add(chkbabycarriage);
+				infoList.add(chkpet);
+				infoList.add(chkcreditcard);
+				infoList.add(expagerange);
+				infoList.add(expguide);
+				
+				model.addAttribute("infoList", infoList);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
