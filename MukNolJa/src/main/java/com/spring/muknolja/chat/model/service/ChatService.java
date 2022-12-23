@@ -32,4 +32,6 @@ public interface ChatService {
 
 	int refusalInvite(HashMap<String, String> map);
 
+	int chatRoomOut(HashMap<String, String> map);
+
 }

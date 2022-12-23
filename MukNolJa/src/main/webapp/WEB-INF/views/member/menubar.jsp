@@ -58,6 +58,13 @@
                 text-decoration: none;
                 color: black;
             }
+            #out_btn{
+            	position: absolute;
+                top: 10px;
+                left: 10px;
+                text-decoration: none;
+                color: black;
+            }
             .chatRoom{
             	margin: 3px;
             	border-top: 1px solid RGB(160, 160, 160, 0.5);
@@ -241,6 +248,7 @@
      
      <div id="chat_modal">
      	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
+     	<a id="out_btn"><i class="bi bi-box-arrow-right"></i></a>
      	<div class="row" style="--bs-gutter-x: 0rem;">
      		<div class="col text-center" id="chatTitle">
      			<b id="chatTitle">채팅방 이름</b>
@@ -284,7 +292,8 @@
     <div id="invite_modal">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
-    		<div class="col" style="margin-top: 20px;">
+    		<div class="col text-center" style="margin-top: 20px;">
+    			<h4>초대하기</h4>
     			<div class = "input-group input-group-sm">
     				<input type = "text" class = "form-control" id="searchNick" placeholder = "닉네임">
 	  				<div class = "input-group-btn">
@@ -474,6 +483,20 @@
         			}
         		});
     		});
+	        
+	        // 채팅방 나가기
+	        document.getElementById('out_btn').addEventListener('click', function(){
+	        	$.ajax({
+	        		url: '${contextPath}/chatRoomOut.ch',
+	        		data: {roomCode:roomCode},
+	        		success: (data) => {
+	        			document.getElementById('chat_modal').style.display = 'none';
+	        			sockJs.close();
+	        			chat();
+	        		}
+	        	});
+	        });
+	        
 	        
 	        function chat(){
 	        	// 채팅방 리스트 불러오기

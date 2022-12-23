@@ -211,5 +211,21 @@ public class ChatroomController {
     	
     	return result;
     }
+    
+    // 채팅방 나가기
+    @RequestMapping("chatRoomOut.ch")
+    @ResponseBody
+    public int chatRoomOut(@RequestParam("roomCode") String roomCode, HttpSession session) {
+    	String id = ((Member)session.getAttribute("loginUser")).getId();
+    	
+    	HashMap<String, String> map = new HashMap<>();
+    	
+    	map.put("id", id);
+    	map.put("roomCode", roomCode);
+    	
+    	int result = cService.chatRoomOut(map);
+    	
+    	return result;
+    }
 
 }

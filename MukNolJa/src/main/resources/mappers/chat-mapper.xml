@@ -109,4 +109,9 @@
 		where CHAT_ROOM_CODE = #{roomCode} and RECIPIENT_ID = #{id}
 	</delete>
 	
+	<delete id="chatRoomOut">
+		delete from CHAT_USER
+		where CHAT_ROOM_CODE = #{roomCode} and PARTICIPANT_ID = #{id}
+	</delete>
+	
 </mapper>

@@ -58,4 +58,8 @@ public class ChatDAO {
 		return sqlSession.delete("chatmapper.refusalInvite", map);
 	}
 
+	public int chatRoomOut(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.delete("chatmapper.chatRoomOut", map);
+	}
+
 }
