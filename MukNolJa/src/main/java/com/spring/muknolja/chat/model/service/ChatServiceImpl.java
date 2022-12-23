@@ -76,4 +76,9 @@ public class ChatServiceImpl implements ChatService{
 	public int refusalInvite(HashMap<String, String> map) {
 		return cDAO.refusalInvite(sqlSession, map);
 	}
+
+	@Override
+	public int chatRoomOut(HashMap<String, String> map) {
+		return cDAO.chatRoomOut(sqlSession, map);
+	}
 }
