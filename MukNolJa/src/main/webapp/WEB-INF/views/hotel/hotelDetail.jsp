@@ -150,7 +150,6 @@
 				</table>
 			</div>
 		</div>
-
 		
 		<div class="row row-cols-4 justify-content-start text-center mt-5 mb-5" style="border-bottom:1px solid #e9e9e9">
 			<div class="col col-auto p-2 mukMutedText mukCategory" id="roomListButton" scope="col">
@@ -184,26 +183,27 @@
 					<label for="accept">인원</label>
 				</div>
 			</div>
+			
+			<!-- 객실 리스트 div -->
 			<div class="col col-lg-9">
-				<div class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 g-5">
-				<c:forEach items="${ roomList }" var="r" varStatus="t">
-					<div class="col pb-3" style="border-bottom:1px solid #e9e9e9">
+				<div id="roomDivList" class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 g-5">
+					<div id="roomDiv" class="col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
 						<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 g-3">
 							<div class="col">
-								<img class="roomImg img-fluid mukRound" data-bs-toggle="modal" data-bs-target="#roomDetailModal" src="${contextPath }/resources/uploadFiles/${roomThumbnail[t.index].fileModifyName}" style="background: lightgray">
+								<img class="roomImg img-fluid mukRound" data-bs-toggle="modal" data-bs-target="#roomDetailModal" src="#" style="background: lightgray">
 							</div>
 							<div class="col">
 								<table id="roomTable" class="table table-borderless" style="margin-bottom:0px; height:100%">
 									<tr><td>
-										<input type="hidden" class="roomId" value="${r.roomId }">
-										<h4 class="roomName lh-1 fw-bold">${r.roomName }</h4>
-										<div class="mukMutedText">${r.roomIntro }</div>
-										<span class="mukMutedText checkinTime">${r.checkinTime }</span>
+										<input type="hidden" class="roomId">
+										<h4 class="roomName lh-1 fw-bold"></h4>
+										<div class="roomIntro mukMutedText"></div>
+										<span class="mukMutedText checkinTime"></span>
 										<span class="mukMutedText">-</span>
-										<span class="checkoutTime mukMutedText">${r.checkoutTime }</span>
+										<span class="checkoutTime mukMutedText"></span>
 									</td></tr>
 									<tr><td class="align-bottom pt-3">
-										<h4 class="lh-1 fw-bold pb-3"><fmt:formatNumber value="${r.roomPrice }" pattern="#,###원"/></h4>
+										<h4 class="roomPrice lh-1 fw-bold pb-3"></h4>
 										<c:if test="${empty loginUser }">
 											<button type="button" class="reserveButton mukButton" style="width:100%" data-bs-toggle="modal" data-bs-target="#mukModal">예약하기</button>
 										</c:if>
@@ -215,9 +215,11 @@
 							</div>
 						</div>
 					</div>
-				</c:forEach>
 				</div>
 			</div>
+			<!-- 객실 리스트 div -->
+			
+			
 		</div>
 		
 		<!-- 객실 리스트 끝 -->
@@ -278,6 +280,46 @@
 		</div>
 		<!-- 호텔 정보 끝 -->
 	</div>
+	
+	
+	
+	
+	<!-- 객실 정보 불러오기 시작 -->
+	<script>
+		$(document).ready(function(){
+			var roomDiv = $("#roomDiv").clone();
+			roomDiv.prop("style").removeProperty("display");
+
+			$.ajax({
+				url: "${contextPath}/selectAllRoom.ho",
+				data: {
+					hotelId: ${hotel.hotelId},
+					checkinDate: $("input[name=checkinDate]").val(),
+					checkoutDate: $("input[name=checkoutDate]").val()
+				},
+				success: (data)=>{
+					console.log(data);
+					var roomDiv2 = roomDiv.clone();
+					
+					$("#roomDivList").html("");
+					roomDiv2.prop("style").removeProperty("display");
+					for(var i of data) {
+						roomDiv2.find(".roomId").val(i.roomId);
+						roomDiv2.find(".roomName").html(i.roomName);
+						roomDiv2.find(".roomIntro").html(i.roomIntro);
+						roomDiv2.find(".roomPrice").html(i.roomPrice.toLocaleString()+"원~");
+						roomDiv2.find(".roomImg").prop("src", "${contextPath }/resources/uploadFiles/"+i.thumbnail);
+						$("#roomDivList").append('<div class="room col pb-3" style="border-bottom:1px solid #f1f1f1">'+roomDiv2.html()+'</div>');
+					}
+				},
+				error: (data)=>{
+					
+				}
+			});
+		});
+	</script>
+	<!-- 객실 정보 불러오기 끝 -->
+	
 	
 	
 	
@@ -406,20 +448,18 @@
 	
 	<!-- 예약 버튼 시작 -->
 	<script>
-		$(document).ready(function(){
-			$(".reserveButton").on("click", function(){
-				if(${!empty loginUser}) {
-					const roomId = $(this).parent().parent().parent().find(".roomId").val();
-					const checkinTime = $(this).parent().parent().parent().find(".checkinTime").text();
-					const checkoutTime = $(this).parent().parent().parent().find(".checkoutTime").text();
-					
-					$("input[name=roomId]").val(roomId);
-					$("input[name=checkinTime]").val(checkinTime);
-					$("input[name=checkoutTime]").val(checkoutTime);
-					
-					$("form").submit();
-				}
-			});
+		$(document).on("click", ".reserveButton", function(){
+			if(${!empty loginUser}) {
+				const roomId = $(this).parent().parent().parent().find(".roomId").val();
+				const checkinTime = $(this).parent().parent().parent().find(".checkinTime").text();
+				const checkoutTime = $(this).parent().parent().parent().find(".checkoutTime").text();
+				
+				$("input[name=roomId]").val(roomId);
+				$("input[name=checkinTime]").val(checkinTime);
+				$("input[name=checkoutTime]").val(checkoutTime);
+				
+				$("form").submit();
+			}
 		});
 	</script>
 	<!-- 예약 버튼 끝 -->
@@ -617,15 +657,24 @@
  	</script>
  	<!-- 지도 끝 -->
 
-
+	
 	<!-- daterangepicker 기본설정, 날짜 기입 시작 -->
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 	<script>
 		let today = new Date();
-		let startDate = today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
-		let endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+		let startDate;
+		let endDate;
+
+		if(${!empty checkinDate && !empty checkoutDate}) {
+			startDate = "${checkinDate}";
+			endDate = "${checkoutDate}";
+		} else {
+			startDate = today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
+			endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+		}
+		
 		$("#daterangepicker").daterangepicker({
 			locale: {
 				"separator": " - ",
@@ -744,7 +793,9 @@
 	<script>
 		$(document).ready(function(){
 			var roomImgDiv = $("#roomDetailModal_roomImgDiv").clone();
-			$(".roomImg").on("click", function(){
+			
+			$(document).on("click", ".roomImg", function(){
+				console.log("클릭");
 				$.ajax({
 					url: "${contextPath}/roomDetail.ho",
 					data: {

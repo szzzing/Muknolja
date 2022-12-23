@@ -39,8 +39,8 @@ public class HotelDAO {
 		return (ArrayList)sqlSession.selectList("hotelmapper.selectHotelImg", hotelId);
 	}
 
-	public ArrayList<Room> selectAllRoom(SqlSessionTemplate sqlSession, int hotelId) {
-		return (ArrayList)sqlSession.selectList("hotelmapper.selectAllRoom", hotelId);
+	public ArrayList<Room> selectAllRoom(SqlSessionTemplate sqlSession, HashMap map) {
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectAllRoom", map);
 	}
 
 	public ArrayList<AttachedFile> selectRoomImg(SqlSessionTemplate sqlSession, int roomId) {
@@ -115,28 +115,10 @@ public class HotelDAO {
 		return sqlSession.selectOne("hotelmapper.getSearchListCount");
 	}
 
-	public ArrayList<Hotel> selectHotelList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("hotelmapper.selectHotelList", null, rowBounds);
-	}
-
-	public ArrayList<AttachedFile> selectHotelImgList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("hotelmapper.selectHotelImgList", null, rowBounds);
-	}
-
 	public ArrayList<Hotel> searchHotelList(SqlSessionTemplate sqlSession, HashMap searchMap, PageInfo pi) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("hotelmapper.searchHotelList", searchMap, rowBounds);
-	}
-
-	public ArrayList<AttachedFile> searchHotelImgList(SqlSessionTemplate sqlSession, HashMap searchMap, PageInfo pi) {
-		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("hotelmapper.searchHotelImgList", searchMap, rowBounds);
 	}
 
 }

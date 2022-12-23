@@ -11,7 +11,9 @@
      <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <style>
-    
+    	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  		*{font-family: 'Noto Sans KR', sans-serif;}
+  		
     	 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
     	 .menul{
     	 font-size: 10px;}

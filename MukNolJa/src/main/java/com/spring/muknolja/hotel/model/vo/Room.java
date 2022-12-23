@@ -25,4 +25,6 @@ public class Room {
 	private String roomInfo;
 	private String roomIntro;
 	private String roomStatus;
+	private String thumbnail;
+	private int emptyRoom;
 }

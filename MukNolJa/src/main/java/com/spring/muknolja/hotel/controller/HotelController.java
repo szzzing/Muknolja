@@ -102,34 +102,6 @@ public class HotelController {
 		return "hotelList";
 	}
 	
-	@RequestMapping(value="selectHotelList.ho", produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public void selectHotelList(@RequestParam(value="page", required=false) Integer page, HttpServletResponse response) {
-		int listCount = hService.getListCount();
-		int currentPage = 1;
-		if(page!=null) {
-			currentPage = page;
-		}
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
-		ArrayList<Hotel> hotelList = hService.selectHotelList(pi);
-		ArrayList<AttachedFile> hotelImgList = hService.selectHotelImgList(pi);
-		
-		HashMap map = new HashMap();
-		map.put("hotelList", hotelList);
-		map.put("hotelImgList", hotelImgList);
-		
-		response.setContentType("application/json; charset=UTF-8");
-		Gson gson = new Gson();
-		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
-		gson = gb.create();
-		
-		try {
-			gson.toJson(map, response.getWriter());
-		} catch (JsonIOException | IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	
 	@RequestMapping(value="searchHotelList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
@@ -163,13 +135,7 @@ public class HotelController {
 		searchMap.put("swim", swim);
 		searchMap.put("fitness", fitness);
 		
-		
-		HashMap map = new HashMap();
-		
 		ArrayList<Hotel> hotelList = hService.searchHotelList(searchMap, pi);
-		ArrayList<AttachedFile> hotelImgList = hService.searchHotelImgList(searchMap, pi);
-		map.put("hotelList", hotelList);
-		map.put("hotelImgList", hotelImgList);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
@@ -177,7 +143,7 @@ public class HotelController {
 		gson = gb.create();
 		
 		try {
-			gson.toJson(map, response.getWriter());
+			gson.toJson(hotelList, response.getWriter());
 		} catch (JsonIOException | IOException e) {
 			e.printStackTrace();
 		}
@@ -187,13 +153,11 @@ public class HotelController {
 	
 	
 	@RequestMapping("hotelDetail.ho")
-	public String hotelDetail(@RequestParam("hotelId") int hotelId, HttpSession session, Model model) {
+	public String hotelDetail(@RequestParam("hotelId") int hotelId, @RequestParam(value="checkinDate", required=false) Date checkinDate, @RequestParam(value="checkoutDate", required=false) Date checkoutDate, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");
-		
+
 		Hotel hotel = hService.selectHotel(hotelId);
 		ArrayList<AttachedFile> hotelImgList = hService.selectHotelImg(hotelId);
-		ArrayList<Room> roomList = hService.selectAllRoom(hotelId);
-		ArrayList<AttachedFile> roomThumbnail = hService.selectAllRoomThumbnail(hotelId);
 		
 		if(m!=null) {
 			LikeHotel l = new LikeHotel();
@@ -206,10 +170,35 @@ public class HotelController {
 		
 		model.addAttribute("hotel", hotel);
 		model.addAttribute("hotelImgList", hotelImgList);
-		model.addAttribute("roomList", roomList);
-		model.addAttribute("roomThumbnail", roomThumbnail);
+		model.addAttribute("checkinDate", checkinDate);
+		model.addAttribute("checkoutDate", checkoutDate);
+		
 		return "hotelDetail";
 	}
+	
+	@RequestMapping(value="selectAllRoom.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void selectAllRoom(@RequestParam("hotelId") int hotelId, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, Model model, HttpServletResponse response) {
+		HashMap map = new HashMap();
+		
+		map.put("checkinDate", checkinDate);
+		map.put("checkoutDate", checkoutDate);
+		map.put("hotelId", hotelId);
+		
+		ArrayList<Room> roomList = hService.selectAllRoom(map);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(roomList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	@RequestMapping(value="roomDetail.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody

@@ -37,4 +37,5 @@ public class Hotel {
 	private double hotelGeoY;
 	private int emptyHotel;
 	private int maxDistance;
+	private String thumbnail;
 }

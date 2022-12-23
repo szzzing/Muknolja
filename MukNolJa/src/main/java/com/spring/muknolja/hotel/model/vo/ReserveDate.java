@@ -11,7 +11,6 @@ public class ReserveDate {
 	private static DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private static SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	// 날짜 더하기
 	public static Date datePlus(Date date, int plus) {
 		String d = date.toString();
 		LocalDate localDate = LocalDate.parse(d, dtFormat);
@@ -20,7 +19,6 @@ public class ReserveDate {
 	}
 	
 	public static int dateDif(Date start, Date end) {
-		
 		try {
 			int dif = (int) ((end.getTime()-start.getTime()) / (24*60*60*1000));
 			return dif;
@@ -28,7 +26,6 @@ public class ReserveDate {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return -1;
 	}
 }

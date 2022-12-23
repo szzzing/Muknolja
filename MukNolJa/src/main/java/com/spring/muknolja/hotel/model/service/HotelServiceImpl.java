@@ -51,8 +51,8 @@ public class HotelServiceImpl implements HotelService{
 	}
 	
 	@Override
-	public ArrayList<Room> selectAllRoom(int hotelId) {
-		return hDAO.selectAllRoom(sqlSession, hotelId);
+	public ArrayList<Room> selectAllRoom(HashMap map) {
+		return hDAO.selectAllRoom(sqlSession, map);
 	}
 	
 	@Override
@@ -146,22 +146,7 @@ public class HotelServiceImpl implements HotelService{
 	}
 	
 	@Override
-	public ArrayList<Hotel> selectHotelList(PageInfo pi) {
-		return hDAO.selectHotelList(sqlSession, pi);
-	}
-	
-	@Override
-	public ArrayList<AttachedFile> selectHotelImgList(PageInfo pi) {
-		return hDAO.selectHotelImgList(sqlSession, pi);
-	}
-	
-	@Override
 	public ArrayList<Hotel> searchHotelList(HashMap searchMap, PageInfo pi) {
 		return hDAO.searchHotelList(sqlSession, searchMap, pi);
-	}
-	
-	@Override
-	public ArrayList<AttachedFile> searchHotelImgList(HashMap searchMap, PageInfo pi) {
-		return hDAO.searchHotelImgList(sqlSession, searchMap, pi);
 	}
 }

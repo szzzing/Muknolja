@@ -23,7 +23,7 @@ public interface HotelService {
 
 	ArrayList<AttachedFile> selectHotelImg(int hotelId);
 
-	ArrayList<Room> selectAllRoom(int hotelId);
+	ArrayList<Room> selectAllRoom(HashMap map);
 
 	ArrayList<AttachedFile> selectRoomImg(int roomId);
 
@@ -61,12 +61,6 @@ public interface HotelService {
 	
 	int getSearchListCount();
 
-	ArrayList<Hotel> selectHotelList(PageInfo pi);
-
-	ArrayList<AttachedFile> selectHotelImgList(PageInfo pi);
-
 	ArrayList<Hotel> searchHotelList(HashMap searchMap, PageInfo pi);
-
-	ArrayList<AttachedFile> searchHotelImgList(HashMap searchMap, PageInfo pi);
 
 }

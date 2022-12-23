@@ -82,7 +82,15 @@
 <body>
 	<jsp:include page="../member/menubar.jsp"/>
 	
-	<div class="container" style="margin-top:120px">
+	<!-- 호텔 상세페이지용 폼 -->
+	<form action="${contextPath }/hotelDetail.ho">
+		<input type="hidden" name="hotelId">
+		<input type="hidden" name="checkinDate">
+		<input type="hidden" name="checkoutDate">
+	</form>
+	<!-- 호텔 상세페이지용 폼 -->
+	
+	<div class="container container-sm" style="margin-top:120px">
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gx-5 gy-5">
 			<div class="col col-lg-3">
 				<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 p-3 pt-4 pb-4 mb-5" style="border:1px solid #f1f1f1">
@@ -91,60 +99,84 @@
 							<div class="fw-bold pb-2" style="display:inline-block;">날짜</div>
 							<small class="fw-bold mukMutedText" style="float:right"><span class="value">1박 2일</span></small>
 							<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
-							<input type="hidden" name="checkinDate">
-							<input type="hidden" name="checkoutDate">
 						</div>
 					</div>
 					<div id="subCategory" class="col">
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
 							<div class="fw-bold pb-2">등급</div>
-							<label for=5star class="mukCheckbox">
-								<input type="checkbox" name="star" id="5star" value="5"><span class="on"></span>
-								5성급
-							</label>
-							<label for=4star class="mukCheckbox">
-								<input type="checkbox" name="star" id="4star" value="4"><span class="on"></span>
-								4성급
-							</label>
-							<label for=3star class="mukCheckbox">
-								<input type="checkbox" name="star" id="3star" value="3"><span class="on"></span>
-								3등급
-							</label>
-							<label for=2star class="mukCheckbox">
-								<input type="checkbox" name="star" id="2star" value="2"><span class="on"></span>
-								2성급
-							</label>
-							<label for=1star class="mukCheckbox">
-								<input type="checkbox" name="star" id="1star" value="1"><span class="on"></span>
-								1성급
-							</label>
+							<div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-2">
+								<div class="col">
+									<label for=5star class="mukCheckbox">
+										<input type="checkbox" name="star" id="5star" value="5"><span class="on"></span>
+										5성급
+									</label>
+								</div>
+								<div class="col">
+									<label for=4star class="mukCheckbox">
+										<input type="checkbox" name="star" id="4star" value="4"><span class="on"></span>
+										4성급
+									</label>
+								</div>
+								<div class="col">
+									<label for=3star class="mukCheckbox">
+										<input type="checkbox" name="star" id="3star" value="3"><span class="on"></span>
+										3등급
+									</label>
+								</div>
+								<div class="col">
+									<label for=2star class="mukCheckbox">
+										<input type="checkbox" name="star" id="2star" value="2"><span class="on"></span>
+										2성급
+									</label>
+								</div>
+								<div class="col">
+									<label for=1star class="mukCheckbox">
+										<input type="checkbox" name="star" id="1star" value="1"><span class="on"></span>
+										1성급
+									</label>
+								</div>
+							</div>
 						</div>
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
 							<div class="fw-bold pb-2">시설</div>
-							<label for="wifi" class="mukCheckbox">
-								<input type="checkbox" name='install' id="wifi"><span class="on"></span>
-								와이파이
-							</label>
-							<label for="breakfast" class="mukCheckbox">
-								<input type="checkbox" name='install' id="breakfast"><span class="on"></span>
-								조식
-							</label>
-							<label for="amenity" class="mukCheckbox">
-								<input type="checkbox" name='install' id="amenity"><span class="on"></span>
-								어메니티
-							</label>
-							<label for="park" class="mukCheckbox">
-								<input type="checkbox" name='install' id="park"><span class="on"></span>
-								주차
-							</label>
-							<label for="swim" class="mukCheckbox">
-								<input type="checkbox" name='install' id="swim"><span class="on"></span>
-								수영장
-							</label>
-							<label for="fitness" class="mukCheckbox">
-								<input type="checkbox" name='install' id="fitness"><span class="on"></span>
-								피트니스
-							</label>
+							<div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-2">
+								<div class="col">
+									<label for="wifi" class="mukCheckbox">
+										<input type="checkbox" name='install' id="wifi"><span class="on"></span>
+										와이파이
+									</label>
+								</div>
+								<div class="col">
+									<label for="breakfast" class="mukCheckbox">
+										<input type="checkbox" name='install' id="breakfast"><span class="on"></span>
+										조식
+									</label>
+								</div>
+								<div class="col">
+									<label for="amenity" class="mukCheckbox">
+										<input type="checkbox" name='install' id="amenity"><span class="on"></span>
+										어메니티
+									</label>
+								</div>
+								<div class="col">
+									<label for="park" class="mukCheckbox">
+										<input type="checkbox" name='install' id="park"><span class="on"></span>
+										주차
+									</label>
+								</div>
+								<div class="col">
+									<label for="swim" class="mukCheckbox">
+										<input type="checkbox" name='install' id="swim"><span class="on"></span>
+										수영장
+									</label>
+								</div>
+								<div class="col">
+									<label for="fitness" class="mukCheckbox">
+										<input type="checkbox" name='install' id="fitness"><span class="on"></span>
+										피트니스
+									</label>
+								</div>
+							</div>
 						</div>
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
 							<div class="fw-bold pb-2" style="display:inline-block;">가격</div>
@@ -164,7 +196,7 @@
 			
 			<div class="col col-lg-9">
 			
-				<div id="hotelList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-1 justify-content-start g-3">
+				<div id="hotelList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-1 justify-content-start g-5">
 					<div id="hotelDiv" class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1; display:none">
 						<div class="row g-3">
 							<div class="col col-sm-6 col-lg-5">
@@ -240,32 +272,27 @@
 						install: install
 					},
 					success: (data)=>{
-						console.log("상세검색");
-						console.log(data);
-						
 						var hotelDiv2 = hotelDiv.clone();
-						const hotelList = data.hotelList;
-						const hotelImgList = data.hotelImgList;
 						
 						$("#hotelList").html("");
 						hotelDiv.prop("style").removeProperty("display");
-						for(var i=0;i<hotelList.length;i++) {
-							hotelDiv2.find(".hotelId").val(hotelList[i].hotelId);
-							hotelDiv2.find(".hotelName").html(hotelList[i].hotelName);
-							hotelDiv2.find(".hotelAddress").html(hotelList[i].hotelAddress);
-							hotelDiv2.find(".minPrice").html(hotelList[i].minPrice.toLocaleString()+"원~");
-							hotelDiv2.find(".hotelImg").prop("src", "${contextPath }/resources/uploadFiles/"+hotelImgList[i].fileModifyName);
-							hotelDiv2.find(".hotelStar").html(hotelList[i].star+"성급");
-							hotelDiv2.find(".avgRating").html(hotelList[i].avgRating.toFixed(1));
+						for(var i of data) {
+							hotelDiv2.find(".hotelId").val(i.hotelId);
+							hotelDiv2.find(".hotelName").html(i.hotelName);
+							hotelDiv2.find(".hotelAddress").html(i.hotelAddress);
+							hotelDiv2.find(".minPrice").html(i.minPrice.toLocaleString()+"원~");
+							hotelDiv2.find(".hotelImg").prop("src", "${contextPath }/resources/uploadFiles/"+i.thumbnail);
+							hotelDiv2.find(".hotelStar").html(i.star+"성급");
+							hotelDiv2.find(".avgRating").html(i.avgRating.toFixed(1));
 							if(searchDistance) {
 								if(searchDistance<0) {
-									hotelDiv2.find(".maxDistance").html(hotelList[i].maxDistance.toFixed(1)+"km 거리");
+									hotelDiv2.find(".maxDistance").html(i.maxDistance.toFixed(1)+"km 거리");
 								} else {
-									hotelDiv2.find(".maxDistance").html(hotelList[i].maxDistance.toFixed(0)+"km 거리");
+									hotelDiv2.find(".maxDistance").html(i.maxDistance.toFixed(0)+"km 거리");
 								}
 							}
-							if(hotelList[i].avgRating==0) {
-								hotelDiv2.find(".avgRating").html(hotelList[i].avgRating.toFixed(0));
+							if(i.avgRating==0) {
+								hotelDiv2.find(".avgRating").html(i.avgRating.toFixed(0));
 							}
 							$("#hotelList").append('<div class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1">'+hotelDiv2.html()+'</div>');
 						}
@@ -331,7 +358,9 @@
 			});
 			
 			$(document).on('click', '.hotel', function(){
-				location.href="${contextPath}/hotelDetail.ho?hotelId="+$(this).find(".hotelId").val();
+// 				location.href="${contextPath}/hotelDetail.ho?hotelId="+$(this).find(".hotelId").val();
+				$("input[name=hotelId]").val($(this).find(".hotelId").val());
+				$("form").submit();
 			});
 		});
 	</script>
