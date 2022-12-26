@@ -17,4 +17,5 @@ public class ChatRoom {
 	private String roomName;
 	private String hostId;
 	private String maxTransferTime;
+	private int receiveCount;
 }

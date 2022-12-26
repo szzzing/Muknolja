@@ -94,7 +94,7 @@
             <a class="nav-link" href="memberManagement.me">
               <i class="bi bi-people"></i>
               <span data-feather="file" class="align-text-bottom"></span>
-              회원관리
+              회원 관리
             </a>
           </li>
           <li class="nav-item">
@@ -174,7 +174,7 @@
                             ],
                             backgroundColor: [
                                 //색상
-                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(107, 182, 236, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
                                 'rgba(255, 206, 86, 0.2)',
                                 'rgba(75, 192, 192, 0.2)',
@@ -183,7 +183,7 @@
                             ],
                             borderColor: [
                                 //경계선 색상
-                                'rgba(255, 99, 132, 1)',
+                                'rgba(107, 182, 236, 1)',
                                 'rgba(54, 162, 235, 1)',
                                 'rgba(255, 206, 86, 1)',
                                 'rgba(75, 192, 192, 1)',

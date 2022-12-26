@@ -101,7 +101,7 @@
             <a class="nav-link" href="memberManagement.me">
               <i class="bi bi-people"></i>
               <span data-feather="file" class="align-text-bottom"></span>
-              회원관리
+              회원 관리
             </a>
           </li>
           <li class="nav-item">
@@ -129,7 +129,7 @@
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>회원 목록</h2>
+      <h2 style="display: inline-block;">회원 목록</h2>
       <div style="float:right; margin: 10px;">
       	<form action="memberManagement.me">
       		<div class = "input-group input-group-sm" id="sendMessage" style="margin-top: 10px;">
@@ -200,7 +200,7 @@
                             ],
                             backgroundColor: [
                                 //색상
-                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(107, 182, 236, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
                                 'rgba(255, 206, 86, 0.2)',
                                 'rgba(75, 192, 192, 0.2)',
@@ -209,7 +209,7 @@
                             ],
                             borderColor: [
                                 //경계선 색상
-                                'rgba(255, 99, 132, 1)',
+                                'rgba(107, 182, 236, 1)',
                                 'rgba(54, 162, 235, 1)',
                                 'rgba(255, 206, 86, 1)',
                                 'rgba(75, 192, 192, 1)',

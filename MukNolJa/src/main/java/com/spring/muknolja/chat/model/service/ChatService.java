@@ -2,6 +2,7 @@ package com.spring.muknolja.chat.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.spring.muknolja.chat.model.vo.ChatInvite;
 import com.spring.muknolja.chat.model.vo.ChatMessage;
@@ -16,7 +17,7 @@ public interface ChatService {
 
 	ArrayList<ChatMessage> selectChatMessage(String roomCode);
 
-	void insertMessage(ChatMessage message);
+	void insertMessage(HashMap<String, Object> map);
 
 	Member selectUser(String nick);
 
@@ -33,5 +34,15 @@ public interface ChatService {
 	int refusalInvite(HashMap<String, String> map);
 
 	int chatRoomOut(HashMap<String, String> map);
+
+	ArrayList<String> selectChatUser(String roomCode);
+
+	ArrayList<String> selectChatList(String roomCode);
+
+	void updateAvailability(HashMap<String, Object> aMap);
+
+	int availablilty(HashMap<String, Object> map);
+
+	ArrayList<ChatRoom> selectCount(String id);
 
 }
