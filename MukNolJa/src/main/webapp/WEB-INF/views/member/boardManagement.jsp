@@ -93,28 +93,28 @@
             <a class="nav-link active" aria-current="page" href="adminPage.me">
               <i class="bi bi-house-door"></i>
               <span data-feather="home" class="align-text-bottom"></span>
-              방문자통계
+              방문자 통계
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="memberManagement.me">
               <i class="bi bi-people"></i>
               <span data-feather="file" class="align-text-bottom"></span>
-              회원관리
+              회원 관리
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="boardManagement.me">
               <i class="bi bi-clipboard-data"></i>
               <span data-feather="shopping-cart" class="align-text-bottom"></span>
-              게시글관리
+              게시글 관리
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="adManagement.me">
               <i class="bi bi-camera-video"></i>
               <span data-feather="users" class="align-text-bottom"></span>
-              광고관리
+              광고 관리
             </a>
           </li>
         </ul>
@@ -123,12 +123,12 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">게시글관리</h1>
+        <h1 class="h2">게시글 관리</h1>
       </div>
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>게시글 목록</h2>
+      <h2 style="display: inline-block;">게시글 목록</h2>
       <div style="float:right; margin: 10px;">
       	<form action="boardManagement.me">
       		<div class = "input-group input-group-sm" id="sendMessage" style="margin-top: 10px;">
@@ -194,7 +194,7 @@
                             ],
                             backgroundColor: [
                                 //색상
-                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(107, 182, 236, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
                                 'rgba(255, 206, 86, 0.2)',
                                 'rgba(75, 192, 192, 0.2)',
@@ -203,7 +203,7 @@
                             ],
                             borderColor: [
                                 //경계선 색상
-                                'rgba(255, 99, 132, 1)',
+                                'rgba(107, 182, 236, 1)',
                                 'rgba(54, 162, 235, 1)',
                                 'rgba(255, 206, 86, 1)',
                                 'rgba(75, 192, 192, 1)',

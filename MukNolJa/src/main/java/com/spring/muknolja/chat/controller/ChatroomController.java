@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -55,6 +56,17 @@ public class ChatroomController {
     public void chatRoomList(HttpServletResponse response, HttpSession session) {
     	String id = ((Member)session.getAttribute("loginUser")).getId();
     	ArrayList<ChatRoom> list = cService.selectChatRoomList(id);
+    	
+    	ArrayList<ChatRoom> countList = cService.selectCount(id);
+    	
+    	for(ChatRoom r : list) {
+    		r.setReceiveCount(0);
+    		for(ChatRoom c : countList) {
+    			if(r.getRoomCode().equals(c.getRoomCode())) {
+    				r.setReceiveCount(c.getReceiveCount());
+    			}
+    		}
+    	}
     	
     	Gson gson = new Gson();
     	
@@ -121,10 +133,20 @@ public class ChatroomController {
     
     // 채팅방 이동
     @RequestMapping("chatRoom.ch")
-    public void chatRoom(@RequestParam("roomCode") String roomCode, HttpServletResponse response) {
+    public void chatRoom(@RequestParam("roomCode") String roomCode, HttpServletResponse response, HttpSession session) {
     	ChatRoom room = cService.selectChatRoom(roomCode);
     	ArrayList<ChatMessage> list = cService.selectChatMessage(roomCode);
-    	 	
+    	
+    	String id = ((Member)session.getAttribute("loginUser")).getId();
+    	
+    	ArrayList<String> cList = cService.selectChatList(roomCode);
+    	
+    	if(!cList.isEmpty()) {
+	    	HashMap<String, Object> aMap = new HashMap<>();
+	    	aMap.put("cList", cList);
+	    	aMap.put("id", id);
+	    	cService.updateAvailability(aMap);
+    	}
     	HashMap<String, Object> map = new HashMap<String, Object>();
     	
     	map.put("list", list);
@@ -137,7 +159,6 @@ public class ChatroomController {
     	try {
 			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

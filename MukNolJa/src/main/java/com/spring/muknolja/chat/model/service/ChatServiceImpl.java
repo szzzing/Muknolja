@@ -2,6 +2,7 @@ package com.spring.muknolja.chat.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,8 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public void insertMessage(ChatMessage message) {
-		cDAO.insertMessage(sqlSession, message);
+	public void insertMessage(HashMap<String, Object> map) {
+		cDAO.insertMessage(sqlSession, map);
 	}
 
 	@Override
@@ -80,5 +81,30 @@ public class ChatServiceImpl implements ChatService{
 	@Override
 	public int chatRoomOut(HashMap<String, String> map) {
 		return cDAO.chatRoomOut(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<String> selectChatUser(String roomCode) {
+		return cDAO.selectChatUser(sqlSession, roomCode);
+	}
+
+	@Override
+	public ArrayList<String> selectChatList(String roomCode) {
+		return cDAO.selectChatList(sqlSession, roomCode);
+	}
+
+	@Override
+	public void updateAvailability(HashMap<String, Object> aMap) {
+		cDAO.updateAvailability(sqlSession, aMap);
+	}
+
+	@Override
+	public int availablilty(HashMap<String, Object> map) {
+		return cDAO.availablilty(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<ChatRoom> selectCount(String id) {
+		return cDAO.selectCount(sqlSession, id);
 	}
 }

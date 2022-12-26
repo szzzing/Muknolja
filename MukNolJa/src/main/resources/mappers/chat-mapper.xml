@@ -13,9 +13,10 @@
 	<select id="selectChatRoomList" resultMap="ChatRoomResultSet">
 		select CHAT_ROOM_CODE, CHAT_ROOM_NAME, max(TRANSFER_TIME) max
 		from CHAT_ROOM
-			join CHAT_USER using(CHAT_ROOM_CODE)
+			join CHAT_USER u using(CHAT_ROOM_CODE)
 			left join CHAT_MESSAGE using(CHAT_ROOM_CODE)
-		where PARTICIPANT_ID = #{id}
+            left join CHAT_AVAILABILITY using(CHAT_ID)
+		where u.PARTICIPANT_ID = #{id}
         group by CHAT_ROOM_CODE, CHAT_ROOM_NAME
         order by max desc nulls first
 		
@@ -26,6 +27,7 @@
 		<result column="BOARD_ID" property="BoardId"/>
 		<result column="CHAT_ROOM_NAME" property="roomName"/>
 		<result column="max" property="maxTransferTime"/>
+		<result column="count" property="receiveCount"/>
 	</resultMap>
 	
 	<select id="selectChatMessage" resultMap="ChatMessageResultSet">
@@ -46,8 +48,20 @@
 	</resultMap>
 	
 	<insert id="insertMessage">
-		insert into CHAT_MESSAGE
-		values(SEQ_CHATID.nextval, #{senderId}, #{roomCode}, #{chatContent}, systimestamp)
+		insert all
+		into CHAT_MESSAGE
+		values(SEQ_CHATID.nextval, #{message.senderId}, #{message.roomCode}, #{message.chatContent}, systimestamp)
+		<foreach collection="iList" item="id">
+			<if test="message.senderId == id">
+				into CHAT_AVAILABILITY
+				values(SEQ_CHATID.currval, #{id}, 'Y')
+			</if>
+			<if test="message.senderId != id">
+				into CHAT_AVAILABILITY
+				values(SEQ_CHATID.currval, #{id}, default)
+			</if>
+		</foreach>
+		select * from dual
 	</insert>
 	
 	<resultMap type="Member" id="memberResultSet">
@@ -114,4 +128,41 @@
 		where CHAT_ROOM_CODE = #{roomCode} and PARTICIPANT_ID = #{id}
 	</delete>
 	
+	<select id="selectChatUser" resultType="String">
+		select PARTICIPANT_ID
+		from CHAT_USER
+		where CHAT_ROOM_CODE = #{roomCode}
+	</select>
+	
+	<select id="selectChatList" resultType="String">
+		select CHAT_ID
+		from CHAT_MESSAGE
+			join CHAT_AVAILABILITY using(CHAT_ID)
+		where CHAT_ROOM_CODE = #{roomCode} and RECEIVING_STATUS = 'N'
+	</select>
+	
+	<update id="updateAvailability">
+		update CHAT_AVAILABILITY
+		set RECEIVING_STATUS = 'Y'
+		where PARTICIPANT_ID = #{id} and CHAT_ID in
+		<foreach collection="cList" item="c" separator="," open="(" close=")">
+			#{c}
+		</foreach>
+	</update>
+	
+	<update id="availablilty">
+		update CHAT_AVAILABILITY
+		set RECEIVING_STATUS = 'Y'
+		where PARTICIPANT_ID = #{id} and CHAT_ID = #{chatId}
+	</update>
+	
+	<select id="selectCount" resultMap="ChatRoomResultSet">
+		select CHAT_ROOM_CODE, count(RECEIVING_STATUS) count
+		from CHAT_ROOM
+			join CHAT_USER u using(CHAT_ROOM_CODE)
+			left join CHAT_MESSAGE using(CHAT_ROOM_CODE)
+            right join CHAT_AVAILABILITY a using(CHAT_ID)
+		where u.PARTICIPANT_ID = #{id} and a.PARTICIPANT_ID = #{id} and RECEIVING_STATUS = 'N'
+        group by CHAT_ROOM_CODE, CHAT_ROOM_NAME
+	</select>
 </mapper>

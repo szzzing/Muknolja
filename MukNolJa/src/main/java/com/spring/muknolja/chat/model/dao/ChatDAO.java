@@ -2,6 +2,7 @@ package com.spring.muknolja.chat.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -26,8 +27,8 @@ public class ChatDAO {
 		return (ArrayList)sqlSession.selectList("chatmapper.selectChatMessage", roomCode);
 	}
 
-	public void insertMessage(SqlSessionTemplate sqlSession, ChatMessage message) {
-		sqlSession.insert("chatmapper.insertMessage", message);
+	public void insertMessage(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		sqlSession.insert("chatmapper.insertMessage", map);
 	}
 
 	public Member selectUser(SqlSessionTemplate sqlSession, String nick) {
@@ -60,6 +61,26 @@ public class ChatDAO {
 
 	public int chatRoomOut(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.delete("chatmapper.chatRoomOut", map);
+	}
+
+	public ArrayList<String> selectChatUser(SqlSessionTemplate sqlSession, String roomCode) {
+		return (ArrayList)sqlSession.selectList("chatmapper.selectChatUser", roomCode);
+	}
+
+	public ArrayList<String> selectChatList(SqlSessionTemplate sqlSession, String roomCode) {
+		return (ArrayList)sqlSession.selectList("chatmapper.selectChatList", roomCode);
+	}
+
+	public void updateAvailability(SqlSessionTemplate sqlSession, HashMap<String, Object> aMap) {
+		sqlSession.update("chatmapper.updateAvailability", aMap);
+	}
+
+	public int availablilty(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.update("chatmapper.availablilty", map);
+	}
+
+	public ArrayList<ChatRoom> selectCount(SqlSessionTemplate sqlSession, String id) {
+		return (ArrayList)sqlSession.selectList("chatmapper.selectCount", id);
 	}
 
 }

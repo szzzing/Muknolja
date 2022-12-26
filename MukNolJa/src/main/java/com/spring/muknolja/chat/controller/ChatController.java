@@ -1,11 +1,17 @@
 package com.spring.muknolja.chat.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.muknolja.chat.model.service.ChatService;
 import com.spring.muknolja.chat.model.vo.ChatMessage;
@@ -32,7 +38,23 @@ public class ChatController {
 
     @MessageMapping(value = "/chat/message")
     public void message(ChatMessage message){
-    	cService.insertMessage(message);
-        template.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
+    	ArrayList<String> iList = cService.selectChatUser(message.getRoomCode());
+    	HashMap<String, Object> map = new HashMap<>();
+    	map.put("message", message);
+    	map.put("iList", iList);
+    	
+    	cService.insertMessage(map);
+ 
+    	template.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
+    }
+    
+    @RequestMapping("availablilty.ch")
+    @ResponseBody
+    public int availablilty(@RequestParam("chatId") int chatId, @RequestParam("id") String id) {
+    	HashMap<String, Object> map = new HashMap<>();
+    	map.put("chatId", chatId);
+    	map.put("id", id);
+
+    	return cService.availablilty(map);
     }
 }

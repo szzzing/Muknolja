@@ -70,7 +70,7 @@
             	border-top: 1px solid RGB(160, 160, 160, 0.5);
             }
             #chatTitle{
-            	 border-bottom: 1px solid black; padding: 10px;
+            	 border-bottom: 1px solid RGB(160, 160, 160, 0.5); padding: 10px;
             	 width: 100%; font-weight: bold;
             }
             #rooms{
@@ -239,7 +239,7 @@
 			<div id="rooms"></div>
 			<div class="row friends" style="padding: 10px 0px;">
            		<div class="col text-center" id="createRoom">채팅방 만들기</div>
-				<div class="col text-center" style="border-bottom: 1px solid black"><h4><i class="bi bi-envelope-plus"></i></h4></div>
+				<div class="col text-center" style="border-bottom: 1px solid RGB(160, 160, 160, 0.5);"><h4><i class="bi bi-envelope-plus"></i></h4></div>
 				<div id="inviteList">
 				</div>
 			</div>
@@ -340,8 +340,8 @@
                     zIndex: zIndex + 1,
 
                     // div center 정렬
-                    top: '50%',
-                    left: '50%',
+                    top: '62%',
+                    left: '85%',
                     transform: 'translate(-50%, -50%)',
                     msTransform: 'translate(-50%, -50%)',
                     webkitTransform: 'translate(-50%, -50%)'
@@ -354,16 +354,18 @@
                 return this;
             };
 
-            document.getElementById('popup_open_btn').addEventListener('click', function() {
-            	
-            	if(${loginUser != null}){
-            	// 모달창 띄우기
-                Modal('room_modal');
-                chat();
-            	} else{
-            		Modal("loginCheck_modal");
-            	}
-            });
+            if(${loginUser != null}){
+	            document.getElementById('popup_open_btn').addEventListener('click', function() {
+	            	
+	            	if(${loginUser != null}){
+	            	// 모달창 띄우기
+	                Modal('room_modal');
+	                chat();
+	            	} else{
+	            		Modal("loginCheck_modal");
+	            	}
+	            });
+            }
             
             // send 버튼 클릭시
 			document.getElementById('send').addEventListener('click', function() {
@@ -403,7 +405,7 @@
             		success: (data) => {
             			document.getElementById('inviteList').innerHTML = '';
             			for(const i of data){
-            				let str = '<div class="row text-center invite" style="border-bottom: 1px solid black;">';
+            				let str = '<div class="row text-center invite" style="border-bottom: 1px solid RGB(160, 160, 160, 0.5);">';
          					str += '<div class="col invites"><b style="margin-right: 10px;">' + i.roomName + '</b> <small>참가</small> <small>거절</small></div>';
          					str += '</div>';
          					document.getElementById('inviteList').innerHTML += str;
@@ -508,7 +510,7 @@
       						let str = '<div class="row chatRoom">';
       						str += '<div class="col">';
       						str += '<b style="padding-left:10px;">' + c.roomName + '</b>';
-      						str += '<div class="messageCheck"><i class="bi bi-chat-dots"></i></div><br>';
+      						str += '<div class="messageCheck"><span class="badge bg-primary">' + c.receiveCount + '</span></div><br>';
       						str += '<small style="padding-left:10px;">' + c.maxTransferTime +'</small>';
       						str += '<input type="hidden" value="' + c.roomCode + '">';
       						str += '</div></div>';
@@ -566,6 +568,14 @@
 									    			const content = JSON.parse(chat.body);
 									    			const chatDiv = document.getElementById('chat');
 									    			
+									    			$.ajax({
+									    				url: 'availablilty.ch',
+									    				data: {chatId:content.chatId, id:'${loginUser.id}'},
+									    				success: (data) => {
+									    					console.log(data);
+									    				}
+									    			});
+									    			
 									    			if(content.senderId != '${ loginUser.id }'){
 									    				let str = '<div style="clear: both;">';
 														str += '<div class="chatBox">';
@@ -585,6 +595,7 @@
 									    			}
 									    			
 									    			$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
+									    			
 									    		});
 									        });
 							    		}
@@ -604,7 +615,7 @@
 							            			document.getElementById('friends').innerHTML = '';
 							            			if(data != ''){
 
-							            				let str = '<div class="row nicks" style="border-bottom: 1px solid black;">';
+							            				let str = '<div class="row nicks" style="border-bottom: 1px solid RGB(160, 160, 160, 0.5);">';
 							            				str += '<div class="col">';
 							            				str += '<b class="nick">' + data.nickName + '</b> <small id="invite">초대하기</small>';
 							            				str += '</div></div>';
