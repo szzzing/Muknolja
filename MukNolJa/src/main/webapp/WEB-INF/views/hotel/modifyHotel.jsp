@@ -9,42 +9,30 @@
 <title>호텔 상세페이지</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  	* {font-family: 'Noto Sans KR', sans-serif;}
+  	input {font-family: 'Noto Sans KR', sans-serif;}
 	ul li {
 		list-style: none;
 		float: left;
 		padding: 10px;
 	}
-	#likeHotelButton {
-		cursor: pointer;
-	}
-	img {
-		cursor: pointer;
-	}
-	#searchMap {
-		cursor: pointer;
-		color: #6BB6EC;
-	}
-	#searchMap:hover {
-		text-decoration: underline;
-	}
-	.writableReview {
-		cursor: pointer;
-	}
-	.writableReview:hover {
-		text-decoration: underline;
-	}
-	#roomTable td {
+	
+	.mukCheckbox { width:auto; display: block; position:relative; padding-left:30px; margin-bottom: 10px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+	.mukCheckbox input[type="checkbox"] { display: none; }
+	.on { width: 24px; height: 24px; border:2px solid #f1f1f1; border-radius:4px; position: absolute; top: 0; left: 0; }
+	.mukCheckbox input[type="checkbox"]:checked + .on { background: #6BB6EC; border:2px solid #6BB6EC; }
+	.on:after { content: ""; position: absolute; display: none; }
+	.mukCheckbox input[type="checkbox"]:checked + .on:after { display: block; }
+	.on:after { width: 8px; height: 14px; border: solid #fff; border-radius:1px; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; bottom: 5px; }
+
+	#hotelTable td {
 		margin:0px;
 		padding:0px;
 	}
-	.hotelImg {transition: all 0.3s;}
-	.hotelImg:hover {opacity:0.5;}
-	.roomDetailModal_roomImg {transition: all 0.3s;}
-	.roomDetailModal_roomImg:hover { opacity:0.5; }
-	.mukCategory {color:#6BB6EC !important; border-bottom:3px solid #6BB6EC; font-weight:bold;}
-	.mukDisplayNone {display:none !important;}
-	.mukRound {border-radius: 8px;}
-	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.hotel {cursor:pointer}
+    .mukRound {border-radius: 8px;}
+	.mukButton {transition: all 0.5s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
@@ -79,93 +67,137 @@
 <body>
 	
 	<div class="container container-sm mt-5 mb-5" style="max-width:800px;">
-		<form action="${contextPath }/insertHotel.ho" class="row g-2 row-cols-1" method="post" enctype="multipart/form-data">
+		<form action="${contextPath }/updateHotel.ho" class="row g-2 row-cols-1" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="entId" value="${ loginUser.id }">
-			<div class="col form-floating mb-3 mt-3">
+			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
+				<h5 class="fw-bold pb-3">호텔명</h5>
+				<input type="hidden" class="form-control" name="hotelId" value="${hotel.hotelId }">
 				<input type="text" class="hotelName form-control" name="hotelName" value="${hotel.hotelName }" required>
-				<label for="hotelName">호텔명</label>
 			</div>
-			<div class="col form-floating mb-3 mt-3">
-				<input type="hidden" class="hotelGeoX" name="hotelGeoX">
-				<input type="hidden" class="hotelGeoY" name="hotelGeoY">
+			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
+				<input type="hidden" class="hotelGeoX" name="hotelGeoX" value="${hotel.hotelGeoX }">
+				<input type="hidden" class="hotelGeoY" name="hotelGeoY" value="${hotel.hotelGeoY }">
+				<h5 class="fw-bold pb-3">주소</h5>
 				<input type="text" class="hotelAddress form-control" name="hotelAddress" value="${hotel.hotelAddress }" onclick="sample4_execDaumPostcode()" required>
-				<label for="hotelAddress">주소</label>
 				<div id="map" class="mukRound mt-3" style="width:100%;height:300px;"></div>
 			</div>
-			<div class="col form-floating mb-3 mt-3">
-				<input type="number" class="form-control" name="star" value="${hotel.star }" min="1" max="5" required>
-				<label for="roomPrice">등급</label>
-			</div>
-			<div class="col form-floating mb-3 mt-3">
+			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
+				<h5 class="fw-bold pb-3">전화번호</h5>
 				<input type="tel" class="form-control m-input" name="hotelPhone" value="${hotel.hotelPhone }" required pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}" maxlength="13"/>
-				<label for="hotelPhone">전화번호</label>
 			</div>
-			<div class="col form-floating mb-3 mt-3">
-				<h5 class="fw-bold">어떤 옵션을 제공할지 선택하세요.</h5>
-				<div class="hotelOptionTable row align-middle text-center">
-						<div class="col col-auto">
-							<input type="hidden" name="wifi" value='Y'>
-							<h2><i class="fa-solid fa-wifi"></i></h2>
+			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
+				<h5 class="fw-bold pb-3">등급</h5>
+				<div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-5">
+					<div class="col">
+						<label for=5star class="star mukCheckbox">
+							<input type="checkbox" id="5star" value="5"><span class="on"></span>
+							5성급
+						</label>
+					</div>
+					<div class="col">
+						<input type="hidden" name="star">
+						<label for=4star class="star mukCheckbox">
+							<input type="checkbox" id="4star" value="4"><span class="on"></span>
+							4성급
+						</label>
+					</div>
+					<div class="col">
+						<label for=3star class="star mukCheckbox">
+							<input type="checkbox" id="3star" value="3"><span class="on"></span>
+							3성급
+						</label>
+					</div>
+					<div class="col">
+						<label for=2star class="star mukCheckbox">
+							<input type="checkbox" id="2star" value="2"><span class="on"></span>
+							2성급
+						</label>
+					</div>
+					<div class="col">
+						<label for=1star class="star mukCheckbox">
+							<input type="checkbox" id="1star" value="1"><span class="on"></span>
+							1성급
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
+				<h5 class="fw-bold pb-3">시설</h5>
+				<div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-6">
+					<div class="col">
+						<label for="wifi" class="mukCheckbox">
+							<input type="hidden" name="wifi" value="${hotel.wifi }">
+							<input type="checkbox" name='install' id="wifi"><span class="on"></span>
 							와이파이
-						</div>
-						<div class="col col-auto">
-							<input type="hidden" name="park" value='Y'>
-							<h2><i class="fa-solid fa-square-parking"></i></h2>
-							주차
-						</div>
-						<div class="col col-auto">
-							<input type="hidden" name="amenity" value='Y'>
-							<h2><i class="fa-solid fa-gift"></i></h2>
-							어메니티
-						</div>
-						<div class="col col-auto">
-							<input type="hidden" name="breakfast" value="Y">
-							<h2><i class="fa-solid fa-utensils"></i></h2>
+						</label>
+					</div>
+					<div class="col">
+						<label for="breakfast" class="mukCheckbox">
+							<input type="hidden" name="breakfast" value="${hotel.breakfast }">
+							<input type="checkbox" name='install' id="breakfast"><span class="on"></span>
 							조식
-						</div>
-						<div class="col col-auto">
-							<input type="hidden" name="fitness" value="Y">
-							<h2><i class="fa-solid fa-dumbbell"></i></h2>
-							피트니스
-						</div>
-						<div class="col col-auto">
-							<input type="hidden" name="swim" value="Y">
-							<h2><i class="fa-solid fa-water-ladder"></i></h2>
+						</label>
+					</div>
+					<div class="col">
+						<label for="amenity" class="mukCheckbox">
+							<input type="hidden" name="amenity" value="${hotel.amenity }">
+							<input type="checkbox" name='install' id="amenity"><span class="on"></span>
+							어메니티
+						</label>
+					</div>
+					<div class="col">
+						<label for="park" class="mukCheckbox">
+							<input type="hidden" name="park" value="${hotel.park }">
+							<input type="checkbox" name='install' id="park"><span class="on"></span>
+							주차
+						</label>
+					</div>
+					<div class="col">
+						<label for="swim" class="mukCheckbox" >
+							<input type="hidden" name="swim" value="${hotel.swim }">
+							<input type="checkbox" name='install' id="swim"><span class="on"></span>
 							수영장
-						</div>
+						</label>
+					</div>
+					<div class="col">
+						<label for="fitness" class="install mukCheckbox">
+							<input type="hidden" name="fitness" value="${hotel.fitness }">
+							<input type="checkbox" name='install' id="fitness"><span class="on"></span>
+							피트니스
+						</label>
+					</div>
 				</div>
 			</div>
-			
-			<div class="form-floating mb-3 mt-3">
+			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
+				<h5 class="fw-bold pb-3">호텔 소개</h5>
 				<textarea class="form-control" name="hotelIntro" rows="2" style="height:150px; resize:none" required>${hotel.hotelIntro}</textarea>
-				<label for="hotelIntro" class="form-label">호텔 한줄소개</label>
 			</div>
 			
-			<div class="form-floating mb-3 mt-3">
+			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
+				<h5 class="fw-bold pb-3">상세정보</h5>
 				<textarea class="form-control" name="hotelInfo" rows="10" style="height:500px; resize:none" required>${hotel.hotelInfo }</textarea>
-				<label for="hotelInfo" class="form-label">호텔 설명</label>
 			</div>
 			
-			<div class="col mb-3 mt-3">
-				<h5 class="fw-bold">호텔 사진을 등록하세요.</h5>
-				<div class="mb-3">
-					<input type="file" class="form-control" name="hotelImg">
+			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
+				<h5 class="fw-bold pb-3" style="display:inline-block">사진</h5>
+				<span class="mukMutedText insertImgButton">최소 1장, 최대 5장의 사진을 등록할 수 있습니다.</span>
+				<span id="insertImgButton" class="fw-bold" style="color:#6bb6ec;">사진추가</span>
+				<div id="newImgDiv" class="col-2" style="display:none">
+					<img src="#" class="img-fluid mukRound">
+					<input type="file" name="newImg" style="display:none">
 				</div>
-				<div class="mb-3">
-					<input type="file" class="form-control" name="hotelImg">
-				</div>
-				<div class="mb-3">
-					<input type="file" class="form-control" name="hotelImg">
-				</div>
-				<div class="mb-3">
-					<input type="file" class="form-control" name="hotelImg">
-				</div>
-				<div class="mb-3">
-					<input type="file" class="form-control" name="hotelImg">
+				<input type="hidden" name="originalImgCount">
+				<input type="hidden" name="deleteImg">
+				<div id="hotelImgList" class="row g-3">
+					<c:forEach items="${hotelImgList }" var="img">
+						<div class="col-2 currImg">
+							<img class="img-fluid mukRound" id="${img.fileModifyName }${img.fileThumbnail }" src="${ contextPath }/resources/uploadFiles/${img.fileModifyName}">
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="d-grid gap-2">
-				<button type="submit" class="mukButton" style="width:100%; align:bottom !important">등록하기</button>
+				<button type="button" id="submitButton" class="mukButton" style="width:100%; align:bottom !important">수정하기</button>
 			</div>
 		</form>
 	</div>
@@ -173,21 +205,48 @@
 	
 	<!-- 사진 첨부 시작 -->
 	<script>
-// 	    $("#hotelImg").click(function(){
-// 	    	$('#myFile').click();
-// 	    });
+		$("input[name=originalImgCount]").val($("#hotelImgList").children().length);
+		
+	    $(".currImg").click(function(){
+	    	const img = $(this).find("img").attr("id");
+	    	$("input[name=deleteImg]").val($("input[name=deleteImg]").val()+img+"/");
+	    	$(this).remove();
+	    	$.viewInsertImgButton();
+	    });
 	    
-// 	    const myFile = document.querySelector('#myFile');
-// 	    const hotelImg = document.querySelector('#hotelImg');
-    
-// 	    myFile.addEventListener('change', ()=>{
-// 	    	const reader = new FileReader();
-// 	    	reader.onload = function(e){
-// 				console.log(e);		    		
-// 				hotelImg.src = e.target.result;
-// 	    	};
-// 	    	reader.readAsDataURL(myFile.files[0]);
-// 	    });
+	    $("#insertImgButton").on("click", function(){
+	    	$("#newImgDiv").find("input[name=newImg]").click();
+	    });
+	    
+	    $("input[name=newImg]").on("change", function(e) {
+			var tmp = e.target.files[0];
+			var img = URL.createObjectURL(tmp);
+			
+			console.log($(this).parent().find("input"));
+			var div = $(this).parent().clone();
+
+			div.find("img").attr("src", img);
+			div.prop("style").removeProperty("display");
+			div.addClass("newImg");
+			$("#hotelImgList").append(div);
+			$.viewInsertImgButton();
+		});
+	    
+	    $(document).on('click', '.newImg', function(){
+	    	$(this).remove();
+	    	$.viewInsertImgButton();
+	    });
+	    
+	    $.viewInsertImgButton=()=>{
+	    	const count = $("#hotelImgList").children().length;
+	    	if(count>=5) {
+	    		$("#insertImgButton").css("display", "none");
+	    	} else {
+	    		$("#insertImgButton").prop("style").removeProperty("display");
+	    	}
+	    }
+	    $.viewInsertImgButton();
+	    
 	</script>
 	<!-- 사진 첨부 끝 -->
 	
@@ -195,13 +254,34 @@
 	
 	<!-- 호텔 옵션 선택 -->
 	<script>
-		$(".hotelOptionTable").find(".col").on("click", function(){
-			if($(this).css("color")=="rgb(33, 37, 41)") {
-				$(this).css("color", "lightgray");
-				$(this).find("input[type=hidden]").val("N");
+		// 기존 옵션
+		var star = ${hotel.star};
+		$("#"+star+"star").prop("checked", true);
+		$("input[name=star]").val(star);
+		
+		$("input[name=install]").each(function(index, item){
+			if($(this).parent().find("input[type=hidden]").val()=='Y') {
+				$(this).prop("checked", true);
 			} else {
-				$(this).prop("style").removeProperty("color");
-				$(this).find("input[type=hidden]").val("Y");
+				$(this).prop("checked", false);
+			}
+		});
+		
+		$(".star").on("click", function(){
+			const checkboxes = $(".star").find("input[type=checkbox]");
+			for(cb of checkboxes) {
+				cb.checked = false;
+			}
+			$(this).find("input[type=checkbox]").prop('checked',true);
+			$("input[name=star]").val($(this).find("input[type=checkbox]").val());
+			console.log($("input[name=star]").val());
+		});
+		
+		$("input[name=install]").on("click", function(){
+			if($(this).is(':checked')) {
+				$(this).parent().find("input[type=hidden]").val("Y");
+			} else {
+				$(this).parent().find("input[type=hidden]").val("N");
 			}
 		});
 	</script>
@@ -349,12 +429,15 @@
 	</script>
 	<!-- 전화번호 입력 설정 끝 -->
 	
-	<!-- 호텔 정보 엔터 구현 시작 -->
+	<!-- 호텔 정보 엔터 구현, newImgDiv 삭제 시작 -->
 	<script>
-		$("button[type=submit]").on("click", function(){
-			var content = $("textarea[name=hotelInfo]").val();
-			content = content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-			$("textarea[name=hotelInfo]").val(content);
+		$("#submitButton").on("click", function(){
+			if($("#hotelImgList").children().length>0) {
+				$("#newImgDiv").remove();
+				$("form").submit();
+			} else {
+				alert("1개 이상의 이미지를 첨부해주세요.");
+			}
 		});
 	</script>
 	<!-- 호텔 정보 엔터 구현 끝 -->

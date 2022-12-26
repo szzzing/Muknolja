@@ -24,9 +24,9 @@
  		}
  	}
  	
-	.mukCheckbox { display: block; position: relative; padding-left: 25px; margin-bottom: 10px; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+	.mukCheckbox { display: block; position: relative; padding-left: 25px; margin-bottom: 10px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 	.mukCheckbox input[type="checkbox"] { display: none; }
-	.on { width: 18px; height: 18px; border:2px solid #f1f1f1; border-radius:5px; position: absolute; top: 0; left: 0; }
+	.on { width: 18px; height: 18px; border:2px solid #f1f1f1; border-radius:5px; position: absolute; top:4px; left:0; }
 	.mukCheckbox input[type="checkbox"]:checked + .on { background: #6BB6EC; border:2px solid #6BB6EC; }
 	.on:after { content: ""; position: absolute; display: none; }
 	.mukCheckbox input[type="checkbox"]:checked + .on:after { display: block; }
@@ -120,7 +120,7 @@
 								<div class="col">
 									<label for=3star class="mukCheckbox">
 										<input type="checkbox" name="star" id="3star" value="3"><span class="on"></span>
-										3등급
+										3성급
 									</label>
 								</div>
 								<div class="col">
@@ -274,13 +274,26 @@
 					success: (data)=>{
 						var hotelDiv2 = hotelDiv.clone();
 						
+						const inout = $("#daterangepicker").val().split(" - ");
+						
+						const checkin = new Date(inout[0]);
+						const checkout = new Date(inout[1]);
+						
+						var diff = checkout - checkin;
+						var currDay = 24 * 60 * 60 * 1000;
+						var journey = parseInt(diff/currDay);
+						console.log(journey);
+						
 						$("#hotelList").html("");
 						hotelDiv.prop("style").removeProperty("display");
 						for(var i of data) {
 							hotelDiv2.find(".hotelId").val(i.hotelId);
 							hotelDiv2.find(".hotelName").html(i.hotelName);
 							hotelDiv2.find(".hotelAddress").html(i.hotelAddress);
-							hotelDiv2.find(".minPrice").html(i.minPrice.toLocaleString()+"원~");
+							hotelDiv2.find(".minPrice").html((i.minPrice*journey).toLocaleString()+"원~");
+							if(i.emptyHotel==0) {
+								hotelDiv2.find(".minPrice").html("예약마감");
+							}
 							hotelDiv2.find(".hotelImg").prop("src", "${contextPath }/resources/uploadFiles/"+i.thumbnail);
 							hotelDiv2.find(".hotelStar").html(i.star+"성급");
 							hotelDiv2.find(".avgRating").html(i.avgRating.toFixed(1));
@@ -393,7 +406,7 @@
 			minDate: new Date(),
 			startDate: startDate,
 			endDate: endDate,
-			autoApply: false
+			autoApply: true
 		});
 		
 		const inout = $("#daterangepicker").val().split(" - ");

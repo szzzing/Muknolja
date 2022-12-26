@@ -94,10 +94,5 @@
 		</div>
 	</div>
 	
-	<script>
-		$("#manageHotelButton").on("click", function(){
-			
-		});
-	</script>
 </body>
 </html>
