@@ -15,9 +15,9 @@ public interface HotelService {
 
 	int insertRoom(Room r);
 
-	int insertRoomAttm(ArrayList<AttachedFile> list);
+	int insertRoomImg(ArrayList<AttachedFile> list);
 	
-	int insertHotelAttm(ArrayList<AttachedFile> list);
+	int insertHotelImg(ArrayList<AttachedFile> list);
 
 	Hotel selectHotel(int hotelId);
 
@@ -62,5 +62,13 @@ public interface HotelService {
 	int getSearchListCount();
 
 	ArrayList<Hotel> searchHotelList(HashMap searchMap, PageInfo pi);
+
+	int updateHotel(Hotel h);
+
+	int insertModifyHotelImg(HashMap map);
+
+	int deleteFile(ArrayList<String> deleteImgList);
+
+	int updateHotelThumbnail(int hotelId);
 
 }

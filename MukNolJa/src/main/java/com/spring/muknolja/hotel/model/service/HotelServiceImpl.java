@@ -31,13 +31,13 @@ public class HotelServiceImpl implements HotelService{
 	}
 
 	@Override
-	public int insertRoomAttm(ArrayList<AttachedFile> list) {
-		return hDAO.insertRoomAttm(sqlSession, list);
+	public int insertRoomImg(ArrayList<AttachedFile> list) {
+		return hDAO.insertRoomImg(sqlSession, list);
 	}
 	
 	@Override
-	public int insertHotelAttm(ArrayList<AttachedFile> list) {
-		return hDAO.insertHotelAttm(sqlSession, list);
+	public int insertHotelImg(ArrayList<AttachedFile> list) {
+		return hDAO.insertHotelImg(sqlSession, list);
 	}
 	
 	@Override
@@ -148,5 +148,25 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public ArrayList<Hotel> searchHotelList(HashMap searchMap, PageInfo pi) {
 		return hDAO.searchHotelList(sqlSession, searchMap, pi);
+	}
+	
+	@Override
+	public int updateHotel(Hotel h) {
+		return hDAO.updateHotel(sqlSession, h);
+	}
+	
+	@Override
+	public int insertModifyHotelImg(HashMap map) {
+		return hDAO.insertModifyHotelImg(sqlSession, map);
+	}
+	
+	@Override
+	public int deleteFile(ArrayList<String> deleteImgList) {
+		return hDAO.deleteFile(sqlSession, deleteImgList);
+	}
+	
+	@Override
+	public int updateHotelThumbnail(int hotelId) {
+		return hDAO.updateHotelThumbnail(sqlSession, hotelId);
 	}
 }
