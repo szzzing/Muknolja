@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.party.model.dao.PartyDAO;
@@ -35,6 +36,10 @@ public class PartyServiceImpl implements PartyService{
 	public ArrayList<Party> selectPartyList(PageInfo pi) {
 		return pDAO.selectPartyList(sqlSession, pi);
 	}
-	
+
+	@Override
+	public Party selectParty(int pId) {
+		return pDAO.selectParty(sqlSession, pId);
+	}
 
 }
