@@ -99,8 +99,16 @@ public class HotelController {
 			Hotel hotel = hService.selectHotelbyId(m.getId());
 			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
 			
+			HashMap map = new HashMap();
+			
+			map.put("checkinDate", null);
+			map.put("checkoutDate", null);
+			map.put("hotelId", hotel.getHotelId());
+			ArrayList<Room> roomList = hService.selectAllRoom(map);
+			
 			model.addAttribute("hotel", hotel);
 			model.addAttribute("hotelImgList", hotelImg);
+			model.addAttribute("roomList", roomList);
 			
 			return "manageReview";
 		} else {
@@ -612,16 +620,22 @@ public class HotelController {
 	//리뷰 전체보기
 	@RequestMapping(value="reviewList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void reviewList(@RequestParam("hotelId") int hotelId, HttpServletResponse response) {
+	public void reviewList(@RequestParam("hotelId") int hotelId, @RequestParam(value="searchByRoom", required=false) Integer searchByRoom, @RequestParam(value="orderBy", required=false) String orderBy, HttpServletResponse response) {
 		HashMap map = new HashMap();
-
-		ArrayList<Review> reviewList = hService.selectReviewList(hotelId);
+		map.put("hotelId", hotelId);
+		map.put("searchByRoom", searchByRoom);
+		map.put("orderBy", orderBy);
+		
+		System.out.println(map);
+		
+		ArrayList<Review> reviewList = hService.selectReviewList(map);
 		int reviewCount = hService.selectReviewCount(hotelId);
 		double avgRating = hService.selectAvgRating(hotelId);
 		
-		map.put("reviewList", reviewList);
-		map.put("reviewCount", reviewCount);
-		map.put("avgRating", avgRating);
+		HashMap map2 = new HashMap();
+		map2.put("reviewList", reviewList);
+		map2.put("reviewCount", reviewCount);
+		map2.put("avgRating", avgRating);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
@@ -629,7 +643,7 @@ public class HotelController {
 		gson = gb.create();
 		
 		try {
-			gson.toJson(map, response.getWriter());
+			gson.toJson(map2, response.getWriter());
 		} catch (JsonIOException | IOException e) {
 			e.printStackTrace();
 		}

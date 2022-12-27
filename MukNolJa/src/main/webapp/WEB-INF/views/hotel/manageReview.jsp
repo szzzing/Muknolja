@@ -19,6 +19,7 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 	.form-control {border:1px solid #e9e9e9 !important}
+	.form-select {border:1px solid #e9e9e9 !important}
   	* {font-family: 'Noto Sans KR', sans-serif;}
 	::-webkit-scrollbar {width:5px;}
 	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
@@ -57,9 +58,6 @@
 	.room {
 		cursor: pointer;
 	}
-	.table tr td {
-		padding:0px;
-	}
 	
 	#roomTable td {
 		margin:0px;
@@ -92,7 +90,7 @@
 	<div class="container">
 	
 		<div class="row">
-			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar shadow-lg collapse" style="height:100%; left:0px; position:fixed;">
+			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar shadow collapse" style="height:100%; left:0px; position:fixed;">
 				<div class="position-sticky sidebar-sticky">
 					<div class="text-center pb-4 m-3 mt-5 mb-5" style="border-bottom:1px solid #e9e9e9">
 						<img id="hotelImg" class="img-fluid mb-3" style="width:100px; height:100px; border-radius:50%" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}">
@@ -134,7 +132,61 @@
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mb-5">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-3 mb-5" style="border-bottom:1px solid #e9e9e9">
 					<h1 class="h2 fw-bold">리뷰 관리</h1>
-					<div id="writeRoomButton" class="fw-bold">객실 추가</div>
+				</div>
+				<div class="newReviewList">
+				
+				</div>
+				
+				<div class="reviewList">
+					<div id="category" class="row g-3">
+						<select class="form-select" name="searchByRoom" style="width:300px;">
+							<option selected value="0">전체 객실</option>
+							<c:forEach items="${roomList }" var="r">
+								<option value="${r.roomId }">${r.roomName }</option>
+							</c:forEach>
+						</select>
+						<select class="form-select" name="orderBy" style="width:100px; float:right">
+							<option selected>최신순</option>
+							<option>별점순</option>
+						</select>
+					</div>
+					
+					
+					<!-- 리뷰 리스트 시작 -->
+					<div id="reviewList" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
+						<div id="reviewDiv" class="review col mt-3 mb-3" style="border-bottom:1px solid #e9e9e9; display:none">
+							<input type="hidden" name="reviewId">
+							<table class="table table-borderless">
+								<tr>
+									<td rowspan="5" style="width:60px;"><span class="ratingEmoji" style="font-size:60px"></span></td>
+									<td>
+										<h5 class="fw-bold">
+											[<span class="reservationId"></span>]
+											<span class="roomName"></span>
+										</h5>
+										<span class="ratingStar"></span>
+										<span class="rating"></span>
+									</td>
+								</tr>
+								<tr>
+									<td class="mukSubText">
+										<span class="nickName fw-bold"></span>
+										·
+										<span class="checkinDate"></span>
+										~
+										<span class="checkoutDate"></span> 숙박
+									</td>
+								</tr>
+								<tr>
+									<td class="reviewContent"></td>
+								</tr>
+								<tr>
+									<td class="mukMutedText"><small class="createDate"></small></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<!-- 리뷰 리스트 끝 -->
 				</div>
 			</main>
 
@@ -142,6 +194,75 @@
 	</div>
 	
 	
-	
+	<!-- 리뷰리스트 보기 시작 -->
+	<script>
+		$(document).ready(function(){
+			var reviewDiv = $("#reviewDiv").clone();
+			reviewDiv.prop("style").removeProperty("display");
+			
+			$.reviewList = function(){
+				
+				// 리뷰 불러오기
+				$.ajax({
+					url: "${contextPath}/reviewList.ho",
+					data: {
+						hotelId: ${hotel.hotelId},
+						orderBy: $("select[name=orderBy]").val(),
+						searchByRoom: $("select[name=searchByRoom]").val()
+					},
+					success: (data)=>{
+						console.log(data);
+						$("#reviewList").html("");
+
+						const reviewList = data.reviewList;
+						for(const r of reviewList) {
+							reviewDiv.find("input[name=reviewId]").val(r.reviewId);
+							reviewDiv.find(".nickName").html(r.nickName);
+							reviewDiv.find(".roomName").html(r.roomName);
+							reviewDiv.find(".reservationId").html(r.reservationId);
+							reviewDiv.find(".reviewContent").html(r.reviewContent.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+							reviewDiv.find(".rating").html(r.rating.toFixed(1));
+							reviewDiv.find(".createDate").html(r.createDate);
+							reviewDiv.find(".checkinDate").html(r.createDate);
+							reviewDiv.find(".checkoutDate").html(r.createDate);
+							
+							ratingStar="";
+							for(var j=1;j<=5;j++) {
+								if(j<=r.rating) {
+									ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#FFD600"></i>';
+								} else {
+									ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#e9e9e9"></i>';
+								}
+							}
+							reviewDiv.find(".ratingStar").html(ratingStar);
+							
+							if(r.rating==5) {
+								reviewDiv.find(".ratingEmoji").text("😍");
+							} else if(r.rating==4) {
+								reviewDiv.find(".ratingEmoji").text("😀");
+							} else if(r.rating==3) {
+								reviewDiv.find(".ratingEmoji").text("🙂");
+							} else if(r.rating==2) {
+								reviewDiv.find(".ratingEmoji").text("😐");
+							} else {
+								reviewDiv.find(".ratingEmoji").text("🙁");
+							}
+							
+							$("#reviewList").append(reviewDiv.clone());
+						}
+					},
+					error: (data)=>{
+						console.log(data);
+					}
+				});
+			}
+			$.reviewList();
+		});
+		
+		$("select").change(function(){
+			$.reviewList();
+		});
+	</script>
+	<!-- 리뷰리스트 보기 끝 -->
 </body>
 </html>

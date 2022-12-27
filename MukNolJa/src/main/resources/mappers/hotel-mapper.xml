@@ -223,7 +223,18 @@
 			join hotel using(hotel_id)
 			join member on(review.member_id=id)
 		where hotel_id=#{hotelId} and review_status='Y'
-		order by review_id desc
+		<if test="searchByRoom!=null and searchByRoom!=0">
+			and room_id=#{searchByRoom}
+		</if>
+		<if test="orderBy==null">
+			order by review_id desc
+		</if>
+		<if test='orderBy!=null and orderBy.equals("최신순")'>
+			order by review_id desc
+		</if>
+		<if test='orderBy!=null and orderBy.equals("별점순")'>
+			order by rating desc
+		</if>
 	</select>
 	
 	<select id="selectAvgRating" resultType="_double">
@@ -401,7 +412,7 @@
 		<result column="REVIEW_ID" property="reviewId"/>
 		<result column="MEMBER_ID" property="memberId"/>
 		<result column="NICKNAME" property="nickName"/>
-		<result column="RESERVATION_ID" property="ReservationId"/>
+		<result column="RESERVATION_ID" property="reservationId"/>
 		<result column="HOTEL_NAME" property="hotelName"/>
 		<result column="ROOM_NAME" property="roomName"/>
 		<result column="CHECKIN_DATE" property="checkinDate"/>

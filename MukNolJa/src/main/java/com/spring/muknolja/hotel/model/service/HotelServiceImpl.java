@@ -111,8 +111,8 @@ public class HotelServiceImpl implements HotelService{
 	}
 	
 	@Override
-	public ArrayList<Review> selectReviewList(int hotelId) {
-		return hDAO.selectReviewList(sqlSession, hotelId);
+	public ArrayList<Review> selectReviewList(HashMap map) {
+		return hDAO.selectReviewList(sqlSession, map);
 	}
 	
 	@Override
