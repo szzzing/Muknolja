@@ -88,6 +88,14 @@ public interface MemberService {
 
 	ArrayList<Reservation> selectReserve(PageInfo pi, String id);
 
+	int deleteDD(int id);
+
+	int getListCount1(String id);
+
+	int deleteBB(int id);
+
+	int getListCount2(String id);
+
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
 
 

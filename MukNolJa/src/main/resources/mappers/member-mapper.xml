@@ -245,6 +245,7 @@
 		<id column="RESERVATION_ID" property="reservationId"/>
 		<result column="MEMBER_ID" property="memberId"/>
 		<result column="HOTEL_ID" property="hotelId"/>
+		<result column="HOTEL_NAME" property="hotelName"/>
 		<result column="ROOM_ID" property="roomId"/>
 		<result column="HOTEL_NAME" property="hotelName"/>
 		<result column="ROOM_NAME" property="roomName"/>
@@ -261,9 +262,15 @@
 		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
 		
 	</resultMap>
+	<select id="myInfoBCount1" resultType="_int">
+	 select count(*)
+	 from RESERVATION join ROOM using(room_id) JOIN HOTEL_IMG using(hotel_Id) JOIN ATTACHED_FILE using(FILE_Id) JOIN HOTEL using(hotel_Id)
+		where member_id = #{id} and RESERVATION_STATUS = 'Y' and FILE_THUMBNAIL = 'Y'
+	 
+	</select>
 	<select id="selectReserve" resultMap="reservationResultSet">
 		  select *
-		from RESERVATION join ROOM using(room_id) JOIN HOTEL_IMG using(hotel_Id) JOIN ATTACHED_FILE using(FILE_Id)
+		from RESERVATION join ROOM using(room_id) JOIN HOTEL_IMG using(hotel_Id) JOIN ATTACHED_FILE using(FILE_Id) JOIN HOTEL using(hotel_Id)
 		where member_id = #{id} and RESERVATION_STATUS = 'Y' and FILE_THUMBNAIL = 'Y'
 	</select>
 	
@@ -294,6 +301,7 @@
 	 where QA_WRITER = #{id} and QA_STATUS= 'Y'
 	 
 	</select>
+	
 	<resultMap type="QA" id="qaResultSet">
 		<id column="QA_ID" property="qaId"/>
 		<result column="QA_BOARD_ID" property="qaBoardId"/>
@@ -309,8 +317,13 @@
 	<select id="selectQA" resultMap="qaResultSet">
 		select *
 		from QA
-		where QA_WRITER = #{id}
+		where QA_WRITER = #{id} and  QA_STATUS='Y'
 	</select>
+	<update id="deleteBB">
+  		update QA
+  		set QA_STATUS='N'
+  		WHERE QA_ID = #{id}
+  	</update>
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>
 		<result column="ENT_ID" property="entId"/>
@@ -335,11 +348,25 @@
 		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
 		<result column="EMPTY_HOTEL" property="emptyHotel"/>
 		<result column="MAX_DISTANCE" property="maxDistance"/>
+		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
 	</resultMap>
 	<select id="selectHotel" resultMap="hotelResultSet">
 		select *
-		from hotel join LIKE_HOTEL using(hotel_id)
-		where id = #{id}
+		from hotel join LIKE_HOTEL using(hotel_id) JOIN HOTEL_IMG using(hotel_Id) JOIN ATTACHED_FILE using(FILE_Id)
+		where id = #{id} and HOTEL_STATUS = 'Y'
 	
+	</select>
+	
+	<update id="deleteDD">
+  		update RESERVATION
+  		set RESERVATION_STATUS='N'
+  		WHERE RESERVATION_ID = #{id}
+  	</update>
+  	
+  	<select id="myInfoBCount2" resultType="_int">
+	 select count(*)
+	 from hotel join LIKE_HOTEL using(hotel_id)
+		where id = #{id}  and HOTEL_STATUS = 'Y'
+	 
 	</select>
   </mapper>

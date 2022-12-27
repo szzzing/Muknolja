@@ -405,28 +405,69 @@ public class MemberController {
 		}
 		@RequestMapping("myInfoA.me")
 		public String myinfoA(HttpSession session,@RequestParam(value="page", required=false) Integer page,Model model) {
-			Member m = (Member)session.getAttribute("loginUser");
-			String id = m.getId();
-			int listCount = mService.getListCount(id);
 			int currentPage = 1;
 			if(page!=null) {
 				currentPage = page;
 			}
 			
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
-			ArrayList<Hotel> hotel=mService.selectHotel(id,pi);
-			ArrayList<AttachedFile> img = mService.selectImg();
-			model.addAttribute("pi", pi);
-			model.addAttribute("hotel", hotel);
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCount(id);
+			
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 2);
+			model.addAttribute("pi",pi);
 			return "myInfoA";		
 		}
 		
 		@RequestMapping("myInfoB.me")
-		public String myinfoB(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
+		public String myinfoB(HttpSession session,@RequestParam(value="page", required=false) Integer page,Model model) {
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
 			
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCount(id);
+			
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 2);
+			model.addAttribute("pi",pi);
 			return "myInfoB";		
 		}
 		
+		@RequestMapping(value="myInfoAA.me", produces="application/json; charset=UTF-8")
+		@ResponseBody
+		public void myinfoAA(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCount2(id);
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 2);
+			ArrayList<Hotel> hotel= mService.selectHotel(id,pi);
+			System.out.println(hotel);
+			
+			
+			HashMap map = new HashMap();
+			map.put("hotel", hotel);
+			
+			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+			gson = gb.create();
+			
+			try {
+				gson.toJson(map, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		@RequestMapping(value="myInfoBB.me", produces="application/json; charset=UTF-8")
 		@ResponseBody
 		public void myinfoBB(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
@@ -469,20 +510,21 @@ public class MemberController {
 		public void myinfoDD(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
 			Member m = (Member)session.getAttribute("loginUser");
 			String id = m.getId();
-			int listCount = mService.getListCount(id);
+			System.out.println(page);
+			int listCount = mService.getListCount1(id);
 			int currentPage = 1;
 			if(page!=null) {
 				currentPage = page;
 			}
-			
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 2);
 			
 			
 			ArrayList<Reservation> list = mService.selectReserve(pi,id);
 			
 			HashMap map = new HashMap();
 			map.put("list", list);
-			
+			map.put("pi", pi);
 			
 			response.setContentType("application/json; charset=UTF-8");
 			Gson gson = new Gson();
@@ -497,11 +539,35 @@ public class MemberController {
 		}
 		
 		@RequestMapping("myInfoD.me")
-		public String myinfoD(HttpSession session,@RequestParam(value="page", required=false) Integer page) {
-		
+		public String myinfoD(HttpSession session,@RequestParam(value="page", required=false) Integer page,Model model) {
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
 			
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCount1(id);
 			
-		
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 2);
+			model.addAttribute("pi",pi);
 			return "myInfoD";		
+		}
+		@RequestMapping("deleteDD.me")
+		@ResponseBody
+		public int deleteDD(@RequestParam("id")int id) {
+			int result = mService.deleteDD(id);
+			
+			return result;
+			
+		}
+		@RequestMapping("deleteBB.me")
+		@ResponseBody
+		public int deleteBB(@RequestParam("id")int id) {
+			int result = mService.deleteBB(id);
+			System.out.println("너는얻ㅣ"+id);
+			return result;
+			
 		}
 }
