@@ -87,8 +87,8 @@ public class HotelDAO {
 		return sqlSession.insert("hotelmapper.insertReview", review);
 	}
 
-	public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession, int hotelId) {
-		return (ArrayList)sqlSession.selectList("hotelmapper.selectReviewList", hotelId);
+	public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession, HashMap map) {
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectReviewList", map);
 	}
 
 	public ArrayList<AttachedFile> selectAllRoomThumbnail(SqlSessionTemplate sqlSession, int hotelId) {

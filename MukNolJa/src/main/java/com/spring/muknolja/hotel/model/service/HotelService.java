@@ -47,7 +47,7 @@ public interface HotelService {
 
 	int insertReview(Review reply);
 
-	ArrayList<Review> selectReviewList(int hotelId);
+	ArrayList<Review> selectReviewList(HashMap map);
 
 	ArrayList<AttachedFile> selectAllRoomThumbnail(int hotelId);
 

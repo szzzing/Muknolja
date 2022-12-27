@@ -65,6 +65,8 @@
 		margin:0px;
 		padding:0px;
 	}
+	.hotelImg {transition: all 0.3s; cursor:pointer}
+	.hotelImg:hover {opacity:0.5;}
 	.roomDetailModal_roomImg {transition: all 0.3s;}
 	.roomDetailModal_roomImg:hover { opacity:0.5; }
 	.mukCategory {color:#6BB6EC !important; border-bottom:3px solid #6BB6EC; font-weight:bold;}
@@ -101,10 +103,10 @@
 	<div class="container">
 	
 		<div class="row">
-			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar shadow-lg collapse" style="height:100%; left:0px; position:fixed;">
+			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar shadow collapse" style="height:100%; left:0px; position:fixed;">
 				<div class="position-sticky sidebar-sticky">
 					<div class="text-center pb-4 m-3 mt-5 mb-5" style="border-bottom:1px solid #e9e9e9">
-						<img id="hotelImg" class="img-fluid mb-3" style="width:100px; height:100px; border-radius:50%" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}">
+						<img class="img-fluid mb-3" style="width:100px; height:100px; border-radius:50%" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}">
 						<h5 class="fw-bold mukSubText">${hotel.hotelName }</h5>
 					</div>
 					<ul class="nav flex-column">
@@ -249,5 +251,17 @@
 		$.viewMap();
  	</script>
  	<!-- 지도 끝 -->
+ 	
+ 	<!-- 호텔이미지 시작 -->
+	<script>
+		$(document).ready(function(){
+			$(".hotelImg").on("click", function(){
+				var src = $("#hotelImg").prop("src");
+				$("#hotelImg").prop("src", $(this).prop("src"));
+				$(this).prop("src", src);
+			});
+		})
+	</script>
+	<!-- 호텔이미지 끝 -->
 </body>
 </html>
