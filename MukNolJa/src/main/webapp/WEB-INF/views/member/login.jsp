@@ -70,7 +70,7 @@
 		            			
 		          				<div style="display:flex; position:absolute; top:85%; margin-left:0vw; text-align:center; ">
 		          				아직 회원이 아니신가요? <a style="font-size:18px;" href="${contextPath }/enrollE.me">회원가입</a>
-		          				<div style="margin-left: 120px;">사업장등록은 여기<a style="font-size:18px;" href="">호텔등록</a></div>
+		          				<div style="margin-left: 120px;">사업장등록은 여기<a style="font-size:18px;" href="${contextPath }/enrollH.me">호텔등록</a></div>
 		          				</div>
 		            		</div>
 		            		

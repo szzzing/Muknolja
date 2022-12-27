@@ -3,11 +3,18 @@
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import com.spring.muknolja.common.model.vo.AD;
+import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.QA;
+import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
+import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
 
@@ -62,5 +69,28 @@ public interface MemberService {
 	ArrayList<Map<String, Integer>> incomeCount();
 
 	ArrayList<AD> selectADList(HashMap<String, Object> map);
+
+	ArrayList<Reservation> selectReserve(String id);
+
+	
+
+	int insertsAttm(ArrayList<AttachedFile> list);
+
+	int getListCount(String id);
+
+	
+
+	ArrayList<QA> selectQA(String id, PageInfo pi);
+
+	ArrayList<Hotel> selectHotel(String id, PageInfo pi);
+
+	ArrayList<AttachedFile> selectImg();
+
+	/* ArrayList<AttachedFile> selectImg(int hotelId); */
+
+
+
+
+
 
 }

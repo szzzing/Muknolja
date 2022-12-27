@@ -3,6 +3,8 @@
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -10,8 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.muknolja.common.model.vo.AD;
+import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.QA;
+import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
+import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.dao.MemberDAO;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
@@ -146,5 +153,49 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<AD> selectADList(HashMap<String, Object> map) {
 		return mDAO.selectADList(sqlSession, map);
 	}
+
+	@Override
+	public ArrayList<Reservation> selectReserve(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.selectReserve(sqlSession,id);
+	}
+
+	
+
+	@Override
+	public int insertsAttm(ArrayList<AttachedFile> list) {
+		// TODO Auto-generated method stub
+		return mDAO.insertAttm(sqlSession, list);
+	}
+
+	@Override
+	public int getListCount(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.getListCount(sqlSession,id);
+	}
+
+	
+
+	@Override
+	public ArrayList<QA> selectQA(String id, PageInfo pi) {
+		// TODO Auto-generated method stub
+		return  mDAO.selectQA(sqlSession,id, pi);
+	}
+
+	@Override
+	public ArrayList<Hotel> selectHotel(String id, PageInfo pi) {
+		// TODO Auto-generated method stub
+		return mDAO.selectHotel(sqlSession,id,pi);
+	}
+
+	
+	/*
+	 * @Override public ArrayList<AttachedFile> selectImg(int hotelId) { // TODO
+	 * Auto-generated method stub return mDAO.selectImg(sqlSession, hotelId); }
+	 */
+
+	
+
+	
 
 }
