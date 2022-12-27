@@ -195,35 +195,6 @@
 			window.print();
 		});
 		
-		
-		$.ajax({
-			method: "GET",
-			url: "http://apis.data.go.kr/B551011/KorService/detailImage?serviceKey=yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=" + ${contentId} + "&imageYN=Y&subImageYN=Y&_type=json",
-			data: {},
-			success: (response) =>{
-				let items = response["response"]["body"]["items"]["item"]
-				for(let i = 0; i < items.length; i++){
-					let image = items[i]["originimgurl"];
-					
-					var carouselDiv = $('.active').clone();
-					carouselDiv.prop('src', image);
-					
-// 					<div class="carousel-item active" data-bs-interval="2000">
-// 				      <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA1MDhfNTkg%2FMDAxNjIwNDQ1NDEzMjMy.5MU5M5KGbrMq6NqH0nwDuT_aoLCLbm8YCU_XgDpqxN0g.xl4oeCee3CUuHTlOLPXFRsvxk4bFSqgG657ck29xcYMg.JPEG.number1khj%2F20140503_171748.jpg%234096x2304" class="d-block w-100" alt="...">
-// 				    </div>
-					
-				}
-			},
-			error: (data)=>{
-				console.log(data);
-			}
-		});
-		
-		
-		
-		
-		
-// 			url: "http://apis.data.go.kr/B551011/KorService/detailIntro?serviceKey=yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D&numOfRows=20&pageNo=" + ${page} + "&MobileOS=ETC&contentId=" + ${contentId} + "&contentTypeId=12&_type=json",
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

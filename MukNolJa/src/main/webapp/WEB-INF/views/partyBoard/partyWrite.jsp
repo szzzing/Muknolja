@@ -191,7 +191,7 @@
 		</div>
 		
 		<!-- 내용 -->
-	<form>
+	<form action="${contextPath}/insertParty.pa" method="POST">
 		<div class="content form-floating">
 		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none;" name="content"></textarea>
 		  <label for="floatingTextarea2">내용</label>
