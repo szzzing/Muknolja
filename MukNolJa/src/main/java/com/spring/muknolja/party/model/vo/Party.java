@@ -16,6 +16,7 @@ import lombok.ToString;
 public class Party {
 	private int partyId;
 	private String partyWriter;
+	private String nickName;
 	private String boardType;
 	private String partyCourse;
 	private String partyTitle;
@@ -28,6 +29,7 @@ public class Party {
 	private Date partyStartDate;
 	private Date partyEndDate;
 	private String gender;
+	private String thumbnail;
 	private String nowParticipate;
 	private int replyCount;
 }

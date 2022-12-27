@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.party.model.vo.Party;
 
@@ -28,5 +29,9 @@ public class PartyDAO {
 		
 		return (ArrayList)sqlSession.selectList("partyMapper.selectPartyList", rowBounds);
 	}
-	
+
+	public Party selectParty(SqlSessionTemplate sqlSession, int pId) {
+		return sqlSession.selectOne("partyMapper.selectParty", pId);
+	}
+
 }

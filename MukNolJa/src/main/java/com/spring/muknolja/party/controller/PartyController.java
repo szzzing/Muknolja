@@ -51,8 +51,14 @@ public class PartyController {
 	}
 	
 	@RequestMapping("partyDetail.pa")
-	public String partyDetail() {
-		return "partyDetail";
+	public String partyDetail(@RequestParam("pId") int pId, @RequestParam("writer") String writer, HttpSession session, Model model) {
+		Party p = pService.selectParty(pId);
+		if(p != null) {
+			model.addAttribute("p", p);
+			return "partyDetail";
+		}else {
+			throw new CommonException("동행 상세보기 조회에 실패하였습니다.");
+		}
 	}
 	
 	@RequestMapping("partyWrite.pa")
@@ -87,4 +93,5 @@ public class PartyController {
 			throw new CommonException("동행게시판 입력에 실패하였습니다.");
 		}
 	}
+	
 }

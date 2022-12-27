@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -112,7 +113,6 @@
 	<div class="container">
 		<br><br><br><br><br><br><br>
 		<h1 class="fw-bold" style="color: #6BB6EC; font-size: 55px;">여행친구찾기</h1>
-		
 		<!-- 카테고리 -->
 		<ul id="category" class="ur" >
 				<div style="display:flex;" lass="ur1">
@@ -154,18 +154,17 @@
 			
 		<!-- list카드 -->
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;">
-				
 				<c:forEach items="${ pList }" var="p">
-					<div class="col" style="margin-bottom: 30px;">
+					<div class="partyCard col" style="margin-bottom: 30px;">
 						<div class="card card-cover h-100 overflow-hidden\">
-						  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
+						  <img src="${ contextPath }/resources/uploadFiles/${p.thumbnail}" class="card-img-top">
 						  <div class="card-body">
 						  	<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">${ p.partyTitle }</h5>
+						  	  <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
 							  <ol class="numbered">
-								  <li>List item one</li>
-								  <li>List item two</li>
-								  <li>List item three</li>
-								  <li>List item four</li>
+							  	  <c:forEach items="${ courseList }" var="course" end="3">
+										  <li>${ course }</li>
+								 </c:forEach>
 							 </ol>
 							 
 							 <table>
@@ -175,7 +174,8 @@
 							 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
 							 	</tr>
 							 </table>
-							 
+							 <input type="hidden" value="${ p.partyId }" class="partyId">
+							 <input type="hidden" value="${ p.nickName }" class="nickName">
 						  </div>
 						</div>
 					</div>
@@ -205,9 +205,11 @@
 		
 		<script>
 			const partyCards = document.getElementsByClassName('card');
+			const partyId = document.getElementsByClassName('partyId')[0];
+			const nickName = document.getElementsByClassName('nickName')[0];
 			for(const partyCard of partyCards){
 				partyCard.addEventListener('click', function(){
-					location.href = '${contextPath}/partyDetail.pa';
+					location.href = '${contextPath}/partyDetail.pa?pId=' + partyId.value + '&writer=' + nickName.value;
 				});
 			}
 			
@@ -215,7 +217,7 @@
 			writeButton.addEventListener('click', function(){
 				location.href = '${contextPath}/partyWrite.pa';
 			});
-		
+			
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

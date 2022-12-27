@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,32 +77,32 @@
 	
 		<br><br><br><br><br><br>
 	
-		<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMDlfODgg%2FMDAxNjY3OTY5OTMzNzUw.nBSmNlV8uDvnFKqWt-OPry4vj_kqvXvAbEncuTSeIQ4g.3TXDOLw_NDlgt2Eq7MmNMRoIZbVVSlbcWBE9Is6kh3cg.JPEG.yomlog%2FIMG_6948.jpg&type=sc960_832" class="img-fluid" alt="..." id="thumbnail">
+		<img src="${ contextPath }/resources/uploadFiles/${p.thumbnail}" id="thumbnail">
 		
 		
 		<div class="title row">
 			<div class="col-lg-8">
 				<!-- 제목 -->
-				<h3>저랑 같이 강릉가실분😉</h3>
+				<h3>${ p.partyTitle }</h3>
 				
 				<!-- 선택목록 -->
 				<div id="location1">
 					<table>
 						<tr>
 							<td width="30px;" style="text-align: center"><i class="fa-solid fa-location-dot"></i></td>
-							<td>서울</td>
+							<td>${ p.partyArea }</td>
 						</tr>
 						<tr>
 							<td style="text-align: center"><i class="fa-solid fa-users"></i></td>
-							<td>5/10</td>
+							<td>0/${ p.maxParticipate }</td>
 						</tr>
 						<tr>
 							<td style="text-align: center"><i class="fa-solid fa-heart"></i></td>
-							<td>여자만</td>
+							<td>${ p.gender }</td>
 						</tr>
 						<tr>
 							<td style="text-align: center"><i class="fa-solid fa-calendar-days"></i></td>
-							<td>2022.12.25~2022.12.27</td>
+							<td>${ p.partyStartDate }~${ p.partyEndDate }</td>
 						</tr>
 					</table>
 					<button type="button" class="btn btn-primary btn-lg">동행참여하기</button>
@@ -109,28 +110,21 @@
 				
 				<!-- 내용 -->
 				<div class="content input-group">
-				  <textarea class="form-control" aria-label="With textarea" style="resize: none;">크리스마스에 강릉 같이 가실분 코스는 대충 짰고 가실분들 있으면 코스 같이 상의해서 더 짜봐요! 같이 놀면 재밌을거같아요!!</textarea>
+				  <textarea class="form-control" aria-label="With textarea" style="resize: none;">${ p.partyContent }</textarea>
 				</div>
 			</div>
 			
 			<div class="col">
 				<div id="profile">
 					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
- 					<label style="font-weight: bold;">슬픈고양이</label>
+ 					<label style="font-weight: bold;">${ p.nickName }</label>
 				</div>
 				<div id="location2">
 					 <ol class="numbered">
-						<li>List item one</li>
-						<li>List item two</li>
-						<li>List item three</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
-						<li>List item four</li>
+					 <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
+						<c:forEach items="${ courseList }" var="course">
+							<li>${ course }</li>
+						</c:forEach>
 					</ol>
 				</div>
 			</div>
