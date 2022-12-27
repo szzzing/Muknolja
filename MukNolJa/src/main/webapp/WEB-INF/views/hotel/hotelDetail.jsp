@@ -274,7 +274,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="mukMutedText">
+							<td class="mukSubText">
 								<span class="nickName"></span>
 								·
 								<span class="roomName"></span>
@@ -404,7 +404,7 @@
 							reviewDiv.find("input[name=reviewId]").val(r.reviewId);
 							reviewDiv.find(".nickName").html(r.nickName);
 							reviewDiv.find(".roomName").html(r.roomName);
-							reviewDiv.find(".reviewContent").html(r.reviewContent);
+							reviewDiv.find(".reviewContent").html(r.reviewContent.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 							reviewDiv.find(".rating").html(r.rating.toFixed(1));
 							reviewDiv.find(".createDate").html(r.createDate);
 							

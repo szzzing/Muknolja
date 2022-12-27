@@ -17,7 +17,7 @@ public class Review {
 	private int reviewId;
 	private String memberId;
 	private String nickName;
-	private int ReservationId;
+	private int reservationId;
 	private String hotelName;
 	private String roomName;
 	private Date checkinDate;
