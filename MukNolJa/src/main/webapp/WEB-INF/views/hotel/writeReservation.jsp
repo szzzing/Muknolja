@@ -9,16 +9,20 @@
 <title>예약하기</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
+	.form-control {border:1px solid #e9e9e9 !important}
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	* {font-family: 'Noto Sans KR', sans-serif;}
-  	
+	::-webkit-scrollbar {width:5px;}
+	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
+	::-webkit-scrollbar-track {opacity:0;}
 	.mukRound {border-radius: 8px;}
 	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
+	.mukSubText {color:rgba(0,0,0,.56);}
 	
-	.termsModalButton {color:#B9B9B9;}
+	.termsModalButton {color:rgba(0,0,0,.56);}
 	.termsModalButton:hover {text-decoration:underline}
 	
 	.mukCheckbox { width:auto; display: block; position:relative; padding-left:30px; margin-bottom: 10px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
@@ -40,7 +44,7 @@
 </head>
 <body>
 	<div class="modal fade" id="termsModal" aria-hidden="true" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content p-3">
 				<div class="modal-header" style="border-bottom:0;">
 					<h5 class="modal-title fw-bold">숙소이용규칙 및 취소/환불 규정</h5>
@@ -48,7 +52,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="fw-bold pb-3">이용규칙</div>
-					<div class="mukMutedText">
+					<div class="mukSubText">
 						최대 인원 초과 시 입실 불가합니다.<br>
 						정원 기준 요금 외 인원 추가 요금은 현장결제입니다.<br>
 						제공 이미지는 배정된 객실과 다를 수 있습니다.<br>
@@ -57,7 +61,7 @@
 						업체 현장에서 객실 컨디션 및 서비스로 인해 발생된 분쟁은 먹놀자에서 책임지지 않습니다.
 					</div>
 					<div class="fw-bold pt-5 pb-3">취소/환불규정</div>
-					<div class="mukMutedText">
+					<div class="mukSubText">
 						숙소 사정에 의해 취소 발생시 100% 환불이 가능합니다.<br>
 						예약 상품 별 숙소 정보에 기재된 취소, 환불 규정을 반드시 확인 후 이용해주시기 바랍니다.<br>
 						예약 이후의 취소는 취소/환불 규정에 의거하여 적용됩니다.<br>
@@ -80,11 +84,11 @@
 				<!-- 예약자 정보 시작 -->
 				<h4 class="fw-bold pb-3">예약자 정보</h4>
 				<div class="mb-5">
-					<label for="reservationName" class="form-label mukMutedText">예약자 이름</label>
+					<label for="reservationName" class="form-label mukSubText">예약자 이름</label>
 					<input type="text" class="form-control" name="reservationName" placeholder="체크인시 필요한 정보입니다." value="${loginUser.name }" required>
 				</div>
 				<div class="mb-5">
-					<label for="reservationPhone" class="form-label mukMutedText">휴대폰 번호</label>
+					<label for="reservationPhone" class="form-label mukSubText">휴대폰 번호</label>
 					<input type="tel" class="form-control" name="reservationPhone" placeholder="체크인시 필요한 정보입니다." value="${loginUser.phone }" required>
 				</div>
 				<!-- 예약자 정보 끝 -->

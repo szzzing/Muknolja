@@ -6,12 +6,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>호텔 상세페이지</title>
+<title>호텔 수정하기</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	* {font-family: 'Noto Sans KR', sans-serif;}
+  	.form-control {border:1px solid #e9e9e9 !important}
   	input {font-family: 'Noto Sans KR', sans-serif;}
+  	.form-control {border:1px solid #e9e9e9 !important}
+  	::-webkit-scrollbar {width:5px;}
+	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
+	::-webkit-scrollbar-track {opacity:0;}
+	
 	ul li {
 		list-style: none;
 		float: left;
@@ -37,27 +43,8 @@
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
 	
-/* 	별점 관련 */
-	.star-rating {
-		color:#e9e9e9;
-		display: flex;
-		width: 5em;
-		flex-direction: row-reverse;
-		justify-content: space-around;
-	}
-	.star-rating input {
-		display: none;
-	}
-	.star-rating label {
-		cursor: pointer;
-	}
-	.star-rating :checked ~ label {
-		-webkit-text-fill-color: #FFD600;
-	}
-	.star-rating label:hover,
-	.star-rating label:hover ~ label {
-	  -webkit-text-fill-color: #FFD600;
-	}
+	#searchAddressButton {color:#6bb6ec; cursor:pointer;}
+	#searchAddressButton:hover {text-decoration:underline;}
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -70,7 +57,7 @@
 		<form action="${contextPath }/updateHotel.ho" class="row g-2 row-cols-1" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="entId" value="${ loginUser.id }">
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
-				<h5 class="fw-bold pb-3">호텔명</h5>
+				<h5 class="fw-bold pb-3">호텔 이름</h5>
 				<input type="hidden" class="form-control" name="hotelId" value="${hotel.hotelId }">
 				<input type="text" class="hotelName form-control" name="hotelName" value="${hotel.hotelName }" required>
 			</div>
@@ -78,7 +65,8 @@
 				<input type="hidden" class="hotelGeoX" name="hotelGeoX" value="${hotel.hotelGeoX }">
 				<input type="hidden" class="hotelGeoY" name="hotelGeoY" value="${hotel.hotelGeoY }">
 				<h5 class="fw-bold pb-3">주소</h5>
-				<input type="text" class="hotelAddress form-control" name="hotelAddress" value="${hotel.hotelAddress }" onclick="sample4_execDaumPostcode()" required>
+				<span id="hotelAddress" class="pe-3">${hotel.hotelAddress }</span><span id="searchAddressButton" class="fw-bold" onclick="sample4_execDaumPostcode()">주소검색</span>
+				<input type="hidden" class="hotelAddress pe-3form-control " name="hotelAddress" value="${hotel.hotelAddress }" required>
 				<div id="map" class="mukRound mt-3" style="width:100%;height:300px;"></div>
 			</div>
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
@@ -153,14 +141,14 @@
 						</label>
 					</div>
 					<div class="col">
-						<label for="swim" class="mukCheckbox" >
+						<label for="swim" class="mukCheckbox">
 							<input type="hidden" name="swim" value="${hotel.swim }">
 							<input type="checkbox" name='install' id="swim"><span class="on"></span>
 							수영장
 						</label>
 					</div>
 					<div class="col">
-						<label for="fitness" class="install mukCheckbox">
+						<label for="fitness" class="mukCheckbox">
 							<input type="hidden" name="fitness" value="${hotel.fitness }">
 							<input type="checkbox" name='install' id="fitness"><span class="on"></span>
 							피트니스
@@ -181,7 +169,7 @@
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3" style="display:inline-block">사진</h5>
 				<span class="mukMutedText insertImgButton">최소 1장, 최대 5장의 사진을 등록할 수 있습니다.</span>
-				<span id="insertImgButton" class="fw-bold" style="color:#6bb6ec;">사진추가</span>
+				<span id="insertImgButton" class="fw-bold" style="color:#6bb6ec; cursor:pointer">사진추가</span>
 				<div id="newImgDiv" class="col-2" style="display:none">
 					<img src="#" class="img-fluid mukRound">
 					<input type="file" name="newImg" style="display:none">
@@ -191,7 +179,7 @@
 				<div id="hotelImgList" class="row g-3">
 					<c:forEach items="${hotelImgList }" var="img">
 						<div class="col-2 currImg">
-							<img class="img-fluid mukRound" id="${img.fileModifyName }${img.fileThumbnail }" src="${ contextPath }/resources/uploadFiles/${img.fileModifyName}">
+							<img class="img-fluid mukRound h-100" id="${img.fileModifyName }${img.fileThumbnail }" src="${ contextPath }/resources/uploadFiles/${img.fileModifyName}">
 						</div>
 					</c:forEach>
 				</div>
@@ -353,6 +341,7 @@
 					}
 					// 우편번호와 주소 정보를 해당 필드에 넣는다.
 					$("input[name=hotelAddress]").val(roadAddr);
+					$("#hotelAddress").text(roadAddr);
 					$.viewMap();
 				}
 			}).open();

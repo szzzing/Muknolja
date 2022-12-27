@@ -65,10 +65,20 @@ public interface HotelService {
 
 	int updateHotel(Hotel h);
 
-	int insertModifyHotelImg(HashMap map);
+	int updateHotelImg(HashMap map);
 
 	int deleteFile(ArrayList<String> deleteImgList);
 
 	int updateHotelThumbnail(int hotelId);
+
+	int updateRoomImg(HashMap map);
+
+	int updateRoomThumbnail(int roomId);
+
+	int updateRoom(Room r);
+
+	int deleteRoom(int roomId);
+
+	int deleteRoomImg(int roomId);
 
 }

@@ -8,13 +8,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>객실 등록</title>
+<title>객실 수정</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <style>
-	.form-control {border:1px solid #e9e9e9 !important}
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+	.form-control {border:1px solid #e9e9e9 !important}
   	* {font-family: 'Noto Sans KR', sans-serif;}
   	input {font-family: 'Noto Sans KR', sans-serif;}
   	::-webkit-scrollbar {width:5px;}
@@ -48,60 +48,76 @@
 <body>
 
 	<div class="container-sm mt-5 mb-5" style="max-width:800px;">
-		<form action="${ contextPath }/insertRoom.ho" enctype="multipart/form-data" method="post">
-			<input type="hidden" name="hotelId" value="${hotel.hotelId }">
+		<form action="${ contextPath }/updateRoom.ho" enctype="multipart/form-data" method="post">
+			<input type="hidden" name="roomId" value="${room.roomId }">
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3">객실 이름</h5>
-				<input type="text" class="form-control" name="roomName" required>
+				<input type="text" class="form-control" name="roomName" value="${room.roomName }" required>
 			</div>
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3">가격</h5>
-				<input type="number" class="form-control" name="roomPrice" min="1000" required>
+				<input type="number" class="form-control" name="roomPrice" min="1000" value="${room.roomPrice }" required>
 			</div>
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3">체크인 시간</h5>
-				<input type="time" class="form-control" id="checkinTime" name="checkinTime" required>
+				<input type="time" class="form-control" id="checkinTime" name="checkinTime" value="${room.checkinTime }" required>
 			</div>
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3">체크아웃 시간</h5>
-				<input type="time" class="form-control" id="checkoutTime" name="checkoutTime" required>
+				<input type="time" class="form-control" id="checkoutTime" name="checkoutTime" value="${room.checkoutTime }" required>
 			</div>
 
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3">최대 인원</h5>
 				<select class="form-select" name="maxAccept">
-					<option selected>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
+					<option <c:if test="${room.maxAccept==1 }">selected</c:if>>1</option>
+					<option <c:if test="${room.maxAccept==2 }">selected</c:if>>2</option>
+					<option <c:if test="${room.maxAccept==3 }">selected</c:if>>3</option>
+					<option <c:if test="${room.maxAccept==4 }">selected</c:if>>4</option>
+					<option <c:if test="${room.maxAccept==5 }">selected</c:if>>5</option>
 				</select>
 			</div>
 			
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3">총 객실 수</h5>
-				<input type="number" class="form-control" name="totalNumber" min="1" required>
+				<input type="number" class="form-control" name="totalNumber" min="1" value="${room.totalNumber }" required>
 			</div>
 			
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3">객실 소개</h5>
-				<textarea class="form-control" name="roomIntro" rows="2" style="height:100px; resize:none" required></textarea>
+				<textarea class="form-control" name="roomIntro" rows="2" style="height:100px; resize:none" required>${room.roomIntro }</textarea>
 			</div>
 			
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3">상세정보</h5>
-				<textarea class="form-control" name="roomInfo" rows="10" style="height:300px; resize:none" required></textarea>
+				<textarea class="form-control" name="roomInfo" rows="10" style="height:300px; resize:none" required>${room.roomInfo }</textarea>
 			</div>
 			
 			<div class="col mb-5 pb-5" style="border-bottom:1px solid #f1f1f1">
 				<h5 class="fw-bold pb-3" style="display:inline-block">사진</h5>
 				<span class="mukMutedText insertImgButton">최소 1장, 최대 5장의 사진을 등록할 수 있습니다.</span>
 				<span id="insertImgButton" class="fw-bold" style="color:#6bb6ec; cursor:pointer">사진추가</span>
-				<div id="roomImgDiv" class="col-2" style="display:none">
+				<div id="newImgDiv" class="col-2" style="display:none">
 					<img src="#" class="img-fluid mukRound">
-					<input type="file" name="roomImg" style="display:none">
+					<input type="file" name="newImg" style="display:none">
 				</div>
+				<input type="hidden" name="originalImgCount">
+				<input type="hidden" name="deleteImg">
 				<div id="roomImgList" class="row g-3">
+					<c:forEach items="${roomImgList }" var="img">
+						<c:if test="${img.fileThumbnail=='Y' }">
+							<div class="col-2 currImg">
+								<img class="img-fluid mukRound h-100" id="${img.fileModifyName }${img.fileThumbnail }" src="${ contextPath }/resources/uploadFiles/${img.fileModifyName}">
+							</div>
+						</c:if>
+					</c:forEach>
+					<c:forEach items="${roomImgList }" var="img">
+						<c:if test="${img.fileThumbnail=='N' }">
+							<div class="col-2 currImg">
+								<img class="img-fluid mukRound h-100" id="${img.fileModifyName }${img.fileThumbnail }" src="${ contextPath }/resources/uploadFiles/${img.fileModifyName}">
+							</div>
+						</c:if>
+					</c:forEach>
 				</div>
 			</div>
 			<div class="d-grid gap-2">
@@ -110,14 +126,22 @@
 		</form>
 	</div>
 	
-	
 	<!-- 사진 첨부 시작 -->
 	<script>
-	    $("#insertImgButton").on("click", function(){
-	    	$("#roomImgDiv").find("input[name=roomImg]").click();
+		$("input[name=originalImgCount]").val($("#roomImgList").children().length);
+		
+	    $(".currImg").click(function(){
+	    	const img = $(this).find("img").attr("id");
+	    	$("input[name=deleteImg]").val($("input[name=deleteImg]").val()+img+"/");
+	    	$(this).remove();
+	    	$.viewInsertImgButton();
 	    });
 	    
-	    $("input[name=roomImg]").on("change", function(e) {
+	    $("#insertImgButton").on("click", function(){
+	    	$("#newImgDiv").find("input[name=newImg]").click();
+	    });
+	    
+	    $("input[name=newImg]").on("change", function(e) {
 			var tmp = e.target.files[0];
 			var img = URL.createObjectURL(tmp);
 			
@@ -126,14 +150,12 @@
 
 			div.find("img").attr("src", img);
 			div.prop("style").removeProperty("display");
-			div.addClass("roomImg");
+			div.addClass("newImg");
 			$("#roomImgList").append(div);
-			
-			$(this).val("");
 			$.viewInsertImgButton();
 		});
 	    
-	    $(document).on('click', '.roomImg', function(){
+	    $(document).on('click', '.newImg', function(){
 	    	$(this).remove();
 	    	$.viewInsertImgButton();
 	    });
@@ -151,13 +173,15 @@
 	</script>
 	<!-- 사진 첨부 끝 -->
 	
-	<!-- 호텔 정보 엔터 구현, hotelImgDiv 삭제 시작 -->
+	
+	<!-- 호텔 정보 엔터 구현, roomImgDiv 삭제 시작 -->
 	<script>
 		$("#submitButton").on("click", function(){
 			if($("#roomImgList").children().length==0) {
 				alert("1개 이상의 이미지를 첨부해주세요.");
 			} else {
-				$("#roomImgDiv").remove();
+				console.log($("input[name=newImg]"));
+				$("#newImgDiv").remove();
 				$("form").submit();
 			}
 		});

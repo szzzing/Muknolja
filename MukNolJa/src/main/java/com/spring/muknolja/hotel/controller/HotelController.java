@@ -76,6 +76,38 @@ public class HotelController {
 		}
 	}
 	
+	@RequestMapping("manageRoom.ho")
+	public String manageRoom(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m.getMemberType().equals("H")) {
+			Hotel hotel = hService.selectHotelbyId(m.getId());
+			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
+			
+			model.addAttribute("hotel", hotel);
+			model.addAttribute("hotelImgList", hotelImg);
+			
+			return "manageRoom";
+		} else {
+			throw new CommonException("호텔 사업자가 아닙니다.");
+		}
+	}
+	
+	@RequestMapping("manageReview.ho")
+	public String manageReview(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m.getMemberType().equals("H")) {
+			Hotel hotel = hService.selectHotelbyId(m.getId());
+			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
+			
+			model.addAttribute("hotel", hotel);
+			model.addAttribute("hotelImgList", hotelImg);
+			
+			return "manageReview";
+		} else {
+			throw new CommonException("호텔 사업자가 아닙니다.");
+		}
+	}
+	
 	
 	@RequestMapping("writeRoom.ho")
 	public String writeRoom(HttpSession session, Model model) {
@@ -133,7 +165,7 @@ public class HotelController {
 		}
 		
 		if(roomResult + imgResult == list.size()*2+1) {
-			return "redirect:hotelList.ho";
+			return "redirect:manageRoom.ho";
 		} else {
 			for(AttachedFile a : list) {
 				AttachedFile.deleteFile(a.getFileModifyName(), request);
@@ -290,7 +322,7 @@ public class HotelController {
 						a.setFileThumbnail("N");
 					}
 				}
-				int imgResult = hService.insertModifyHotelImg(map);
+				int imgResult = hService.updateHotelImg(map);
 				
 			// 새로운 이미지가 없는 경우 + 썸네일을 삭제한 경우
 			} else if(newThumbnail && !deleteAllExisting) {
@@ -307,6 +339,124 @@ public class HotelController {
 	}
 	
 	
+	@RequestMapping("modifyRoom.ho")
+	public String modifyRoom(@RequestParam("roomId") int roomId, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+
+		Room room = hService.selectRoom(roomId);
+		ArrayList<AttachedFile> roomImgList = hService.selectRoomImg(roomId);
+		
+		model.addAttribute("room", room);
+		model.addAttribute("roomImgList", roomImgList);
+		
+		return "modifyRoom";
+	}
+	
+	@RequestMapping("updateRoom.ho")
+	public String updateRoom(HttpSession session, HttpServletRequest request, @ModelAttribute Room r, @RequestParam(value="newImg", required=false) ArrayList<MultipartFile> newImg, @RequestParam("deleteImg") String deleteImg, @RequestParam("originalImgCount") int originalImgCount) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m.getMemberType().equals("H")) {
+			
+			ArrayList<AttachedFile> originalList = hService.selectRoomImg(r.getRoomId());
+			ArrayList<String> deleteImgList = new ArrayList<String>();
+			
+			boolean newThumbnail = false;
+			
+			// 삭제한 이미지가 있는 경우
+			if(deleteImg.length()>0) {
+				for(String i : deleteImg.split("/")) {
+					AttachedFile.deleteFile(i.substring(0, i.length()-1), request);
+					if(i.substring(i.length()-1).equals("Y")) {
+						newThumbnail = true;
+					}
+					deleteImgList.add(i.substring(0, i.length()-1));
+				}
+				int deleteFileResult = hService.deleteFile(deleteImgList);
+			}
+			
+			// 모든 파일을 삭제한 경우
+			boolean deleteAllExisting = originalImgCount-deleteImgList.size()==0 ? true : false;
+			System.out.println("originalImgCount"+originalImgCount);
+			System.out.println("deleteImgList.size()"+deleteImgList.size());
+			System.out.println("deleteAllExisting"+deleteAllExisting);
+			System.out.println("newImg"+newImg);
+			
+			// 새로운 이미지가 있는 경우
+			ArrayList<AttachedFile> newImgList = new ArrayList();
+			if(newImg!=null) {
+				for(MultipartFile file : newImg) {
+					String fileName = file.getOriginalFilename();
+					if(!fileName.equals("")) {
+						String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+						
+						if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+							String[] returnArr = AttachedFile.saveFile(file, request);
+							
+							if(returnArr[1] != null) {
+								AttachedFile img = new AttachedFile();
+								img.setFileName(file.getOriginalFilename());
+								img.setFileModifyName(returnArr[1]);
+								img.setFileLink(returnArr[0]);
+								
+								System.out.println(img);
+								newImgList.add(img);
+							}
+						}
+					}
+				}
+				HashMap map = new HashMap();
+				map.put("list", newImgList);
+				map.put("roomId", r.getRoomId());
+				
+				// 썸네일 관련
+				for(int i = 0; i < newImgList.size(); i++) {
+					AttachedFile a = newImgList.get(i);
+					if(deleteAllExisting && i==0) {
+						a.setFileThumbnail("Y");
+					} else {
+						a.setFileThumbnail("N");
+					}
+				}
+				int imgResult = hService.updateRoomImg(map);
+				
+			// 새로운 이미지가 없는 경우 + 썸네일을 삭제한 경우
+			} else if(newThumbnail && !deleteAllExisting) {
+				int updateRoomThumbnailResult = hService.updateRoomThumbnail(r.getRoomId());
+			}
+			
+			
+			int result = hService.updateRoom(r);
+			
+			return "redirect:manageRoom.ho";
+		} else {
+			throw new CommonException("호텔 사업자가 아닙니다.");
+		}
+	}
+	
+	
+	@RequestMapping(value="deleteRoom.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void deleteRoom(@RequestParam("roomId") int roomId, HttpServletResponse response) {
+		int result = hService.deleteRoom(roomId);
+		int imgResult = hService.deleteRoomImg(roomId);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(result, response.getWriter());
+			gson.toJson(imgResult, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	// 일반회원
 	
 	@RequestMapping("hotelList.ho")
 	public String hotelList() {
@@ -386,9 +536,10 @@ public class HotelController {
 		return "hotelDetail";
 	}
 	
+	
 	@RequestMapping(value="selectAllRoom.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void selectAllRoom(@RequestParam("hotelId") int hotelId, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, Model model, HttpServletResponse response) {
+	public void selectAllRoom(@RequestParam("hotelId") int hotelId, @RequestParam(value="checkinDate", required=false) Date checkinDate, @RequestParam(value="checkoutDate", required=false) Date checkoutDate, Model model, HttpServletResponse response) {
 		HashMap map = new HashMap();
 		
 		map.put("checkinDate", checkinDate);
@@ -431,6 +582,7 @@ public class HotelController {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	
 	
