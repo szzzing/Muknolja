@@ -125,8 +125,8 @@ public class HotelDAO {
 		return sqlSession.update("hotelmapper.updateHotel", h);
 	}
 
-	public int insertModifyHotelImg(SqlSessionTemplate sqlSession, HashMap map) {
-		return sqlSession.insert("hotelmapper.insertModifyHotelImg", map);
+	public int updateHotelImg(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.insert("hotelmapper.updateHotelImg", map);
 	}
 	
 	public int deleteFile(SqlSessionTemplate sqlSession, ArrayList<String> list) {
@@ -135,6 +135,26 @@ public class HotelDAO {
 
 	public int updateHotelThumbnail(SqlSessionTemplate sqlSession, int hotelId) {
 		return sqlSession.update("hotelmapper.updateHotelThumbnail", hotelId);
+	}
+
+	public int updateRoomImg(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.insert("hotelmapper.updateRoomImg", map);
+	}
+
+	public int updateRoomThumbnail(SqlSessionTemplate sqlSession, int roomId) {
+		return sqlSession.update("hotelmapper.updateRoomThumbnail", roomId);
+	}
+
+	public int updateRoom(SqlSessionTemplate sqlSession, Room r) {
+		return sqlSession.update("hotelmapper.updateRoom", r);
+	}
+
+	public int deleteRoom(SqlSessionTemplate sqlSession, int roomId) {
+		return sqlSession.update("hotelmapper.deleteRoom", roomId);
+	}
+
+	public int deleteRoomImg(SqlSessionTemplate sqlSession, int roomId) {
+		return sqlSession.update("hotelmapper.deleteRoomImg", roomId);
 	}
 
 }

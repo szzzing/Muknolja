@@ -15,14 +15,17 @@
 
 </head>
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  	* {font-family: 'Noto Sans KR', sans-serif;}
+  	.form-control {border:1px solid #e9e9e9 !important}
+  	input {font-family: 'Noto Sans KR', sans-serif;}
+  	::-webkit-scrollbar {width:5px;}
+	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
+	::-webkit-scrollbar-track {opacity:0;}
+	
 	.subCategoryButton {
 		display:none;
 	}
- 	@media(max-width:960px) {
- 		.subCategoryButton {
- 			display:block;
- 		}
- 	}
  	
 	.mukCheckbox { display: block; position: relative; padding-left: 25px; margin-bottom: 10px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 	.mukCheckbox input[type="checkbox"] { display: none; }
@@ -42,6 +45,7 @@
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
+	.mukSubText {color:rgba(0,0,0,.56);}
 	
 	
 	input[type=range] {
@@ -58,7 +62,7 @@
 		transition: all 0.2s ease;
 		background: #f1f1f1;
 		border: 0px solid #000;
-		border-radius: 0px;
+		border-radius: 5px;
 	}
 	input[type=range]::-webkit-slider-thumb {
 		position: relative;

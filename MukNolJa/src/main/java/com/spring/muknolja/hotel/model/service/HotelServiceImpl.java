@@ -156,8 +156,13 @@ public class HotelServiceImpl implements HotelService{
 	}
 	
 	@Override
-	public int insertModifyHotelImg(HashMap map) {
-		return hDAO.insertModifyHotelImg(sqlSession, map);
+	public int updateHotelImg(HashMap map) {
+		return hDAO.updateHotelImg(sqlSession, map);
+	}
+	
+	@Override
+	public int updateRoomImg(HashMap map) {
+		return hDAO.updateRoomImg(sqlSession, map);
 	}
 	
 	@Override
@@ -168,5 +173,25 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public int updateHotelThumbnail(int hotelId) {
 		return hDAO.updateHotelThumbnail(sqlSession, hotelId);
+	}
+	
+	@Override
+	public int updateRoomThumbnail(int roomId) {
+		return hDAO.updateRoomThumbnail(sqlSession, roomId);
+	}
+	
+	@Override
+	public int updateRoom(Room r) {
+		return hDAO.updateRoom(sqlSession, r);
+	}
+	
+	@Override
+	public int deleteRoom(int roomId) {
+		return hDAO.deleteRoom(sqlSession, roomId);
+	}
+	
+	@Override
+	public int deleteRoomImg(int roomId) {
+		return hDAO.deleteRoomImg(sqlSession, roomId);
 	}
 }

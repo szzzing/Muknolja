@@ -9,6 +9,14 @@
 <title>호텔 상세페이지</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+	.form-control {border:1px solid #e9e9e9 !important}
+  	* {font-family: 'Noto Sans KR', sans-serif;}
+  	input {font-family: 'Noto Sans KR', sans-serif;}
+  	::-webkit-scrollbar {width:5px;}
+	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
+	::-webkit-scrollbar-track {opacity:0;}
+	
 	.blinking{
 		-webkit-animation: blink 0.3s ease-in-out infinite alternate;
 		-moz-animation: blink 0.3s ease-in-out infinite alternate;
@@ -69,6 +77,7 @@
 	.disabledMukButton {height:40px; border-radius: 8px; padding:0px 10px; cursor:pointer; background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
+	.mukSubText {color:rgba(0,0,0,.56);}
 	
 /* 	별점 관련 */
 	.star-rating {
@@ -124,14 +133,16 @@
 			<div class="col">
 				<div class="row">
 					<div class="col">
-						<img id="hotelImg" class="img-fluid mukRound" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}" style="background-color:#F9F9F9;">
+						<img id="hotelImg" class="img-fluid mukRound h-100" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}" style="background-color:#F9F9F9;">
 					</div>
 				</div>
 				<div class="row mt-1 justify-content-start gx-1 gy-0">
-					<c:forEach items="${hotelImgList }" var="i">
-						<div class="col col-2">
-							<img class="hotelImg img-fluid mukRound" src="${contextPath }/resources/uploadFiles/${i.fileModifyName}" style="background-color:#F9F9F9;">
-						</div>
+					<c:forEach items="${hotelImgList }" var="i" varStatus="status">
+						<c:if test="${i.fileThumbnail=='N' }">
+							<div class="col col-2">
+								<img class="hotelImg img-fluid mukRound h-100" src="${contextPath }/resources/uploadFiles/${i.fileModifyName}" style="background-color:#F9F9F9;">
+							</div>
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>
@@ -157,14 +168,14 @@
 				<div id="hotelIntro" class="mt-1 mb-1">${hotel.hotelIntro }</div>
 				<table class="mt-3 mb-3">
 					<tr>
-						<td class="mukMutedText">
-							<i class="fa-solid fa-phone"></i>
+						<td class="mukSubText">
+							<i class="fa-solid fa-phone p-1"></i>
 							${hotel.hotelPhone }
 						</td>
 					</tr>
 					<tr>
-						<td class="align-top mukMutedText">
-							<i class="fa-solid fa-location-dot"></i>
+						<td class="align-top mukSubText">
+							<i class="fa-solid fa-location-dot p-1"></i>
 							${hotel.hotelAddress }
 						</td>
 					</tr>
@@ -202,17 +213,17 @@
 					<div id="roomDiv" class="col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
 						<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 g-3">
 							<div class="col">
-								<img class="roomImg img-fluid mukRound" data-bs-toggle="modal" data-bs-target="#roomDetailModal" src="#" style="background: lightgray">
+								<img class="roomImg img-fluid mukRound h-100" data-bs-toggle="modal" data-bs-target="#roomDetailModal" src="#" style="background: lightgray">
 							</div>
 							<div class="col">
 								<table id="roomTable" class="table table-borderless" style="margin-bottom:0px; height:100%">
 									<tr><td>
 										<input type="hidden" class="roomId">
 										<h4 class="roomName lh-1 fw-bold"></h4>
-										<div class="roomIntro mukMutedText"></div>
-										<span class="mukMutedText checkinTime"></span>
-										<span class="mukMutedText">-</span>
-										<span class="checkoutTime mukMutedText"></span>
+										<div class="roomIntro mukSubText"></div>
+										<span class="mukSubText checkinTime"></span>
+										<span class="mukSubText">-</span>
+										<span class="checkoutTime mukSubText"></span>
 									</td></tr>
 									<tr><td class="align-bottom pt-3">
 										<small class="emptyRoom fw-bold blinking" style="color:red; display:none">마감임박</small>
@@ -282,12 +293,12 @@
 		<!-- 리뷰 리스트 끝 -->
 		
 		<!-- 호텔 정보 시작 -->
-		<div id="hotelInfo" class="mukDisplayNone">
-			<h4 id="hotelInfo" class="fw-bold pb-3">기본 정보</h4>
-			${hotel.hotelInfo }
+		<div id="hotelInfoList" class="mukDisplayNone">
+			<h4 class="fw-bold pb-3">기본 정보</h4>
+			<div id="hotelInfo">${hotel.hotelInfo }</div>
 			
 			<h4 class="fw-bold pt-5 pb-3">위치</h4>
-			<p>${hotel.hotelAddress } <span id="searchMap">길찾기</span></p>
+			<div class="pb-3">${hotel.hotelAddress }<span id="searchMap" class="p-1 fw-bold">길찾기</span></div>
 			<div id="map" class="mukRound" style="width:540px;height:300px;"></div>
 			
 		</div>
@@ -630,10 +641,6 @@
 						$("input[name=rating]").val(i);
 					}
 				}
-				var content = $("textarea[name=reviewContent]").val();
-				content = content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-				$("textarea[name=reviewContent]").val(content);
-	
 				$.ajax({
 					url: "${contextPath}/insertReview.ho",
 					data: {
@@ -773,7 +780,7 @@
 				
 				$("#roomList").removeClass("mukDisplayNone");
 				$("#reviewList").addClass("mukDisplayNone");
-				$("#hotelInfo").addClass("mukDisplayNone");
+				$("#hotelInfoList").addClass("mukDisplayNone");
 			});
 			$("#reviewListButton").on("click", function(){
 				$(this).addClass("mukCategory");
@@ -782,7 +789,7 @@
 				
 				$("#roomList").addClass("mukDisplayNone");
 				$("#reviewList").removeClass("mukDisplayNone");
-				$("#hotelInfo").addClass("mukDisplayNone");
+				$("#hotelInfoList").addClass("mukDisplayNone");
 				$.writableReview();
 			});
 			$("#hotelInfoButton").on("click", function(){
@@ -791,7 +798,7 @@
 				$("#reviewListButton").removeClass("mukCategory");
 				
 				$("#roomList").addClass("mukDisplayNone");
-				$("#hotelInfo").removeClass("mukDisplayNone");
+				$("#hotelInfoList").removeClass("mukDisplayNone");
 				$("#reviewList").addClass("mukDisplayNone");
 				
 				$.viewMap();
@@ -805,7 +812,9 @@
 	<script>
 		$(document).ready(function(){
 			$(".hotelImg").on("click", function(){
+				var src = $("#hotelImg").prop("src");
 				$("#hotelImg").prop("src", $(this).prop("src"));
+				$(this).prop("src", src);
 			});
 		})
 	</script>
@@ -820,20 +829,20 @@
 						<div class="col col-7">
 							<div class="row">
 								<div class="col">
-									<img id="roomDetailModal_roomImg" class="img-fluid mukRound" src="#" style="background-color:#F9F9F9;">
+									<img id="roomDetailModal_roomImg" class="img-fluid mukRound h-100" src="#" style="background-color:#F9F9F9;">
 								</div>
 							</div>
 							<div id="roomDetailModal_roomImgList" class="row justify-content-start mt-1 gx-1 gy-0">
-								<div id="roomDetailModal_roomImgDiv" class="roomDetailModal_roomImg col col-3" style="display:none;">
-									<img class="img-fluid" src="#" style="border-radius:5px;">
+								<div id="roomDetailModal_roomImgDiv" class="col col-3" style="display:none;">
+									<img class="img-fluid h-100 roomDetailModal_roomImg" src="#" style="border-radius:5px;">
 								</div>
 							</div>
 						</div>
 						<div class="col col-5">
 							<h4 id="roomDetailModal_roomName" class="fw-bold pb-3"></h4>
-							<div id="roomDetailModal_roomInfo" class='mb-3'></div>
-							<div id="roomDetailModal_checkin"></div>
-							<div id="roomDetailModal_checkout"></div>
+							<div id="roomDetailModal_roomInfo" class='mb-3 mukSubText'></div>
+							<div id="roomDetailModal_checkin" class="mukSubText"></div>
+							<div id="roomDetailModal_checkout" class="mukSubText"></div>
 						</div>
 					</div>
 					<button type="button" class="mukButton mt-3" style="width:100%" data-bs-dismiss="modal">닫기</button>
@@ -859,18 +868,24 @@
 						$("#roomDetailModal_roomImg").prop("src", "${contextPath }/resources/uploadFiles/"+roomImgList[0].fileModifyName);
 						
 						$("#roomDetailModal_roomImgList").html("");
-						for(const i of roomImgList) {
-							roomImgDiv.prop("style").removeProperty("display");
-							roomImgDiv.find("img").prop("src", "${contextPath }/resources/uploadFiles/"+i.fileModifyName);
-							$("#roomDetailModal_roomImgList").append('<div class="roomDetailModal_roomImg col col-3">'+roomImgDiv.html()+'</div>');
+						for(i of roomImgList) {
+							if(i.fileThumbnail=='Y') {
+								$("#roomDetailModal_roomImg").prop("src", "${contextPath }/resources/uploadFiles/"+i.fileModifyName);
+							} else {
+								roomImgDiv.prop("style").removeProperty("display");
+								roomImgDiv.find("img").prop("src", "${contextPath }/resources/uploadFiles/"+i.fileModifyName);
+								$("#roomDetailModal_roomImgList").append('<div class="col col-3">'+roomImgDiv.html()+'</div>');
+							}
 						}
 						
 						$("#roomDetailModal_roomInfo").html(room.roomInfo.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 						$("#roomDetailModal_checkin").html("체크인 "+room.checkinTime);
 						$("#roomDetailModal_checkout").html("체크아웃 "+room.checkoutTime);
 						
-						$(".roomDetailModal_roomImg").on("click", function(){
-							$("#roomDetailModal_roomImg").prop("src", $(this).find("img").prop("src"));
+						$(document).on("click", ".roomDetailModal_roomImg", function(){
+							var src = $("#roomDetailModal_roomImg").prop("src");
+							$("#roomDetailModal_roomImg").prop("src", $(this).prop("src"));
+							$(this).prop("src", src);
 						});
 					},
 					error: (data)=>{

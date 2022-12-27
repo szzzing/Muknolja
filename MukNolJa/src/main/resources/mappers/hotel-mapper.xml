@@ -34,8 +34,10 @@
 	</select>
 	
 	<select id="selectAllRoom" resultMap="roomResultSet">
-		select room_id, room_name, room_price, checkin_time, checkout_time, room_info, room_intro, file_modify_name as thumbnail, total_number, max_accept,
-		    empty_room(#{checkinDate}, #{checkoutDate}, room_id) as empty_room
+		select room_id, room_name, room_price, checkin_time, checkout_time, room_info, room_intro, file_modify_name as thumbnail, total_number, max_accept
+		<if test="checkinDate!=null and checkoutDate!=null">
+		    ,empty_room(#{checkinDate}, #{checkoutDate}, room_id) as empty_room
+		</if>
 		from room
 		    join room_img using(room_id)
 		    join attached_file using(file_id)
@@ -91,7 +93,7 @@
 		and file_type='H'
 	</delete>
 	
-	<insert id="insertModifyHotelImg">
+	<insert id="updateHotelImg">
 		insert all
 		<foreach collection="list" item="a">
 			into ATTACHED_FILE
@@ -118,6 +120,48 @@
 		</foreach>
 		select * from dual
 	</insert>
+	
+	<insert id="updateRoomImg">
+		insert all
+		<foreach collection="list" item="a">
+			into ATTACHED_FILE
+			values(NEW_FID, 'H', sysdate, #{a.fileName}, #{a.fileModifyName}, #{a.fileLink}, default, #{a.fileThumbnail})
+			into room_img
+			values(CUR_FID, #{roomId})
+		</foreach>
+		select * from dual
+	</insert>
+	
+	<update id="updateRoomThumbnail">
+		update attached_file
+		set file_thumbnail='Y'
+		WHERE file_id = (select min(file_id) from attached_file join room_img using(file_id) where room_id=#{roomId})
+	</update>
+	
+	<update id="updateRoom">
+		update room
+		set
+			room_name=#{roomName}, max_accept=#{maxAccept}, room_price=#{roomPrice},
+			checkin_time=#{checkinTime}, checkout_time=#{checkoutTime},
+			total_number=#{totalNumber}, room_info=#{roomInfo}, room_intro=#{roomIntro}
+		where room_id=#{roomId}
+	</update>
+	
+	<update id="deleteRoom">
+		update room
+		set room_status='N'
+		where room_id=#{roomId}
+	</update>
+	
+	<update id="deleteRoomImg">
+		update (
+			select file_status
+			from room_img
+				join attached_file using(file_id)
+			where room_id=#{roomId})
+		set file_status='N'
+	</update>
+	
 	
 	<select id="selectRoom" resultMap="roomResultSet">
 		select *
