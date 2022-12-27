@@ -17,11 +17,13 @@
 		<typeAlias type="com.spring.muknolja.common.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.spring.muknolja.common.model.vo.AD" alias="AD"/>
 		<typeAlias type="com.spring.muknolja.common.model.vo.QA" alias="QA"/>
+		<typeAlias type="com.spring.muknolja.party.model.vo.Party" alias="Party"/>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mappers/chat-mapper.xml"/>
 		<mapper resource="mappers/hotel-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
+		<mapper resource="mappers/party-mapper.xml"/>
 	</mappers>
 </configuration>

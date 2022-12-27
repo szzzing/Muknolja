@@ -191,9 +191,9 @@
 		</div>
 		
 		<!-- 내용 -->
-	<form action="${contextPath}/insertParty.pa" method="POST">
+	<form action="${contextPath}/insertParty.pa" method="POST" enctype="multipart/form-data">
 		<div class="content form-floating">
-		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none;" name="content"></textarea>
+		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none;" name="partyContent"></textarea>
 		  <label for="floatingTextarea2">내용</label>
 		</div>
 		
@@ -203,12 +203,13 @@
  		
  		<!-- hidden값 -->
  		<input id="myFile" type="file" accept="image/*" style="display:none;" name="thumbnail">
- 		<input type="hidden" name="title" id="hiddenTitle">
- 		<input type="hidden" name="location" id="hiddenLocation">
- 		<input type="hidden" name="travleDate" id="hiddenDate">
+ 		<input type="hidden" name="partyTitle" id="hiddenTitle">
+ 		<input type="hidden" name="partyArea" id="hiddenLocation">
+ 		<input type="hidden" name="partyStartDate" id="hiddenStartDate">
+ 		<input type="hidden" name="partyEndDate" id="hiddenEndDate">
  		<input type="hidden" name="gender" id="hiddenGender">
- 		<input type="hidden" name="partyNum" id="hiddenNum">
- 		<input type="hidden" name="course" id="hiddenCourse">
+ 		<input type="hidden" name="maxParticipate" id="hiddenNum">
+ 		<input type="hidden" name="partyCourse" id="hiddenCourse">
  	</form>
 		
 		<br><br>
@@ -217,7 +218,6 @@
 	</div>
 	
 	<script>
-		
 		<!-- 제목넣기 -->
 		const hiddenTitle = document.getElementById('hiddenTitle');
 		const title = document.getElementsByClassName('title')[0];
@@ -379,8 +379,8 @@
 			
 			<!-- 날짜넣기 -->
 			$('.travelDate').change(function(){
-				$('#hiddenDate').val($('.travelDate').val());
-				console.log($('#hiddenDate').val());
+				$('#hiddenStartDate').val($('.travelDate').val().split(" ~ ")[0]);
+				$('#hiddenEndDate').val($('.travelDate').val().split(" ~ ")[1]);
 			});
 			
 		});

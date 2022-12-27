@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -152,34 +152,37 @@
 				<button type="button" class="writeButton mukButton" style="width: 150px;" id="writeButton">글쓰기</button>
 			</div>
 			
+		<!-- list카드 -->
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;">
 				
-				<div class="col" style="margin-bottom: 30px;">
-					<div class="card card-cover h-100 overflow-hidden\">
-					  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
-					  <div class="card-body">
-					  	<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">저랑 같이 강릉가실분😉</h5>
-						  <ol class="numbered">
-							  <li>List item one</li>
-							  <li>List item two</li>
-							  <li>List item three</li>
-							  <li>List item four</li>
-						 </ol>
-						 
-						 <table>
-						 	<tr>
-						 		<td><i class="fa-solid fa-users"></i> 5/10</td>
-						 		<td><i class="fa-solid fa-heart"></i> 여자만</td>
-						 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
-						 	</tr>
-						 </table>
-						 
-					  </div>
+				<c:forEach items="${ pList }" var="p">
+					<div class="col" style="margin-bottom: 30px;">
+						<div class="card card-cover h-100 overflow-hidden\">
+						  <img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjExMTBfMTE1%2FMDAxNjY4MDU3MjU0NjQ5.1oHW6oHqjqL5w5UE0J8YFeAyXkCvdTWz-ZzIi4ThPywg.FeBfV1UwWQ5jz_BUu6222dXZrS6jMVuX4Kf0Yt0o7kog.JPEG.lollol7768%2FKakaoTalk_20221109_092054938_26.jpg&type=sc960_832" class="card-img-top" alt="...">
+						  <div class="card-body">
+						  	<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">${ p.partyTitle }</h5>
+							  <ol class="numbered">
+								  <li>List item one</li>
+								  <li>List item two</li>
+								  <li>List item three</li>
+								  <li>List item four</li>
+							 </ol>
+							 
+							 <table>
+							 	<tr>
+							 		<td><i class="fa-solid fa-users"></i> 0/${ p.maxParticipate }</td>
+							 		<td><i class="fa-solid fa-heart"></i> ${ p.gender }</td>
+							 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
+							 	</tr>
+							 </table>
+							 
+						  </div>
+						</div>
 					</div>
-				</div>
-				
-				</div>
+				</c:forEach>
+			</div>
 			
+		<!-- 페이징 -->
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination d-flex justify-content-center">
 			    <li class="page-item">
