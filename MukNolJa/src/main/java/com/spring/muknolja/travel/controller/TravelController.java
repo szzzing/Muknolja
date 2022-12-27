@@ -3,6 +3,7 @@ package com.spring.muknolja.travel.controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.travel.model.vo.Travel;
-
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @Controller
 public class TravelController {
@@ -99,6 +98,72 @@ public class TravelController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return "travelList";
+	}
+	
+	@RequestMapping("searchTravel.tr")
+	public String searchTravel(@RequestParam("searchValue") String searchValue, @RequestParam(value="page", required=false) Integer page, Model model) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		try {
+			int pageNo = currentPage;
+			String urlStr;
+			String keyword = URLEncoder.encode(searchValue, "UTF-8");
+			
+			urlStr = "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=" + serviceKey + "&MobileApp=AppTest&MobileOS=ETC&pageNo=" + pageNo + "&numOfRows=20&listYN=Y&&arrange=A&keyword=" + keyword + "&contentTypeId=12&_type=json";
+			
+			URL url = new URL(urlStr);
+			BufferedReader bf;
+			String line = "";
+			String result = "";
+			
+			bf = new BufferedReader(new InputStreamReader(url.openStream()));
+			
+			while((line=bf.readLine())!=null){
+                result=result.concat(line);
+            }
+			
+			JSONParser parser = new JSONParser();
+			JSONObject obj = (JSONObject)parser.parse(result);
+			JSONObject parseResponse = (JSONObject)obj.get("response");
+			JSONObject parseBody = (JSONObject)parseResponse.get("body");
+			JSONObject parseItems = (JSONObject)parseBody.get("items");
+			JSONArray parseItem = (JSONArray)parseItems.get("item");
+			
+			ArrayList<Travel> list = new ArrayList<Travel>();
+			for(Object arr : parseItem) {
+				JSONObject tr = (JSONObject)arr;
+				System.out.println(tr);
+				
+				Travel travel = new Travel();
+				travel.setAddr(tr.get("addr1").toString());
+				travel.setContentId(tr.get("contentid").toString());
+				travel.setFirstImage(tr.get("firstimage").toString());
+				travel.setMapx(tr.get("mapx").toString());
+				travel.setMapy(tr.get("mapy").toString());
+				travel.setReadCount(tr.get("readcount").toString());
+				travel.setTel(tr.get("tel").toString());
+				travel.setTitle(tr.get("title").toString());
+				
+				list.add(travel);
+			}
+			
+			int listCount = Integer.parseInt(String.valueOf(parseBody.get("totalCount")));
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 20);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+			model.addAttribute("searchValue", searchValue);
+			
+			bf.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return "travelList";
 	}
 	

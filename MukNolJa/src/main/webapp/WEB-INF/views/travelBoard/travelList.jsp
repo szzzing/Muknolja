@@ -102,7 +102,7 @@
 		<div class="container">
 			<ul id="category" class="ur" >
 				<div style="display:flex;" lass="ur1">
-					<li class="ll 0">전체</li>
+					<li class="ll">전체</li>
 					<li class="ll 1">서울</li>
 					<li class="ll 2">인천</li>
 					<li class="ll 3">대전</li>
@@ -126,8 +126,8 @@
 			</ul>
 		
 			<div class="input-group" id="input" style="margin-bottom: 30px;">
-				<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
-				<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+				<input type="text" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2" id="searchValue" name="searchValue">
+				<button class="searchButton btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 			</div>
 			
 			<hr id="hr1">
@@ -142,7 +142,7 @@
 			
 			<hr id="hr2" >
 			<br>
-			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" id="travelCard">
 				<c:forEach items="${ list }" var="t">
 					 <div class="allCard col">
 			            <div class="card card-cover h-100 overflow-hidden\">
@@ -174,6 +174,9 @@
 		            	<c:if test="${ areaCode != null }">
 		            		<c:param name="areaCode" value="${ areaCode }"/>
 		            	</c:if>
+		            	<c:if test="${ searchValue != null }">
+		            		<c:param name="searchValue" value="${ searchValue }"/>
+		            	</c:if>
 		            	<c:param name="page" value="${ pi.currentPage-1 }"/>
 		        	</c:url>
 		        	<a class="page-link" href="${ goBack }" aria-label="Previous">
@@ -186,6 +189,9 @@
 			    		<c:if test="${ areaCode != null }">
 		            		<c:param name="areaCode" value="${ areaCode }"/>
 		            	</c:if>
+		            	<c:if test="${ searchValue != null }">
+		            		<c:param name="searchValue" value="${ searchValue }"/>
+		            	</c:if>
 			    		<c:param name="page" value="${ p }"/>
 			    	</c:url>
 			    	 <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
@@ -195,6 +201,9 @@
 			    	<c:url var="goNext" value="${ loc }">
 			    		<c:if test="${ areaCode != null }">
 		            		<c:param name="areaCode" value="${ areaCode }"/>
+		            	</c:if>
+		            	<c:if test="${ searchValue != null }">
+		            		<c:param name="searchValue" value="${ searchValue }"/>
 		            	</c:if>
 				    	<c:param name="page" value="${ pi.currentPage+1 }"/>
 			    	</c:url>
@@ -208,6 +217,7 @@
 		</div>
 		
 		<script>
+			<!-- 상세보기 -->
 			const allCards = document.getElementsByClassName('allCard');
 			for(const allCard of allCards){
 				allCard.addEventListener('click', function(){
@@ -219,6 +229,7 @@
 				});
 			}
 			
+			<!-- 카테고리선택 -->
 			const categorys = document.getElementsByClassName('ll');
 			for(const category of categorys){
 				category.addEventListener('click', function(){
@@ -226,6 +237,20 @@
 					location.href='${contextPath}/travelList.tr?areaCode=' + areaCode;
 				});
 			}
+			
+			<!-- 검색하기 -->
+			const searchButton = document.getElementsByClassName('searchButton')[0]; 
+		   	const searchValue = document.getElementById('searchValue');
+		   	
+		   	searchButton.addEventListener('click', function(){
+		   		location.href='${contextPath}/searchTravel.tr?searchValue=' + searchValue.value;
+		   	});
+		   	
+		   	searchValue.addEventListener('keypress', function(e){
+		   		if (e.keyCode === 13) {
+		   			location.href='${contextPath}/searchTravel.tr?searchValue=' + searchValue.value;
+		   	    }
+		   	});
 		</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

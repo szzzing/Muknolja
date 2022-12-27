@@ -20,4 +20,9 @@ public class PartyController {
 	public String partyWrtie() {
 		return "partyWrite";
 	}
+	
+	@RequestMapping("insertParty.pa")
+	public String insertParty() {
+		return null;
+	}
 }
