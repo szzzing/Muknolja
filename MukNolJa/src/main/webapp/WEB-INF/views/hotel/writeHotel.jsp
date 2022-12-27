@@ -287,11 +287,11 @@
 	
 	<!-- 호텔 정보 엔터 구현 시작 -->
 	<script>
-		$("button[type=submit]").on("click", function(){
-			var content = $("textarea[name=hotelInfo]").val();
-			content = content.replace(/(?:\r\n|\r|\n)/g, '<br>');
-			$("textarea[name=hotelInfo]").val(content);
-		});
+// 		$("button[type=submit]").on("click", function(){
+// 			var content = $("textarea[name=hotelInfo]").val();
+// 			content = content.replace(/(?:\r\n|\r|\n)/g, '<br>');
+// 			$("textarea[name=hotelInfo]").val(content);
+// 		});
 	</script>
 	<!-- 호텔 정보 엔터 구현 끝 -->
 </body>

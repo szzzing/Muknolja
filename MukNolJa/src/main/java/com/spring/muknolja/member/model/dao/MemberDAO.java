@@ -2,6 +2,8 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -9,8 +11,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.common.model.vo.AD;
+import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.QA;
+import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
+import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
 
@@ -122,4 +129,45 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectADList", map);
 	}
 
-}
+	public ArrayList<Reservation> selectReserve(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("memberMapper.selectReserve",id);
+		}
+
+	
+
+	public int insertAttm(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertAttm",list);
+	}
+
+	public int getListCount(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.myInfoBCount",id);
+	}
+
+	
+
+	public ArrayList<QA> selectQA(SqlSessionTemplate sqlSession, String id, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectQA", id, rowBounds);
+	}
+
+	public ArrayList<Hotel> selectHotel(SqlSessionTemplate sqlSession, String id, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectHotel", id, rowBounds);
+	}
+
+	/*
+	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int
+	 * hotelId) { // TODO Auto-generated method stub return
+	 * (ArrayList)sqlSession.selectList("memberMapper.selectImg", hotelId); }
+	 */
+	}
+
+	
+	
+
+

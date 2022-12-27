@@ -6,7 +6,7 @@
 		values(SEQ_ROOMID.nextval, #{hotelId}, #{maxAccept}, #{roomName}, #{roomPrice}, #{checkinTime}, #{checkoutTime}, #{totalNumber}, #{roomInfo}, #{roomIntro}, default)
 	</insert>
 	
-	<insert id="insertRoomAttm">
+	<insert id="insertRoomImg">
 		insert all
 		<foreach collection="list" item="a">
 			into ATTACHED_FILE
@@ -34,7 +34,7 @@
 	</select>
 	
 	<select id="selectAllRoom" resultMap="roomResultSet">
-		select room_id, room_name, room_price, checkin_time, checkout_time, room_info, room_intro, file_modify_name as thumbnail,
+		select room_id, room_name, room_price, checkin_time, checkout_time, room_info, room_intro, file_modify_name as thumbnail, total_number, max_accept,
 		    empty_room(#{checkinDate}, #{checkoutDate}, room_id) as empty_room
 		from room
 		    join room_img using(room_id)
@@ -73,7 +73,42 @@
 		)
 	</insert>
 	
-	<insert id="insertHotelAttm">
+	<update id="updateHotel">
+		update hotel
+		set
+			hotel_name=#{hotelName}, hotel_phone=#{hotelPhone}, hotel_address=#{hotelAddress},
+			wifi=#{wifi}, breakfast=#{breakfast}, amenity=#{amenity}, park=#{park}, swim=#{swim}, fitness=#{fitness},
+			star=#{star}, hotel_info=#{hotelInfo}, hotel_intro=#{hotelIntro}, hotel_geo_x=#{hotelGeoX}, hotel_geo_y=#{hotelGeoY}
+		where hotel_id=#{hotelId}
+	</update>
+	
+	<delete id="deleteFile">
+		delete from attached_file
+		where file_modify_name in
+		<foreach collection="list" open="(" close=")" separator="," item="item">
+			#{item}
+		</foreach>
+		and file_type='H'
+	</delete>
+	
+	<insert id="insertModifyHotelImg">
+		insert all
+		<foreach collection="list" item="a">
+			into ATTACHED_FILE
+			values(NEW_FID, 'H', sysdate, #{a.fileName}, #{a.fileModifyName}, #{a.fileLink}, default, #{a.fileThumbnail})
+			into HOTEL_IMG
+			values(CUR_FID, #{hotelId}, default)
+		</foreach>
+		select * from dual
+	</insert>
+	
+	<update id="updateHotelThumbnail">
+		update attached_file
+		set file_thumbnail='Y'
+		WHERE file_id = (select min(file_id) from attached_file join hotel_img using(file_id) where hotel_id=#{hotelId})
+	</update>
+	
+	<insert id="insertHotelImg">
 		insert all
 		<foreach collection="list" item="a">
 			into ATTACHED_FILE
@@ -91,15 +126,14 @@
 	</select>
 	
 	<select id="getCurrentReservationId" resultType="_int">
-		select last_number
-		from user_sequences
-		where sequence_name = 'SEQ_RESERVATIONID'
+		select SEQ_RESERVATIONID.nextval
+		from dual
 	</select>
 	
 	<insert id="insertReservation">
 		insert all
 			into reservation
-			values(SEQ_RESERVATIONID.nextval, #{r.memberId}, #{r.roomId}, #{r.checkinDate}, #{r.checkoutDate}, default, #{r.paymentMethod}, #{r.paymentAmount}, sysdate, #{r.reservationName}, #{r.reservationPhone})
+			values(SEQ_RESERVATIONID.currval, #{r.memberId}, #{r.roomId}, #{r.checkinDate}, #{r.checkoutDate}, default, #{r.paymentMethod}, #{r.paymentAmount}, sysdate, #{r.reservationName}, #{r.reservationPhone})
 		<foreach collection="list" item="re">
 			into reserve
 			values(#{re.reservationDate}, #{re.roomId}, SEQ_RESERVATIONID.currval)
@@ -238,6 +272,7 @@
 		</if>
 		order by hotel_id desc
 	</select>
+	
 	
 	
 	<resultMap type="Hotel" id="hotelResultSet">

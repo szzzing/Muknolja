@@ -9,6 +9,26 @@
 <title>호텔 상세페이지</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
+	.blinking{
+		-webkit-animation: blink 0.3s ease-in-out infinite alternate;
+		-moz-animation: blink 0.3s ease-in-out infinite alternate;
+		animation: blink 0.3s ease-in-out infinite alternate;
+	}
+	
+	@-webkit-keyframes blink{
+		0% {opacity: 0;}
+		100% {opacity: 1;}
+	}
+	
+	@-moz-keyframes blink{
+		0% {opacity: 0;}
+		100% {opacity: 1;}
+	}
+	@keyframes blink{
+		0% {opacity: 0;}
+		100% {opacity: 1;}
+	}
+	
 	ul li {
 		list-style: none;
 		float: left;
@@ -46,6 +66,7 @@
 	.mukRound {border-radius: 8px;}
 	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.disabledMukButton {height:40px; border-radius: 8px; padding:0px 10px; cursor:pointer; background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
 	
@@ -133,7 +154,7 @@
 					<i class="fa-solid fa-star" style="color:#FFD600"></i>
 					<span class="avgRating"></span>
 				</h4>
-				<div class="mt-1 mb-1">${hotel.hotelIntro }</div>
+				<div id="hotelIntro" class="mt-1 mb-1">${hotel.hotelIntro }</div>
 				<table class="mt-3 mb-3">
 					<tr>
 						<td class="mukMutedText">
@@ -150,6 +171,7 @@
 				</table>
 			</div>
 		</div>
+		
 		
 		<div class="row row-cols-4 justify-content-start text-center mt-5 mb-5" style="border-bottom:1px solid #e9e9e9">
 			<div class="col col-auto p-2 mukMutedText mukCategory" id="roomListButton" scope="col">
@@ -172,16 +194,6 @@
 					<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
 					<label for="daterangepicker">1박 2일</label>
 				</div>
-				<div class="mb-3 form-floating">
-					<select class="form-select" name="accept">
-						<option selected>1</option>
-						<option>2</option>
-						<option>3</option>
-						<option>4</option>
-						<option>5</option>
-					</select>
-					<label for="accept">인원</label>
-				</div>
 			</div>
 			
 			<!-- 객실 리스트 div -->
@@ -203,6 +215,7 @@
 										<span class="checkoutTime mukMutedText"></span>
 									</td></tr>
 									<tr><td class="align-bottom pt-3">
+										<small class="emptyRoom fw-bold blinking" style="color:red; display:none">마감임박</small>
 										<h4 class="roomPrice lh-1 fw-bold pb-3"></h4>
 										<c:if test="${empty loginUser }">
 											<button type="button" class="reserveButton mukButton" style="width:100%" data-bs-toggle="modal" data-bs-target="#mukModal">예약하기</button>
@@ -229,7 +242,7 @@
 		<!-- 리뷰 리스트 시작 -->
 		<div id="reviewList" class="mukDisplayNone">
 			<div class="text-center pb-5" style="border-bottom:1px solid #e9e9e9">
-				<h2 class="fw-bold">최고예요!</h2>
+				<h2 class="fw-bold">${hotel.hotelName }</h2>
 				<div style="display:inline-block">
 					<h2 id="ratingStar"></h2>
 				</div>
@@ -270,7 +283,7 @@
 		
 		<!-- 호텔 정보 시작 -->
 		<div id="hotelInfo" class="mukDisplayNone">
-			<h4 class="fw-bold pb-3">기본 정보</h4>
+			<h4 id="hotelInfo" class="fw-bold pb-3">기본 정보</h4>
 			${hotel.hotelInfo }
 			
 			<h4 class="fw-bold pt-5 pb-3">위치</h4>
@@ -289,33 +302,54 @@
 		$(document).ready(function(){
 			var roomDiv = $("#roomDiv").clone();
 			roomDiv.prop("style").removeProperty("display");
-
-			$.ajax({
-				url: "${contextPath}/selectAllRoom.ho",
-				data: {
-					hotelId: ${hotel.hotelId},
-					checkinDate: $("input[name=checkinDate]").val(),
-					checkoutDate: $("input[name=checkoutDate]").val()
-				},
-				success: (data)=>{
-					console.log(data);
-					var roomDiv2 = roomDiv.clone();
-					
-					$("#roomDivList").html("");
-					roomDiv2.prop("style").removeProperty("display");
-					for(var i of data) {
-						roomDiv2.find(".roomId").val(i.roomId);
-						roomDiv2.find(".roomName").html(i.roomName);
-						roomDiv2.find(".roomIntro").html(i.roomIntro);
-						roomDiv2.find(".roomPrice").html(i.roomPrice.toLocaleString()+"원~");
-						roomDiv2.find(".roomImg").prop("src", "${contextPath }/resources/uploadFiles/"+i.thumbnail);
-						$("#roomDivList").append('<div class="room col pb-3" style="border-bottom:1px solid #f1f1f1">'+roomDiv2.html()+'</div>');
+			
+			
+			$.roomList = function(){
+				const inout = $("#daterangepicker").val().split(" - ");
+				
+				const checkin = new Date(inout[0]);
+				const checkout = new Date(inout[1]);
+				
+				var diff = checkout - checkin;
+				var currDay = 24 * 60 * 60 * 1000;
+				var journey = parseInt(diff/currDay);
+				console.log(journey);
+	
+				$.ajax({
+					url: "${contextPath}/selectAllRoom.ho",
+					data: {
+						hotelId: ${hotel.hotelId},
+						checkinDate: $("input[name=checkinDate]").val(),
+						checkoutDate: $("input[name=checkoutDate]").val()
+					},
+					success: (data)=>{
+						console.log(data);
+						
+						$("#roomDivList").html("");
+						for(var i of data) {
+							var roomDiv2 = roomDiv.clone();
+							roomDiv2.find(".roomId").val(i.roomId);
+							roomDiv2.find(".roomName").html(i.roomName);
+							roomDiv2.find(".roomIntro").html(i.roomIntro);
+							roomDiv2.find(".checkinTime").html(i.checkinTime);
+							roomDiv2.find(".checkoutTime").html(i.checkoutTime);
+							roomDiv2.find(".roomPrice").html((i.roomPrice*journey).toLocaleString()+"원");
+							roomDiv2.find(".roomImg").prop("src", "${contextPath }/resources/uploadFiles/"+i.thumbnail);
+							if(i.emptyRoom==0) {
+								roomDiv2.find("button").text("예약불가");
+								roomDiv2.find("button").attr("disabled",true).removeClass("mukButton").addClass("disabledMukButton");
+							} else if(i.emptyRoom<2) {
+								roomDiv2.find(".emptyRoom").prop("style").removeProperty("display");
+							}
+							$("#roomDivList").append('<div class="room col pb-3" style="border-bottom:1px solid #f1f1f1">'+roomDiv2.html()+'</div>');
+						}
+					},
+					error: (data)=>{
+						
 					}
-				},
-				error: (data)=>{
-					
-				}
-			});
+				});
+			}
+			$.roomList();
 		});
 	</script>
 	<!-- 객실 정보 불러오기 끝 -->
@@ -625,6 +659,14 @@
 	
 	
 	
+	<script>
+		var hotelInfo = $("#hotelInfo").html().replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		var hotelIntro = $("#hotelIntro").html().replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		$("#hotelInfo").html(hotelInfo);
+		$("#hotelIntro").html(hotelIntro);
+	</script>
+	
+	
 	
 	
 	<!-- 지도 시작 -->
@@ -687,12 +729,21 @@
 			minDate: new Date(),
 			startDate: startDate,
 			endDate: endDate,
-			autoApply: false
+			autoApply: true
 		});
 		
 		const inout = $("#daterangepicker").val().split(" - ");
 		$("input[name=checkinDate]").val(inout[0]);
 		$("input[name=checkoutDate]").val(inout[1]);
+		
+		const checkin = new Date(inout[0]);
+		const checkout = new Date(inout[1]);
+		
+		var diff = checkout - checkin;
+		var currDay = 24 * 60 * 60 * 1000;
+		var journey = parseInt(diff/currDay);
+		console.log(journey);
+		$("#daterangepicker").parent().find("label").text(journey+"박 "+(journey+1)+"일");
 		
 		$("#daterangepicker").on("change", function(){
 			const inout = $(this).val().split(" - ");
@@ -700,13 +751,13 @@
 			$("input[name=checkoutDate]").val(inout[1]);
 			const checkin = new Date(inout[0]);
 			const checkout = new Date(inout[1]);
-			console.log($("input[name=checkinDate]").val());
-			console.log($("input[name=checkoutDate]").val());
 			
 			var diff = checkout - checkin;
 			var currDay = 24 * 60 * 60 * 1000;
-			const journey = parseInt(diff/currDay);
+			journey = parseInt(diff/currDay);
 			$(this).parent().find("label").text(journey+"박 "+(journey+1)+"일");
+			
+			$.roomList();
 		});
 	</script>
 	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->
@@ -814,7 +865,7 @@
 							$("#roomDetailModal_roomImgList").append('<div class="roomDetailModal_roomImg col col-3">'+roomImgDiv.html()+'</div>');
 						}
 						
-						$("#roomDetailModal_roomInfo").html(room.roomInfo);
+						$("#roomDetailModal_roomInfo").html(room.roomInfo.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 						$("#roomDetailModal_checkin").html("체크인 "+room.checkinTime);
 						$("#roomDetailModal_checkout").html("체크아웃 "+room.checkoutTime);
 						

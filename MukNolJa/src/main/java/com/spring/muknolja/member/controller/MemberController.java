@@ -1,9 +1,15 @@
 ﻿package com.spring.muknolja.member.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +23,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.spring.muknolja.common.model.vo.AD;
+import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
+import com.spring.muknolja.common.model.vo.QA;
+import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.service.MemberService;
 import com.spring.muknolja.member.model.vo.Member;
@@ -340,17 +354,133 @@ public class MemberController {
 			model.addAttribute("id",id);
 			return "changePwd";
 		}
-		@RequestMapping("myInfo5.me")
-		@ResponseBody
-		public ArrayList<Reserve> myInfo5(@RequestParam("id")String id) {
-			
-			return null;
-		}
+		
+	
 		@RequestMapping("changePassword.me")
 		public String changePassword(@RequestParam("pwd")String pwd,@RequestParam("id")String id,Member m) {
 			m.setId(id);
 			m.setPwd(bcrypt.encode(pwd));
 			int result = mService.changePassword(m);
 			return "login";
+		}
+		@RequestMapping("enrollH.me")
+		public String enrollH() {
+			return "enrollH";
+		}
+		@RequestMapping("enrollH2.me")
+		public String enrollH2(Member member, @RequestParam("file")ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
+			
+			ArrayList<AttachedFile> list = new ArrayList();
+			for(MultipartFile file : files) {
+				String fileName = file.getOriginalFilename();
+				if(!fileName.equals("")) {
+					String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+					
+					if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+						String[] returnArr = AttachedFile.saveFile(file, request);
+						
+						if(returnArr[1] != null) {
+							AttachedFile attm = new AttachedFile();
+							attm.setFileName(file.getOriginalFilename());
+							attm.setFileModifyName(returnArr[1]);
+							attm.setFileLink(returnArr[0]);
+							
+							list.add(attm);
+						}
+					}
+				}
+			
+		}
+				int attmResult = 0;
+			if(!list.isEmpty()) {
+				 attmResult = mService.insertsAttm(list);
+			}
+			
+			if(attmResult > 0) {
+			return "login";
+		}else {
+			return "myInfo";
+		}
+			
+		}
+		@RequestMapping("myInfoA.me")
+		public String myinfoA(HttpSession session,@RequestParam(value="page", required=false) Integer page,Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCount(id);
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+			ArrayList<Hotel> hotel=mService.selectHotel(id,pi);
+			ArrayList<AttachedFile> img = mService.selectImg();
+			model.addAttribute("pi", pi);
+			model.addAttribute("hotel", hotel);
+			return "myInfoA";		
+		}
+		
+		@RequestMapping("myInfoB.me")
+		public String myinfoB(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
+			
+			return "myInfoB";		
+		}
+		
+		@RequestMapping(value="myInfoBB.me", produces="application/json; charset=UTF-8")
+		@ResponseBody
+		public void myinfoBB(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCount(id);
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+			ArrayList<QA> qa= mService.selectQA(id,pi);
+			
+			
+			
+			HashMap map = new HashMap();
+			map.put("qa", qa);
+			
+			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+			gson = gb.create();
+			
+			try {
+				gson.toJson(map, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@RequestMapping("myInfoC.me")
+		public String myinfoC() {
+			return "myInfoC";		
+		}
+		
+		@RequestMapping("myInfoD.me")
+		public String myinfoD(HttpSession session,Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+
+			ArrayList<Reservation> list1 = mService.selectReserve(id);
+			
+			
+			
+			 HashSet<Object> hotel = new HashSet<>();
+			
+			
+			
+			
+			
+			model.addAttribute("list1", list1);
+		
+			return "myInfoD";		
 		}
 }

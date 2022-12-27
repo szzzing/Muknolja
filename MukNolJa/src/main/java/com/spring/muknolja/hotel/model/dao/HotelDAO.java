@@ -22,12 +22,12 @@ public class HotelDAO {
 		return sqlSession.insert("hotelmapper.insertRoom", r);
 	}
 
-	public int insertRoomAttm(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
-		return sqlSession.insert("hotelmapper.insertRoomAttm", list);
+	public int insertRoomImg(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
+		return sqlSession.insert("hotelmapper.insertRoomImg", list);
 	}
 	
-	public int insertHotelAttm(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
-		return sqlSession.insert("hotelmapper.insertHotelAttm", list);
+	public int insertHotelImg(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
+		return sqlSession.insert("hotelmapper.insertHotelImg", list);
 	}
 	
 
@@ -119,6 +119,22 @@ public class HotelDAO {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("hotelmapper.searchHotelList", searchMap, rowBounds);
+	}
+
+	public int updateHotel(SqlSessionTemplate sqlSession, Hotel h) {
+		return sqlSession.update("hotelmapper.updateHotel", h);
+	}
+
+	public int insertModifyHotelImg(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.insert("hotelmapper.insertModifyHotelImg", map);
+	}
+	
+	public int deleteFile(SqlSessionTemplate sqlSession, ArrayList<String> list) {
+		return sqlSession.delete("hotelmapper.deleteFile", list);
+	}
+
+	public int updateHotelThumbnail(SqlSessionTemplate sqlSession, int hotelId) {
+		return sqlSession.update("hotelmapper.updateHotelThumbnail", hotelId);
 	}
 
 }

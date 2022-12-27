@@ -37,7 +37,7 @@
           	 <div class="row justify-content-center" >
             	<div class="col"style="left:0">
           			<div style="width:800px; height:100%; display:inLine-block; background: white">
-          				<div style=" margin-top:5vh; font-size: 50px; color:#6BB6EC; width: 800; ">MUKNOLJA</div>
+          				<div style=" margin-top:5vh; font-size: 50px; color:#6BB6EC; width: 800;" onclick= "location.href='${contextPath }/home.do'">MUKNOLJA</div>
             				<div style="float:left; margin-left: 150px; margin-top: 4vh;">
 		            			<form action="${ contextPath }/insertm.me" method="POST">
 		            			<div style="margin-top:20px;">

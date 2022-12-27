@@ -38,7 +38,7 @@
             	<div class="col"style=" height:100%; ">
             		<div style=" height:100%; background:white;display:inLine-block;">
           			<div style=" height:100%; display:inLine-block; ">
-          				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" >MUKNOLJA</div>
+          				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" onclick= "location.href='${contextPath }/home.do'">MUKNOLJA</div>
             				<div style="float:left;  margin-top: 4vh;">
 		            			<form >
 		            				<label for="email" style="float:left; font-size:20px;">이메일</label>

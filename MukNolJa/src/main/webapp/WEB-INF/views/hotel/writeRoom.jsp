@@ -84,11 +84,11 @@
 	</div>
 	
 	<script>
-		$("button[type=submit]").on("click", function(){
-			var content = $("textarea[name=roomInfo]").val();
-			content = content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-			$("textarea[name=roomInfo]").val(content);
-		});
+// 		$("button[type=submit]").on("click", function(){
+// 			var content = $("textarea[name=roomInfo]").val();
+// 			content = content.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+// 			$("textarea[name=roomInfo]").val(content);
+// 		});
 	</script>
 </body>
 </html>

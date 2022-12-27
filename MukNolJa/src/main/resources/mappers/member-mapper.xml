@@ -240,4 +240,106 @@
   		</if>
   		order by START_DATE desc
   	</select>
+  	
+  	<resultMap type="Reservation" id="reservationResultSet">
+		<id column="RESERVATION_ID" property="reservationId"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="HOTEL_ID" property="hotelId"/>
+		<result column="ROOM_ID" property="roomId"/>
+		<result column="HOTEL_NAME" property="hotelName"/>
+		<result column="ROOM_NAME" property="roomName"/>
+		<result column="CHECKIN_DATE" property="checkinDate"/>
+		<result column="CHECKOUT_DATE" property="checkoutDate"/>
+		<result column="RESERVATION_STATUS" property="reservationStatus"/>
+		<result column="PAYMENT_METHOD" property="paymentMethod"/>
+		<result column="PAYMENT_AMOUNT" property="paymentAmount"/>
+		<result column="PAYMENT_DATE" property="paymentDate"/>
+		<result column="RESERVATION_NAME" property="reservationName"/>
+		<result column="RESERVATION_PHONE" property="reservationPhone"/>
+		<result column="CHECKIN_TIME" property="checkinTime"/>
+		<result column="CHECKOUT_TIME" property="checkoutTime"/>
+		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
+		
+	</resultMap>
+	<select id="selectReserve" resultMap="reservationResultSet">
+		  select *
+		from RESERVATION join ROOM using(room_id) JOIN HOTEL_IMG using(hotel_Id) JOIN ATTACHED_FILE using(FILE_Id)
+		where member_id = #{id} and RESERVATION_STATUS = 'Y' and FILE_THUMBNAIL = 'Y'
+	</select>
+	
+	
+	<resultMap type="AttachedFile" id="attachedFileResultSet">
+		<id column="ROOM_ID" property="fileId"/>
+		<result column="FILE_TYPE" property="fileType"/>
+		<result column="FILE_CREATE_DATE" property="fileCreateDate"/>
+		<result column="FILE_NAME" property="fileName"/>
+		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
+		<result column="FILE_LINK" property="fileLink"/>
+		<result column="FILE_STATUS" property="fileStatus"/>
+		<result column="FILE_THUMBNAIL" property="fileThumbnail"/>
+	</resultMap>
+	
+	<insert id="insertAttm">
+		insert all
+		<foreach collection="list" item="a">
+			into ATTACHED_FILE
+			values(NEW_FID, 'S', sysdate, #{a.fileName}, #{a.fileModifyName}, #{a.fileLink}, default, 'Y')
+			
+		</foreach>
+		select * from dual
+	</insert>
+	<select id="myInfoBCount" resultType="_int">
+	 select count(*)
+	 from QA
+	 where QA_WRITER = #{id}
+	 
+	</select>
+	<resultMap type="QA" id="qaResultSet">
+		<id column="QA_ID" property="qaId"/>
+		<result column="QA_BOARD_ID" property="qaBoardId"/>
+		<result column="QA_WRITER" property="qaWriter"/>
+		<result column="QA_ RECEIVER" property="qaReceever"/>
+		<result column="QA_TITLE" property="qaTitle"/>
+		<result column="QA_CONTENT" property="qaContent"/>
+		<result column="QA_YN" property="qaYn"/>
+		<result column="QA_REPLY_CONTENT" property="qaReplyContent"/>
+		<result column="QA_CREATE_DATE" property="qaCreateDate"/>
+		<result column="QA_STATUS" property="qaStatus"/>
+	</resultMap>
+	<select id="selectQA" resultMap="qaResultSet">
+		select *
+		from QA
+		where QA_WRITER = #{id}
+	</select>
+	<resultMap type="Hotel" id="hotelResultSet">
+		<id column="HOTEL_ID" property="hotelId"/>
+		<result column="ENT_ID" property="entId"/>
+		<result column="HOTEL_NAME" property="hotelName"/>
+		<result column="HOTEL_PHONE" property="hotelPhone"/>
+		<result column="HOTEL_ADDRESS" property="hotelAddress"/>
+		<result column="WIFI" property="wifi"/>
+		<result column="BREAKFAST" property="breakfast"/>
+		<result column="AMENITY" property="amenity"/>
+		<result column="PARK" property="park"/>
+		<result column="STAR" property="star"/>
+		<result column="SWIM" property="swim"/>
+		<result column="FITNESS" property="fitness"/>
+		<result column="ENT_APPROVAL" property="entApproval"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="HOTEL_INFO" property="hotelInfo"/>
+		<result column="HOTEL_INTRO" property="hotelIntro"/>
+		<result column="HOTEL_STATUS" property="hotelStatus"/>
+		<result column="MIN_PRICE" property="minPrice"/>
+		<result column="AVG_RATING" property="avgRating"/>
+		<result column="HOTEL_GEO_X" property="hotelGeoX"/>
+		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
+		<result column="EMPTY_HOTEL" property="emptyHotel"/>
+		<result column="MAX_DISTANCE" property="maxDistance"/>
+	</resultMap>
+	<select id="selectHotel" resultMap="hotelResultSet">
+		select *
+		from hotel join LIKE_HOTEL using(hotel_id)
+		where id = #{id}
+	
+	</select>
   </mapper>
