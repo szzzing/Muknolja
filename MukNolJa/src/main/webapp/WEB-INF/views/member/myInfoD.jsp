@@ -66,15 +66,62 @@
 			      </div>
 			      <div class="row justify-content-center " style="padding-left:0px; padding-right:0px; height:70px; margin-top:30px; ">
 	            		<div class="col-9" style="box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.1); height:600px;">
-	            		${ file }
-	            		${ list1 }
-	            			<div id="pr" style=:font-size:50px;></div>
+	            		
+	            			
 	            		</div>
+	            			<nav aria-label="Page navigation example" style="background: white" class="col-9">
+			  <ul class="pagination d-flex justify-content-center">
+			    <li class="page-item">
+			    	<c:url var="goBack" value="${ loc }">
+		            	<c:param name="page" value="${ pi.currentPage-1 }"/>
+		        	</c:url>
+		        	<a class="page-link" href="${ goBack }" aria-label="Previous">
+		        		<span aria-hidden="true">&laquo;</span>
+		        	</a>
+			    </li>
+			    
+			    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+			    	<c:url var="goNum" value="${ loc }">
+			    		<c:param name="page" value="${ p }"/>
+			    	</c:url>
+			    	 <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
+			    </c:forEach>
+			    
+			    <li class="page-item">
+			    	<c:url var="goNext" value="${ loc }">
+				    	<c:param name="page" value="${ pi.currentPage+1 }"/>
+			    	</c:url>
+				    <a class="page-link" href="${ goNext }" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				    </a>
+			    </li>
+			  </ul>
+			</nav>
 	            </div>
 			</div>
 		</div>
 	</div>
-	
+	<script>
+	$(document).ready(function(){
+		var page = 1;
+		$.ajax({
+			url: "${contextPath}/myInfoDD.me",
+			data: {
+				page: page
+			},
+			success: (data)=>{
+				const list = data.list;
+				console.log(list);
+				
+				
+				
+			},
+			error: (data)=>{
+				console.log(data);
+			}
+		});
+	});
+	</script>
   </body>
  
 </html>

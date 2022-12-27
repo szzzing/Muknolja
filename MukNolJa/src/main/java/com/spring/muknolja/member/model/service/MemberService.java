@@ -86,6 +86,8 @@ public interface MemberService {
 
 	ArrayList<AttachedFile> selectImg();
 
+	ArrayList<Reservation> selectReserve(PageInfo pi, String id);
+
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
 
 

@@ -129,10 +129,7 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectADList", map);
 	}
 
-	public ArrayList<Reservation> selectReserve(SqlSessionTemplate sqlSession, String id) {
-		// TODO Auto-generated method stub
-		return (ArrayList)sqlSession.selectList("memberMapper.selectReserve",id);
-		}
+	
 
 	
 
@@ -158,6 +155,14 @@ public class MemberDAO {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("memberMapper.selectHotel", id, rowBounds);
+	}
+
+	public ArrayList<Reservation> selectReserve(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectReserve", id, rowBounds);
+	
 	}
 
 	/*

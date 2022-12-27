@@ -291,7 +291,7 @@
 	<select id="myInfoBCount" resultType="_int">
 	 select count(*)
 	 from QA
-	 where QA_WRITER = #{id}
+	 where QA_WRITER = #{id} and QA_STATUS= 'Y'
 	 
 	</select>
 	<resultMap type="QA" id="qaResultSet">

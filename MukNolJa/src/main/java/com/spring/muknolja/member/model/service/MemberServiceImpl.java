@@ -154,11 +154,7 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.selectADList(sqlSession, map);
 	}
 
-	@Override
-	public ArrayList<Reservation> selectReserve(String id) {
-		// TODO Auto-generated method stub
-		return mDAO.selectReserve(sqlSession,id);
-	}
+	
 
 	
 
@@ -186,6 +182,26 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Hotel> selectHotel(String id, PageInfo pi) {
 		// TODO Auto-generated method stub
 		return mDAO.selectHotel(sqlSession,id,pi);
+	}
+
+	
+
+	@Override
+	public ArrayList<Reservation> selectReserve(PageInfo pi, String id) {
+		// TODO Auto-generated method stub
+		return mDAO.selectReserve(sqlSession,pi,id);
+	}
+
+	@Override
+	public ArrayList<Reservation> selectReserve(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<AttachedFile> selectImg() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

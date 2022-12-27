@@ -464,22 +464,43 @@ public class MemberController {
 			return "myInfoC";		
 		}
 		
-		@RequestMapping("myInfoD.me")
-		public String myinfoD(HttpSession session,Model model) {
+		@RequestMapping(value="myInfoDD.me", produces="application/json; charset=UTF-8")
+		@ResponseBody
+		public void myinfoDD(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
 			Member m = (Member)session.getAttribute("loginUser");
 			String id = m.getId();
-
-			ArrayList<Reservation> list1 = mService.selectReserve(id);
+			int listCount = mService.getListCount(id);
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
 			
 			
+			ArrayList<Reservation> list = mService.selectReserve(pi,id);
 			
-			 HashSet<Object> hotel = new HashSet<>();
+			HashMap map = new HashMap();
+			map.put("list", list);
 			
 			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+			gson = gb.create();
+			
+			try {
+				gson.toJson(map, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@RequestMapping("myInfoD.me")
+		public String myinfoD(HttpSession session,@RequestParam(value="page", required=false) Integer page) {
+		
 			
 			
-			
-			model.addAttribute("list1", list1);
 		
 			return "myInfoD";		
 		}
