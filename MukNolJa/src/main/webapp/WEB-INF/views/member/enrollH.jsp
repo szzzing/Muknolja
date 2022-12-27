@@ -29,7 +29,7 @@
             <div class="col" style="width:100vw; height:80px; display:inLine-block; background: white; border-bottom:2px solid #F2F2F2" >
             	<div style="width:800px; height:80px; display:inLine-block; ">
             		
-            			<div style="margin-top: 20px; font-size: 40px; font-weight:600; text-align:center;">회원가입(2/2)</div>
+            			<div style="margin-top: 20px; font-size: 40px; font-weight:600; text-align:center;">호텔가입</div>
             		
             	</div>
             </div>
@@ -37,9 +37,9 @@
           	 <div class="row justify-content-center" >
             	<div class="col"style="left:0">
           			<div style="width:800px; height:100%; display:inLine-block; background: white">
-          				<div style=" margin-top:5vh; font-size: 50px; color:#6BB6EC; width: 800;" onclick= "location.href='${contextPath }/home.do'">MUKNOLJA</div>
+          				<div style=" margin-top:5vh; font-size: 50px; color:#6BB6EC; width: 800; " onclick= "location.href='${contextPath }/home.do'">MUKNOLJA</div>
             				<div style="float:left; margin-left: 150px; margin-top: 4vh;">
-		            			<form action="${ contextPath }/insertm.me" method="POST">
+		            			<form action="${ contextPath }/enrollH2.me" method="POST" enctype="multipart/form-data" id="attmForm">
 		            			<div style="margin-top:20px;">
 		            				<div style="display:flex"><label for="id" style="float:left; font-size:15px; font-weight:600">아이디</label> <div id="idsol"style="margin-left:10px; float:left; font-size:15px; color:red; font-weight:100"></div></div>
 		            				<br>
@@ -61,40 +61,38 @@
 		            				
 		            			</div>
 		            			<div style="margin-top:50px;">
-		            				<label for="name" style="float:left; font-size:15px; font-weight:600">이름</label>
+		            				<label for="name" style="float:left; font-size:15px; font-weight:600">사업자 이름</label>
 		            				<br>
 		            				<input type="text" name="name" id="name" class="name" style="width:500px; font-size:20px; padding:10px 10px; padding-top:15px; border: 1px solid lightgrey" required>
 		            			</div>
 		            			<div style="margin-top:50px;">
-		            				<div style="display:flex"><label for="nickName" style="float:left; font-size:15px; font-weight:600">닉네임</label><div id="nickNamesol"style="margin-left:10px; float:left; font-size:15px; color:red; font-weight:100"></div></div>
+		            				<div style="display:flex"><label for="nickName" style="float:left; font-size:15px; font-weight:600">호텔명</label><div id="nickNamesol"style="margin-left:10px; float:left; font-size:15px; color:red; font-weight:100"></div></div>
 		            				<br>
 		            				<input type="text" name="nickName" id="nickName" class="nickName" style="width:500px; font-size:20px; padding:10px 10px; margin-top:-20px;"padding-top:15px; border: 1px solid lightgrey" required>
 		            				
 		            			</div>
 		            			<div style="margin-top:40px;">
-		            				<label for="phone" style="float:left;font-weight:600; font-size:15px;">휴대폰</label>
+		            				<label for="phone" style="float:left;font-weight:600; font-size:15px;">호텔 전화번호</label>
 		            				<br>
 		            				<input type="text" name="phone" id="phone" class="phone" style="width:500px; font-size:20px; padding:10px 10px; padding-top:15px; border: 1px solid lightgrey" required>
 		            			</div>
 		            			<div style="margin-top:40px;">
-		            				<label for="email" style="float:left; font-weight:600; font-size:15px;">이메일</label>
+		            				<label for="email" style="float:left; font-weight:600; font-size:15px;">호텔 이메일</label>
 		            			<br>
-		            				<input type="text" name="email" id="email" class="email" style="width:500px; font-size:20px; padding:10px 10px; padding-top:15px; border: 1px solid lightgrey" readonly value="${ email }">
+		            				<input type="text" name="email" id="email" class="email" style="width:500px; font-size:20px; padding:10px 10px; padding-top:15px; border: 1px solid lightgrey" required>
 		            			</div>
 		            			<div style="margin-top:40px;">
-		            				<label for="address" style="float:left; font-weight:600; font-size:15px;">주소</label>
+		            				<label for="address" style="float:left; font-weight:600; font-size:15px;">호텔 주소</label>
 		            				<br>
 		            				<input type="text" name="address" id="address" class="address" style="width:500px; font-size:20px; padding:10px 10px; padding-top:15px; border: 1px solid lightgrey" required>
 		            			</div>
 		            			<div style="margin-top:40px;">
-		            				<label for="gender" style="float:left; font-weight:600; font-size:15px; ">성별</label>
+		            				<label for="file" style="float:left; font-weight:600; font-size:15px;">사업자등록증</label>
 		            				<br>
-				 					<select id="gender" name="gender" style="width:500px; font-size:20px; height:57px; padding:5px; font-weight:500; border: 1px solid lightgrey; font-family:Georgia;"  required>
-									<option style=height:30px;>성별</option>
-									<option style=height:30px;>남자</option>
-									<option style=height:30px;>여자</option>
-									</select>
-					            	</div>
+		            				
+		            				<input type="file" name="file" id="file" class="file" style="padding-right:0px;width:500px; font-size:20px;  padding-top:15px; " required>
+		            				
+		            			</div>
 		            			
 			            	
 			            			
@@ -175,46 +173,18 @@
   			idResult.innerText = ""
   				okpassword1 = true;
   		 }
-  	});$( "#nickName").on("blur",function () {
-
-  		const idResult = document.getElementById('nickNamesol');
-  		
-  		var reg =  /^[a-z][a-z0-9]{6,12}$/;
- 		var value = $('#nickName').val().trim();
- 		if (!reg.test(value)) {
- 			idResult.innerText = "6~12자리 사이의 글자를 입력해주세요"
- 				idResult.style.color= "red"
- 					okNickName = false;
- 		}else{
-
-  		$.ajax({
-			url: '${ contextPath}/checkNickName.me',
-			data: {"nickName" : document.getElementById("nickName").value},
-			success: (data)=>{
-				
-				console.log(data);
-				if(data.trim() == 'yes'){
-					idResult.innerText = "사용가능한 아이디 입니다.";
-					idResult.style.color= "#6BB6EC"
-						okNickName = true;
-				}else if (data.trim() == 'no'){
-					
-					idResult.innerText = "중복된 닉네임 입니다."
-						idResult.style.color= "red"
-							okNickName = false;
-				}
-			},
-			error: (data)=>{
-				console.log(data);
-			}
-			
-		});
- 		}
   	});
+  		
+
 
 	$('button').click(function(){
-		if(okId && okNickName && okpassword && okpassword1){
-			$('form').submit();
+		if(okId  && okpassword && okpassword1){
+			
+			if( $('#file').val().trim() == ''){
+				alert("사업자등록증을 첨부해주세요")
+			}else{
+				$('form').submit();
+			}
 		}else{
 			alert("옮바르지 않은 회원가입입니다.")
 			

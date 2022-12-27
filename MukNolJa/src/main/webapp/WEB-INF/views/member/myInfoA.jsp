@@ -16,8 +16,10 @@
           font-weight:600;
           padding-left:0px;
            }
-         #bu1{
+          #bu2{
          border-bottom: 10px solid RGB(107, 182, 236);}
+         
+         
          #bu1:hover, #bu2:hover, #bu3:hover, #bu4:hover, #bu5:hover{
          border-bottom: 10px solid RGB(107, 182, 236);
          
@@ -63,7 +65,8 @@
 			            	</div>
 			      </div>
 			      <div class="row justify-content-center " style="padding-left:0px; padding-right:0px; height:70px; margin-top:30px; ">
-	            		<div class="col-9" style="box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.1); height:200px;">
+	            		<div class="col-9" style="box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.1); height:600px;">
+	            		${ hotel }
 	            			<div id="pr" style=:font-size:50px;></div>
 	            		</div>
 	            </div>
