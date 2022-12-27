@@ -329,6 +329,9 @@
                     if(sockJs != '' && id != 'invite_modal'){
                     	sockJs.close();
                     }
+                    if(id == 'chat_modal'){
+                    	chat();
+                    }
                 });
 
                 modal.setStyle({
