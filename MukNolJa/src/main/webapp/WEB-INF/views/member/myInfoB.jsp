@@ -126,12 +126,15 @@
 								        <h1 class="modal-title fs-5 title" id="exampleModalLabel" >Modal title</h1>
 								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 								      </div>
-								      <div class="modal-body body">
+								      <div class="modal-body body" style="border-bottom:1px solid #DEE2E6">
 								        ...
 								      </div>
-								      <div class="modal-footer">
-								        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-								        <button type="button" class="btn btn-primary">Save changes</button>
+								       <div class="modal-body body2">
+								        ...
+								      </div>
+								      <div class="modal-footer foot">
+								        <button type="button" class="btn btn-secondary" id="de">삭제</button>
+								        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
 								      </div>
 								    </div>
 								  </div>
@@ -198,13 +201,13 @@
 					for(var i=0;i<qa.length;i++) {
 						var id = qa[i].qaId;
 						var title = qa[i].qaTitle;
-						var re = qa[i].qaReceevier;
+						var re = qa[i].qaReceever;
 						var date = qa[i].qaCreateDate;
 						var content = qa[i].qaContent;
 						var Yn = qa[i].qaYn;
+						var reContent = qa[i].qaReplyContent;
 						
-						
-						var qaHtml = '<tr id=al'+i+' data-bs-toggle="modal" data-bs-target="#exampleModal">'+
+						var qaHtml = '<tr id='+i+' data-bs-toggle="modal" data-bs-target="#exampleModal" class="qaTr">'+
     						'<th scope="row" class="id">'+id+'</th>'+
     						'<td class="re">'+re+'</td>'+
     						'<td class="">'+title+'</td>'+
@@ -213,15 +216,32 @@
     						
     														    
 						$("#QAboard").append(qaHtml);
-						$("#al"+i).click(function(){
+// 						$("#al"+i).click(function(){
 							
-							$(".title").empty();
-							$(".body").empty();
-							$(".title").append(title);
-							$(".body").append(content);
-						});
+// 							$(".title").empty();
+// 							$(".body").empty();
+// 							$(".foot").empty();
+// 							$(".title").append(title);
+// 							$(".body").append(content);
+// 							$(".foot").append(Yn);
+// 						});
 						
 					}
+					
+					$('.qaTr').click(function(){
+						$(".title").empty();
+						$(".body").empty();
+						$(".body2").empty();
+						var idNum = $(this).attr('id');
+						
+						$(".title").append(qa[idNum].qaTitle);
+						$(".body").append(qa[idNum].qaContent);
+						$(".body2").append(qa[idNum].qaReplyContent);
+						console.log(qa[idNum].qaReplyContent);
+						if(qa[idNum].qaReplyContent == null){
+							$(".body2").append('좀 더 기다려주시면 감사하겠습니다.');
+						}
+					});
 				},
 				error: (data)=>{
 					console.log(data);
