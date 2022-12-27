@@ -153,7 +153,7 @@
 	           						
 							
 	            		</div>
-	            		<nav aria-label="Page navigation example" style="background: white" class="col-9">
+	           <nav aria-label="Page navigation example" style="background: white" class="col-9">
 			  <ul class="pagination d-flex justify-content-center">
 			    <li class="page-item">
 			    	<c:url var="goBack" value="${ loc }">
@@ -188,9 +188,10 @@
 	</div>
 	<script>
 		$(document).ready(function(){
-			var page = 1;
+			var page = ${ pi.currentPage };
 			$.ajax({
 				url: "${contextPath}/myInfoBB.me",
+				traditional : true,
 				data: {
 					page: page
 				},
@@ -216,16 +217,7 @@
     						
     														    
 						$("#QAboard").append(qaHtml);
-// 						$("#al"+i).click(function(){
-							
-// 							$(".title").empty();
-// 							$(".body").empty();
-// 							$(".foot").empty();
-// 							$(".title").append(title);
-// 							$(".body").append(content);
-// 							$(".foot").append(Yn);
-// 						});
-						
+// 						
 					}
 					
 					$('.qaTr').click(function(){
@@ -241,7 +233,25 @@
 						if(qa[idNum].qaReplyContent == null){
 							$(".body2").append('좀 더 기다려주시면 감사하겠습니다.');
 						}
+						var id = qa[idNum].qaId;
+						$('#de').click(function(){
+							console.log(id);
+							$.ajax({
+								url: "${contextPath}/deleteBB.me",
+								traditional : true,
+								data: {
+									id : id
+								},
+								success: (data)=>{
+									location.href = "${ contextPath }/myInfoB.me"
+								},
+								error: (data)=>{
+									console.log(data);
+								}
+							});
+						});
 					});
+					
 				},
 				error: (data)=>{
 					console.log(data);

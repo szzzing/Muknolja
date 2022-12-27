@@ -204,6 +204,30 @@ public class MemberServiceImpl implements MemberService {
 		return null;
 	}
 
+	@Override
+	public int deleteDD(int id) {
+		// TODO Auto-generated method stub
+		return mDAO.deleteDD(sqlSession,id);
+	}
+
+	@Override
+	public int getListCount1(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.getListCount1(sqlSession,id);
+	}
+
+	@Override
+	public int deleteBB(int id) {
+		// TODO Auto-generated method stub
+		return mDAO.deleteBB(sqlSession,id);
+	}
+
+	@Override
+	public int getListCount2(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.getListCount2(sqlSession,id);
+	}
+
 	
 	/*
 	 * @Override public ArrayList<AttachedFile> selectImg(int hotelId) { // TODO

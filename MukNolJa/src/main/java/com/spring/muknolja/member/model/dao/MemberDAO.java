@@ -163,8 +163,30 @@ public class MemberDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("memberMapper.selectReserve", id, rowBounds);
 	
+		
+		
 	}
 
+	public int deleteDD(SqlSessionTemplate sqlSession, int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.deleteDD",id);
+	}
+
+	public int getListCount1(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.myInfoBCount1",id);
+	}
+
+	public int deleteBB(SqlSessionTemplate sqlSession, int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.deleteBB",id);
+	}
+
+	public int getListCount2(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.myInfoBCount2",id);
+	}
+	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int
 	 * hotelId) { // TODO Auto-generated method stub return
