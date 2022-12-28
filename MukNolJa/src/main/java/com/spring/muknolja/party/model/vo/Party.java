@@ -30,6 +30,7 @@ public class Party {
 	private Date partyEndDate;
 	private String gender;
 	private String thumbnail;
+	private String contentCourse;
 	private String nowParticipate;
 	private int replyCount;
 }

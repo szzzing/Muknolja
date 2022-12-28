@@ -225,7 +225,7 @@
 					const mapx = this.querySelector('.mapx').value;
 					const mapy = this.querySelector('.mapy').value;
 					
-					location.href='${contextPath}/travelDetail.tr?contentId=' + contentId + '&mapx=' + mapx + '&mapy=' + mapy + '&page=' + ${pi.currentPage};
+					location.href='${contextPath}/travelDetail.tr?contentId=' + contentId + '&page=' + ${pi.currentPage};
 				});
 			}
 			
