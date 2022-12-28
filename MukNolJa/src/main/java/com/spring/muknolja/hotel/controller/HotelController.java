@@ -49,6 +49,10 @@ public class HotelController {
 		Member m = (Member)session.getAttribute("loginUser");
 		if(m.getMemberType().equals("H")) {
 			Hotel hotel = hService.selectHotelbyId(m.getId());
+			if(hotel==null) {
+				return "redirect:writeHotel.ho";
+			}
+			
 			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
 			
 			model.addAttribute("hotel", hotel);
@@ -69,7 +73,8 @@ public class HotelController {
 			
 			model.addAttribute("hotel", hotel);
 			model.addAttribute("hotelImgList", hotelImg);
-			
+			System.out.println(hotel);
+
 			return "manageHotel";
 		} else {
 			throw new CommonException("호텔 사업자가 아닙니다.");
@@ -111,6 +116,30 @@ public class HotelController {
 			model.addAttribute("roomList", roomList);
 			
 			return "manageReview";
+		} else {
+			throw new CommonException("호텔 사업자가 아닙니다.");
+		}
+	}
+	
+	@RequestMapping("manageReserve.ho")
+	public String manageReserve(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		if(m.getMemberType().equals("H")) {
+			Hotel hotel = hService.selectHotelbyId(m.getId());
+			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
+			
+			HashMap map = new HashMap();
+			
+			map.put("checkinDate", null);
+			map.put("checkoutDate", null);
+			map.put("hotelId", hotel.getHotelId());
+			ArrayList<Room> roomList = hService.selectAllRoom(map);
+			
+			model.addAttribute("hotel", hotel);
+			model.addAttribute("hotelImgList", hotelImg);
+			model.addAttribute("roomList", roomList);
+			
+			return "manageReserve";
 		} else {
 			throw new CommonException("호텔 사업자가 아닙니다.");
 		}
@@ -239,7 +268,7 @@ public class HotelController {
 		}
 		
 		if(hotelResult + imgResult == list.size()*2+1) {
-			return "redirect:hotelList.ho";
+			return "redirect:admin.ho";
 		} else {
 			for(AttachedFile a : list) {
 				AttachedFile.deleteFile(a.getFileModifyName(), request);

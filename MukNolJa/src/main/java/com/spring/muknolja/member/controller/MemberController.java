@@ -79,6 +79,9 @@ public class MemberController {
 					model.addAttribute("visitList", visitList);
 					
 					return "adminPage";
+					
+				} else if(loginUser.getMemberType().equals("H")) {
+					return "redirect:admin.ho";
 				}
 				
 				return "redirect:home.do";

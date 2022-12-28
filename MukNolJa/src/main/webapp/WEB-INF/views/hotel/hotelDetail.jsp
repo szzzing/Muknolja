@@ -437,8 +437,10 @@
 						for(var j=1;j<=5;j++) {
 							if(j<=avgRating) {
 								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#FFD600"></i>';
-							} else if(j-avgRating<0.5) {
-								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="background:linear-gradient(90deg, #FFD600 50%, #f1f1f1 50%); color:transparent; -webkit-background-clip:text;"></i>';
+							} else if(j-avgRating>0 && j-avgRating<1) {
+								var x = (1-(j-avgRating))*100;
+								console.log("x"+x);
+								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="background:linear-gradient(90deg, #FFD600 '+x+'%, #f1f1f1 '+x+'%); color:transparent; -webkit-background-clip:text;"></i>';
 							} else {
 								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#f1f1f1"></i>';
 							}

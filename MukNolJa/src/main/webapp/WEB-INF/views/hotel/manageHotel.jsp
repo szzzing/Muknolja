@@ -111,28 +111,35 @@
 					</div>
 					<ul class="nav flex-column">
 						<li class="nav-item">
-							<a class="nav-link" href="admin.ho">
+							<a class="nav-link" href="${contextPath }/admin.ho">
 								<i class="fa-solid fa-house"></i>
 								<span data-feather="home" class="align-text-bottom"></span>
 								통계
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="manageHotel.ho">
+							<a class="nav-link" href="${contextPath }/manageHotel.ho">
 								<i class="fa-solid fa-hotel"></i>
 								<span data-feather="file" class="align-text-bottom"></span>
 								호텔 관리
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="manageRoom.ho">
+							<a class="nav-link" aria-current="page" href="${contextPath }/manageRoom.ho">
 								<i class="fa-solid fa-door-closed"></i>
 								<span data-feather="file" class="align-text-bottom"></span>
 								객실 관리
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" aria-current="page" href="manageReview.ho">
+							<a class="nav-link" aria-current="page" href="${contextPath }/manageReserve.ho">
+								<i class="fa-solid fa-door-closed"></i>
+								<span data-feather="file" class="align-text-bottom"></span>
+								예약 관리
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="${contextPath }/manageReview.ho">
 								<i class="fa-solid fa-message"></i>
 								<span data-feather="file" class="align-text-bottom"></span>
 								리뷰 관리
