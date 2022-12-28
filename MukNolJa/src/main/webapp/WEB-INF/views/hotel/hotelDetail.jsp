@@ -10,7 +10,8 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-	.form-control {border:1px solid #e9e9e9 !important}
+	.form-control {border:2px solid #f1f1f1 !important; border-radius:20px !important}
+	.form-select {border:2px solid #f1f1f1 !important; border-radius:20px !important}
   	* {font-family: 'Noto Sans KR', sans-serif;}
   	input {font-family: 'Noto Sans KR', sans-serif;}
   	::-webkit-scrollbar {width:5px;}
@@ -81,7 +82,7 @@
 	
 /* 	별점 관련 */
 	.star-rating {
-		color:#e9e9e9;
+		color:#f1f1f1;
 		display: flex;
 		width: 5em;
 		flex-direction: row-reverse;
@@ -100,6 +101,8 @@
 	.star-rating label:hover ~ label {
 	  -webkit-text-fill-color: #FFD600;
 	}
+	
+	.replyTable tr td {padding:0px;}
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -133,7 +136,11 @@
 			<div class="col">
 				<div class="row">
 					<div class="col">
-						<img id="hotelImg" class="img-fluid mukRound h-100" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}" style="background-color:#F9F9F9;">
+						<c:forEach items="${hotelImgList }" var="i" varStatus="status">
+							<c:if test="${i.fileThumbnail=='Y' }">
+								<img id="hotelImg" class="img-fluid mukRound h-100" src="${contextPath }/resources/uploadFiles/${i.fileModifyName}" style="background-color:#F9F9F9;">
+							</c:if>
+						</c:forEach>
 					</div>
 				</div>
 				<div class="row mt-1 justify-content-start gx-1 gy-0">
@@ -260,6 +267,15 @@
 				<h2 class="fw-bold avgRating" style="display:inline-block">4.5</h2>
 				<h4 class="pt-3"><span class="reviewCount"></span>개의 리뷰</h4>
 			</div>
+			<div id="category" class="pt-5">
+				<select class="form-select" name="searchByRoom" style="width:300px; display:inline-block;">
+					<option selected value="0">전체 객실</option>
+				</select>
+				<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
+					<option selected>최신순</option>
+					<option>별점순</option>
+				</select>
+			</div>
 			
 			<div id="reviewListRow" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
 				<div id="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9; display:none">
@@ -285,6 +301,27 @@
 						</tr>
 						<tr>
 							<td class="createDate mukMutedText"></td>
+						</tr>
+						<tr>
+							<td class="align-middle businessReplyTable pt-3 pb-3" colspan="2" style="display:none">
+								<div class="p-4" style="background:#fafafa; border-radius:20px;">
+									<table class="replyTable table table-borderless" style="margin-bottom:0px; padding:0;">
+										<tr class="align-middle">
+											<td style="width:30px; padding-bottom:10px">
+												<c:forEach items="${hotelImgList }" var="i" varStatus="status">
+													<c:if test="${i.fileThumbnail=='Y' }">
+														<img class="img-fluid mukRound" src="${contextPath }/resources/uploadFiles/${i.fileModifyName}" style="width:24px; height:24px; border-radius:50%;">
+													</c:if>
+												</c:forEach>
+											</td>
+											<td style="padding-bottom:10px"><h6 class="fw-bold" style="margin:0px; padding-top:3px; display:inline-block;">${hotel.hotelName }</h6></td>
+										</tr>
+										<tr class="viewReplyTr" colspan="2">
+											<td colspan="2" class="businessReply"></td>
+										</tr>
+									</table>
+								</div>
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -353,6 +390,10 @@
 								roomDiv2.find(".emptyRoom").prop("style").removeProperty("display");
 							}
 							$("#roomDivList").append('<div class="room col pb-3" style="border-bottom:1px solid #f1f1f1">'+roomDiv2.html()+'</div>');
+						
+							
+							// 리뷰리스트 객실별 리뷰보기 용도
+							$("select[name=searchByRoom]").append('<option value="'+i.roomId+'">'+i.roomName+'</option>');
 						}
 					},
 					error: (data)=>{
@@ -380,7 +421,9 @@
 				$.ajax({
 					url: "${contextPath}/reviewList.ho",
 					data: {
-						hotelId: ${hotel.hotelId}
+						hotelId: ${hotel.hotelId},
+						orderBy: $("select[name=orderBy]").val(),
+						searchByRoom: $("select[name=searchByRoom]").val()
 					},
 					success: (data)=>{
 						const reviewList = data.reviewList;
@@ -394,8 +437,10 @@
 						for(var j=1;j<=5;j++) {
 							if(j<=avgRating) {
 								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#FFD600"></i>';
+							} else if(j-avgRating<0.5) {
+								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="background:linear-gradient(90deg, #FFD600 50%, #f1f1f1 50%); color:transparent; -webkit-background-clip:text;"></i>';
 							} else {
-								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#e9e9e9"></i>';
+								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#f1f1f1"></i>';
 							}
 						}
 						$("#ratingStar").html(ratingStar);
@@ -435,7 +480,14 @@
 								reviewDiv.find(".ratingEmoji").text("🙁");
 							}
 							
-							$("#reviewListRow").append('<div id="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9">'+reviewDiv.html()+'</div>');
+							if(r.businessReply!=null) {
+								reviewDiv.find(".businessReplyTable").prop("style").removeProperty("display");
+								reviewDiv.find(".businessReply").html(r.businessReply.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+							} else {
+								reviewDiv.find(".businessReplyTable").css("display","none");
+							}
+							
+							$("#reviewListRow").append(reviewDiv.clone());
 						}
 					},
 					error: (data)=>{
@@ -444,6 +496,10 @@
 				});
 			}
 			$.reviewList();
+			
+			$("select").change(function(){
+				$.reviewList();
+			});
 		});
 	</script>
 	<!-- 리뷰리스트 보기 끝 -->

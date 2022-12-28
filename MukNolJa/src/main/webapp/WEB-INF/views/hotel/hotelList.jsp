@@ -17,7 +17,8 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	* {font-family: 'Noto Sans KR', sans-serif;}
-  	.form-control {border:1px solid #e9e9e9 !important}
+  	.form-control {border:2px solid #f1f1f1 !important; border-radius:20px !important}
+	.form-select {border:2px solid #f1f1f1 !important; border-radius:20px !important}
   	input {font-family: 'Noto Sans KR', sans-serif;}
   	::-webkit-scrollbar {width:5px;}
 	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
@@ -101,7 +102,7 @@
 					<div class="col">
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
 							<div class="fw-bold pb-2" style="display:inline-block;">날짜</div>
-							<small class="fw-bold mukMutedText" style="float:right"><span class="value">1박 2일</span></small>
+							<small class="fw-bold mukSubText" style="float:right"><span class="value">1박 2일</span></small>
 							<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
 						</div>
 					</div>
@@ -184,14 +185,14 @@
 						</div>
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
 							<div class="fw-bold pb-2" style="display:inline-block;">가격</div>
-							<small id="cancelPrice" class="mukMutedText" style="display:none"><i class="bi bi-x-lg"></i></small>
-							<small class="fw-bold value mukMutedText" style="float:right"><span class="value">무관</small>
+							<small id="cancelPrice" class="mukSubText" style="display:none"><i class="bi bi-x-lg"></i></small>
+							<small class="fw-bold value mukSubText" style="float:right"><span class="value">무관</small>
 							<input id="maxPrice" name="maxPrice" class="mukRange" value="0" max="100" min="10" step="10" type="range">
 						</div>
 						<div>
 							<div class="fw-bold pb-2" style="display:inline-block;">거리</div>
-							<small id="cancelDistance" class="mukMutedText" style="display:none"><i class="bi bi-x-lg"></i></small>
-							<small style="float:right;" class="value fw-bold mukMutedText">무관</small>
+							<small id="cancelDistance" class="mukSubText" style="display:none"><i class="bi bi-x-lg"></i></small>
+							<small style="float:right;" class="value fw-bold mukSubText">무관</small>
 							<input id="maxDistance" name="maxDistance" class="mukRange" value="0" max="100" min="10" step="10" type="range">
 						</div>
 					</div>

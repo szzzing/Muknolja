@@ -18,8 +18,11 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-	.form-control {border:1px solid #e9e9e9 !important}
-	.form-select {border:1px solid #e9e9e9 !important}
+	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	input:focus {outline: none !important;} /* outline 테두리 없애기 */
+	textarea:focus {outline: none !important;} /* outline 테두리 없애기 */
+	
   	* {font-family: 'Noto Sans KR', sans-serif;}
 	::-webkit-scrollbar {width:5px;}
 	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
@@ -74,11 +77,15 @@
 	.mukMutedText {color:#B9B9B9;}
 	.mukSubText {color:rgba(0,0,0,.56);}
 	
-	#writeRoomButton {color:#6bb6ec; cursor:pointer;}
-	#writeRoomButton:hover {text-decoration:underline;}
+	.mukSimpleButton {color:#6bb6ec; cursor:pointer;}
+	.mukSimpleButton:hover {text-decoration:underline;}
 	
-	#modifyButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
-	#deleteButton {transition: all 0.3s; background: white; height:40px; border-radius: 8px; padding:0px 10px; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.modifyReplyButton {transition: all 0.3s; color:#6bb6ec;}
+	.modifyReplyButton:hover {transition: all 0.3s; opacity:0.8;}
+	.insertReplyButton {transition: all 0.3s; color:#6bb6ec;}
+	.insertReplyButton:hover {transition: all 0.3s; opacity:0.8;}
+	
+	.replyTable tr td {padding:0px;}
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -138,14 +145,14 @@
 				</div>
 				
 				<div class="reviewList">
-					<div id="category" class="row g-3">
-						<select class="form-select" name="searchByRoom" style="width:300px;">
+					<div id="category">
+						<select class="form-select" name="searchByRoom" style="width:300px; display:inline-block;">
 							<option selected value="0">전체 객실</option>
 							<c:forEach items="${roomList }" var="r">
 								<option value="${r.roomId }">${r.roomName }</option>
 							</c:forEach>
 						</select>
-						<select class="form-select" name="orderBy" style="width:100px; float:right">
+						<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
 							<option selected>최신순</option>
 							<option>별점순</option>
 						</select>
@@ -158,10 +165,13 @@
 							<input type="hidden" name="reviewId">
 							<table class="table table-borderless">
 								<tr>
-									<td rowspan="5" style="width:60px;"><span class="ratingEmoji" style="font-size:60px"></span></td>
-									<td>
+									<td class="text-center" rowspan="5" style="width:60px;">
+										<div class="ratingEmoji" style="font-size:60px"></div>
+										<div class="hasReply mt-2" style="background:#6BB6EC; border-radius:10px; color:white; padding:2px 4px;">답변완료</div>
+									</td>
+									<td colspan="2">
 										<h5 class="fw-bold">
-											[<span class="reservationId"></span>]
+											[<span class="reservationId"></span>번 예약]
 											<span class="roomName"></span>
 										</h5>
 										<span class="ratingStar"></span>
@@ -169,7 +179,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td class="mukSubText">
+									<td colspan="2" class="mukSubText">
 										<span class="nickName fw-bold"></span>
 										·
 										<span class="checkinDate"></span>
@@ -178,10 +188,33 @@
 									</td>
 								</tr>
 								<tr>
-									<td class="reviewContent"></td>
+									<td colspan="2" class="reviewContent"></td>
 								</tr>
 								<tr>
 									<td class="mukMutedText"><small class="createDate"></small></td>
+									<td class="text-end mukMutedText">
+										<h4 class="writeReplyButton bi bi-chevron-down" style="display:inline-block; margin-bottom:0px; cursor:pointer;"></h4>
+									</td>
+								</tr>
+								<tr>
+									<td class="align-middle textarea pt-3 pb-3" colspan="2" style="display:none">
+										<div class="p-4" style="background:#fafafa; border-radius:20px;">
+											<table class="replyTable table table-borderless" style="margin-bottom:0px; padding:0;">
+												<tr class="align-middle">
+													<td style="width:30px; padding-bottom:10px"><img id="hotelImg" class="img-fluid" style="width:24px; height:24px; border-radius:50%;" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}"></td>
+													<td colspan="2" style="padding-bottom:10px"><h5 class="fw-bold" style="margin:0px; padding-top:3px; display:inline-block;">${hotel.hotelName }</h5></td>
+												</tr>
+												<tr class="writeReplyTr align-bottom" style="display:none;">
+													<td colspan="2"><textarea style="background:none; padding:0; border:0px !important; width:100%; height:48px; resize:none" required></textarea></td>
+													<td style="width:30px;"><div class="insertReplyButton fa-solid fa-message" style="color:#6bb6ec; float:right; cursor:pointer;"></div></td>
+												</tr>
+												<tr class="viewReplyTr" colspan="2" style="display:none;">
+													<td colspan="2" class="businessReply"></td>
+													<td class="align-bottom" style="width:30px;"><small class="modifyReplyButton" style="color:#6bb6ec; float:right; cursor:pointer;">수정</small></td>
+												</tr>
+											</table>
+										</div>
+									</td>
 								</tr>
 							</table>
 						</div>
@@ -211,20 +244,32 @@
 						searchByRoom: $("select[name=searchByRoom]").val()
 					},
 					success: (data)=>{
-						console.log(data);
 						$("#reviewList").html("");
-
+						
+						const reviewDiv2 = reviewDiv.clone();
 						const reviewList = data.reviewList;
 						for(const r of reviewList) {
-							reviewDiv.find("input[name=reviewId]").val(r.reviewId);
-							reviewDiv.find(".nickName").html(r.nickName);
-							reviewDiv.find(".roomName").html(r.roomName);
-							reviewDiv.find(".reservationId").html(r.reservationId);
-							reviewDiv.find(".reviewContent").html(r.reviewContent.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
-							reviewDiv.find(".rating").html(r.rating.toFixed(1));
-							reviewDiv.find(".createDate").html(r.createDate);
-							reviewDiv.find(".checkinDate").html(r.createDate);
-							reviewDiv.find(".checkoutDate").html(r.createDate);
+							reviewDiv2.find("input[name=reviewId]").val(r.reviewId);
+							reviewDiv2.find(".nickName").html(r.nickName);
+							reviewDiv2.find(".roomName").html(r.roomName);
+							reviewDiv2.find(".reservationId").html(r.reservationId);
+							reviewDiv2.find(".reviewContent").html(r.reviewContent.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+							reviewDiv2.find(".rating").html(r.rating.toFixed(1));
+							reviewDiv2.find(".createDate").html(r.createDate);
+							reviewDiv2.find(".checkinDate").html(r.createDate);
+							reviewDiv2.find(".checkoutDate").html(r.createDate);
+							if(r.businessReply!=null) {
+								reviewDiv2.find("textarea").val(r.businessReply);
+								reviewDiv2.find(".businessReply").html(r.businessReply.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+								reviewDiv2.find(".writeReplyTr").css("display", "none");
+								reviewDiv2.find(".viewReplyTr").prop("style").removeProperty("display");
+								reviewDiv2.find(".hasReply").prop("style").removeProperty("display");
+							} else {
+								reviewDiv2.find("textarea").val("");
+								reviewDiv2.find(".writeReplyTr").prop("style").removeProperty("display");
+								reviewDiv2.find(".viewReplyTr").css("display", "none");
+								reviewDiv2.find(".hasReply").css("display", "none");
+							}
 							
 							ratingStar="";
 							for(var j=1;j<=5;j++) {
@@ -234,21 +279,21 @@
 									ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#e9e9e9"></i>';
 								}
 							}
-							reviewDiv.find(".ratingStar").html(ratingStar);
+							reviewDiv2.find(".ratingStar").html(ratingStar);
 							
 							if(r.rating==5) {
-								reviewDiv.find(".ratingEmoji").text("😍");
+								reviewDiv2.find(".ratingEmoji").text("😍");
 							} else if(r.rating==4) {
-								reviewDiv.find(".ratingEmoji").text("😀");
+								reviewDiv2.find(".ratingEmoji").text("😀");
 							} else if(r.rating==3) {
-								reviewDiv.find(".ratingEmoji").text("🙂");
+								reviewDiv2.find(".ratingEmoji").text("🙂");
 							} else if(r.rating==2) {
-								reviewDiv.find(".ratingEmoji").text("😐");
+								reviewDiv2.find(".ratingEmoji").text("😐");
 							} else {
-								reviewDiv.find(".ratingEmoji").text("🙁");
+								reviewDiv2.find(".ratingEmoji").text("🙁");
 							}
 							
-							$("#reviewList").append(reviewDiv.clone());
+							$("#reviewList").append(reviewDiv2.clone());
 						}
 					},
 					error: (data)=>{
@@ -264,5 +309,50 @@
 		});
 	</script>
 	<!-- 리뷰리스트 보기 끝 -->
+	
+	<!-- 댓글 작성 버튼 -->
+	<script>
+		$(document).on("click", ".writeReplyButton", function(){
+			const table = $(this).parents("table");
+			if(table.find(".textarea").css("display")=="none") {
+				table.find(".textarea").prop("style").removeProperty("display");
+				$(this).addClass("bi-chevron-up");
+				$(this).removeClass("bi-chevron-down");
+			} else {
+				table.find(".textarea").css("display", "none");
+				$(this).addClass("bi-chevron-down");
+				$(this).removeClass("bi-chevron-up");
+			}
+		});
+		
+		$(document).on("click", ".modifyReplyButton", function(){
+			$(this).closest("table").find(".viewReplyTr").css("display","none");
+			$(this).closest("table").find(".writeReplyTr").prop("style").removeProperty("display");
+		});
+		
+		$(document).on("click", ".insertReplyButton", function(){
+			if($(this).closest(".review").find("textarea").val().trim()!="") {
+				$.ajax({
+					url: "${contextPath}/insertReply.ho",
+					data: {
+						reviewId: $(this).closest(".review").find("input[name=reviewId]").val(),
+						businessReply: $(this).closest("tr").find("textarea").val()
+					},
+					success: (data)=>{
+						console.log(data);
+						$(this).closest("table").find(".businessReply").html($(this).closest("tr").find("textarea").val().replace(/(?:\r\n|\r|\n)/g, '<br/>'));
+						$(this).closest("table").find(".writeReplyTr").css("display", "none");
+						$(this).closest("table").find(".viewReplyTr").prop("style").removeProperty("display");
+					},
+					error: (data)=>{
+						console.log(data);
+					}
+				});
+			} else {
+				alert("내용을 입력해주세요.");
+			}
+		});
+	</script>
+	<!-- 댓글 작성 버튼 -->
 </body>
 </html>
