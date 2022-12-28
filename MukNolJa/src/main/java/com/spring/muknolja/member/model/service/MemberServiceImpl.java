@@ -61,8 +61,8 @@ public class MemberServiceImpl implements MemberService {
 
 
 	@Override
-	public void visitCount(String id) {
-		mDAO.visitCount(sqlSession, id);
+	public void visitCount(HashMap<String, String> map) {
+		mDAO.visitCount(sqlSession, map);
 	}
 
 	@Override
@@ -78,6 +78,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public ArrayList<Map<String, Integer>> selectVisitList() {
 		return mDAO.selectVisitList(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Map<String, Integer>> selectVisitAllList() {
+		return mDAO.selectVisitAllList(sqlSession);
 	}
 
 	@Override
@@ -152,8 +157,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ArrayList<AD> selectADList(HashMap<String, Object> map) {
-		return mDAO.selectADList(sqlSession, map);
+	public ArrayList<AD> selectADList(int category) {
+		return mDAO.selectADList(sqlSession, category);
 	}
 
 	
@@ -252,6 +257,11 @@ public class MemberServiceImpl implements MemberService {
 	public int getListCount4(String id) {
 		// TODO Auto-generated method stub
 		return mDAO.getListCount4(sqlSession,id);
+	}
+
+	@Override
+	public int waringCheck(String id) {
+		return mDAO.waringCheck(sqlSession, id);
 	}
 
 	

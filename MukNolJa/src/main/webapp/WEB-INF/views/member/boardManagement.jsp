@@ -77,6 +77,9 @@
       	text-decoration: none;
       	color: black;
       }
+      .cate{
+      	width: 88px;
+      }
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -111,6 +114,13 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="adStats.me">
+              <i class="bi bi-bar-chart-line"></i>
+              <span data-feather="users" class="align-text-bottom"></span>
+              광고 통계
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="adManagement.me">
               <i class="bi bi-camera-video"></i>
               <span data-feather="users" class="align-text-bottom"></span>
@@ -130,8 +140,13 @@
 
       <h2 style="display: inline-block;">게시글 목록</h2>
       <div style="float:right; margin: 10px;">
+      	<div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
+		  <button type="button" class="btn btn-outline-dark cate" id="party">동행</button>
+		  <button type="button" class="btn btn-outline-dark cate" id="review">후기</button>
+		  <button type="button" class="btn btn-outline-dark cate" id="report">신고</button>
+		</div>
       	<form action="boardManagement.me">
-      		<div class = "input-group input-group-sm" id="sendMessage" style="margin-top: 10px;">
+      		<div class = "input-group input-group-sm" style="margin-top: 10px;">
       			<input type="hidden" name="category" value="${ category }">
 	            <input type = "text" class = "form-control" id="search" name="search" placeholder = "제목">
 		        <div class = "input-group-btn">
@@ -139,7 +154,7 @@
 		  		</div>
      	 	</div>
      	 </form>
-      <a href="boardManagement.me?category=0"> 동행게시글 </a>|<a href="boardManagement.me?category=1"> 후기게시글 </a>|<a href="boardManagement.me?category=2"> 신고관리 </a>
+<!--       <a href="boardManagement.me?category=0"> 동행게시글 </a>|<a href="boardManagement.me?category=1"> 후기게시글 </a>|<a href="boardManagement.me?category=2"> 신고관리 </a> -->
       </div>
       <div class="table-responsive" style="clear: both;">
         <table class="table table-striped table-sm">
@@ -235,6 +250,18 @@
                     }
                 }
             });
+            
+            document.getElementById('party').addEventListener('click', function(){
+				location.href = 'boardManagement.me?category=0';
+           	});
+           	
+           	document.getElementById('review').addEventListener('click', function(){
+				location.href = 'boardManagement.me?category=1';
+           	});
+           	
+           	document.getElementById('report').addEventListener('click', function(){
+				location.href = 'boardManagement.me?category=2';
+           	});
         </script>
 </body>
 </html>

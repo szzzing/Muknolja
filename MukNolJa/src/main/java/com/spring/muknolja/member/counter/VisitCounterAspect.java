@@ -1,10 +1,13 @@
 package com.spring.muknolja.member.counter;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +35,12 @@ public class VisitCounterAspect {
 			Visit v = mService.selectVisitCounter(loginUser.getId());
 			
 			if(v == null) {
-				mService.visitCount(loginUser.getId());
+				HashMap<String, String> map = new HashMap<>();
+				
+				map.put("id", loginUser.getId());
+				map.put("check", "m");
+				
+				mService.visitCount(map);
 			}
 		}
 	}

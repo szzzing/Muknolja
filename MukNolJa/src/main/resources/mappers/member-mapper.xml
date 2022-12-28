@@ -71,7 +71,14 @@
   	</select>
   	<insert id="visitCount">
   		insert into visit
-  		values(#{id}, SYSDATE)
+  		values(#{id}, SYSDATE, 
+  		<if test='check.equals("m")'>
+  			'Y'
+  		</if>
+  		<if test='check.equals("a")'>
+  			'N'
+  		</if>
+  		)
   	</insert>
   	
   	<select id="selectVisitCounter" resultMap="VisitResutSet">
@@ -93,6 +100,16 @@
   	</select>
   	
   	<select id="selectVisitList" resultType="map">
+  		select visit_date, visit_count
+		from (select to_char(visit_time, 'mm.dd') visit_date, count(*) visit_count
+		      from visit
+		      where MEMBER_YN = 'Y'
+		      GROUP by to_char(visit_time, 'mm.dd')
+		      order by visit_date desc)
+		where rownum <![CDATA[<=]]> 7
+  	</select>
+  	
+  	<select id="selectVisitAllList" resultType="map">
   		select visit_date, visit_count
 		from (select to_char(visit_time, 'mm.dd') visit_date, count(*) visit_count
 		      from visit
@@ -146,6 +163,12 @@
   		set report = report + 1
   		where id = #{id}
   	</update>
+  	
+  	<select id="waringCheck" resultType="_int">
+  		select REPORT
+  		from MEMBER
+  		where ID = #{id}
+  	</select>
   	
   	<update id="stop">
   		update member

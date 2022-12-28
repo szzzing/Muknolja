@@ -78,6 +78,9 @@
       	text-decoration: none;
       	color: black;
       }
+      .cate{
+      	width: 88px;
+      }
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -112,6 +115,13 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="adStats.me">
+              <i class="bi bi-bar-chart-line"></i>
+              <span data-feather="users" class="align-text-bottom"></span>
+              광고 통계
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="adManagement.me">
               <i class="bi bi-camera-video"></i>
               <span data-feather="users" class="align-text-bottom"></span>
@@ -131,8 +141,13 @@
 
       <h2 style="display: inline-block;">회원 목록</h2>
       <div style="float:right; margin: 10px;">
+      	<div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
+		  <button type="button" class="btn btn-outline-dark cate" id="nomal">일반회원</button>
+		  <button type="button" class="btn btn-outline-dark cate" id="hotel">호텔사업자</button>
+		  <button type="button" class="btn btn-outline-dark cate" id="admin">관리자</button>
+		</div>
       	<form action="memberManagement.me">
-      		<div class = "input-group input-group-sm" id="sendMessage" style="margin-top: 10px;">
+      		<div class = "input-group input-group-sm" style="margin-top: 10px;">
       			<input type="hidden" name="category" value="${ category }">
 	            <input type = "text" class = "form-control" id="search" name="search" placeholder = "아이디">
 		        <div class = "input-group-btn">
@@ -140,7 +155,7 @@
 		  		</div>
      	 	</div>
      	 </form>
-      <a href="memberManagement.me?category=0"> 일반회원 </a>|<a href="memberManagement.me?category=1"> 호텔사업자 </a>|<a href="memberManagement.me?category=2"> 관리자 </a>
+<!--       <a href="memberManagement.me?category=0"> 일반회원 </a>|<a href="memberManagement.me?category=1"> 호텔사업자 </a>|<a href="memberManagement.me?category=2"> 관리자 </a> -->
       </div>
       <div class="table-responsive" style="clear: both;">
         <table class="table table-striped table-sm">
@@ -247,29 +262,43 @@
            		const id = m.querySelector('td').innerText;
            		const buttons = m.querySelectorAll('button');
            		
-           		buttons[0].addEventListener('click', function(){
-           			if(confirm('정말 회원을 경고하시겠습니까?')){
-	           			$.ajax({
-	           				url: 'waring.me',
-	           				data: {id:id},
-	           				success: (data) => {
-	           					alert('회원을 경고하였습니다.');
-	           				}
-	           			});
-           			}
-           		});
-				buttons[1].addEventListener('click', function(){
-					if(confirm('정말 회원을 정지시키겠습니까?')){
-						$.ajax({
-	           				url: 'stop.me',
-	           				data: {id:id},
-	           				success: (data) => {
-	           					alert('회원을 정지시켰습니다.');
-	           				}
-	           			});
-					}
-           		});
+           		if(buttons.length != 0){
+	           		buttons[0].addEventListener('click', function(){
+	           			if(confirm('정말 회원을 경고하시겠습니까?')){
+		           			$.ajax({
+		           				url: 'waring.me',
+		           				data: {id:id},
+		           				success: (data) => {
+		           					alert('회원을 경고하였습니다.');
+		           				}
+		           			});
+	           			}
+	           		});
+					buttons[1].addEventListener('click', function(){
+						if(confirm('정말 회원을 정지시키겠습니까?')){
+							$.ajax({
+		           				url: 'stop.me',
+		           				data: {id:id},
+		           				success: (data) => {
+		           					alert('회원을 정지시켰습니다.');
+		           				}
+		           			});
+						}
+	           		});
+           		}
            	}
+           	
+           	document.getElementById('nomal').addEventListener('click', function(){
+				location.href = 'memberManagement.me?category=0';
+           	});
+           	
+           	document.getElementById('hotel').addEventListener('click', function(){
+				location.href = 'memberManagement.me?category=1';
+           	});
+           	
+           	document.getElementById('admin').addEventListener('click', function(){
+				location.href = 'memberManagement.me?category=2';
+           	});
             
         </script>
 </body>

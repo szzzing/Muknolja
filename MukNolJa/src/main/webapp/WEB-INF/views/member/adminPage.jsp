@@ -105,6 +105,13 @@
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="adStats.me">
+              <i class="bi bi-bar-chart-line"></i>
+              <span data-feather="users" class="align-text-bottom"></span>
+              광고 통계
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="adManagement.me">
               <i class="bi bi-camera-video"></i>
               <span data-feather="users" class="align-text-bottom"></span>
@@ -122,7 +129,7 @@
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>금일 방문자</h2>
+      <h2>방문 멤버</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
@@ -167,40 +174,27 @@
                     ],
                     datasets: [
                         { //데이터
-                            label: '방문자', //차트 제목
+                            label: '방문 멤버', //차트 제목
                             fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                             data: [
                             	'${ visitList[6].VISIT_COUNT }','${ visitList[5].VISIT_COUNT }','${ visitList[4].VISIT_COUNT }','${ visitList[3].VISIT_COUNT }','${ visitList[2].VISIT_COUNT }','${ visitList[1].VISIT_COUNT }','${ visitList[0].VISIT_COUNT }'
                             ],
-                            backgroundColor: [
-                                //색상
-                                'rgba(107, 182, 236, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                //경계선 색상
-                                'rgba(107, 182, 236, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
+                            // 색상
+                            backgroundColor: 'rgba(255, 0, 255, 0.2)',
+                            // 경계선 색상
+                            borderColor: 'rgba(255, 0, 255, 1)',
                             borderWidth: 1 //경계선 굵기
-                        }/* ,
+                        },
                         {
-                            label: 'test2',
-                            fill: false,
+                            label: '방문자',
+                            fill: true,
                             data: [
-                                8, 34, 12, 24
+                            	'${ vsitAllList[6].VISIT_COUNT }','${ vsitAllList[5].VISIT_COUNT }','${ vsitAllList[4].VISIT_COUNT }','${ vsitAllList[3].VISIT_COUNT }','${ vsitAllList[2].VISIT_COUNT }','${ vsitAllList[1].VISIT_COUNT }','${ vsitAllList[0].VISIT_COUNT }'
                             ],
-                            backgroundColor: 'rgb(157, 109, 12)',
-                            borderColor: 'rgb(157, 109, 12)'
-                        } */
+                            backgroundColor: 'rgba(107, 182, 236, 0.2)',
+                            borderColor: 'rgba(107, 182, 236, 1)',
+                            borderWidth: 1
+                        }
                     ]
                 },
                 options: {

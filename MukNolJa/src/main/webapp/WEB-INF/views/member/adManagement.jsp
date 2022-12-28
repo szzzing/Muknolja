@@ -17,6 +17,8 @@
 <title>AdminPage</title>
 
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  		*{font-family: 'Noto Sans KR', sans-serif;}
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -77,6 +79,10 @@
       	text-decoration: none;
       	color: black;
       }
+      #cate>.nav-item{
+      	margin: 0px 30px;
+      	font-size: 20px;
+      }
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -126,110 +132,68 @@
         <h1 class="h2">광고 관리</h1>
       </div>
 
-      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-      <h2 style="display: inline-block;">광고 목록</h2>
-      <div style="float:right; margin: 10px;">
-      	<form action="adManagement.me">
-      		<div class = "input-group input-group-sm" id="sendMessage" style="margin-top: 10px;">
-      			<input type="hidden" name="category" value="${ category }">
-	            <input type = "text" class = "form-control" id="search" name="search" placeholder = "제목">
-		        <div class = "input-group-btn">
-		            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
-		  		</div>
-     	 	</div>
-     	 </form>
-      <a href="adManagement.me?category=0"> 호텔 </a>|<a href="adManagement.me?category=1"> 후기 </a>|<a href="adManagement.me?category=2"> 동행 </a>|<a href="adManagement.me?category=3"> 여행 </a>
-      </div>
-      <div class="table-responsive" style="clear: both;">
+      <div class="cotainer">
+      	<div class="row" style="margin: 20px 0px;">
+      		<nav class="navbar navbar-expand-lg bg-light">
+			  <div class="container-fluid ">
+			    <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+			      <ul class="navbar-nav" id="cate">
+			        <li class="nav-item">
+			          <a class="nav-link active" aria-current="page" href="#">메인</a>
+			        </li>
+			        <li class="nav-item dropdown">
+			          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+			            여행
+			          </a>
+			          <ul class="dropdown-menu">
+			            <li><a class="dropdown-item" href="#">관광지</a></li>
+			            <li><a class="dropdown-item" href="#">맛집</a></li>
+			            <li><a class="dropdown-item" href="#">축제</a></li>
+			          </ul>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link active" aria-current="page" href="#">호텔</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link active" aria-current="page" href="#">동행</a>
+			        </li>
+			        <li class="nav-item">
+			          <a class="nav-link active" aria-current="page" href="#">후기</a>
+			        </li>
+			      </ul>
+			    </div>
+			  </div>
+			</nav>
+      	</div>
+      	<div class="row">
+      		<div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">게시판</th>
-              <th scope="col">광고비</th>
-              <th scope="col">시작일</th>
-              <th scope="col">마감일</th>
+              <th scope="col">아이디</th>
+              <th scope="col">닉네임</th>
+              <th scope="col">이름</th>
+              <th scope="col">전화번호</th>
+              <th scope="col">가입일</th>
             </tr>
           </thead>
           <tbody>
-          	<c:forEach items="${ aList }" var="a">
 	            <tr>
-	              <td>${ a.boardType }</td>
-	              <td>${ a.price }</td>
-	              <td>${ a.start }</td>
-	              <td>${ a.deadline }</td>
+	              <td>1</td>
+	              <td>2</td>
+	              <td>3</td>
+	              <td>4</td>
+	              <td>5</td>
 	            </tr>
-            </c:forEach>
           </tbody>
         </table>
       </div>
+      	</div>
+      </div>
+      
     </main>
   </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-<script type="text/javascript">
-
-            var context = document
-                .getElementById('myChart')
-                .getContext('2d');
-            var myChart = new Chart(context, {
-                type: 'line', // 차트의 형태
-                data: { // 차트에 들어갈 데이터
-                    labels: [
-                        //x 축
-                    	'${ incomeCount[6].START_DATE }','${ incomeCount[5].START_DATE }','${ incomeCount[4].START_DATE }','${ incomeCount[3].START_DATE }','${ incomeCount[2].START_DATE }','${ incomeCount[1].START_DATE }','${ incomeCount[0].START_DATE }'
-                    ],
-                    datasets: [
-                        { //데이터
-                            label: '광고수입', //차트 제목
-                            fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-                            data: [
-                            	'${ incomeCount[6].COUNT }','${ incomeCount[5].COUNT }','${ incomeCount[4].COUNT }','${ incomeCount[3].COUNT }','${ incomeCount[2].COUNT }','${ incomeCount[1].COUNT }','${ incomeCount[0].COUNT }'
-                            ],
-                            backgroundColor: [
-                                //색상
-                                'rgba(107, 182, 236, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                //경계선 색상
-                                'rgba(107, 182, 236, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1 //경계선 굵기
-                        }/* ,
-                        {
-                            label: 'test2',
-                            fill: false,
-                            data: [
-                                8, 34, 12, 24
-                            ],
-                            backgroundColor: 'rgb(157, 109, 12)',
-                            borderColor: 'rgb(157, 109, 12)'
-                        } */
-                    ]
-                },
-                options: {
-                    scales: {
-                        yAxes: [
-                            {
-                                ticks: {
-                                    beginAtZero: true
-                                }
-                            }
-                        ]
-                    }
-                }
-            });
-        </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>
 </html>
