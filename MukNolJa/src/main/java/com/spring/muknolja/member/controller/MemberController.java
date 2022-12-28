@@ -224,9 +224,11 @@ public class MemberController {
 		public String adminPage(Model model) {
 			ArrayList<Member> today = mService.selectVisitToday();
 			ArrayList<Map<String, Integer>> visitList = mService.selectVisitList();
+			ArrayList<Map<String, Integer>> vsitAllList = mService.selectVisitAllList();
 			
 			model.addAttribute("today", today);
 			model.addAttribute("visitList", visitList);
+			model.addAttribute("vsitAllList", vsitAllList);
 			
 			return "adminPage";
 		}
@@ -298,18 +300,14 @@ public class MemberController {
 		}
 		
 		@RequestMapping("adManagement.me")
-		public String adManagement(@RequestParam(value="category", required=false) Integer cate, @RequestParam(value="search", required=false) String search, Model model) {
+		public String adManagement(@RequestParam(value="category", required=false) Integer cate, Model model) {
 			
 			int category = 0;
 			if(cate != null && cate > 0 && cate <= 3) {
 				category = cate;
 			}
 			
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("category", category);
-			map.put("search", search);
-			
-			ArrayList<AD> aList = mService.selectADList(map);
+			ArrayList<AD> aList = mService.selectADList(category);
 			
 			for(AD a : aList) {
 				String boardType = a.getBoardType();
@@ -339,6 +337,11 @@ public class MemberController {
 		public int waring(@RequestParam("id") String id) {
 			int result = mService.waring(id);
 			
+			int waringCheck = mService.waringCheck(id);
+			
+			if(waringCheck >= 3) {
+				stop(id);
+			}
 			return result;
 		}
 		

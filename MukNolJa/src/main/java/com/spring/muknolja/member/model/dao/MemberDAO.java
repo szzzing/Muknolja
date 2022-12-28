@@ -48,8 +48,8 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.findId", email);
 	}
-	public void visitCount(SqlSessionTemplate sqlSession, String id) {
-		sqlSession.insert("memberMapper.visitCount", id);
+	public void visitCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		sqlSession.insert("memberMapper.visitCount", map);
 	}
 
 	public Visit selectVisitCounter(SqlSessionTemplate sqlSession, String id) {
@@ -62,6 +62,10 @@ public class MemberDAO {
 
 	public ArrayList<Map<String, Integer>> selectVisitList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitList");
+	}
+	
+	public ArrayList<Map<String, Integer>> selectVisitAllList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitAllList");
 	}
 
 	public String selectPwd(SqlSessionTemplate sqlSession, String id) {
@@ -125,8 +129,8 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.incomeCount");
 	}
 
-	public ArrayList<AD> selectADList(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
-		return (ArrayList)sqlSession.selectList("memberMapper.selectADList", map);
+	public ArrayList<AD> selectADList(SqlSessionTemplate sqlSession, int category) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectADList", category);
 	}
 
 	
@@ -163,6 +167,10 @@ public class MemberDAO {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("memberMapper.selectReserve", id, rowBounds);
 	
+	}
+
+	public int waringCheck(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("memberMapper.waringCheck", id);
 	}
 
 	/*

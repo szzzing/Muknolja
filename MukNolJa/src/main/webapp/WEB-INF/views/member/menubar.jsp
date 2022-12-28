@@ -491,15 +491,17 @@
 	        
 	        // 채팅방 나가기
 	        document.getElementById('out_btn').addEventListener('click', function(){
-	        	$.ajax({
-	        		url: '${contextPath}/chatRoomOut.ch',
-	        		data: {roomCode:roomCode},
-	        		success: (data) => {
-	        			document.getElementById('chat_modal').style.display = 'none';
-	        			sockJs.close();
-	        			chat();
-	        		}
-	        	});
+	        	if(confirm('정말 채팅방을 나가시겠습니까?')){
+		        	$.ajax({
+		        		url: '${contextPath}/chatRoomOut.ch',
+		        		data: {roomCode:roomCode},
+		        		success: (data) => {
+		        			document.getElementById('chat_modal').style.display = 'none';
+		        			sockJs.close();
+		        			chat();
+		        		}
+		        	});
+	        	}
 	        });
 	        
 	        

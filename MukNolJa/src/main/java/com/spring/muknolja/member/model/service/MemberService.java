@@ -34,7 +34,7 @@ public interface MemberService {
 
 	String findId(String email);
 
-	void visitCount(String id);
+	void visitCount(HashMap<String, String> map);
 
 	Visit selectVisitCounter(String id);
 
@@ -68,7 +68,7 @@ public interface MemberService {
 
 	ArrayList<Map<String, Integer>> incomeCount();
 
-	ArrayList<AD> selectADList(HashMap<String, Object> map);
+	ArrayList<AD> selectADList(int category);
 
 	ArrayList<Reservation> selectReserve(String id);
 
@@ -87,6 +87,10 @@ public interface MemberService {
 	ArrayList<AttachedFile> selectImg();
 
 	ArrayList<Reservation> selectReserve(PageInfo pi, String id);
+
+	ArrayList<Map<String, Integer>> selectVisitAllList();
+
+	int waringCheck(String id);
 
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
 
