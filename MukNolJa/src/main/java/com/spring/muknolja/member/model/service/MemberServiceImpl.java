@@ -264,6 +264,26 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.waringCheck(sqlSession, id);
 	}
 
+	@Override
+	public int insertAd(HashMap<String, Object> map) {
+		return mDAO.insertAd(sqlSession, map);
+	}
+
+	@Override
+	public AttachedFile selectAttm(int id) {
+		return mDAO.selectAttm(sqlSession, id);
+	}
+
+	@Override
+	public int updateAttm(HashMap<String, Object> map) {
+		return mDAO.updateAttm(sqlSession, map);
+	}
+
+	@Override
+	public int updateAd(HashMap<String, Object> aMap) {
+		return mDAO.updateAd(sqlSession, aMap);
+	}
+
 	
 	/*
 	 * @Override public ArrayList<AttachedFile> selectImg(int hotelId) { // TODO

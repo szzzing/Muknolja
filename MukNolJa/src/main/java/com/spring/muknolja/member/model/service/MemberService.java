@@ -110,6 +110,14 @@ public interface MemberService {
 
 	int waringCheck(String id);
 
+	int insertAd(HashMap<String, Object> map);
+
+	AttachedFile selectAttm(int id);
+
+	int updateAttm(HashMap<String, Object> map);
+
+	int updateAd(HashMap<String, Object> aMap);
+
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
 
 

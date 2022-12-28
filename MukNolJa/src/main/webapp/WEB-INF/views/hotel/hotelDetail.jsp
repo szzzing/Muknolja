@@ -740,7 +740,7 @@
 		});
 		
 		const inout = $("#daterangepicker").val().split(" - ");
-		$("input[name=checkinDate]").val(inout[0]);
+		$("input[name=checkinDate]").val(inout[0]);	
 		$("input[name=checkoutDate]").val(inout[1]);
 		
 		const checkin = new Date(inout[0]);

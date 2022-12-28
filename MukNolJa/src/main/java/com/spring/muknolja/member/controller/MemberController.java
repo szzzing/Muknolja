@@ -1,11 +1,8 @@
 ﻿package com.spring.muknolja.member.controller;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AD;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
@@ -37,7 +35,6 @@ import com.spring.muknolja.common.model.vo.QA;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
-import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.service.MemberService;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.party.model.vo.Party;
@@ -305,7 +302,7 @@ public class MemberController {
 		public String adManagement(@RequestParam(value="category", required=false) Integer cate, Model model) {
 			
 			int category = 0;
-			if(cate != null && cate > 0 && cate <= 3) {
+			if(cate != null && cate > 0 && cate <= 6) {
 				category = cate;
 			}
 			
@@ -314,15 +311,38 @@ public class MemberController {
 			for(AD a : aList) {
 				String boardType = a.getBoardType();
 				
-				if(boardType.equals("H")) {
-					a.setBoardType("호텔");
-				} else if(boardType.equals("R")) {
-					a.setBoardType("후기");
+				if(boardType.equals("M")) {
+					a.setBoardType("메인");
+				} else if(boardType.equals("T")) {
+					a.setBoardType("광광지");
+				} else if(boardType.equals("F")) {
+					a.setBoardType("맛집");
+				} else if(boardType.equals("V")) {
+					a.setBoardType("축제");
 				} else if(boardType.equals("P")) {
 					a.setBoardType("동행");
-				} else if(boardType.equals("T")) {
-					a.setBoardType("여행");
+				} else if(boardType.equals("R")) {
+					a.setBoardType("후기");
+				} else if(boardType.equals("H")) {
+					a.setBoardType("호텔");
 				}
+			}
+			
+			String type = null;
+			if(category == 0) {
+				type = "메인";
+			} else if(category == 1) {
+				type = "관광지";
+			} else if(category == 2) {
+				type = "맛집";
+			} else if(category == 3) {
+				type = "축제";
+			} else if(category == 4) {
+				type = "동행";
+			} else if(category == 5) {
+				type = "후기";
+			} else if(category == 6) {
+				type = "호텔";
 			}
 			
 			ArrayList<Map<String, Integer>> incomeCount = mService.incomeCount();
@@ -330,6 +350,7 @@ public class MemberController {
 			model.addAttribute("aList", aList);
 			model.addAttribute("incomeCount", incomeCount);
 			model.addAttribute("category", category);
+			model.addAttribute("type", type);
 		
 			return "adManagement";
 		}
@@ -634,4 +655,114 @@ public class MemberController {
 			return result;
 			
 		}
+		
+		@RequestMapping("addAd.me")
+		public String addAd(@ModelAttribute AD a, @RequestParam("adImg") MultipartFile file, HttpServletRequest request) {
+			
+			String boardType = a.getBoardType();
+			
+			if(boardType.equals("메인")) {
+				a.setBoardType("M");
+			} else if(boardType.equals("관광지")) {
+				a.setBoardType("T");
+			} else if(boardType.equals("맛집")) {
+				a.setBoardType("F");
+			} else if(boardType.equals("축제")) {
+				a.setBoardType("V");
+			} else if(boardType.equals("동행")) {
+				a.setBoardType("P");
+			} else if(boardType.equals("후기")) {
+				a.setBoardType("R");
+			} else if(boardType.equals("호텔")) {
+				a.setBoardType("H");
+			}
+			
+			String fileName = file.getOriginalFilename();
+			
+			AttachedFile attm = new AttachedFile();
+			
+			String[] returnArr = AttachedFile.saveFile(file, request);
+			
+			attm.setFileName(fileName);
+			attm.setFileType("A");
+			attm.setFileLink(returnArr[0]);
+			attm.setFileModifyName(returnArr[1]);
+			attm.setFileThumbnail("Y");
+			
+			HashMap<String, Object> map = new HashMap<>();
+			
+			map.put("a", a);
+			map.put("attm", attm);
+			
+			int result = mService.insertAd(map);
+			
+			
+			return "redirect:adManagement.me";
+		}
+		
+		@RequestMapping("selectAttm.me")
+		public void selectAttm(@RequestParam("id") int id, HttpServletResponse response) {
+			AttachedFile attm = mService.selectAttm(id);
+			Gson gson = new Gson();
+	    	
+	    	response.setContentType("application/json; charset=UTF-8");
+	    	
+	    	try {
+				gson.toJson(attm, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		@RequestMapping("modifyAd.me")
+		public String ModifyAd(@ModelAttribute AD a, @RequestParam("adImg") MultipartFile file, @RequestParam("beforeFileId") int beforeFileId, @RequestParam("beforeFileName") String beforeFileName,HttpServletRequest request) {
+			
+			String boardType = a.getBoardType();
+			
+			if(boardType.equals("메인")) {
+				a.setBoardType("M");
+			} else if(boardType.equals("관광지")) {
+				a.setBoardType("T");
+			} else if(boardType.equals("맛집")) {
+				a.setBoardType("F");
+			} else if(boardType.equals("축제")) {
+				a.setBoardType("V");
+			} else if(boardType.equals("동행")) {
+				a.setBoardType("P");
+			} else if(boardType.equals("후기")) {
+				a.setBoardType("R");
+			} else if(boardType.equals("호텔")) {
+				a.setBoardType("H");
+			}
+			
+			String fileName = file.getOriginalFilename();
+			
+			AttachedFile attm = new AttachedFile();
+			
+			String[] returnArr = AttachedFile.saveFile(file, request);
+			
+			attm.setFileName(fileName);
+			attm.setFileLink(returnArr[0]);
+			attm.setFileModifyName(returnArr[1]);
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("attm", attm);
+			map.put("beforeFileId", beforeFileId);
+			
+			HashMap<String, Object> aMap = new HashMap<>();
+			aMap.put("beforeFileId", beforeFileId);
+			aMap.put("a", a);
+			
+			int result = mService.updateAttm(map);
+			result += mService.updateAd(aMap);
+			
+			if(result >= 2) {
+				AttachedFile.deleteFile(beforeFileName, request);
+				return "redirect:adManagement.me";
+			} else {
+				throw new CommonException("광고 수정 실패.");
+			}
+		}
+		
 }

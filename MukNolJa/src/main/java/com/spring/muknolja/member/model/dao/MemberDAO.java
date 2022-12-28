@@ -219,6 +219,22 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.myInfoBCount4",id);
 	}
+
+	public int insertAd(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("memberMapper.insertAd", map);
+	}
+
+	public AttachedFile selectAttm(SqlSessionTemplate sqlSession, int id) {
+		return sqlSession.selectOne("memberMapper.selectAttm", id);
+	}
+
+	public int updateAttm(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.update("memberMapper.updateAttm", map);
+	}
+
+	public int updateAd(SqlSessionTemplate sqlSession, HashMap<String, Object> aMap) {
+		return sqlSession.update("memberMapper.updateAd", aMap);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int
