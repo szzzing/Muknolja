@@ -250,17 +250,27 @@
   	<select id="selectADList" resultMap="ADResultSet">
   		select *
   		from AD
+  		where to_char(DEADLINE, 'yy-mm-dd') <![CDATA[>=]]> to_char(sysdate, 'yy-mm-dd')
   		<if test="category == 0">
-  			where BOARD_TYPE = 'H'
+  			and BOARD_TYPE = 'M'
   		</if>
   		<if test="category == 1">
-  			where BOARD_TYPE = 'R'
+  			and BOARD_TYPE = 'T'
   		</if>
   		<if test="category == 2">
-  			where BOARD_TYPE = 'P'
+  			and BOARD_TYPE = 'F'
   		</if>
   		<if test="category == 3">
-  			where BOARD_TYPE = 'T'
+  			and BOARD_TYPE = 'V'
+  		</if>
+  		<if test="category == 4">
+  			and BOARD_TYPE = 'P'
+  		</if>
+  		<if test="category == 5">
+  			and BOARD_TYPE = 'R'
+  		</if>
+  		<if test="category == 6">
+  			and BOARD_TYPE = 'H'
   		</if>
   		order by START_DATE desc
   	</select>
@@ -300,7 +310,7 @@
 	
 	
 	<resultMap type="AttachedFile" id="attachedFileResultSet">
-		<id column="ROOM_ID" property="fileId"/>
+		<id column="FILE_ID" property="fileId"/>
 		<result column="FILE_TYPE" property="fileType"/>
 		<result column="FILE_CREATE_DATE" property="fileCreateDate"/>
 		<result column="FILE_NAME" property="fileName"/>
@@ -458,4 +468,31 @@
 		from board join board_img using (board_id) join ATTACHED_FILE using(file_id)
 		where BOARD_WRITER = #{id} and BOARD_STATUS = 'Y' and FILE_THUMBNAIL='Y'
 	</select>
+	
+	<insert id="insertAd">
+		insert all
+		into ATTACHED_FILE
+		values(SEQ_FID.nextval, #{attm.fileType}, sysdate, #{attm.fileName}, #{attm.fileModifyName}, #{attm.fileLink}, default, #{attm.fileThumbnail})
+		into AD
+		values(SEQ_FID.currval, #{a.boardType}, #{a.price}, #{a.start}, #{a.deadline})
+		select * from dual
+	</insert>
+	
+	<select id="selectAttm" resultMap="attachedFileResultSet">
+		select *
+		from ATTACHED_FILE
+		where FILE_ID = #{id}
+	</select>
+	
+	<update id="updateAttm">
+		update ATTACHED_FILE
+		set FILE_NAME = #{attm.fileName}, FILE_MODIFY_NAME = #{attm.fileModifyName}, FILE_LINK = #{attm.fileLink}
+		where FIle_ID = #{beforeFileId}
+	</update>
+	
+	<update id="updateAd">
+		update AD
+		set AD_PRICE = #{a.price}, START_DATE = #{a.start}, DEADLINE = #{a.deadline}
+		where FILE_ID = #{beforeFileId}
+	</update>
   </mapper>
