@@ -15,6 +15,8 @@
   		*{font-family: 'Noto Sans KR', sans-serif;}
   		
     	 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+    	 
+    	 input:focus {outline: none;} /* outline 테두리 없애기 */
     	 .menul{
     	 font-size: 10px;}
     	 .menud{
@@ -194,7 +196,7 @@
 						  </ul>
 						</div>				
 					</div>
-            		<div class="col-1 coco" style="  font-weight:600;">호텔</div>
+            		<div class="col-1 coco" style="  font-weight:600;"><a href="${contextPath }/hotelList.ho">호텔</a></div>
             		<div class="col-1 coco" style="  font-weight:600;"><a href="${ contextPath }/partyList.pa">동행</a></div>
             		<a href="${ contextPath }/reviewList.re"class="col-1 coco" style="  font-weight:600;">후기</a>
             		<div class="col d-none d-sm-block"></div>

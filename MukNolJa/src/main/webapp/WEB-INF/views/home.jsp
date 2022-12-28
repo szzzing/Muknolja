@@ -13,7 +13,6 @@
     body {
   background: #f2f2f2;
 }
-
  .ur{
  box-shadow: 0px 15px 30px 0px rgba(0,0,0,0.3);
  padding-left:0px;

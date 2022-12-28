@@ -81,4 +81,6 @@ public interface HotelService {
 
 	int deleteRoomImg(int roomId);
 
+	int insertReply(HashMap map);
+
 }

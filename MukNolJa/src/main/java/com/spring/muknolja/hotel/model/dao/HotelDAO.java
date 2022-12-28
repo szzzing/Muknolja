@@ -157,4 +157,8 @@ public class HotelDAO {
 		return sqlSession.update("hotelmapper.deleteRoomImg", roomId);
 	}
 
+	public int insertReply(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.update("hotelmapper.insertReply", map);
+	}
+
 }

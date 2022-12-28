@@ -462,6 +462,27 @@ public class HotelController {
 	}
 	
 	
+	@RequestMapping(value="insertReply.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void insertReply(HttpServletResponse response, @RequestParam("reviewId") int reviewId, @RequestParam("businessReply") String businessReply) {
+		HashMap map = new HashMap();
+		map.put("reviewId", reviewId);
+		map.put("businessReply", businessReply);
+		
+		int result = hService.insertReply(map);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	
 	// 일반회원
@@ -625,8 +646,6 @@ public class HotelController {
 		map.put("hotelId", hotelId);
 		map.put("searchByRoom", searchByRoom);
 		map.put("orderBy", orderBy);
-		
-		System.out.println(map);
 		
 		ArrayList<Review> reviewList = hService.selectReviewList(map);
 		int reviewCount = hService.selectReviewCount(hotelId);

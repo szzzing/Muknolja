@@ -329,6 +329,15 @@
 	</select>
 	
 	
+	<update id="insertReply">
+		update review
+		set business_reply=#{businessReply}
+		where review_id=#{reviewId}
+	</update>
+	
+	
+	
+	
 	
 	<resultMap type="Hotel" id="hotelResultSet">
 		<id column="HOTEL_ID" property="hotelId"/>

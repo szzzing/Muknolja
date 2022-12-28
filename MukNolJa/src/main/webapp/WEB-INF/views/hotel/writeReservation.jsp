@@ -9,7 +9,8 @@
 <title>예약하기</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
-	.form-control {border:1px solid #e9e9e9 !important}
+	.form-control {border:2px solid #f1f1f1 !important; border-radius:20px !important}
+	.form-select {border:2px solid #f1f1f1 !important; border-radius:20px !important}
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	* {font-family: 'Noto Sans KR', sans-serif;}
 	::-webkit-scrollbar {width:5px;}
@@ -33,8 +34,18 @@
 	.mukCheckbox input[type="checkbox"]:checked + .on:after { display: block; }
 	.on:after { width: 8px; height: 14px; border: solid #fff; border-radius:1px; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; bottom: 5px; }
 	
+	.termsTable {
+		border: 1px solid #e9e9e9;
+		border-collapse: collapse;
+		width:100%;
+		font-size:14px;
+	}
+	.termsTable th, .termsTable td {
+		border: 1px solid #e9e9e9;
+		padding: 5px;
+	}
 </style>
-<script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/203ce9d742.jsa" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -69,6 +80,104 @@
 						당일 결제를 포함한 체크인 당일 취소는 취소, 변경이 불가합니다.<br>
 						예약 취소가 불가능한 시간에 고객 사정에 의한 취소 시, 먹놀자가 제공하는 모든 혜택에서 제외될 수 있으며, 본 예약 시 사용한 쿠폰은 소멸됩니다.<br>
 						단! 숙소의 객실 정보가 수시로 변경될 수 있으며 이로 인한 불이익은 먹놀자가 책임지지 않습니다.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<div class="modal fade" id="termsModal2" aria-hidden="true" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content p-3">
+				<div class="modal-header" style="border-bottom:0;">
+					<h5 class="modal-title fw-bold">개인정보 수집 및 이용 동의</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<table class="mukSubText termsTable" style="border:1px solid #e9e9e9">
+						<tr align="center" style="background:#fafafa">
+							<td>구분</td>
+							<td>수집/이용 목적</td>
+							<td>수집 항목</td>
+							<td>보유/이용 기간</td>
+						</tr>
+						<tr>
+							<td>필수</td>
+							<td>예약/결제 서비스 이용</td>
+							<td>
+								-예약서비스이용:<br>
+								예약자 이름, 휴대폰 번호, CI<br><br>
+								-결제서비스이용:<br>
+								(카드 결제 시)<br>
+								카드사명, 카드번호, 유효기간, 이메일<br>
+								(휴대폰 결제 시)<br>
+								휴대폰 번호, 통신사, 결제 승인번호<br>
+								(계좌이체 시)<br>
+								은행명, 계좌번호, 예금주<br>
+								(현금 영수증 발급 시)<br>
+								휴대폰 번호, 이메일<br>
+								(취소환불을 위한 대금지급 요청 시)<br>
+								은행명, 계좌번호, 예금주명<br><br>
+								- 서비스 이용:<br>
+								서비스 이용시간/이용기록, 접수로그, 이용컨텐츠, 접속IP정보, 기기모델명, 브라우저 정보
+							</td>
+							<td>보유/이용 기간</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="termsModal3" aria-hidden="true" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content p-3">
+				<div class="modal-header" style="border-bottom:0;">
+					<h5 class="modal-title fw-bold">개인정보 제 3자 제공 동의</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<table class="mukSubText termsTable" style="border:1px solid #e9e9e9">
+						<tr align="center" style="background:#fafafa">
+							<td>제공받는 자</td>
+							<td>제공 목적</td>
+							<td>제공하는 항목</td>
+							<td>제공받는 자의 개인정보 보유 및 이용기간</td>
+						</tr>
+						<tr>
+							<td class="fw-bold">${hotel.hotelName }</td>
+							<td class="fw-bold">숙박예약서비스 이용계약 이행<br>(서비스 제공, 확인, 이용자 정보 확인)</td>
+							<td>
+								예약한 숙박서비스의 이용자 정보(예약자 이름, 휴대폰번호, 예약번호, 예약한 업체명, 예약한 객실명, 결제금액)
+							</td>
+							<td class="fw-bold">예약서비스 제공 완료 후 6개월</td>
+						</tr>
+						<tr>
+							<td class="fw-bold">(주)시너츠</td>
+							<td class="fw-bold">OTA 상품 공급 및 예약관리/통지서비스</td>
+							<td>
+								예약정보(이름/휴대폰번호)
+							</td>
+							<td class="fw-bold">예약서비스 제공 완료 후 6개월</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="termsModal4" aria-hidden="true" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content p-3">
+				<div class="modal-header" style="border-bottom:0;">
+					<h5 class="modal-title fw-bold">만 14세 이상 확인</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="pb-3" style="color:#6bb6ec">먹놀자는 <strong>만 14세 미만 아동</strong>의 <strong>서비스 이용을 제한</strong>하고 있습니다.</div>
+					<div class="mukSubText">
+					정보통신망 이용촉진 및 정보보호 등에 관한 법률에는 만 14세 미만의 개인정보 수집 시 법정대리인의 동의를 받도록 규정하고 있으며, 만 14세 미만 아동이 법정대리인 동의 없이 서비스 이용이 확인된 경우 서비스 이용이 제한될 수 있음을 알려드립니다.
 					</div>
 				</div>
 			</div>
@@ -112,49 +221,49 @@
 					</label>
 					<label for="terms2" class="mukCheckbox">
 						<input type="checkbox" name='terms' id="terms2"><span class="on"></span>
-						<span class="termsModalButton">개인정보 수집 및 이용 동의</span>
+						<span class="termsModalButton" data-bs-toggle="modal" data-bs-target="#termsModal2">개인정보 수집 및 이용 동의</span>
 					</label>
 					<label for="terms3" class="mukCheckbox">
 						<input type="checkbox" name='terms' id="terms3"><span class="on"></span>
-						<span class="termsModalButton">개인정보 제 3자 제공 동의</span>
+						<span class="termsModalButton" data-bs-toggle="modal" data-bs-target="#termsModal3">개인정보 제 3자 제공 동의</span>
 					</label>
 					<label for="terms4" class="mukCheckbox">
 						<input type="checkbox" name='terms' id="terms4"><span class="on"></span>
-						<span class="termsModalButton">만 14세 이상 확인</span>
+						<span class="termsModalButton" data-bs-toggle="modal" data-bs-target="#termsModal4">만 14세 이상 확인</span>
 					</label>
 				</div>
 				<!-- 결제수단 선택 끝 -->
 			</div>
 			
 			<div class="col-md-5 col-lg-5 pt-5">
-				<div id="reservationInfo">
+				<div id="reservationInfo" style="background:#fafafa; border-radius:20px;">
 					<div class="p-5">
 						<div class="mb-3">
-							<div class="mukMutedText mb-1">호텔 이름</div>
+							<div class="mukSubText mb-1">호텔 이름</div>
 							<h5>${hotel.hotelName }</h5>
 							<input type="hidden" name="hotelId" value="${hotel.hotelId }">
 							<input type="hidden" name="hotelName" value="${hotel.hotelName }">
 						</div>
 						<div class="mb-3">
-							<div class="mukMutedText mb-1">객실 이름</div>
+							<div class="mukSubText mb-1">객실 이름</div>
 							<h5>${room.roomName }</h5>
 							<input type="hidden" name="roomId" value="${room.roomId }">
 							<input type="hidden" name="roomName" value="${room.roomName }">
 						</div>
 						<div class="mb-3">
-							<div class="mukMutedText mb-1">숙박기간</div>
+							<div class="mukSubText mb-1">숙박기간</div>
 							<fmt:parseNumber value="${r.checkinDate.time / (1000*60*60*24)}" integerOnly="true" var="checkinDate" scope="request"/>
 							<fmt:parseNumber value="${r.checkoutDate.time / (1000*60*60*24)}" integerOnly="true" var="checkoutDate" scope="request"/>
 							<h5>${checkoutDate - checkinDate }박 ${checkoutDate - checkinDate+1 }일</h5>
 						</div>
 						<div class="mb-3">
-							<div class="mukMutedText mb-1">체크인</div>
+							<div class="mukSubText mb-1">체크인</div>
 							<input type="hidden" name="checkinDate" value="${r.checkinDate }">
 							<input type="hidden" name="checkinTime" value="${room.checkinTime }">
 							<h5><fmt:formatDate value="${r.checkinDate }" pattern="MM.dd E" /> ${room.checkinTime }</h5>
 						</div>
 						<div>
-							<div class="mukMutedText mb-1">체크아웃</div>
+							<div class="mukSubText mb-1">체크아웃</div>
 							<input type="hidden" name="checkoutDate" value="${r.checkoutDate }">
 							<input type="hidden" name="checkoutTime" value="${room.checkoutTime }">
 							<h5><fmt:formatDate value="${r.checkoutDate }" pattern="MM.dd E" /> ${room.checkoutTime }</h5>
@@ -193,8 +302,12 @@
 					}
 				}
 			}
-			console.log(boxes);
-		})
+		});
+		
+		$(".termsModalButton").on("click", function(){
+			$(this).parent().find("input[name=terms]").click();
+		});
+		
 		$("input[name=terms]").on("click", function() {
 			var allChecked = true;
 			var boxes = $("input[name=terms]");
@@ -219,9 +332,10 @@
 		
 		$("#reservationButton").on("click", function(){
 			
-			for(i of $(".mukCheckbox")) {
+			for(i of $("input[name=terms]")) {
 				if(!i.checked) {
 					alert("약관에 동의해주세요.");
+					console.log(i.checked);
 					break;
 				} else {
 					requestPay();

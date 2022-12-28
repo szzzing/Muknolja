@@ -194,4 +194,9 @@ public class HotelServiceImpl implements HotelService{
 	public int deleteRoomImg(int roomId) {
 		return hDAO.deleteRoomImg(sqlSession, roomId);
 	}
+	
+	@Override
+	public int insertReply(HashMap map) {
+		return hDAO.insertReply(sqlSession, map);
+	}
 }
