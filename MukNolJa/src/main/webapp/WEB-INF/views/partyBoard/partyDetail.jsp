@@ -16,16 +16,24 @@
 	.title button{background: #6BB6EC; border-color: #6BB6EC;}
 	.title button:hover{background: white; color: #6BB6EC; border-color: #6BB6EC;}
 	#location1, #location2{border: 1px solid lightgray; border-radius: 5px;}
-	#location1{padding-left: 10px; padding-top: 15px; padding-right: 20px; height: 180px; margin-bottom: 30px;}
-	#location2{height: 400px;}
+	#location1{padding-left: 10px; padding-top: 15px; padding-right: 20px; height: 180px; margin-bottom: 30px; margin-top: 20px;}
+	#location2{height: 420px; margin-top: 20px;}
 	#location1 button{float: right;}
 	#profile img{border-radius: 50%; width: 50px; height: 50px; margin-bottom: 10px;}
 	#location2{overflow-x: auto;}
+	#location2::-webkit-scrollbar {width: 8px;}
+	#location2::-webkit-scrollbar-thumb {
+	    height: 30%;
+	    background: lightgray;
+	    border-radius: 10px;
+	}
+	#location2::-webkit-scrollbar-track {
+	    background: rgba(176, 176, 176, .1);
+	}
  	#thumbnail{width: 100%; height: 400px; border-radius: 15px; margin-bottom: 30px;}
-	.content{height: 250px; margin-bottom: 30px;}
-	.content textarea{border: none;}
+	.content{height: 245px; margin-bottom: 30px;}
+	.content textarea{border: none; outline: none;}
 	
- 	
  	ol.numbered {
 	  list-style: none;
 	  border-left: 3px solid RGB(107, 182, 236,0.7);
@@ -62,11 +70,18 @@
 	  text-align: center;
 	  padding-top:-10px;
 	}
-	
 	#travelReply{margin-top: 30px;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
+	#updateButton{color: #424242; border: none; background: white;}
+	#updateButton:hover{color: #6BB6EC; border: none; background: white; text-decoration: underline; font-weight: 700;}
+	#deleteButton{color: #424242; border: none; background: white;}
+	#deleteButton:hover{color: #6BB6EC; border: none; background: white; text-decoration: underline; font-weight: 700;}
 	
+	.replyProfile img{border-radius: 50%; width: 40px; height: 40px; margin-bottom: 10px; float:left;}
+	.replyProfile table{font-size: 12px; vertical-align: middle;}
+	.buttons{background: white !important; border: none; font-size: 13px;}
+	.buttons:hover{background: white !important; border: none; font-size: 13px; color: black!important; font-weight: 700;}
 </style>
 </head>
 <body>
@@ -110,7 +125,7 @@
 				
 				<!-- 내용 -->
 				<div class="content input-group">
-				  <textarea class="form-control" aria-label="With textarea" style="resize: none;">${ p.partyContent }</textarea>
+				  <textarea style="resize: none; width: 100%;" readonly>${ p.partyContent }</textarea>
 				</div>
 			</div>
 			
@@ -122,28 +137,83 @@
 				<div id="location2">
 					 <ol class="numbered">
 					 <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
+					 <c:set var="contentIdList" value="${fn:split(p.contentCourse,'/')}" />
 						<c:forEach items="${ courseList }" var="course">
-							<li>${ course }</li>
+								<li>${ course }</li>
 						</c:forEach>
-					</ol>
+					 </ol>
+					 <c:forEach items="${ contentIdList }" var="contentId">
+					 	<input type="hidden" class="contentId" value="${ contentId }">
+					 </c:forEach>
 				</div>
+				<c:if test="${ loginUser.id != p.partyWriter }">
+					<div style="float: right; margin-top: 15px; display: none;">
+						<button type="submit" id="updateButton">수정</button>
+						<button type="submit" id="deleteButton">삭제</button>
+					</div>
+				</c:if>
+				<c:if test="${ loginUser.id == p.partyWriter }">
+					<div style="float: right; margin-top: 15px;">
+						<button type="submit" id="updateButton">수정</button>
+						<button type="submit" id="deleteButton">삭제</button>
+					</div>
+				</c:if>
+				
 			</div>
 			
-			<div id="partyReply">
-				<h4 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h4>
+			<div id="partyReply" style="margin-top:40px">
+				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h5>
 				<div class="input-group mb-3">
 					<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
 					<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
 				</div>
 			</div>
+			
+			<div style="margin-top: 30px;">
+				<div class="replyProfile">
+					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
+					<table style="float:left;">
+						<tr>
+							<td>슬픈고양이</td>
+						</tr>
+						<tr>
+							<td style="color: gray;">2022.12.28</td>
+						</tr>
+					</table>
+					<div style="float:right;">
+						<button class="buttons">수정</button>
+						<button class="buttons">삭제</button>
+					</div>
+				</div>
+				<div style="clear:both; margin-left: 33px; margin-top: 15px;">
+					<textarea style="resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;" readonly>여수 현지인분께 여쭤보니 거문도 방문을 추천해주시더라구요. 이미 인터넷에서 유명한 곳들은 다 방문하실 거 같으니.. 여수항에서 거문도 한 번 들러보시길 추천드립니다 :)</textarea>
+				</div>
+				<div>
+					<button class="buttons">답글달기</button>
+				</div>
+				<hr style="margin-top: 10px; border-color: gray;">
+			</div>
+		
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 		
-		
-
-		<br><br>
-		
-		
 	</div>
+	<script>
+// 		const numLis = document.getElementsByClassName('numbered')[0];
+// 		const locationn = document.getElementById('location2');
+// 		const lis = numLis.querySelectorAll('li');
+// 		const contentIds = locationn.querySelectorAll('input');
+// 		for(const li of lis){
+// 			li.addEventListener('click', function(){
+				
+// 			});
+// 		}
+
+// 		const updateButton = document.getElementById('updateButton');
+// 		updateButton.addEventListener('click', function(){
+			
+// 		});
+	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

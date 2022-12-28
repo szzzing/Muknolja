@@ -67,15 +67,15 @@ public class PartyController {
 	}
 	
 	@RequestMapping("insertParty.pa")
-	public String insertParty(HttpSession session, HttpServletRequest request, @ModelAttribute Party p, @ModelAttribute AttachedFile af, @RequestParam("thumbnail") MultipartFile thumbnail) {
+	public String insertParty(HttpSession session, HttpServletRequest request, @ModelAttribute Party p, @ModelAttribute AttachedFile af, @RequestParam("firstFile") MultipartFile firstFile) {
 		String boardWriter = ((Member)session.getAttribute("loginUser")).getId();
 		p.setPartyWriter(boardWriter);
 		
-		if(!thumbnail.getOriginalFilename().equals("")) {
-			String[] returnArr = AttachedFile.saveFile(thumbnail, request);
+		if(!firstFile.getOriginalFilename().equals("")) {
+			String[] returnArr = AttachedFile.saveFile(firstFile, request);
 			
 			if(returnArr[1] != null) {
-				af.setFileName(thumbnail.getOriginalFilename());
+				af.setFileName(firstFile.getOriginalFilename());
 				af.setFileModifyName(returnArr[1]);
 				af.setFileLink(returnArr[0]);
 			}

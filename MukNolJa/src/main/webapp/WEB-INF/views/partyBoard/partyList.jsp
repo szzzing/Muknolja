@@ -148,9 +148,16 @@
 			</div>
 			
 		<!-- 글쓰기버튼 -->
-			<div  style="float: right;">
-				<button type="button" class="writeButton mukButton" style="width: 150px;" id="writeButton">글쓰기</button>
-			</div>
+			<c:if test="${ loginUser == null }">
+				<div  style="float: right;">
+					<button type="button" class="writeButton mukButton" style="width: 150px; display: none;" id="writeButton">글쓰기</button>
+				</div>
+			</c:if>
+			<c:if test="${ loginUser != null }">
+				<div  style="float: right;">
+					<button type="button" class="writeButton mukButton" style="width: 150px;" id="writeButton">글쓰기</button>
+				</div>
+			</c:if>
 			
 		<!-- list카드 -->
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;">
@@ -162,10 +169,10 @@
 						  	<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">${ p.partyTitle }</h5>
 						  	  <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
 							  <ol class="numbered">
-							  	  <c:forEach items="${ courseList }" var="course" end="3">
-										  <li>${ course }</li>
-								 </c:forEach>
-							 </ol>
+								  <c:forEach items="${ courseList }" var="course" end="3">
+								  	<li>${ course }</li>
+								  </c:forEach>
+							  </ol>
 							 
 							 <table>
 							 	<tr>
@@ -205,11 +212,11 @@
 		
 		<script>
 			const partyCards = document.getElementsByClassName('card');
-			const partyId = document.getElementsByClassName('partyId')[0];
-			const nickName = document.getElementsByClassName('nickName')[0];
 			for(const partyCard of partyCards){
 				partyCard.addEventListener('click', function(){
-					location.href = '${contextPath}/partyDetail.pa?pId=' + partyId.value + '&writer=' + nickName.value;
+				var partyId = partyCard.querySelectorAll('input')[0].value;
+				var nickName = partyCard.querySelectorAll('input')[1].value;
+					location.href = '${contextPath}/partyDetail.pa?pId=' + partyId + '&writer=' + nickName;
 				});
 			}
 			

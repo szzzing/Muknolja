@@ -20,12 +20,13 @@
 		<result column="PARTY_ENDDATE" property="partyEndDate"/>
 		<result column="PARTY_GENDER" property="gender"/>
 		<result column="FILE_MODIFY_NAME" property="thumbnail"/>
+		<result column="CONTENT_COURSE" property="contentCourse"/>
 	</resultMap>
 	
 	<!-- 글입력 -->
 	<insert id="insertParty">
 		insert all
-		into board values(SEQ_BID.nextval, #{p.partyWriter}, 'P', #{p.partyCourse}, #{p.partyTitle}, #{p.partyContent}, sysdate, sysdate, #{p.partyArea}, default)
+		into board values(SEQ_BID.nextval, #{p.partyWriter}, 'P', #{p.partyCourse}, #{p.partyTitle}, #{p.partyContent}, sysdate, sysdate, #{p.partyArea}, default, #{p.contentCourse})
 		into attached_file values(SEQ_FID.nextval, 'P', sysdate, #{af.fileName}, #{af.fileModifyName}, #{af.fileLink}, default, 'Y')
 		into board_img values(SEQ_FID.currval, SEQ_BID.nextval)
 		into party values(SEQ_BID.currval, #{p.maxParticipate}, to_date(#{p.partyStartDate}), to_date(#{p.partyEndDate}), #{p.gender})

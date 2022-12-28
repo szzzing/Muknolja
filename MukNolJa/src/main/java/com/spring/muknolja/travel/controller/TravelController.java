@@ -168,10 +168,10 @@ public class TravelController {
 	}
 	
 	@RequestMapping("travelDetail.tr")
-	public String travelDetail(@RequestParam("contentId") String contentId, @RequestParam(value="page", required=false) Integer page, @RequestParam("mapx") String mapx, @RequestParam("mapy") String mapy, Model model) {
+	public String travelDetail(@RequestParam("contentId") String contentId, @RequestParam(value="page", required=false) Integer page, Model model) {
 		
 		try {
-			String urlStr = "http://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=" + serviceKey + "&contentId=" + contentId + "&defaultYN=Y&addrinfoYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest&_type=json";
+			String urlStr = "http://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=" + contentId + "&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&_type=json";
 			URL url = new URL(urlStr);
 			BufferedReader bf;
 			String line = "";
@@ -199,16 +199,18 @@ public class TravelController {
 				String homePage = tDetail.get("homepage").toString();
 				String addr = tDetail.get("addr1").toString();
 				String overview = tDetail.get("overview").toString();
+				String mapx = tDetail.get("mapx").toString();
+				String mapy = tDetail.get("mapy").toString();
 				
 				model.addAttribute("title", title);
 				model.addAttribute("tel", tel);
 				model.addAttribute("homePage", homePage);
 				model.addAttribute("addr", addr);
 				model.addAttribute("overview", overview);
+				model.addAttribute("mapx", mapx);
+				model.addAttribute("mapy", mapy);
 			}
 			model.addAttribute("contentId", contentId);
-			model.addAttribute("mapx", mapx);
-			model.addAttribute("mapy", mapy);
 			model.addAttribute("page", page);
 			
 			
@@ -264,7 +266,6 @@ public class TravelController {
 			for(int i = 0; i < parseItem3.size(); i++) {
 				JSONObject tInfo = (JSONObject)parseItem3.get(i);
 				
-				System.out.println(tInfo);
 				String infocenter = tInfo.get("infocenter").toString();
 				String opendate = tInfo.get("opendate").toString();
 				String parking = tInfo.get("parking").toString();

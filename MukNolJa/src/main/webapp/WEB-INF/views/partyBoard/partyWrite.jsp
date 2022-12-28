@@ -202,7 +202,7 @@
  		</div>
  		
  		<!-- hidden값 -->
- 		<input id="myFile" type="file" accept="image/*" style="display:none;" name="thumbnail">
+ 		<input id="myFile" type="file" accept="image/*" style="display:none;" name="firstFile">
  		<input type="hidden" name="partyTitle" id="hiddenTitle">
  		<input type="hidden" name="partyArea" id="hiddenLocation">
  		<input type="hidden" name="partyStartDate" id="hiddenStartDate">
@@ -210,6 +210,7 @@
  		<input type="hidden" name="gender" id="hiddenGender">
  		<input type="hidden" name="maxParticipate" id="hiddenNum">
  		<input type="hidden" name="partyCourse" id="hiddenCourse">
+ 		<input type="hidden" name="contentCourse" id="hiddenCourse2">
  	</form>
 		
 		<br><br>
@@ -255,13 +256,20 @@
 		<!-- 코스넣기 -->
 		const writeButton = document.getElementById('writeButton');
 		const numberLis = document.getElementsByClassName('numberLi');
+		const contentIds = document.getElementsByClassName('contentId2');
 		const hiddenCourse = document.getElementById('hiddenCourse');
+		const hiddenCourse2 = document.getElementById('hiddenCourse2');
 		var courseTest = "";
+		var courseTest2 = "";
 		writeButton.addEventListener('click', function(){
 			for(const numberLi of numberLis){
-				courseTest += numberLi.innerHTML + '/';
+				courseTest += numberLi.innerText + '/';
+			}
+			for(const contentId of contentIds){
+				courseTest2 += contentId.value + '/';
 			}
 			hiddenCourse.value = courseTest.slice(0, -1);
+			hiddenCourse2.value = courseTest2.slice(0, -1);
 		});
 		
 		
@@ -312,10 +320,12 @@
 						
 						let title = items[i]["title"];
 						let addr = items[i]["addr1"];
+						let contentId = items[i]["contentid"];
 						
 						var span = '<span>' + title + '</span>';
 						var p = '<p>' + addr + '</p>';
-						var searchDiv = '<div class="searchInfo" style="cursor: pointer;">' + span + p +'</div><hr>';
+						var hidden = '<input type="hidden" value="' + contentId + '" class="contentId1">';
+						var searchDiv = '<div class="searchInfo" style="cursor: pointer;">' + span + p + hidden + '</div><hr>';
 						
 						document.querySelector('.location1').innerHTML += searchDiv;
 					}
@@ -329,9 +339,10 @@
 	   	
  	   	<!-- 코스선택 후 리스트에 추가 -->
 	   	$(document).on('click', '.searchInfo', function(){
-	   		var li = '<li class="numberLi" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
+	   		var li = '<li class="numberLi" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>';
+	   		var ContentId = '<input type="hidden" value="' + this.querySelector('.contentId1').value + '" class="contentId2">';
 	   		var numLi = document.querySelector('.numbered');
-	   		numLi.innerHTML += li;
+	   		numLi.innerHTML += (li+ContentId);
 
 			const locDiv = document.getElementsByClassName('location2')[0];
 			locDiv.isScrollBottom = true;
