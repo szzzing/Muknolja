@@ -17,11 +17,13 @@ import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.QA;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.dao.MemberDAO;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
+import com.spring.muknolja.party.model.vo.Party;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService {
@@ -226,6 +228,30 @@ public class MemberServiceImpl implements MemberService {
 	public int getListCount2(String id) {
 		// TODO Auto-generated method stub
 		return mDAO.getListCount2(sqlSession,id);
+	}
+
+	@Override
+	public int deleteAA(LikeHotel list) {
+		// TODO Auto-generated method stub
+		return mDAO.deleteAA(sqlSession,list);
+	}
+
+	@Override
+	public int getListCount3(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.getListCount3(sqlSession,id);
+	}
+
+	@Override
+	public ArrayList<Party> selectParty(PageInfo pi, String id) {
+		// TODO Auto-generated method stub
+		return mDAO.selectParty(sqlSession,pi,id);
+	}
+
+	@Override
+	public int getListCount4(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.getListCount4(sqlSession,id);
 	}
 
 	

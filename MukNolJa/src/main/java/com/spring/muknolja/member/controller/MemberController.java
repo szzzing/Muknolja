@@ -35,10 +35,12 @@ import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.common.model.vo.QA;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.service.MemberService;
 import com.spring.muknolja.member.model.vo.Member;
+import com.spring.muknolja.party.model.vo.Party;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -501,8 +503,53 @@ public class MemberController {
 		}
 		
 		@RequestMapping("myInfoC.me")
-		public String myinfoC() {
+		public String myinfoC(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCount4(id);
+			
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 2);
+			model.addAttribute("pi",pi);
+				
 			return "myInfoC";		
+		}
+		@RequestMapping(value="myInfoCC.me", produces="application/json; charset=UTF-8")
+		@ResponseBody
+		public void myinfoCC(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			System.out.println(page);
+			int listCount = mService.getListCount4(id);
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 2);
+			
+			
+			ArrayList<Party> list = mService.selectParty(pi,id);
+			
+			HashMap map = new HashMap();
+			map.put("list", list);
+			
+			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+			gson = gb.create();
+			
+			try {
+				gson.toJson(map, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		@RequestMapping(value="myInfoDD.me", produces="application/json; charset=UTF-8")
@@ -566,6 +613,20 @@ public class MemberController {
 		@ResponseBody
 		public int deleteBB(@RequestParam("id")int id) {
 			int result = mService.deleteBB(id);
+			System.out.println("너는얻ㅣ"+id);
+			return result;
+			
+		}
+		@RequestMapping("deleteAA.me")
+		@ResponseBody
+		public int deleteAA(@RequestParam("hotelId")int hotelId, HttpSession session, LikeHotel list) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			
+			list.setHotelId(hotelId);
+			list.setId(id);
+			System.out.println("리스트는"+list);
+			int result = mService.deleteAA(list);
 			System.out.println("너는얻ㅣ"+id);
 			return result;
 			

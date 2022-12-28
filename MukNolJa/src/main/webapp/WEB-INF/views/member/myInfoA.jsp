@@ -125,6 +125,7 @@
 					var wifi = '';
 					var park = '';
 					var to = '';
+					var bread = '';
 					for(y = 0; y<list[i].star; y++){
 						 sta = sta+star;
 					}
@@ -141,12 +142,15 @@
 						fi = '<img alt="1" src="${contextPath }/resources/img/fi.png" style="width:50px; height:50px; margin-left:20px;">'
 					}
 					if( list[i].amenity == "Y" ){
-						to = '<img alt="1" src="${contextPath }/resources/img/to.png" style="width:50px; height:50px; ">'
+						to = '<img alt="1" src="${contextPath }/resources/img/to.png" style="width:50px; height:50px;margin-left:20px; ">'
+					}
+					if( list[i].breakfast == "Y" ){
+						bread = '<img alt="1" src="${contextPath }/resources/img/bread.png" style="width:50px; height:50px; ">'
 					}
 					var dHtml=	'<div class="row Small shadow " style="padding-top:20px;  ">'+
 							'<div id="l'+i+'" class="col-xl-4 col-12 cll" style="height:260px;"><img alt="왜"src="${ contextPath}/resources/uploadFiles/'+list[i].fileModifyName+'" style="width:100%; height:240px"></div>'+
-							'<div class="col-xl-8 col-8" style="float:left; text-align:left; font-size:30px; font-weight:600" >'+list[i].hotelName +'&nbsp;'+sta+'<i style="float:right; color:#6BB6EC" class="bi bi-heart-fill"></i><div style=" font-size:25px; margin-top:20px;font-weight:300">위치 :&nbsp;'+
-							list[i].hotelAddress+'</div><br>'+to+swim+fi+park+wifi+'</div>'
+							'<div class="col-xl-8 col-8" style="float:left; text-align:left; font-size:30px; font-weight:600" >'+list[i].hotelName +'&nbsp;'+sta+'<i  id="c'+i+'"style="float:right; color:#6BB6EC" class="bi bi-heart-fill imo"></i><div style=" font-size:25px; margin-top:20px;font-weight:300">위치 :&nbsp;'+
+							list[i].hotelAddress+'</div><div style="margin-top:20px; margin-bottom:20px;">'+bread+to+swim+fi+park+wifi+'</div></div>'
 					$('#dd').append(dHtml);
 					
 				}
@@ -155,6 +159,24 @@
 					var st = list[idNum].hotelId
 					console.log('번호' + st)
 					location.href="${ contextPath }/hotelDetail.ho?hotelId="+ st;
+				});
+				$(".imo").click(function(){
+					var idNum = $(this).attr('id').substr(1);
+					var st = list[idNum].hotelId
+					
+					$.ajax({
+						url: "${contextPath}/deleteAA.me",
+						traditional : true,
+						data: {
+							hotelId : st
+						},
+						success: (data)=>{
+						location.href="";
+						},
+						error: (data)=>{
+							console.log(data);
+						}
+					});
 				});
 			},
 			error: (data)=>{

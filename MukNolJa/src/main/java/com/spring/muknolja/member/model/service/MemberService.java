@@ -13,10 +13,12 @@ import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.QA;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
+import com.spring.muknolja.party.model.vo.Party;
 
 public interface MemberService {
 
@@ -95,6 +97,14 @@ public interface MemberService {
 	int deleteBB(int id);
 
 	int getListCount2(String id);
+
+	int deleteAA(LikeHotel list);
+
+	int getListCount3(String id);
+
+	ArrayList<Party> selectParty(PageInfo pi, String id);
+
+	int getListCount4(String id);
 
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
 

@@ -299,7 +299,7 @@
 	 select count(*)
 	 from QA
 	 where QA_WRITER = #{id} and QA_STATUS= 'Y'
-	 
+	 order by QA_CREATE_DATE desc
 	</select>
 	
 	<resultMap type="QA" id="qaResultSet">
@@ -353,8 +353,8 @@
 	<select id="selectHotel" resultMap="hotelResultSet">
 		select *
 		from hotel join LIKE_HOTEL using(hotel_id) JOIN HOTEL_IMG using(hotel_Id) JOIN ATTACHED_FILE using(FILE_Id)
-		where id = #{id} and HOTEL_STATUS = 'Y'
-	
+		where id = #{id} and HOTEL_STATUS = 'Y' and FILE_THUMBNAIL = 'Y'
+		order by hotel_id desc
 	</select>
 	
 	<update id="deleteDD">
@@ -368,5 +368,59 @@
 	 from hotel join LIKE_HOTEL using(hotel_id)
 		where id = #{id}  and HOTEL_STATUS = 'Y'
 	 
+	</select>
+	<update id="deleteAA">
+  		delete from like_hotel
+  		where id = #{id} and hotel_Id = #{hotelId}
+  	</update>
+  	
+  		<select id="myInfoBCount3" resultType="_int">
+	 select count(*)
+	 from PARTY_PARTICIPATE
+		where member_id = #{id}  
+	 
+	</select>
+	
+	<resultMap type="Party" id="partyResultSet">
+		<id column="BOARD_ID" property="partyId"/>
+		<result column="BOARD_WRITER" property="partyWriter"/>
+		<result column="NICKNAME" property="nickName"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="BOARD_COURSE" property="partyCourse"/>
+		<result column="BOARD_TITLE" property="partyTitle"/>
+		<result column="BOARD_CONTENT" property="partyContent"/>
+		<result column="BOARD_CREATE_DATE" property="createDate"/>
+		<result column="BAORD_MODIFY_DATE" property="modifyDate"/>
+		<result column="BOARD_AREA" property="partyArea"/>
+		<result column="BOARD_STATUS" property="partyStatus"/>
+		<result column="MAX_PARTICIPATE" property="maxParticipate"/>
+		<result column="PARTY_STARTDATE" property="partyStartDate"/>
+		<result column="PARTY_ENDDATE" property="partyEndDate"/>
+		<result column="PARTY_GENDER" property="gender"/>
+		<result column="FILE_MODIFY_NAME" property="thumbnail"/>
+	</resultMap>
+	<select id="myInfoBCount4" resultType="_int">
+		select COUNT(*)
+		from board
+			 join member on(board_writer = id)
+			 join party using(board_id)
+			 join board_img using(board_id)
+             join attached_file using(file_id)
+             join PARTY_PARTICIPATE using (board_id)
+             where MEMBER_ID = #{id}
+		order by board_id desc
+
+	</select>
+	<select id="selectParty" resultMap="partyResultSet">
+		select *
+		from board
+			 join member on(board_writer = id)
+			 join party using(board_id)
+			 join board_img using(board_id)
+             join attached_file using(file_id)
+             join PARTY_PARTICIPATE using (board_id)
+             where MEMBER_ID = #{id}
+		order by board_id desc
+
 	</select>
   </mapper>

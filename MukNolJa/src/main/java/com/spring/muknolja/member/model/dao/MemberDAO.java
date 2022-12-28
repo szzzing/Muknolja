@@ -16,10 +16,12 @@ import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.QA;
 import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
+import com.spring.muknolja.party.model.vo.Party;
 
 @Repository("mDAO")
 public class MemberDAO {
@@ -185,6 +187,29 @@ public class MemberDAO {
 	public int getListCount2(SqlSessionTemplate sqlSession, String id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.myInfoBCount2",id);
+	}
+
+	public int deleteAA(SqlSessionTemplate sqlSession, LikeHotel list) {
+		// TODO Auto-generated method stub
+		System.out.println("리스트는2"+list);
+		return sqlSession.delete("memberMapper.deleteAA",list);
+	}
+
+	public int getListCount3(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.myInfoBCount3",id);
+	}
+
+	public ArrayList<Party> selectParty(SqlSessionTemplate sqlSession, PageInfo pi, String id) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectParty", id, rowBounds);
+	}
+
+	public int getListCount4(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.myInfoBCount4",id);
 	}
 	
 	/*
