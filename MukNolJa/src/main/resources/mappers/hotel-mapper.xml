@@ -42,7 +42,21 @@
 		    join room_img using(room_id)
 		    join attached_file using(file_id)
 		where hotel_id=#{hotelId} and room_status='Y' and file_thumbnail='Y'
-		order by room_id desc
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			and instr(room_name, #{searchValue}) > 0
+		</if>
+		<if test="orderBy==null">
+			order by room_id desc
+		</if>
+		<if test='orderBy!=null and orderBy.equals("최신순")'>
+			order by room_id desc
+		</if>
+		<if test='orderBy!=null and orderBy.equals("낮은가격순")'>
+			order by room_price
+		</if>
+		<if test='orderBy!=null and orderBy.equals("높은가격순")'>
+			order by room_price desc
+		</if>
 	</select>
 	
 	<select id="selectAllRoomThumbnail" resultMap="attachedFileResultSet">

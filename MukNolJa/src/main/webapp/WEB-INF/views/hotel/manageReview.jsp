@@ -147,9 +147,6 @@
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-3 mb-5" style="border-bottom:1px solid #e9e9e9">
 					<h1 class="h2 fw-bold">리뷰 관리</h1>
 				</div>
-				<div class="newReviewList">
-				
-				</div>
 				
 				<div class="reviewList">
 					<div id="category">

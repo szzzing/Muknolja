@@ -127,7 +127,7 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="${contextPath }/manageReserve.ho">
-								<i class="fa-solid fa-door-closed"></i>
+								<i class="fa-solid fa-book"></i>
 								<span data-feather="file" class="align-text-bottom"></span>
 								예약 관리
 							</a>
@@ -145,89 +145,9 @@
 			
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mb-5">
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-3 mb-5" style="border-bottom:1px solid #e9e9e9">
-					<h1 class="h2 fw-bold">리뷰 관리</h1>
-				</div>
-				<div class="newReviewList">
-				
+					<h1 class="h2 fw-bold">예약 관리</h1>
 				</div>
 				
-				<div class="reviewList">
-					<div id="category">
-						<select class="form-select" name="searchByRoom" style="width:300px; display:inline-block;">
-							<option selected value="0">전체 객실</option>
-							<c:forEach items="${roomList }" var="r">
-								<option value="${r.roomId }">${r.roomName }</option>
-							</c:forEach>
-						</select>
-						<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
-							<option selected>최신순</option>
-							<option>별점순</option>
-						</select>
-					</div>
-					
-					
-					<!-- 리뷰 리스트 시작 -->
-					<div id="reviewList" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
-						<div id="reviewDiv" class="review col mt-3 mb-3" style="border-bottom:1px solid #e9e9e9; display:none">
-							<input type="hidden" name="reviewId">
-							<table class="table table-borderless">
-								<tr>
-									<td class="text-center" rowspan="5" style="width:60px;">
-										<div class="ratingEmoji" style="font-size:60px"></div>
-										<div class="hasReply mt-2" style="background:#6BB6EC; border-radius:10px; color:white; padding:2px 4px;">답변완료</div>
-									</td>
-									<td colspan="2">
-										<h5 class="fw-bold">
-											[<span class="reservationId"></span>번 예약]
-											<span class="roomName"></span>
-										</h5>
-										<span class="ratingStar"></span>
-										<span class="rating"></span>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" class="mukSubText">
-										<span class="nickName fw-bold"></span>
-										·
-										<span class="checkinDate"></span>
-										~
-										<span class="checkoutDate"></span> 숙박
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" class="reviewContent"></td>
-								</tr>
-								<tr>
-									<td class="mukMutedText"><span class="createDate"></span></td>
-									<td class="text-end mukMutedText">
-										<h4 class="writeReplyButton bi bi-chevron-down" style="display:inline-block; margin-bottom:0px; cursor:pointer;"></h4>
-									</td>
-								</tr>
-								<tr>
-									<td class="align-middle textarea pt-3 pb-3" colspan="2" style="display:none">
-										<div class="p-4" style="background:#fafafa; border-radius:20px;">
-											<table class="replyTable table table-borderless" style="margin-bottom:0px; padding:0;">
-												<tr class="align-middle">
-													<td style="width:30px; padding-bottom:10px"><img id="hotelImg" class="img-fluid" style="width:24px; height:24px; border-radius:50%;" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}"></td>
-													<td colspan="2" style="padding-bottom:10px"><h5 class="fw-bold" style="margin:0px; padding-top:3px; display:inline-block;">${hotel.hotelName }</h5></td>
-												</tr>
-												<tr class="writeReplyTr align-bottom" style="display:none;">
-													<td colspan="2"><textarea style="background:none; padding:0; border:0px !important; width:100%; height:48px; resize:none" required></textarea></td>
-													<td style="width:30px;"><div class="insertReplyButton fa-solid fa-message" style="color:#6bb6ec; float:right; cursor:pointer;"></div></td>
-												</tr>
-												<tr class="viewReplyTr" colspan="2" style="display:none;">
-													<td colspan="2" class="businessReply"></td>
-													<td class="align-bottom" style="width:30px;"><small class="modifyReplyButton" style="color:#6bb6ec; float:right; cursor:pointer;">수정</small></td>
-												</tr>
-											</table>
-										</div>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-					<!-- 리뷰 리스트 끝 -->
-				</div>
 			</main>
 
 		</div>

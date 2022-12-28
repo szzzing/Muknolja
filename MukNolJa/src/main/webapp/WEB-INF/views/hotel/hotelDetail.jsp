@@ -110,6 +110,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 <body>
+	<script>
+		document.title="먹놀자 :: ${hotel.hotelName}";
+	</script>
 	<jsp:include page="../member/menubar.jsp"/>
 	
 	<!-- 예약 전송용 form 시작 -->
@@ -158,7 +161,7 @@
 					${hotel.star }성급
 				</span>
 				<h1 class="fw-bold pb-1">${hotel.hotelName }
-					<c:if test="${!empty loginUser }">
+					<c:if test="${!empty loginUser && loginUser.memberType=='N' }">
 						<i id="likeHotelButton" class="fa-solid fa-bookmark"
 							<c:if test="${!empty loginUser && isLikeHotel==0 }">style="color:#E9E9E9"</c:if>
 							<c:if test="${!empty loginUser && isLikeHotel==1 }">style="color:#6BB6EC"</c:if>>
@@ -207,15 +210,29 @@
 		
 		<!-- 객실 리스트 시작 -->
 		<div id="roomList" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 gy-5">
-			<div class="col col-lg-3">
+			
+			<div id="hasNoRoom" class="col-lg-12 text-center pb-5">
+				<h1>🙏</h1>
+				<h4 class="fw-bold">예약 가능한 객실이 없습니다</h4>
+				<div class="fw-bold mukSubText">다음 기회에 찾아주세요</div>
+			</div>
+			
+			<div id="hasRoom1" class="col col-lg-3">
 				<div class="mb-3 form-floating">
 					<input type="text" class="form-control" id="daterangepicker" name="daterangepicker">
 					<label for="daterangepicker">1박 2일</label>
 				</div>
 			</div>
-			
+		
 			<!-- 객실 리스트 div -->
-			<div class="col col-lg-9">
+			<div id="hasRoom2" class="col col-lg-9">
+				<div id="roomCategory">
+					<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
+						<option selected>최신순</option>
+						<option>낮은가격순</option>
+						<option>높은가격순</option>
+					</select>
+				</div>
 				<div id="roomDivList" class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 g-5">
 					<div id="roomDiv" class="col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
 						<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 g-3">
@@ -234,12 +251,12 @@
 									</td></tr>
 									<tr><td class="align-bottom pt-3">
 										<small class="emptyRoom fw-bold blinking" style="color:red; display:none">마감임박</small>
-										<h4 class="roomPrice lh-1 fw-bold pb-3"></h4>
+										<h4 class="roomPrice lh-1 fw-bold"></h4>
 										<c:if test="${empty loginUser }">
-											<button type="button" class="reserveButton mukButton" style="width:100%" data-bs-toggle="modal" data-bs-target="#mukModal">예약하기</button>
+											<button type="button" class="reserveButton mukButton mt-3" style="width:100%" data-bs-toggle="modal" data-bs-target="#mukModal">예약하기</button>
 										</c:if>
-										<c:if test="${!empty loginUser }">
-											<button type="button" class="reserveButton mukButton" style="width:100%">예약하기</button>
+										<c:if test="${!empty loginUser && loginUser.memberType=='N' }">
+											<button type="button" class="reserveButton mukButton mt-3" style="width:100%">예약하기</button>
 										</c:if>
 									</td></tr>
 								</table>
@@ -259,24 +276,37 @@
 		
 		<!-- 리뷰 리스트 시작 -->
 		<div id="reviewList" class="mukDisplayNone">
-			<div class="text-center pb-5" style="border-bottom:1px solid #e9e9e9">
-				<h2 class="fw-bold">${hotel.hotelName }</h2>
-				<div style="display:inline-block">
-					<h2 id="ratingStar"></h2>
+			<div id="hasReview">
+				<div class="text-center pb-5" style="border-bottom:1px solid #e9e9e9">
+					<h2 class="fw-bold">${hotel.hotelName }</h2>
+					<div style="display:inline-block">
+						<h2 id="ratingStar"></h2>
+					</div>
+					<h2 class="fw-bold avgRating" style="display:inline-block">4.5</h2>
+					<h4 class="pt-3"><span class="reviewCount"></span>개의 리뷰</h4>
 				</div>
-				<h2 class="fw-bold avgRating" style="display:inline-block">4.5</h2>
-				<h4 class="pt-3"><span class="reviewCount"></span>개의 리뷰</h4>
-			</div>
-			<div id="category" class="pt-5">
-				<select class="form-select" name="searchByRoom" style="width:300px; display:inline-block;">
-					<option selected value="0">전체 객실</option>
-				</select>
-				<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
-					<option selected>최신순</option>
-					<option>별점순</option>
-				</select>
+				<div id="reviewCategory" class="pt-5">
+					<select class="form-select" name="searchByRoom" style="width:300px; display:inline-block;">
+						<option selected value="0">전체 객실</option>
+					</select>
+					<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
+						<option selected>최신순</option>
+						<option>별점순</option>
+					</select>
+				</div>
 			</div>
 			
+			<div id="hasNoReview" class="text-center pb-5">
+				<h1>😅</h1>
+				<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
+				<div class="fw-bold mukSubText" onclick='$("#roomListButton").click();' style="cursor:pointer">${hotel.hotelName }의 첫번째 리뷰어가 되어주세요</div>
+			</div>
+			
+			<div id="hasNoSubReview" class="col text-center pt-5 pb-5">
+				<h1>😅</h1>
+				<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
+				<div class="fw-bold mukSubText" onclick='$("#roomListButton").click();' style="cursor:pointer">${hotel.hotelName }의 첫번째 리뷰어가 되어주세요</div>
+			</div>
 			<div id="reviewListRow" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
 				<div id="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9; display:none">
 					<input type="hidden" name="reviewId">
@@ -371,9 +401,20 @@
 						checkoutDate: $("input[name=checkoutDate]").val()
 					},
 					success: (data)=>{
-						console.log(data);
 						
 						$("#roomDivList").html("");
+						
+						if(data.length==0) {
+							$("#hasRoom1").css("display", "none");
+							$("#hasRoom2").css("display", "none");
+							console.log($("#hasRoom2").css("display"));
+							$("#hasNoRoom").prop("style").removeProperty("display");
+						} else {
+							$("#hasNoRoom").css("display", "none");
+							$("#hasRoom1").prop("style").removeProperty("display");
+							$("#hasRoom2").prop("style").removeProperty("display");
+						}
+						
 						for(var i of data) {
 							var roomDiv2 = roomDiv.clone();
 							roomDiv2.find(".roomId").val(i.roomId);
@@ -397,7 +438,7 @@
 						}
 					},
 					error: (data)=>{
-						
+						console.log(data);
 					}
 				});
 			}
@@ -414,6 +455,16 @@
 		$(document).ready(function(){
 			var reviewDiv = $("#review").clone();
 			reviewDiv.prop("style").removeProperty("display");
+			const hasNoReview = false;
+			
+// 			if(reviewList.length==0) {
+// 				$("#hasReview").css("display", "none");
+// 				$("#hasNoReview").prop("style").removeProperty("display");
+// 				hasNoReview = true;
+// 			} else {
+// 				$("#hasNoReview").css("display", "none");
+// 				$("#hasReview").prop("style").removeProperty("display");
+// 			}
 			
 			$.reviewList = function(){
 				// 리뷰 불러오기
@@ -422,13 +473,22 @@
 					url: "${contextPath}/reviewList.ho",
 					data: {
 						hotelId: ${hotel.hotelId},
-						orderBy: $("select[name=orderBy]").val(),
-						searchByRoom: $("select[name=searchByRoom]").val()
+						orderBy: $("#reviewCategory select[name=orderBy]").val(),
+						searchByRoom: $("#reviewCategory select[name=searchByRoom]").val()
 					},
 					success: (data)=>{
-						const reviewList = data.reviewList;
+						reviewList = data.reviewList;
 						const avgRating = data.avgRating;
 						const reviewCount = data.reviewCount;
+						
+						if(!hasNoReview && reviewList.length==0) {
+							$("#hasNoSubReview").prop("style").removeProperty("display");
+							var selectedRoom = $("#reviewCategory select[name=searchByRoom]").val();
+							selectedRoom = $("option[value="+selectedRoom+"]").html();
+							$("#hasNoSubReview").find(".mukSubText").html(selectedRoom+"의 첫번째 리뷰어가 되어주세요");
+						} else {
+							$("#hasNoSubReview").css("display", "none");
+						}
 						
 						$(".avgRating").text(avgRating.toFixed(1));
 						$(".reviewCount").text(reviewCount);
@@ -499,7 +559,16 @@
 			}
 			$.reviewList();
 			
-			$("select").change(function(){
+			if(reviewList.length==0) {
+				$("#hasReview").css("display", "none");
+				$("#hasNoReview").prop("style").removeProperty("display");
+				hasNoReview = true;
+			} else {
+				$("#hasNoReview").css("display", "none");
+				$("#hasReview").prop("style").removeProperty("display");
+			}
+			
+			$("#reviewCategory select").change(function(){
 				$.reviewList();
 			});
 		});

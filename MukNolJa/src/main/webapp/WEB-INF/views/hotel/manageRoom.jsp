@@ -18,8 +18,11 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-	.form-control {border:1px solid #e9e9e9 !important}
   	* {font-family: 'Noto Sans KR', sans-serif;}
+	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	input:focus {outline: none !important;} /* outline 테두리 없애기 */
+	textarea:focus {outline: none !important;} /* outline 테두리 없애기 */
 	::-webkit-scrollbar {width:5px;}
 	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
 	::-webkit-scrollbar-track {opacity:0;}
@@ -146,13 +149,24 @@
 					<h1 class="h2 fw-bold">객실 관리</h1>
 					<div id="writeRoomButton" class="fw-bold">객실 추가</div>
 				</div>
-				<div id="roomDivList" class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 g-3">
-					<div id="roomDiv" class="room col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
+				
+				<div id="category">
+					<input type="text" class="form-control" name="searchValue" style="width:300px; display:inline-block;">
+					<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
+						<option selected>최신순</option>
+						<option>낮은가격순</option>
+						<option>높은가격순</option>
+					</select>
+				</div>
+				
+				
+				<div id="roomDivList" class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
+					<div id="roomDiv" class="room col pb-4 mb-4" style="border-bottom:1px solid #e9e9e9; display:none">
 						<div class="row g-3" data-bs-toggle="modal" data-bs-target="#roomDetailModal">
-							<div class="col col-3">
+							<div class="col col-5 col-sm-5 col-lg-3">
 								<img class="roomImg img-fluid mukRound h-100" src="#">
 							</div>
-							<div class="col col-9">
+							<div class="col col-7 col-sm-7 col-lg-9">
 								<table id="roomTable" class="table table-borderless" style="margin-bottom:0px; height:100%">
 									<tr><td>
 										<input type="hidden" class="roomId">
@@ -190,7 +204,9 @@
 				$.ajax({
 					url: "${contextPath}/selectAllRoom.ho",
 					data: {
-						hotelId: ${hotel.hotelId}
+						hotelId: ${hotel.hotelId},
+						searchValue: $("input[name=searchValue]").val(),
+						orderBy: $("select[name=orderBy]").val()
 					},
 					success: (data)=>{
 						$("#roomDivList").html("");
@@ -207,7 +223,7 @@
 							roomDiv2.find(".checkoutTime").html(i.checkoutTime);
 							roomDiv2.find(".roomPrice").html(i.roomPrice.toLocaleString()+"원");
 							roomDiv2.find(".roomImg").prop("src", "${contextPath }/resources/uploadFiles/"+i.thumbnail);
-							$("#roomDivList").append('<div class="room col pb-3" style="border-bottom:1px solid #f1f1f1">'+roomDiv2.html()+'</div>');
+							$("#roomDivList").append(roomDiv2.clone());
 						}
 					},
 					error: (data)=>{
@@ -215,6 +231,14 @@
 					}
 				});
 			}
+			$.roomList();
+		});
+		
+		$("input[type=text]").keyup(function(){
+			console.log($("input[name=searchValue]").val());
+			$.roomList();
+		});
+		$("select").change(function(){
 			$.roomList();
 		});
 	</script>

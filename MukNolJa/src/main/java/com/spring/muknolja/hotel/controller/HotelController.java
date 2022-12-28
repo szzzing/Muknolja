@@ -597,12 +597,16 @@ public class HotelController {
 	
 	@RequestMapping(value="selectAllRoom.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void selectAllRoom(@RequestParam("hotelId") int hotelId, @RequestParam(value="checkinDate", required=false) Date checkinDate, @RequestParam(value="checkoutDate", required=false) Date checkoutDate, Model model, HttpServletResponse response) {
+	public void selectAllRoom(@RequestParam("hotelId") int hotelId, @RequestParam(value="checkinDate", required=false) Date checkinDate, @RequestParam(value="checkoutDate", required=false) Date checkoutDate, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam(value="orderBy", required=false) String orderBy, Model model, HttpServletResponse response) {
 		HashMap map = new HashMap();
 		
 		map.put("checkinDate", checkinDate);
 		map.put("checkoutDate", checkoutDate);
 		map.put("hotelId", hotelId);
+		map.put("searchValue", searchValue);
+		map.put("orderBy", orderBy);
+		
+		System.out.println(map);
 		
 		ArrayList<Room> roomList = hService.selectAllRoom(map);
 		
