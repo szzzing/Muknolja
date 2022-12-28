@@ -66,12 +66,12 @@
 			      </div>
 			      <div class="row justify-content-center " style="padding-left:0px; padding-right:0px; height:70px; margin-top:30px; ">
 	            		<div  class="col-9" style=" height:650px; ">
-	            			<div id="dd" style="padding-top:10px;">
 	            			
+	            				<div class="row" id="dd">
 	            			
 	            				
-	            			 
-	            		</div>
+	            			 </div>
+	            		
 	            			<nav aria-label="Page navigation example" style="margin-top:20px;" class="col">
 								  <ul class="pagination d-flex justify-content-center">
 								    <li class="page-item">
@@ -120,10 +120,24 @@
 					
 					for(i = 0; i<list.length; i++){
 						
-						var ht = '<div class="row"><div class="col-xl-6 col"><img alt="왜"src="${ contextPath}/resources/uploadFiles/'+list[i].thumbnail+'" style="width:100%; height:300px"></div></div>';
+						var ht = '<div id="'+i+'"class="col-lg-6 col-12 bo" style="height:550px; " ><div style="height:540px;box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); border-radius:10px;"><img alt="왜"src="${ contextPath}/resources/uploadFiles/'+list[i].thumbnail+'" style="width:100%; height:250px">'+
+						'<div style="padding:5px;border-top:2px solid RGB(106, 181, 235, 0.3);border-bottom:2px solid RGB(106, 181, 235, 0.3); font-size:20px;">'+list[i].partyContent+' </div><div class="row" style="margin-top:10px; text-align:left"><div style="padding-left:30px;" class="col-6">작성자 : '+list[i].partyWriter+'<br>성별 : '+list[i].gender+'</div>'+
+						'<div class="col-6">지역 : '+list[i].partyArea+'<br> 인원 : '+list[i].maxParticipate+'</div></div><div style="text-align:left; padding-left:20px;">날짜 : '+list[i].partyStartDate+' ~ '+list[i].partyEndDate+'</div></div></div>'
+								
 									
 						$('#dd').append(ht);		
 					}
+					
+					$('.bo').click(function(){
+						var idNum = $(this).attr('id');
+						var type = list[idNum].boardType;
+						var pId = list[idNum].partyId;
+						var nickName = list[idNum].nickName;
+						
+							location.href="${ contextPath }/partyDetail.pa?pId="+ pId+'&writer='+ nickName;
+						
+						
+					});
 				},
 				error: (data)=>{
 					console.log(data);

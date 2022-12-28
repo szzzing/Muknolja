@@ -106,6 +106,10 @@ public interface MemberService {
 
 	int getListCount4(String id);
 
+	int getListCount5(String id);
+
+	ArrayList<Board> selectB(PageInfo pi, String id);
+
 	ArrayList<Map<String, Integer>> selectVisitAllList();
 
 	int waringCheck(String id);

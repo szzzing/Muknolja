@@ -219,6 +219,16 @@ public class MemberDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("memberMapper.myInfoBCount4",id);
 	}
+
+	public int getListCount5(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.myInfoBCount5",id);
+	}
+
+	public ArrayList<Board> selectB(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.selectB", id);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int

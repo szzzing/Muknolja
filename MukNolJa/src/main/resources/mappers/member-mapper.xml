@@ -227,6 +227,7 @@
   		<result column="BAORD_MODIFY_DATE" property="modifyDate"/>
   		<result column="BOARD_AREA" property="boardArea"/>
   		<result column="BOARD_STATUS" property="boardStatus"/>
+  		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
   	</resultMap>
   	
   	<resultMap type="AD" id="ADResultSet">
@@ -445,5 +446,16 @@
              where MEMBER_ID = #{id}
 		order by board_id desc
 
+	</select>
+	<select id="myInfoBCount5" resultType="_int">
+		select COUNT(*)
+		from board 
+		where BOARD_WRITER = #{id} and BOARD_STATUS = 'Y'
+	</select>
+	
+	<select id="seletB" resultMap="BoardResultSet">
+		select *
+		from board join board_img using (board_id) join ATTACHED_FILE using(file_id)
+		where BOARD_WRITER = #{id} and BOARD_STATUS = 'Y' and FILE_THUMBNAIL='Y'
 	</select>
   </mapper>
