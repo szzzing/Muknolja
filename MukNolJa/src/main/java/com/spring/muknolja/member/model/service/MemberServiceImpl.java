@@ -254,6 +254,18 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.getListCount4(sqlSession,id);
 	}
 
+	@Override
+	public int getListCount5(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.getListCount5(sqlSession,id);
+	}
+
+	@Override
+	public ArrayList<Board> selectB(PageInfo pi, String id) {
+		// TODO Auto-generated method stub
+		return mDAO.selectB(sqlSession,id);
+	}
+
 	
 	/*
 	 * @Override public ArrayList<AttachedFile> selectImg(int hotelId) { // TODO

@@ -24,4 +24,5 @@ public class Board {
 	private Date modifyDate;
 	private String boardArea;
 	private String boardStatus;
+	private String fileModifyName;
 }

@@ -140,8 +140,20 @@ public class MemberController {
 			
 		}
 		@RequestMapping("myInfo.me")
-		public String myInfo() {
-			return"myInfo";
+		public String myinfo(HttpSession session,@RequestParam(value="page", required=false) Integer page,Model model) {
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCount5(id);
+			
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
+			model.addAttribute("pi",pi);
+			return "myInfo";		
 		}
 		@RequestMapping("checkNickName.me")
 		@ResponseBody
@@ -371,7 +383,7 @@ public class MemberController {
 		}
 		@RequestMapping("enrollH2.me")
 		public String enrollH2(Member member, @RequestParam("file")ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
-			
+			System.out.println("나는"+files);
 			ArrayList<AttachedFile> list = new ArrayList();
 			for(MultipartFile file : files) {
 				String fileName = file.getOriginalFilename();
@@ -572,6 +584,39 @@ public class MemberController {
 			HashMap map = new HashMap();
 			map.put("list", list);
 			map.put("pi", pi);
+			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+			gson = gb.create();
+			
+			try {
+				gson.toJson(map, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@RequestMapping(value="myInfo11.me", produces="application/json; charset=UTF-8")
+		@ResponseBody
+		public void myinfo11(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			System.out.println(page);
+			int listCount = mService.getListCount5(id);
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 6);
+			
+			
+			ArrayList<Board> list = mService.selectB(pi,id);
+			
+			HashMap map = new HashMap();
+			map.put("list", list);
+			
 			
 			response.setContentType("application/json; charset=UTF-8");
 			Gson gson = new Gson();
