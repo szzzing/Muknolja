@@ -164,7 +164,7 @@
 					
 					
 					<!-- 리뷰 리스트 시작 -->
-					<div id="hasNoSubReview" class="text-center mt-3 mb-3 pt-5 pb-5">
+					<div id="hasNoSubReview" class="text-center mt-3 mb-3 pt-5 pb-5" style="display:none">
 						<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/0.svg">
 						<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
 					</div>

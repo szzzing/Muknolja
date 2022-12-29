@@ -99,6 +99,7 @@
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gx-5 gy-5">
 			<div class="col col-lg-3">
 				<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 p-3 pt-4 pb-4 mb-5" style="border:1px solid #f1f1f1">
+					
 					<div class="col">
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
 							<div class="fw-bold pb-2" style="display:inline-block;">날짜</div>
@@ -107,6 +108,21 @@
 						</div>
 					</div>
 					<div id="subCategory" class="col">
+						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
+							<div class="fw-bold pb-2" style="display:inline-block;">거리</div>
+							<button id = "find-me">Show my location</button><br/>
+							<p id = "status"></p>
+							<a id = "map-link" target="_blank"></a>
+							<small id="cancelDistance" class="mukSubText" style="display:none; float:right">초기화</small>
+							<div style="float:right;" class="value fw-bold mukSubText">무관</div>
+							<input id="maxDistance" name="maxDistance" class="mukRange" value="0" max="100" min="10" step="10" type="range">
+						</div>
+						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
+							<div class="fw-bold pb-2">가격</div>
+							<small id="cancelPrice" class="mukSubText" style="display:none; float:right"><i class="bi bi-x-lg"></i></small>
+							<div class="value mukSubText" style="float:right"><span class="value">무관</div>
+							<input id="maxPrice" name="maxPrice" class="mukRange" value="0" max="100" min="10" step="10" type="range">
+						</div>
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
 							<div class="fw-bold pb-2">등급</div>
 							<div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-2">
@@ -142,7 +158,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
+						<div>
 							<div class="fw-bold pb-2">시설</div>
 							<div class="row row-cols-3 row-cols-sm-3 row-cols-md-3 row-cols-lg-2">
 								<div class="col">
@@ -182,18 +198,6 @@
 									</label>
 								</div>
 							</div>
-						</div>
-						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
-							<div class="fw-bold pb-2" style="display:inline-block;">가격</div>
-							<small id="cancelPrice" class="mukSubText" style="display:none"><i class="bi bi-x-lg"></i></small>
-							<small class="fw-bold value mukSubText" style="float:right"><span class="value">무관</small>
-							<input id="maxPrice" name="maxPrice" class="mukRange" value="0" max="100" min="10" step="10" type="range">
-						</div>
-						<div>
-							<div class="fw-bold pb-2" style="display:inline-block;">거리</div>
-							<small id="cancelDistance" class="mukSubText" style="display:none"><i class="bi bi-x-lg"></i></small>
-							<small style="float:right;" class="value fw-bold mukSubText">무관</small>
-							<input id="maxDistance" name="maxDistance" class="mukRange" value="0" max="100" min="10" step="10" type="range">
 						</div>
 					</div>
 				</div>
@@ -385,7 +389,43 @@
 	<!-- 호텔 검색 끝 -->
 	
 	
-	
+	<!-- 위치 -->
+	<script>
+		function geoFindMe() {
+
+		  const status = document.querySelector('#status');
+		  const mapLink = document.querySelector('#map-link');
+		
+		  mapLink.href = '';
+		  mapLink.textContent = '';
+		
+		  function success(position) {
+		    const latitude  = position.coords.latitude;
+		    const longitude = position.coords.longitude;
+		
+		    status.textContent = latitude + ", " + longitude;
+		    console.log("성공");
+		    console.log(latitude);
+		    console.log(longitude);
+		  }
+		  function error() {
+		    status.textContent = 'Unable to retrieve your location';
+		    console.log("실패");
+		  }
+		
+		  if(!navigator.geolocation) {
+		    status.textContent = 'Geolocation is not supported by your browser';
+		    console.log("Geolocation is not supported by your browser");
+		  } else {
+		    status.textContent = 'Locating…';
+		    navigator.geolocation.getCurrentPosition(success, error);
+		  }
+		
+		}
+		
+		document.querySelector('#find-me').addEventListener('click', geoFindMe);
+	</script>
+	<!-- 위치 -->
 	
 	
 	

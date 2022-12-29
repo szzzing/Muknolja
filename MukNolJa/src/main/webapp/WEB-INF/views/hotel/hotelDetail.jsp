@@ -211,7 +211,7 @@
 		<!-- 객실 리스트 시작 -->
 		<div id="roomList" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 gy-5">
 			
-			<div id="hasNoRoom" class="col-lg-12 text-center pt-5 pb-5">
+			<div id="hasNoRoom" class="col-lg-12 text-center pt-5 pb-5" style="display:none">
 				<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/1f64f.svg">
 				<h4 class="fw-bold">예약 가능한 객실이 없습니다</h4>
 				<div class="fw-bold mukSubText">다음 기회에 찾아주세요</div>
@@ -227,11 +227,6 @@
 			<!-- 객실 리스트 div -->
 			<div id="hasRoom2" class="col col-lg-9">
 				<div id="roomCategory">
-<!-- 					<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;"> -->
-<!-- 						<option selected>최신순</option> -->
-<!-- 						<option>낮은가격순</option> -->
-<!-- 						<option>높은가격순</option> -->
-<!-- 					</select> -->
 				</div>
 				<div id="roomDivList" class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 g-5">
 					<div id="roomDiv" class="col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
@@ -296,7 +291,7 @@
 				</div>
 			</div>
 			
-			<div id="hasNoSubReview" class="col text-center pt-5 pb-5">
+			<div id="hasNoSubReview" class="col text-center pt-5 pb-5" style="display:none">
 				<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/0.svg">
 				<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
 				<div class="fw-bold mukSubText" onclick='$("#roomListButton").click();' style="cursor:pointer">${hotel.hotelName }의 첫번째 리뷰어가 되어주세요</div>

@@ -159,7 +159,7 @@
 					</select>
 				</div>
 				
-				<div id="hasNoRoom" class="col-lg-12 text-center pt-5 pb-5">
+				<div id="hasNoRoom" class="col-lg-12 text-center pt-5 pb-5" style="display:none">
 					<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/1f64f.svg">
 					<h4 class="fw-bold">객실이 없습니다</h4>
 				</div>
