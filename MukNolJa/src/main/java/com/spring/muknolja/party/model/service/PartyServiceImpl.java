@@ -42,4 +42,14 @@ public class PartyServiceImpl implements PartyService{
 		return pDAO.selectParty(sqlSession, pId);
 	}
 
+	@Override
+	public int updateParty(HashMap<String, Object> map) {
+		return pDAO.updateParty(sqlSession, map);
+	}
+
+	@Override
+	public int deleteParty(HashMap<String, Integer> map) {
+		return pDAO.deleteParty(sqlSession, map);
+	}
+
 }

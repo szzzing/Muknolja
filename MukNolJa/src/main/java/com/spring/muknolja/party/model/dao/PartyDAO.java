@@ -34,4 +34,17 @@ public class PartyDAO {
 		return sqlSession.selectOne("partyMapper.selectParty", pId);
 	}
 
+	public int updateParty(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		int board = sqlSession.update("partyMapper.updateBoard", map);
+		int party = sqlSession.update("partyMapper.updateParty", map);
+		int attm = sqlSession.update("partyMapper.updateAttm", map);
+		return board + party + attm;
+	}
+
+	public int deleteParty(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		int board = sqlSession.update("partyMapper.deleteBoard", map);
+		int attm = sqlSession.update("partyMapper.deleteAttm", map);
+		return board + attm;
+	}
+
 }

@@ -170,10 +170,9 @@
 						  	  <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
 							  <ol class="numbered">
 								  <c:forEach items="${ courseList }" var="course" end="3">
-								  	<li>${ course }</li>
+								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
 								  </c:forEach>
 							  </ol>
-							 
 							 <table>
 							 	<tr>
 							 		<td><i class="fa-solid fa-users"></i> 0/${ p.maxParticipate }</td>
@@ -216,7 +215,7 @@
 				partyCard.addEventListener('click', function(){
 				var partyId = partyCard.querySelectorAll('input')[0].value;
 				var nickName = partyCard.querySelectorAll('input')[1].value;
-					location.href = '${contextPath}/partyDetail.pa?pId=' + partyId + '&writer=' + nickName;
+					location.href = '${contextPath}/selectParty.pa?pId=' + partyId + '&writer=' + nickName;
 				});
 			}
 			
