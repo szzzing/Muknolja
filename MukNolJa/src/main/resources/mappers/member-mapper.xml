@@ -495,4 +495,41 @@
 		set AD_PRICE = #{a.price}, START_DATE = #{a.start}, DEADLINE = #{a.deadline}
 		where FILE_ID = #{beforeFileId}
 	</update>
+	
+	<select id="reportListCount" resultType="_int">
+		select count(*)
+		from REPORT
+	</select>
+	
+	<select id="selectReportList" resultMap="ReportResultSet">
+		select *
+		from report
+		<if test="search != null">
+			where REPORT_TITLE LIKE '%'||#{search}||'%'
+		</if>
+		order by REPORT_ID desc
+	</select>
+	
+	<resultMap type="Report" id="ReportResultSet">
+		<id column="REPORT_ID" property="reportId"/>
+		<result column="MEMBER_ID" property="memberId"/>
+		<result column="TARGET_ID" property="targetId"/>
+		<result column="REPORT_CLASSIFICATION" property="reportClassification"/>
+		<result column="REPORT_CONTENT" property="reportContent"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="PROCESSING" property="processing"/>
+		<result column="REPORT_TITLE" property="reportTitle"/>
+	</resultMap>
+	
+	<select id="selectBoardType" resultType="String">
+		select BOARD_TYPE
+		from board
+		where BOARD_ID = #{id}
+	</select>
+	
+	<update id="updateProcessing">
+		update report
+		set PROCESSING = 'Y'
+		where REPORT_ID = #{id}
+	</update>
   </mapper>

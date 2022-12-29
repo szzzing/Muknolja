@@ -120,7 +120,7 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.boardListCount");
 	}
 
-	public ArrayList<Board> selectBoardList(SqlSessionTemplate sqlSession, HashMap<String, Object> map, PageInfo pi) {
+	public ArrayList<Object> selectBoardList(SqlSessionTemplate sqlSession, HashMap<String, Object> map, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
@@ -243,6 +243,24 @@ public class MemberDAO {
 
 	public int updateAd(SqlSessionTemplate sqlSession, HashMap<String, Object> aMap) {
 		return sqlSession.update("memberMapper.updateAd", aMap);
+	}
+
+	public int reportListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.reportListCount");
+	}
+
+	public ArrayList<Object> selectReportList(SqlSessionTemplate sqlSession, String search, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectReportList", search, rowBounds);
+	}
+
+	public String selectBoardType(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("memberMapper.selectBoardType", id);
+	}
+
+	public int updateProcessing(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.update("memberMapper.updateProcessing", id);
 	}
 	
 	/*
