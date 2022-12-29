@@ -861,4 +861,16 @@ public class MemberController {
 			}
 		}
 		
+		@RequestMapping("QA.me")
+		public String QA(Model model) {
+			
+			ArrayList<Map<String, Integer>> qCountList = mService.QACount();
+			ArrayList<QA> qList = mService.selectQAList();
+			
+			model.addAttribute("qList", qList);
+			model.addAttribute("qCountList", qCountList);
+			
+			return "QA";
+		}
+		
 }

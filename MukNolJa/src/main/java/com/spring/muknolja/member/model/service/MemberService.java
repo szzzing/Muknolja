@@ -130,6 +130,10 @@ public interface MemberService {
 
 	int updateProcessing(String id);
 
+	ArrayList<Map<String, Integer>> QACount();
+
+	ArrayList<QA> selectQAList();
+
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
 
 
