@@ -28,6 +28,7 @@
 	.replyProfile table{font-size: 12px; vertical-align: middle;}
 	.buttons{background: white !important; border: none; font-size: 13px;}
 	.buttons:hover{background: white !important; border: none; font-size: 13px; color: black!important; font-weight: 700;}
+	#travelReply input[readonly]{background: white;}
 </style>
 </head>
 <body>
@@ -155,14 +156,22 @@
 				</table>
 			</div>
 		</div>
-			
+		
+		<!-- 댓글입력 -->
+		<form method="POST">
 		<div id="travelReply">
 			<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h5>
 			<div class="input-group mb-3">
-				<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-				<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
+				<c:if test="${ loginUser == null }">
+					<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
+				</c:if>
+				<c:if test="${ loginUser != null }">
+					<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" id="replyContent">
+				</c:if>
+				<button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="bi bi-send"></i></button>
 			</div>
 		</div>
+		</form>
 		
 		<div style="margin-top: 30px;">
 				<div class="replyProfile">
@@ -218,6 +227,20 @@
 	<script>
 		$('#print').click(function(){
 			window.print();
+		});
+		
+		document.getElementById('button-addon2').addEventListener('click', function(){
+			$.ajax({
+				url: '${contextPath}/insertReply.pa',
+				date: {replyContent:document.getElementById('replyContent').value,
+					   refBoardId:${contentId}, replyWriter:'${loginUser.id}'},
+				success: (data) =>{
+					console.log(data)
+				},
+				error: (data) =>{
+					console.log(data)
+				}
+			});
 		});
 		
 	</script>

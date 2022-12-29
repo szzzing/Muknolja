@@ -103,6 +103,8 @@
 	.card td{width: 80px; font-size: 14px; color: gray; margin-right: auto;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
+	.pagination a{color: #6BB6EC;}
+	.pagination a:hover{background: #6BB6EC; color: white;}
 </style>
 </head>
 <body style="background-color:white;">
@@ -192,17 +194,26 @@
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination d-flex justify-content-center">
 			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
+			    	<c:url var="goBack" value="${ loc }">
+			    		<c:param name="page" value="${ pi.currentPage-1 }"/>
+			    	</c:url>
+			      	<a class="page-link" href="${ goBack }" aria-label="Previous">
+			        	<span aria-hidden="true"><i class="fa-solid fa-angle-left"></i></span>
+			      	</a>
 			    </li>
-			    <li class="page-item"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
+			    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+			    	<c:url var="goNum" value="${ loc }">
+			    		<c:param name="page" value="${ p }"/>
+			    	</c:url>
+				    <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
+			    </c:forEach>
 			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
+			    	<c:url var="goNext" value="${ loc }">
+			    		<c:param name="page" value="${ pi.currentPage+1 }"/>
+			    	</c:url>
+				    <a class="page-link" href="${ goNext }" aria-label="Next">
+				    	<span aria-hidden="true"><i class="fa-solid fa-angle-right"></i></span>
+				    </a>
 			    </li>
 			  </ul>
 			</nav>
