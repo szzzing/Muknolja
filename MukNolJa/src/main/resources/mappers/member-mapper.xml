@@ -556,4 +556,10 @@
 		from qa
 		where QA_ID = #{id}
 	</select>
+	
+	<update id="updateQAReply">
+		update qa
+		set QA_REPLY_CONTENT = #{qaReplyContent}, QA_YN = 'Y'
+		where QA_ID = #{qaId}
+	</update>
   </mapper>

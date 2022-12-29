@@ -337,6 +337,11 @@ public class MemberServiceImpl implements MemberService {
 	public QA selectQAOne(String id) {
 		return mDAO.selectQAOne(sqlSession, id);
 	}
+	
+	@Override
+	public int updateQAReply(QA q) {
+		return mDAO.updateQAReply(sqlSession, q);
+	}
 
 	
 

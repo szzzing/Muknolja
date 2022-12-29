@@ -179,6 +179,13 @@
               광고 관리
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="QA.me">
+              <i class="bi bi-question-circle"></i>
+              <span data-feather="users" class="align-text-bottom"></span>
+              문의 내역
+            </a>
+          </li>
         </ul>
         <a href="${ contextPath }/logout.me" id="logout"><i class="bi bi-box-arrow-right"></i> 로그아웃</a>
       </div>
@@ -221,15 +228,15 @@
 	              <td>${ a.price }</td>
 	              <td>${ a.start }</td>
 	              <td>${ a.deadline }</td>
-	              <td width="80"><button type="button" class="btn btn-outline-primary btn-sm adDetail">확인</button></td>
-	              <td width="80"><button type="button" class="btn btn-outline-primary btn-sm adModify">수정</button></td>
+	              <td width="80"><button type="button" class="mukButton adDetail">확인</button></td>
+	              <td width="80"><button type="button" class="mukButton adModify">수정</button></td>
 	              <input type="hidden" value="${ a.fileId }">
 	            </tr>
             </c:forEach>
             <c:forEach begin="1" end="${ 3 - fn:length(aList) }">
             	<tr>
             		<td colspan="6">
-            			<button type="button" class="btn btn-outline-secondary addAd">광고 추가</button>
+            			<button type="button" class="mukButton addAd">광고 추가</button>
             		</td>
             	</tr>
             </c:forEach>

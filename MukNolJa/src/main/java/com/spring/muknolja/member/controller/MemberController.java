@@ -897,4 +897,12 @@ public class MemberController {
 			}
 		}
 		
+		@RequestMapping("qaReply.me")
+		@ResponseBody
+		public int qaReply(@ModelAttribute QA q) {
+			
+			int result = mService.updateQAReply(q);
+			
+			return result;
+		}
 }

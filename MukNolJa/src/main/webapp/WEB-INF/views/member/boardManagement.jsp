@@ -125,6 +125,13 @@
               광고 관리
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="QA.me">
+              <i class="bi bi-question-circle"></i>
+              <span data-feather="users" class="align-text-bottom"></span>
+              문의 내역
+            </a>
+          </li>
         </ul>
         <a href="${ contextPath }/logout.me" id="logout"><i class="bi bi-box-arrow-right"></i> 로그아웃</a>
       </div>

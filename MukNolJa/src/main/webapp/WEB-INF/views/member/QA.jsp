@@ -83,7 +83,7 @@
       	text-decoration: none;
       	color: black;
       }
-      #qa_modal{
+      #qa_modal, #reply_modal{
 		display: none;
 		width: 350px;
 		height: 450px;
@@ -110,6 +110,11 @@
 	#qaContent{
 		width: 100%;
 		height: 250px;
+ 		resize: none;
+	}
+	#replyContent{
+		width: 100%;
+		height: 300px;
  		resize: none;
 	}
     </style>
@@ -222,6 +227,22 @@
 	</div>
 </div>
 
+<div id="reply_modal">
+	<div class="row">
+		<div class="col text-center">
+			<label>답장</label><br>
+			<textarea class="form-control" id="replyContent"></textarea>
+		</div>
+	</div>
+	<div class="row text-center" style="margin-top: 20px;">
+		<div class="col">
+			<button type="button" class="mukButton" id="reply_btn">답장</button>
+			<button type="button" class="mukButton" id="close_btn">닫기</button>
+		</div>
+	</div>
+</div>
+<input type="hidden">
+
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
 <script type="text/javascript">
 
@@ -304,6 +325,12 @@
     	    		success: (data) => {
     	    			document.getElementById('qaTitle').value = data.qaTitle;
     	    			document.getElementById('qaContent').value = data.qaContent;
+    	    			
+    	    			const hidden = document.querySelector('input[type="hidden"]');
+    	    			
+    	    			hidden.value = data.qaId;
+    	    			
+    	    			Modal('qa_modal');
     	    		},
     	    		error: (data) => {
     	    			console.log(data);
@@ -311,9 +338,26 @@
     	    		
     	    	});
     	    	console.log(id);
+    	    });
+    	    
+    	    document.getElementById('qa_btn').addEventListener('click', function(){
+    	    	Modal('reply_modal');
     	    	
-    	    	
-    	    	Modal('qa_modal');
+    	    	document.getElementById('reply_btn').addEventListener('click', function(){
+    	    		const hidden = document.querySelectorAll('input[type="hidden"]');
+    	    		const qaId = hidden[0].value;
+    	    		const qaReplyContent = document.getElementById('replyContent').value;
+    	    		
+    	    		$.ajax({
+    	    			url: 'qaReply.me',
+    	    			data: {qaId:qaId, qaReplyContent:qaReplyContent},
+    	    			success: (data) => {
+    	    				document.getElementById('reply_modal').style.display = 'none';
+    	    				document.getElementById('qa_modal').style.display = 'none';
+    	    				alert('문의 답장 완료');
+    	    			}
+    	    		});
+    	    	});
     	    });
         </script>
 </body>

@@ -122,7 +122,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="QA.me">
-              <i class="bi bi-camera-video"></i>
+              <i class="bi bi-question-circle"></i>
               <span data-feather="users" class="align-text-bottom"></span>
               문의 내역
             </a>

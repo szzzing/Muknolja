@@ -278,6 +278,10 @@ public class MemberDAO {
 	public QA selectQAOne(SqlSessionTemplate sqlSession, String id) {
 		return sqlSession.selectOne("memberMapper.selectQAOne", id);
 	}
+
+	public int updateQAReply(SqlSessionTemplate sqlSession, QA q) {
+		return sqlSession.update("memberMapper.updateQAReply", q);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int
