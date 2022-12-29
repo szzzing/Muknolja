@@ -182,7 +182,7 @@ public class TravelController {
 	}
 	
 	@RequestMapping("travelDetail.tr")
-	public String travelDetail(@RequestParam("contentId") String contentId, @RequestParam(value="page", required=false) Integer page, Model model) {
+	public String travelDetail(@RequestParam("contentId") int contentId, @RequestParam(value="page", required=false) Integer page, Model model) {
 		
 		try {
 			String urlStr = "http://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=" + contentId + "&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&_type=json";
@@ -309,6 +309,8 @@ public class TravelController {
 			e.printStackTrace();
 		}
 		
+		ArrayList<Reply> list = tService.selectReply(contentId);
+		model.addAttribute("rlist", list);
 		return "travelDetail";
 	}
 	
@@ -316,14 +318,14 @@ public class TravelController {
 	@ResponseBody
 	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
 		int result = tService.insertReply(r);
-		ArrayList<Reply> list = tService.selectReply(r.getRefBoardId());
-		
+		ArrayList<Reply> rlist = tService.selectReply(r.getRefBoardId());
+		System.out.println(r);
 		response.setContentType("application/json; charset=UTF-8");
 		GsonBuilder gb = new GsonBuilder();
 		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
 		Gson gson = gb2.create();
 		try {
-			gson.toJson(list, response.getWriter());
+			gson.toJson(rlist, response.getWriter());
 		} catch (JsonIOException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
