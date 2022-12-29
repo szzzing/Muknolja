@@ -12,7 +12,7 @@
 		<result column="BOARD_TITLE" property="partyTitle"/>
 		<result column="BOARD_CONTENT" property="partyContent"/>
 		<result column="BOARD_CREATE_DATE" property="createDate"/>
-		<result column="BAORD_MODIFY_DATE" property="modifyDate"/>
+		<result column="BOARD_MODIFY_DATE" property="modifyDate"/>
 		<result column="BOARD_AREA" property="partyArea"/>
 		<result column="BOARD_STATUS" property="partyStatus"/>
 		<result column="MAX_PARTICIPATE" property="maxParticipate"/>
@@ -21,6 +21,7 @@
 		<result column="PARTY_GENDER" property="gender"/>
 		<result column="FILE_MODIFY_NAME" property="thumbnail"/>
 		<result column="CONTENT_COURSE" property="contentCourse"/>
+		<result column="FILE_ID" property="fileId"/>
 	</resultMap>
 	
 	<!-- 글입력 -->
@@ -49,6 +50,7 @@
 			 join party using(board_id)
 			 join board_img using(board_id)
              join attached_file using(file_id)
+       	where board_status='Y'
 		order by board_id desc
 	</select>
 	
@@ -61,6 +63,44 @@
 			 join board_img using(board_id)
              join attached_file using(file_id)
         where board_id=#{pId}
-        	  and board_status='Y'
 	</select>
+	
+	<!-- 동행 글 수정 -->
+	<update id="updateBoard">
+		update board
+		set board_course=#{p.partyCourse},
+			board_title=#{p.partyTitle},
+			board_content=#{p.partyContent},
+			board_modify_date=sysdate,
+			board_area=#{p.partyArea},
+			content_course=#{p.contentCourse}
+		where board_id=#{p.partyId}
+	</update>
+	<update id="updateParty">
+		update party
+		set max_participate=#{p.maxParticipate},
+			party_startdate=#{p.partyStartDate},
+			party_enddate=#{p.partyEndDate},
+			party_gender=#{p.gender}
+		where board_id=#{p.partyId}
+	</update>
+	<update id="updateAttm">
+		update attached_file
+		set file_name=#{af.fileName},
+			file_modify_name=#{af.fileModifyName}
+		where file_id=#{p.fileId}
+	</update>
+	
+	<!-- 동행 글 삭제 -->
+	<update id="deleteBoard"> 
+		update board
+		set board_status='N'
+		where board_id=#{partyId}
+	</update>
+	<update id="deleteAttm"> 
+		update attached_file
+		set file_status='N'
+		where file_id=#{fileId}
+	</update>
+	
 </mapper>

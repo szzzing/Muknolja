@@ -82,6 +82,7 @@
 	.replyProfile table{font-size: 12px; vertical-align: middle;}
 	.buttons{background: white !important; border: none; font-size: 13px;}
 	.buttons:hover{background: white !important; border: none; font-size: 13px; color: black!important; font-weight: 700;}
+	.travelList{cursor: pointer;}
 </style>
 </head>
 <body>
@@ -91,9 +92,11 @@
 	<div class="container">
 	
 		<br><br><br><br><br><br>
-	
-		<img src="${ contextPath }/resources/uploadFiles/${p.thumbnail}" id="thumbnail">
 		
+		<form id="detailForm" method="POST">
+		<input type="hidden" name="partyId" value="${ p.partyId }">
+		<input type="hidden" name="fileId" value="${ p.fileId }">
+		<img src="${ contextPath }/resources/uploadFiles/${p.thumbnail}" id="thumbnail">
 		
 		<div class="title row">
 			<div class="col-lg-8">
@@ -138,13 +141,10 @@
 					 <ol class="numbered">
 					 <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
 					 <c:set var="contentIdList" value="${fn:split(p.contentCourse,'/')}" />
-						<c:forEach items="${ courseList }" var="course">
-								<li>${ course }</li>
+						<c:forEach items="${ courseList }" var="course" varStatus="status">
+							<li class="travelList">${ course }<input type="hidden" class="contentId" value="${ contentIdList[status.index] }"></li>
 						</c:forEach>
 					 </ol>
-					 <c:forEach items="${ contentIdList }" var="contentId">
-					 	<input type="hidden" class="contentId" value="${ contentId }">
-					 </c:forEach>
 				</div>
 				<c:if test="${ loginUser.id != p.partyWriter }">
 					<div style="float: right; margin-top: 15px; display: none;">
@@ -154,13 +154,29 @@
 				</c:if>
 				<c:if test="${ loginUser.id == p.partyWriter }">
 					<div style="float: right; margin-top: 15px;">
-						<button type="submit" id="updateButton">수정</button>
-						<button type="submit" id="deleteButton">삭제</button>
+						<button type="button" id="updateButton">수정</button>
+						<button type="button" id="deleteButton" data-bs-toggle="modal" data-bs-target="#exampleModal">삭제</button>
 					</div>
 				</c:if>
 				
 			</div>
 			
+			<!-- 글 삭제 모달 -->
+			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <div class="modal-body" style="border: none!important; margin-top: 30px; text-align: center; font-size: 20px;">
+			        정말로 <span style="color: #DF0101">삭제</span>하시겠습니까?
+			      </div>
+			      <div class="modal-footer" style="border: none!important; margin: auto;">
+			        <button type="button" class="buttons" style="font-size: 14px; margin-bottom: 30px;" id="realDelete">예</button>
+			        <button type="button" class="buttons" data-bs-dismiss="modal" style="font-size: 14px; margin-bottom: 30px;">아니오</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<!-- 댓글작성 -->
 			<div id="partyReply" style="margin-top:40px">
 				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h5>
 				<div class="input-group mb-3">
@@ -169,6 +185,7 @@
 				</div>
 			</div>
 			
+			<!-- 댓글내용 -->
 			<div style="margin-top: 30px;">
 				<div class="replyProfile">
 					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
@@ -193,26 +210,41 @@
 				</div>
 				<hr style="margin-top: 10px; border-color: gray;">
 			</div>
-		
+			
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 		
+		</form>
+		
 	</div>
+	
+	
+	
 	<script>
-// 		const numLis = document.getElementsByClassName('numbered')[0];
-// 		const locationn = document.getElementById('location2');
-// 		const lis = numLis.querySelectorAll('li');
-// 		const contentIds = locationn.querySelectorAll('input');
-// 		for(const li of lis){
-// 			li.addEventListener('click', function(){
-				
-// 			});
-// 		}
-
-// 		const updateButton = document.getElementById('updateButton');
-// 		updateButton.addEventListener('click', function(){
+		const travelLists = document.getElementsByClassName('travelList');
+		for(const travelList of travelLists){
+			travelList.addEventListener('click', function(){
+				const contentId = travelList.querySelector('input').value;
+				location.href='${contextPath}/travelDetail.tr?contentId=' + contentId;
+			});
+		}
+		
+		window.onload = () =>{
+			const updateButton = document.getElementById('updateButton');
+			const form = document.getElementById('detailForm');
+			if(updateButton != null){
+				updateButton.addEventListener('click', function(){
+						form.action = '${contextPath}/updateForm.pa';
+						form.submit();
+				});
+			}
 			
-// 		});
+			const realDelete = document.getElementById('realDelete');
+			realDelete.addEventListener('click', function(){
+				form.action = '${contextPath}/deleteParty.pa';
+				form.submit();
+			});
+		}
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

@@ -222,9 +222,6 @@
 			for(const allCard of allCards){
 				allCard.addEventListener('click', function(){
 					const contentId = this.querySelector('.contentId').value;
-					const mapx = this.querySelector('.mapx').value;
-					const mapy = this.querySelector('.mapy').value;
-					
 					location.href='${contextPath}/travelDetail.tr?contentId=' + contentId + '&page=' + ${pi.currentPage};
 				});
 			}
