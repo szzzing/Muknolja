@@ -19,6 +19,7 @@
 		<typeAlias type="com.spring.muknolja.common.model.vo.QA" alias="QA"/>
 		<typeAlias type="com.spring.muknolja.party.model.vo.Party" alias="Party"/>
 		<typeAlias type="com.spring.muknolja.common.model.vo.Report" alias="Report"/>
+		<typeAlias type="com.spring.muknolja.common.model.vo.Reply" alias="Reply"/>
 	</typeAliases>
 
 	<mappers>
@@ -26,5 +27,6 @@
 		<mapper resource="mappers/hotel-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/party-mapper.xml"/>
+		<mapper resource="mappers/reply-mapper.xml"/>
 	</mappers>
 </configuration>
