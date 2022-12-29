@@ -38,5 +38,4 @@ public class Hotel {
 	private int emptyHotel;
 	private int maxDistance;
 	private String thumbnail;
-	private String fileModifyName;
 }

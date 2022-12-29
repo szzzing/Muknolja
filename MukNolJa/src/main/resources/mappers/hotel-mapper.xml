@@ -304,18 +304,19 @@
 			avg_rating(hotel_id) as avg_rating,
 			empty_hotel(#{checkinDate}, #{checkoutDate}, hotel_id) as empty_hotel,
 			file_modify_name as thumbnail
-			<if test="maxDistance!=0">
+			<if test="maxDistance!=0 and geoX!=0 and geoY!=0">
 				, DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), 126.950305407863, 37.5632043013128) as max_distance
 			</if>
 		from hotel
 			join hotel_img using(hotel_id)
             join attached_file using(file_id)
 		where hotel_status='Y' and file_thumbnail='Y'
-		<if test="maxPrice!=0">
-			and min_price(hotel_id)<![CDATA[<#{maxPrice}]]>
+		<if test="maxPrice!=1000000">
+			and min_price(hotel_id)<![CDATA[>=#{minPrice}]]>
+			and min_price(hotel_id)<![CDATA[<=#{maxPrice}]]>
 		</if>
-		<if test="maxDistance!=0">
-			and DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), 126.950305407863, 37.5632043013128)<![CDATA[<#{maxDistance}]]>
+		<if test="maxDistance!=0 and geoX!=0 and geoY!=0">
+			and DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), #{geoX}, #{geoY})<![CDATA[<#{maxDistance}]]>
 		</if>
 		<if test="star!=null">
 			and star in

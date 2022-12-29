@@ -180,10 +180,6 @@
 							${hotel.star }성급
 						</span>
 						<h1 class="fw-bold pb-1">${hotel.hotelName }</h1>
-						<h4 class="fw-bold pb-3">
-							<i class="fa-solid fa-star" style="color:#FFD600"></i>
-							<span class="avgRating">${hotel.avgRating }</span>
-						</h4>
 						<div id="hotelIntro" class="mt-1 mb-1">${hotel.hotelIntro }</div>
 						<table class="mt-3 mb-3">
 							<tr>
@@ -205,7 +201,7 @@
 				<div id="hotelInfo">${hotel.hotelInfo }</div>
 				
 				<h4 class="fw-bold pt-5 pb-3">위치</h4>
-				<div class="pb-3">${hotel.hotelAddress } <span id="searchMap" class="p-1 fw-bold">길찾기</span></div>
+				<div class="pb-3">${hotel.hotelAddress }</div>
 				<div id="map" class="mukRound" style="width:540px;height:300px;"></div>
 			</main>
 
@@ -248,12 +244,6 @@
 			});
 			
 			map.setCenter(coords);
-
-			// 길찾기
-			const url = "https://map.kakao.com/link/to/${hotel.hotelName},"+${hotel.hotelGeoY}+","+${hotel.hotelGeoX};
-			$("#searchMap").on("click", function(){
-				window.open(url, "_blank", "width=800, height=400", true);
-			});
 		}
 		$.viewMap();
  	</script>

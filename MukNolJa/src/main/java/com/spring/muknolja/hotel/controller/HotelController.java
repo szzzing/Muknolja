@@ -228,7 +228,6 @@ public class HotelController {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		h.setEntId(m.getId());
-		int hotelResult = hService.insertHotel(h);
 		
 		ArrayList<AttachedFile> list = new ArrayList();
 		for(MultipartFile file : files) {
@@ -236,7 +235,7 @@ public class HotelController {
 			if(!fileName.equals("")) {
 				String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
 				
-				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg") || fileType.equals("jfif")) {
 					String[] returnArr = AttachedFile.saveFile(file, request);
 					
 					if(returnArr[1] != null) {
@@ -247,6 +246,8 @@ public class HotelController {
 						
 						list.add(img);
 					}
+				} else {
+					throw new CommonException("이미지 형식이 잘못 되었습니다.");
 				}
 			}
 		}
@@ -266,6 +267,7 @@ public class HotelController {
 		if(!list.isEmpty()) {
 			imgResult = hService.insertHotelImg(list);
 		}
+		int hotelResult = hService.insertHotel(h);
 		
 		if(hotelResult + imgResult == list.size()*2+1) {
 			return "redirect:admin.ho";
@@ -513,6 +515,13 @@ public class HotelController {
 	}
 	
 	
+	@RequestMapping(value="selectReservationList.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void selectReservationList(HttpServletResponse response, @RequestParam("reviewId") int hotelId) {
+//		ArrayList<Reservation> list = hService.selectReservationList(hotelId);
+	}
+	
+	
 	
 	// 일반회원
 	
@@ -524,7 +533,7 @@ public class HotelController {
 	
 	@RequestMapping(value="searchHotelList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void searchHotelList(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, @RequestParam(value="maxPrice", required=false) Integer maxPrice, @RequestParam(value="maxDistance", required=false) Integer maxDistance, @RequestParam(value="star", required=false) ArrayList<Integer> star, @RequestParam(value="install", required=false) ArrayList<String> install, HttpServletResponse response) {
+	public void searchHotelList(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, @RequestParam(value="maxPrice", required=false) int maxPrice, @RequestParam(value="minPrice", required=false) int minPrice, @RequestParam(value="maxDistance", required=false) Integer maxDistance, @RequestParam(value="geoX", required=false) Double geoX, @RequestParam(value="geoY", required=false) Double geoY, @RequestParam(value="star", required=false) ArrayList<Integer> star, @RequestParam(value="install", required=false) ArrayList<String> install, HttpServletResponse response) {
 		int listCount = hService.getListCount();
 		int currentPage = 1;
 		if(page!=null) {
@@ -543,8 +552,11 @@ public class HotelController {
 		searchMap.put("searchValue", searchValue);
 		searchMap.put("checkinDate", checkinDate);
 		searchMap.put("checkoutDate", checkoutDate);
+		searchMap.put("minPrice", minPrice*10000);
 		searchMap.put("maxPrice", maxPrice*10000);
 		searchMap.put("maxDistance", maxDistance);
+		searchMap.put("geoX", geoX);
+		searchMap.put("geoY", geoY);
 		searchMap.put("star", star);
 		searchMap.put("wifi", wifi);
 		searchMap.put("breakfast", breakfast);
@@ -553,7 +565,11 @@ public class HotelController {
 		searchMap.put("swim", swim);
 		searchMap.put("fitness", fitness);
 		
+		System.out.println(searchMap);
+		
 		ArrayList<Hotel> hotelList = hService.searchHotelList(searchMap, pi);
+//		System.out.println(hotelList);
+		System.out.println(hotelList.size());
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();

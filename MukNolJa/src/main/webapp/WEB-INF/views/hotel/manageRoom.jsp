@@ -299,6 +299,10 @@
 									<td class='pb-1 mukSubText'>체크아웃</td>
 									<td id="roomDetailModal_checkout" class="pb-1"></td>
 								</tr>
+								<tr>
+									<td class='pb-1 mukSubText'>가격</td>
+									<td id="roomDetailModal_price" class="pb-1"></td>
+								</tr>
 							</table>
 						</div>
 					</div>
@@ -346,6 +350,7 @@
 						$("#roomDetailModal_roomInfo").html(room.roomInfo.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 						$("#roomDetailModal_checkin").html(room.checkinTime);
 						$("#roomDetailModal_checkout").html(room.checkoutTime);
+						$("#roomDetailModal_price").html(room.roomPrice.toLocaleString()+"원");
 						
 						$(document).on("click", ".roomDetailModal_roomImg", function(){
 							var src = $("#roomDetailModal_roomImg").prop("src");

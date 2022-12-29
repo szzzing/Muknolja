@@ -13,6 +13,9 @@
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
+<link rel="stylesheet" href="${contextPath }/resources/css/rSlider.min.css">
+<script src="${contextPath }/resources/src/js/rSlider.js"></script>
+
 </head>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
@@ -36,6 +39,7 @@
 	.mukCheckbox input[type="checkbox"]:checked + .on:after { display: block; }
 	.on:after { width: 6px; height: 10px; border: solid #fff; border-radius:1px; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 4px; bottom: 3px; }
 	
+	
 	#hotelTable td {
 		margin:0px;
 		padding:0px;
@@ -48,41 +52,6 @@
 	.mukMutedText {color:#B9B9B9;}
 	.mukSubText {color:rgba(0,0,0,.56);}
 	
-	
-	input[type=range] {
-		-webkit-appearance: none;
-		width: 100%;
-	}
-	input[type=range]:focus {
-		outline: none;
-	}
-	input[type=range]::-webkit-slider-runnable-track {
-		width: 100%;
-		height: 5px;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		background: #f1f1f1;
-		border: 0px solid #000;
-		border-radius: 5px;
-	}
-	input[type=range]::-webkit-slider-thumb {
-		position: relative;
-		border: 4px solid rgba(255, 255, 255, 0.5);
-		height: 20px;
-		width: 20px;
-		border-radius: 100%;
-		background: #6BB6EC;
-		cursor: pointer;
-		z-index: 1;
-		-webkit-appearance: none;
-		margin-top: -8px;
-	}
-	.range {
-	  box-sizing: border-box;
-	  position: relative;
-	  padding: 0 50px;
-	  width: 100%;
-	}
 </style>
 <body>
 	<jsp:include page="../member/menubar.jsp"/>
@@ -109,19 +78,45 @@
 					</div>
 					<div id="subCategory" class="col">
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
-							<div class="fw-bold pb-2" style="display:inline-block;">거리</div>
-							<button id = "find-me">Show my location</button><br/>
-							<p id = "status"></p>
-							<a id = "map-link" target="_blank"></a>
-							<small id="cancelDistance" class="mukSubText" style="display:none; float:right">초기화</small>
-							<div style="float:right;" class="value fw-bold mukSubText">무관</div>
-							<input id="maxDistance" name="maxDistance" class="mukRange" value="0" max="100" min="10" step="10" type="range">
+							<div class="fw-bold pb-2" style="display:inline-block; padding-right:4px;">거리</div>
+							<div id="status" style="font-size:14px; color:#6bb6ec; display:inline-block"></div>
+							<input type="hidden" name="geoX">
+							<input type="hidden" name="geoY">
+							<input type="hidden" name="maxDistance">
+							<div class="row row-cols-lg-1">
+								<div class="col">
+									<label for="0km" class="distance mukCheckbox">
+										<input type="checkbox" id="0km" value="0"><span class="on"></span>
+										기준거리
+									</label>
+								</div>
+								<div class="col">
+									<input type="hidden" name="distance">
+									<label for="10km" class="distance mukCheckbox">
+										<input type="checkbox" id="10km" value="10"><span class="on"></span>
+										10km
+									</label>
+								</div>
+								<div class="col">
+									<label for="30km" class="distance mukCheckbox">
+										<input type="checkbox" id="30km" value="30"><span class="on"></span>
+										30km
+									</label>
+								</div>
+								<div class="col">
+									<label for="50km" class="distance mukCheckbox">
+										<input type="checkbox" id="50km" value="50"><span class="on"></span>
+										50km
+									</label>
+								</div>
+							</div>
 						</div>
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
-							<div class="fw-bold pb-2">가격</div>
-							<small id="cancelPrice" class="mukSubText" style="display:none; float:right"><i class="bi bi-x-lg"></i></small>
-							<div class="value mukSubText" style="float:right"><span class="value">무관</div>
-							<input id="maxPrice" name="maxPrice" class="mukRange" value="0" max="100" min="10" step="10" type="range">
+							<div class="slider-container">
+								<input type="text" id="slider" class="slider">
+								<input type="hidden" name="minPrice">
+								<input type="hidden" name="maxPrice">
+							</div>
 						</div>
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
 							<div class="fw-bold pb-2">등급</div>
@@ -238,34 +233,50 @@
 		</div>
 	</div>
 	
-	
+	<script>
+		$("input[name=minPrice]").val("10");
+		$("input[name=maxPrice]").val("100");
+		
+		(function() {
+		
+			var init = function () {
+				var slider = new rSlider({
+					target: '#slider',
+					values: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+					range: true,
+					set: [0, 100],
+					onChange: function (vals) {
+					    const prices = vals.split(",");
+					    $("input[name=minPrice]").val(Number(prices[0]));
+						$("input[name=maxPrice]").val(Number(prices[1]));
+						$.search();
+					}
+				});
+			};
+			window.onload = init;
+		})();
+	</script>
 	
 	<!-- 호텔 검색 시작 -->
 	<script>
 		$(document).ready(function(){
 			var hotelDiv = $("#hotelDiv").clone();
-			var searchPrice=false;
-			var searchDistance=false;
 			
 			var star = new Array();
 			var install = new Array('N','N','N','N','N','N');
-		
+			
 			$.search = function(){
 				var page = 1;
 				var searchValue = "";
-		// 		var searchValue = $('input[name=searchValue]').val();
 				var checkinDate = $("input[name=checkinDate]").val()+"";
 				var checkoutDate = $("input[name=checkoutDate]").val()+"";
+				var minPrice = $("input[name=minPrice]").val();
 				var maxPrice = $("input[name=maxPrice]").val();
 				var maxDistance = $("input[name=maxDistance]").val();
-				if(!searchPrice){
-					maxPrice = 0;
-				}
-				if(!searchDistance){
-					maxDistance = 0;
-				}
-				console.log(star);
-				console.log(install);
+				var geoX = Number($("input[name=geoX]").val());
+				var geoY = Number($("input[name=geoY]").val());
+				
+// 				var maxDistance = 0;
 				
 				$.ajax({
 					url: "${contextPath}/searchHotelList.ho",
@@ -275,8 +286,11 @@
 						searchValue: searchValue,
 						checkinDate: checkinDate,
 						checkoutDate: checkoutDate,
+						minPrice: minPrice,
 						maxPrice: maxPrice,
 						maxDistance: maxDistance,
+						geoX: geoX,
+						geoY: geoY,
 						star: star,
 						install: install
 					},
@@ -291,8 +305,8 @@
 						var diff = checkout - checkin;
 						var currDay = 24 * 60 * 60 * 1000;
 						var journey = parseInt(diff/currDay);
-						console.log(journey);
 						
+						console.log(data);
 						$("#hotelList").html("");
 						hotelDiv.prop("style").removeProperty("display");
 						for(var i of data) {
@@ -306,8 +320,8 @@
 							hotelDiv2.find(".hotelImg").prop("src", "${contextPath }/resources/uploadFiles/"+i.thumbnail);
 							hotelDiv2.find(".hotelStar").html(i.star+"성급");
 							hotelDiv2.find(".avgRating").html(i.avgRating.toFixed(1));
-							if(searchDistance) {
-								if(searchDistance<0) {
+							if(geoX!=0 && geoY!=0 && maxDistance!=0) {
+								if(i.maxDistance<0) {
 									hotelDiv2.find(".maxDistance").html(i.maxDistance.toFixed(1)+"km 거리");
 								} else {
 									hotelDiv2.find(".maxDistance").html(i.maxDistance.toFixed(0)+"km 거리");
@@ -348,39 +362,8 @@
 				}
 				$.search();
 			});
-					
-			$("input[name=maxPrice]").on("change", function(){
-				searchPrice = true;
-				$(this).parent().find(".value").text($(this).val()+"만원 이하");
-				$("#cancelPrice").prop("style").removeProperty("display");
-				$.search();
-			});
-			
-			$("input[name=maxDistance]").on("change", function(){
-				searchDistance = true;
-				$(this).parent().find(".value").html($(this).val()+"km 이내");
-				$("#cancelDistance").prop("style").removeProperty("display");
-				$.search();
-			});
-			
-			$("#cancelPrice").on("click", function(){
-				searchPrice = false;
-				$("input[name=maxPrice]").val(10);
-				$("input[name=maxPrice]").parent().find(".value").text($(this).val()+"무관");
-				$(this).css("display", "none");
-				$.search();
-			});
-			
-			$("#cancelDistance").on("click", function(){
-				searchDistance = false;
-				$("input[name=maxDistance]").val(10);
-				$("input[name=maxDistance]").parent().find(".value").text($(this).val()+"무관");
-				$(this).css("display", "none");
-				$.search();
-			});
 			
 			$(document).on('click', '.hotel', function(){
-// 				location.href="${contextPath}/hotelDetail.ho?hotelId="+$(this).find(".hotelId").val();
 				$("input[name=hotelId]").val($(this).find(".hotelId").val());
 				$("form").submit();
 			});
@@ -390,40 +373,62 @@
 	
 	
 	<!-- 위치 -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4aaeb935cb2fd15933272e12d906ced0&libraries=services"></script>
 	<script>
+	$("input[name=maxDistance]").val(0);
+		$(".distance").on("click", function(){
+			const checkboxes = $(".distance").find("input[type=checkbox]");
+			for(cb of checkboxes) {
+				cb.checked = false;
+			}
+			$(this).find("input[type=checkbox]").prop('checked',true);
+			$("input[name=maxDistance]").val($(this).find("input[type=checkbox]").val());
+			console.log($("input[name=maxDistance]").val());
+			
+			$.search();
+		});
+		
 		function geoFindMe() {
-
-		  const status = document.querySelector('#status');
-		  const mapLink = document.querySelector('#map-link');
 		
-		  mapLink.href = '';
-		  mapLink.textContent = '';
-		
-		  function success(position) {
-		    const latitude  = position.coords.latitude;
-		    const longitude = position.coords.longitude;
-		
-		    status.textContent = latitude + ", " + longitude;
-		    console.log("성공");
-		    console.log(latitude);
-		    console.log(longitude);
-		  }
-		  function error() {
-		    status.textContent = 'Unable to retrieve your location';
-		    console.log("실패");
-		  }
-		
-		  if(!navigator.geolocation) {
-		    status.textContent = 'Geolocation is not supported by your browser';
-		    console.log("Geolocation is not supported by your browser");
-		  } else {
-		    status.textContent = 'Locating…';
-		    navigator.geolocation.getCurrentPosition(success, error);
-		  }
-		
+			const status = document.querySelector('#status');
+			
+			function success(position) {
+				const latitude  = position.coords.latitude;
+				const longitude = position.coords.longitude;
+				
+				$("input[name=geoX]").val(Number(longitude));
+				$("input[name=geoY]").val(Number(latitude));
+				getAddr(latitude, longitude);
+			}
+			function error() {
+				$("input[name=geoX]").val(0);
+				$("input[name=geoY]").val(0);
+				console.log("실패");
+			}
+			
+			if(!navigator.geolocation) {
+				$("input[name=geoX]").val(0);
+				$("input[name=geoY]").val(0);
+			} else {
+				$("input[name=geoX]").val(0);
+				$("input[name=geoY]").val(0);
+				navigator.geolocation.getCurrentPosition(success, error);
+			}
 		}
+		geoFindMe();
 		
-		document.querySelector('#find-me').addEventListener('click', geoFindMe);
+		
+		function getAddr(lat,lng) {
+		    let geocoder = new kakao.maps.services.Geocoder();
+
+		    let coord = new kakao.maps.LatLng(lat, lng);
+		    let callback = function(result, status) {
+		        if (status === kakao.maps.services.Status.OK) {
+		            document.querySelector('#status').textContent = result[0].road_address.address_name;
+		        }
+		    }
+		    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+		}
 	</script>
 	<!-- 위치 -->
 	
@@ -478,8 +483,6 @@
 	</script>
 	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->
 	
-	
-
 	
 </body>
 </html>
