@@ -11,9 +11,7 @@
 		
    		
    
-   		background-image: url('${contextPath}/resources/img/water4.png');
-   		background-size: 100vw 100vh;
-		
+   		
 
    		
    		}
@@ -62,11 +60,11 @@
 		
 	</style>
 </head>
-<body style="font-family: 'OTWelcomeRA';">
+<body style="font-family: 'OTWelcomeRA' ;margin:0px;padding:0px; left:0px;">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>	
   	<!-- <div style="width:44vw; height:97vh; border-radius:5%; position:absolute; margin-top:2.5vh; margin-left: 50vw; background:rgb(239, 245, 245,0.6); z-index:-1;"> -->
-  	
+  	<div style="padding:0px; margin:0px;width:100%; height:100%; background-image: url('${contextPath}/resources/img/water4.png'); background-size: 100vw 100vh;">
    	<div class="c1" style="background-image:url('${contextPath}/resources/img/main5.png'); width: 100%;
    		height: 100%;
    		background-repeat: no-repeat ;
@@ -117,6 +115,7 @@
 			</div>
 			</div>
    		</div> 
+	</div>
 	
    
 	
