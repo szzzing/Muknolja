@@ -9,9 +9,10 @@
 	<style>
 		#carouselExampleInterval{height: 550px; margin-top: 80px;}
 		#carouselExampleInterval img{height:550px;}
-		.page-link:focus, .page-link:hover {color: #fff; background-color: #6BB6EC;}
 		.travelInfo a{color: black; font-size: 25px; text-decoration: none;}
 		.travelInfo p{color: gray; font-size: 15px; margin-top: 20px;}
+		.pagination a{color: #6BB6EC;}
+		.pagination a:hover{background: #6BB6EC; color: white;}
 		hr{margin: auto;}
 		#hr1, #hr2{height: 1px; color: lightgray;}
 		#num{margin: auto;}
@@ -179,8 +180,8 @@
 		            	</c:if>
 		            	<c:param name="page" value="${ pi.currentPage-1 }"/>
 		        	</c:url>
-		        	<a class="page-link" href="${ goBack }" aria-label="Previous">
-		        		<span aria-hidden="true">&laquo;</span>
+		        	<a class="page-link" href="${ goBack }" aria-label="Previous" style="height: 100%; padding-top: 10px;">
+		        		<span aria-hidden="true"><i class="fa-solid fa-angle-left"></i></span>
 		        	</a>
 			    </li>
 			    
@@ -207,8 +208,8 @@
 		            	</c:if>
 				    	<c:param name="page" value="${ pi.currentPage+1 }"/>
 			    	</c:url>
-				    <a class="page-link" href="${ goNext }" aria-label="Next">
-				        <span aria-hidden="true">&raquo;</span>
+				    <a class="page-link" href="${ goNext }" aria-label="Next" style="height: 100%; padding-top: 10px;">
+				        <span aria-hidden="true"><i class="fa-solid fa-angle-right"></i></span>
 				    </a>
 			    </li>
 			  </ul>

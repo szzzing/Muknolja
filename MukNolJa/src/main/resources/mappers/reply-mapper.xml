@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="replyMapper">
+<!-- 	<resultMap type="Reply" id="replyResultMap"></resultMap> -->
+	<insert id="insertReply">
+		insert into reply
+		values(seq_replyid.nextval, #{replyWriter}, #{refBoardId}, #{replyContent}, sysdate, sysdate, default, #{refReplyId})
+	</insert>
+<!-- 	<select id="selectReply" resultMap="replyResultMap"> -->
+	
+<!-- 	</select> -->
+</mapper>
