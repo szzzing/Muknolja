@@ -338,7 +338,6 @@
 	
 	<resultMap type="QA" id="qaResultSet">
 		<id column="QA_ID" property="qaId"/>
-		<result column="QA_BOARD_ID" property="qaBoardId"/>
 		<result column="QA_WRITER" property="qaWriter"/>
 		<result column="QA_ RECEIVER" property="qaReceever"/>
 		<result column="QA_TITLE" property="qaTitle"/>
@@ -532,4 +531,19 @@
 		set PROCESSING = 'Y'
 		where REPORT_ID = #{id}
 	</update>
+	
+	<select id="QACount" resultType="map">
+		select qa_date, count
+		from (select to_char(QA_CREATE_DATE, 'mm.dd') qa_date, count(*) count
+		      from qa
+		      GROUP by to_char(QA_CREATE_DATE, 'mm.dd')
+		      order by qa_date desc)
+		where rownum <![CDATA[<=]]> 7
+	</select>
+	
+	<select id="selectQAList" resultMap="qaResultSet">
+		select *
+		from qa
+		order by to_char(QA_CREATE_DATE, 'yy.mm.dd')
+	</select>
   </mapper>

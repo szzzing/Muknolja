@@ -322,6 +322,8 @@ li{list-style:none;}
   		   
   		   <a href="${ contextPath }/enrollE.me">회원가입1</a>
   		    <a href="${ contextPath }/pra.me">연습</a>
+  		    
+    <jsp:include page="common/footer.jsp"/>
     <script>
     
 	window.onload = () =>{

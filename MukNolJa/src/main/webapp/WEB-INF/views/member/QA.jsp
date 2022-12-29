@@ -134,32 +134,30 @@
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">방문자 통계</h1>
+        <h1 class="h2">문의</h1>
       </div>
 
       <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>방문 멤버</h2>
+      <h2>문의 내역</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">아이디</th>
-              <th scope="col">닉네임</th>
-              <th scope="col">이름</th>
-              <th scope="col">전화번호</th>
-              <th scope="col">가입일</th>
+              <th scope="col">문의자</th>
+              <th scope="col">제목</th>
+              <th scope="col">문의일</th>
+              <th scope="col">확인여부</th>
             </tr>
           </thead>
           <tbody>
           	
-          	<c:forEach items="${ today }" var="m">
+          	<c:forEach items="${ qList }" var="q">
 	            <tr>
-	              <td>${ m.id }</td>
-	              <td>${ m.nickName }</td>
-	              <td>${ m.name }</td>
-	              <td>${ m.phone }</td>
-	              <td>${ m.enrollDate }</td>
+	              <td>${ q.qaWriter }</td>
+	              <td>${ q.qaTitle }</td>
+	              <td>${ q.qaCreateDate }</td>
+	              <td>${ q.qaYn }</td>
 	            </tr>
             </c:forEach>
           </tbody>
@@ -180,30 +178,20 @@
                 data: { // 차트에 들어갈 데이터
                     labels: [
                         //x 축
-                    	'${ visitList[6].VISIT_DATE }','${ visitList[5].VISIT_DATE }','${ visitList[4].VISIT_DATE }','${ visitList[3].VISIT_DATE }','${ visitList[2].VISIT_DATE }','${ visitList[1].VISIT_DATE }','${ visitList[0].VISIT_DATE }'
+                    	'${ qCountList[6].QA_DATE }','${ qCountList[5].QA_DATE }','${ qCountList[4].QA_DATE }','${ qCountList[3].QA_DATE }','${ qCountList[2].QA_DATE }','${ qCountList[1].QA_DATE }','${ qCountList[0].QA_DATE }'
                     ],
                     datasets: [
                         { //데이터
-                            label: '방문 멤버', //차트 제목
+                            label: '문의', //차트 제목
                             fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
                             data: [
-                            	'${ visitList[6].VISIT_COUNT }','${ visitList[5].VISIT_COUNT }','${ visitList[4].VISIT_COUNT }','${ visitList[3].VISIT_COUNT }','${ visitList[2].VISIT_COUNT }','${ visitList[1].VISIT_COUNT }','${ visitList[0].VISIT_COUNT }'
-                            ],
+                            	'${ qCountList[6].COUNT }','${ qCountList[5].COUNT }','${ qCountList[4].COUNT }','${ qCountList[3].COUNT }','${ qCountList[2].COUNT }','${ qCountList[1].COUNT }','${ qCountList[0].COUNT }'
+                            	],
                             // 색상
-                            backgroundColor: 'rgba(255, 0, 255, 0.2)',
-                            // 경계선 색상
-                            borderColor: 'rgba(255, 0, 255, 1)',
-                            borderWidth: 1 //경계선 굵기
-                        },
-                        {
-                            label: '방문자',
-                            fill: true,
-                            data: [
-                            	'${ vsitAllList[6].VISIT_COUNT }','${ vsitAllList[5].VISIT_COUNT }','${ vsitAllList[4].VISIT_COUNT }','${ vsitAllList[3].VISIT_COUNT }','${ vsitAllList[2].VISIT_COUNT }','${ vsitAllList[1].VISIT_COUNT }','${ vsitAllList[0].VISIT_COUNT }'
-                            ],
                             backgroundColor: 'rgba(107, 182, 236, 0.2)',
+                            // 경계선 색상
                             borderColor: 'rgba(107, 182, 236, 1)',
-                            borderWidth: 1
+                            borderWidth: 1 //경계선 굵기
                         }
                     ]
                 },

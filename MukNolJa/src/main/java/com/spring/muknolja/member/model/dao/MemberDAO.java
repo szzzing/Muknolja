@@ -262,6 +262,14 @@ public class MemberDAO {
 	public int updateProcessing(SqlSessionTemplate sqlSession, String id) {
 		return sqlSession.update("memberMapper.updateProcessing", id);
 	}
+
+	public ArrayList<Map<String, Integer>> QACount(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.QACount");
+	}
+
+	public ArrayList<QA> selectQAList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectQAList");
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int

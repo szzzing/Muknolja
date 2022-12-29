@@ -314,6 +314,15 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.updateProcessing(sqlSession, id);
 	}
 	
+	@Override
+	public ArrayList<Map<String, Integer>> QACount() {
+		return mDAO.QACount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<QA> selectQAList() {
+		return mDAO.selectQAList(sqlSession);
+	}
 	/*
 	 * @Override public ArrayList<AttachedFile> selectImg(int hotelId) { // TODO
 	 * Auto-generated method stub return mDAO.selectImg(sqlSession, hotelId); }
