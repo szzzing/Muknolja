@@ -147,7 +147,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi) {
+	public ArrayList<Object> selectBoardList(HashMap<String, Object> map, PageInfo pi) {
 		return mDAO.selectBoardList(sqlSession, map, pi);
 	}
 
@@ -294,6 +294,25 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.updateAd(sqlSession, aMap);
 	}
 
+	@Override
+	public int reportListCount() {
+		return mDAO.reportListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Object> selectReportList(String search, PageInfo pi) {
+		return mDAO.selectReportList(sqlSession, search, pi);
+	}
+	
+	@Override
+	public String selectBoardType(String id) {
+		return mDAO.selectBoardType(sqlSession, id);
+	}
+	
+	@Override
+	public int updateProcessing(String id) {
+		return mDAO.updateProcessing(sqlSession, id);
+	}
 	
 	/*
 	 * @Override public ArrayList<AttachedFile> selectImg(int hotelId) { // TODO

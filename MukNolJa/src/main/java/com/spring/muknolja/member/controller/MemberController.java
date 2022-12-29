@@ -32,6 +32,7 @@ import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.common.model.vo.QA;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
@@ -294,6 +295,9 @@ public class MemberController {
 				currentPage = page;
 			}
 			
+			ArrayList<Object> bList = null;
+			
+			if(category != 2) {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("category", category);
 			map.put("search", search);
@@ -302,7 +306,27 @@ public class MemberController {
 			
 			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 30);
 			
-			ArrayList<Board> bList = mService.selectBoardList(map, pi);
+			bList = mService.selectBoardList(map, pi);
+			
+			} else {
+				System.out.println(search);
+				int listCount = mService.reportListCount();
+				
+				PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 30);
+				
+				bList = mService.selectReportList(search, pi);
+				
+				for(Object r : bList) {
+					Report report = (Report)r;
+					String type = report.getReportClassification();
+					
+					if(type.equals("B")) {
+						report.setReportClassification("게시글");
+					} else {
+						report.setReportClassification("댓글");
+					}
+				}
+			}
 			
 			ArrayList<Map<String, Integer>> bCount = mService.bCount();
 			
@@ -322,7 +346,7 @@ public class MemberController {
 			}
 			
 			ArrayList<AD> aList = mService.selectADList(category);
-			
+			 
 			for(AD a : aList) {
 				String boardType = a.getBoardType();
 				
@@ -810,6 +834,30 @@ public class MemberController {
 				return "redirect:adManagement.me";
 			} else {
 				throw new CommonException("광고 수정 실패.");
+			}
+		}
+		
+		@RequestMapping("reportDetail.me")
+		public String reportDetail(@RequestParam("id") String id, Model model) {
+			String type = mService.selectBoardType(id);
+			
+			model.addAttribute("id", id);
+			
+			if(type.equals("P")) {
+				return "redirect:partyDetail.pa";
+			} else {
+				return "redirect:reviewDetail.re";
+			}
+		}
+		
+		@RequestMapping("processing.me")
+		public String processing(@RequestParam("id") String id) {
+			int result = mService.updateProcessing(id);
+			
+			if(result > 0) {
+				return "redirect:boardManagement.me";
+			} else {
+				throw new CommonException("신고 확인 실패.");
 			}
 		}
 		

@@ -29,7 +29,7 @@ public class PartyController {
 	private PartyService pService;
 	
 	@RequestMapping("partyList.pa")
-	public String partyList(@RequestParam(value="page", required=false) Integer page, Model model) {
+	public String partyList(@RequestParam(value="page", required=true) Integer page, Model model) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -51,7 +51,7 @@ public class PartyController {
 	}
 	
 	@RequestMapping("partyDetail.pa")
-	public String partyDetail(@RequestParam("pId") int pId, @RequestParam("writer") String writer, HttpSession session, Model model) {
+	public String partyDetail(@RequestParam("pId") int pId, @RequestParam(value = "writer", required = false) String writer, HttpSession session, Model model) {
 		Party p = pService.selectParty(pId);
 		if(p != null) {
 			model.addAttribute("p", p);

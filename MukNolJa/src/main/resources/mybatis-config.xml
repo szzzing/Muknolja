@@ -18,6 +18,7 @@
 		<typeAlias type="com.spring.muknolja.common.model.vo.AD" alias="AD"/>
 		<typeAlias type="com.spring.muknolja.common.model.vo.QA" alias="QA"/>
 		<typeAlias type="com.spring.muknolja.party.model.vo.Party" alias="Party"/>
+		<typeAlias type="com.spring.muknolja.common.model.vo.Report" alias="Report"/>
 	</typeAliases>
 
 	<mappers>

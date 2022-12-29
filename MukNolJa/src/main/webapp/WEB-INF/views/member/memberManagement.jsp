@@ -81,6 +81,11 @@
       .cate{
       	width: 88px;
       }
+      #logout{
+      	position: relative;
+      	top: 480px;
+      	font-size: 12px;
+      }
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -115,13 +120,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="adStats.me">
-              <i class="bi bi-bar-chart-line"></i>
-              <span data-feather="users" class="align-text-bottom"></span>
-              광고 통계
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="adManagement.me">
               <i class="bi bi-camera-video"></i>
               <span data-feather="users" class="align-text-bottom"></span>
@@ -129,6 +127,7 @@
             </a>
           </li>
         </ul>
+        <a href="${ contextPath }/logout.me" id="logout"><i class="bi bi-box-arrow-right"></i> 로그아웃</a>
       </div>
     </nav>
 
