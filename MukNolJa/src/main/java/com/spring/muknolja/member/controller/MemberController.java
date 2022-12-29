@@ -873,4 +873,13 @@ public class MemberController {
 			return "QA";
 		}
 		
+		@RequestMapping("insertQA.me")
+		@ResponseBody
+		public int insertQA(@ModelAttribute QA q, HttpSession session) {
+			q.setQaWriter(((Member)session.getAttribute("loginUser")).getId());
+			int result = mService.insertQA(q);
+			
+			return result;
+		}
+		
 }

@@ -134,6 +134,8 @@ public interface MemberService {
 
 	ArrayList<QA> selectQAList();
 
+	int insertQA(QA q);
+
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
 
 

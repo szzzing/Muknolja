@@ -339,7 +339,6 @@
 	<resultMap type="QA" id="qaResultSet">
 		<id column="QA_ID" property="qaId"/>
 		<result column="QA_WRITER" property="qaWriter"/>
-		<result column="QA_ RECEIVER" property="qaReceever"/>
 		<result column="QA_TITLE" property="qaTitle"/>
 		<result column="QA_CONTENT" property="qaContent"/>
 		<result column="QA_YN" property="qaYn"/>
@@ -546,4 +545,9 @@
 		from qa
 		order by to_char(QA_CREATE_DATE, 'yy.mm.dd')
 	</select>
+	
+	<insert id="insertQA">
+		insert into qa
+		values(seq_qaid.nextval, #{qaWriter}, #{qaTitle}, #{qaContent}, default, null, sysdate, default)
+	</insert>
   </mapper>

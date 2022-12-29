@@ -16,7 +16,7 @@ import lombok.ToString;
 public class QA {
 	private int qaId;
 	private String qaWriter;
-	private String qaReceever, qaTitle, qaContent, qaYn, qaReplyContent;
+	private String qaTitle, qaContent, qaYn, qaReplyContent;
 	private Date qaCreateDate;
 	private String qaStatus;
 	

@@ -328,6 +328,11 @@ public class MemberServiceImpl implements MemberService {
 	 * Auto-generated method stub return mDAO.selectImg(sqlSession, hotelId); }
 	 */
 
+	@Override
+	public int insertQA(QA q) {
+		return mDAO.insertQA(sqlSession, q);
+	}
+
 	
 
 	

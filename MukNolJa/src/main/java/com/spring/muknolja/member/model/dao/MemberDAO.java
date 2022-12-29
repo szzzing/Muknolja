@@ -270,6 +270,10 @@ public class MemberDAO {
 	public ArrayList<QA> selectQAList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectQAList");
 	}
+
+	public int insertQA(SqlSessionTemplate sqlSession, QA q) {
+		return sqlSession.insert("memberMapper.insertQA", q);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int
