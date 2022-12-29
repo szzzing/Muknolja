@@ -29,6 +29,8 @@
 	.buttons{background: white !important; border: none; font-size: 13px;}
 	.buttons:hover{background: white !important; border: none; font-size: 13px; color: black!important; font-weight: 700;}
 	#travelReply input[readonly]{background: white;}
+	.replyContent{clear:both; margin-left: 33px; margin-top: 15px;}
+	.replyContent textarea{resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;}
 </style>
 </head>
 <body>
@@ -97,7 +99,7 @@
 		<h4>상세정보</h4>
 		
 		<div id="detailContent">
-			${overview}
+			${overview}${ rlist }
 		</div>
 		
 		<div id="map" style="width:100%;height:350px;"></div>
@@ -168,32 +170,43 @@
 				<c:if test="${ loginUser != null }">
 					<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" id="replyContent">
 				</c:if>
-				<button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="bi bi-send"></i></button>
+				<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
 			</div>
 		</div>
 		</form>
 		
-		<div style="margin-top: 30px;">
-				<div class="replyProfile">
-					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
-					<table style="float:left;">
-						<tr>
-							<td>슬픈고양이</td>
-						</tr>
-						<tr>
-							<td style="color: gray;">2022.12.28</td>
-						</tr>
-					</table>
-					<div style="float:right;">
-						<button class="buttons">수정</button>
-						<button class="buttons">삭제</button>
+		<c:forEach items="${ rlist }" var="r">
+			<div class="reply" style="margin-top: 30px;">
+					<div class="replyProfile">
+						<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
+						<table style="float:left; margin-left: 10px;">
+							<tr>
+								<td>${ r.nickName }</td>
+							</tr>
+							<tr>
+								<td style="color: gray;">${ r.replyModifyDate }</td>
+							</tr>
+						</table>
+						<c:if test="${ r.replyWriter == loginUser.id }">
+							<div style="float:right;">
+								<button class="buttons">수정</button>
+								<button class="buttons">삭제</button>
+							</div>
+						</c:if>
+						<c:if test="${ r.replyWriter != loginUser.id }">
+							<div style="float:right; display:none;">
+								<button class="buttons">수정</button>
+								<button class="buttons">삭제</button>
+							</div>
+						</c:if>
 					</div>
-				</div>
-				<div style="clear:both; margin-left: 33px; margin-top: 15px;">
-					<textarea style="resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;" readonly>여수 현지인분께 여쭤보니 거문도 방문을 추천해주시더라구요. 이미 인터넷에서 유명한 곳들은 다 방문하실 거 같으니.. 여수항에서 거문도 한 번 들러보시길 추천드립니다 :)</textarea>
-				</div>
-				<hr style="margin-top: 10px; border-color: gray;">
-		</div>
+					<div class="replyContent">
+						<textarea readonly>${ r.replyContent }</textarea>
+					</div>
+					<hr style="margin-top: 10px; border-color: gray;">
+			</div>
+		</c:forEach>
+		
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		
 		
@@ -229,16 +242,46 @@
 			window.print();
 		});
 		
+		console.log($('.reply').clone());
 		document.getElementById('button-addon2').addEventListener('click', function(){
 			$.ajax({
 				url: '${contextPath}/insertReply.pa',
-				date: {replyContent:document.getElementById('replyContent').value,
-					   refBoardId:${contentId}, replyWriter:'${loginUser.id}'},
+				data: {replyContent:document.getElementById('replyContent').value,
+					   refBoardId:${contentId}, replyWriter:"${loginUser.id}"},
 				success: (data) =>{
-					console.log(data)
+					console.log(data);
+// 					<div style="margin-top: 30px;">
+// 					<div class="replyProfile">
+// 						<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
+// 						<table style="float:left; margin-left: 10px;">
+// 							<tr>
+// 								<td>${ r.nickName }</td>
+// 							</tr>
+// 							<tr>
+// 								<td style="color: gray;">${ r.replyModifyDate }</td>
+// 							</tr>
+// 						</table>
+// 						<c:if test="${ r.replyWriter == loginUser.id }">
+// 						<div style="float:right;">
+// 							<button class="buttons">수정</button>
+// 							<button class="buttons">삭제</button>
+// 						</div>
+// 						</c:if>
+// 						<c:if test="${ r.replyWriter != loginUser.id }">
+// 						<div style="float:right; display:none;">
+// 							<button class="buttons">수정</button>
+// 							<button class="buttons">삭제</button>
+// 						</div>
+// 						</c:if>
+// 					</div>
+// 					<div style="clear:both; margin-left: 33px; margin-top: 15px;">
+// 						<textarea style="resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;" readonly>${ r.replyContent }</textarea>
+// 					</div>
+// 					<hr style="margin-top: 10px; border-color: gray;">
+// 			</div>
 				},
 				error: (data) =>{
-					console.log(data)
+					console.log(data);
 				}
 			});
 		});
