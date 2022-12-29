@@ -164,14 +164,21 @@
 					
 					
 					<!-- 리뷰 리스트 시작 -->
+					<div id="hasNoSubReview" class="text-center mt-3 mb-3 pt-5 pb-5">
+						<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/0.svg">
+						<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
+					</div>
+						
 					<div id="reviewList" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
+					
+					
 						<div id="reviewDiv" class="review col mt-3 mb-3" style="border-bottom:1px solid #e9e9e9; display:none">
 							<input type="hidden" name="reviewId">
 							<table class="table table-borderless">
 								<tr>
-									<td class="text-center" rowspan="5" style="width:60px;">
-										<div class="ratingEmoji" style="font-size:60px"></div>
-										<div class="hasReply mt-2" style="background:#6BB6EC; border-radius:10px; color:white; padding:2px 4px;">답변완료</div>
+									<td class="text-center" rowspan="5" style="width:80px;">
+										<img class="ratingEmoji img-fluid mukRound" style="width:100%;" src="${contextPath }/resources/img/5.svg">
+										<div class="hasReply mt-2" style="background:#6BB6EC; border-radius:10px; font-size:14px; color:white; padding:2px 3px;">답변완료</div>
 									</td>
 									<td colspan="2">
 										<h5 class="fw-bold">
@@ -252,6 +259,15 @@
 						
 						const reviewDiv2 = reviewDiv.clone();
 						const reviewList = data.reviewList;
+						
+						if(reviewList.length==0) {
+							$("#hasNoSubReview").prop("style").removeProperty("display");
+							console.log('dd');
+						} else {
+							$("#hasNoSubReview").css("display", "none");
+							console.log('ss');
+						}
+						
 						for(const r of reviewList) {
 							reviewDiv2.find("input[name=reviewId]").val(r.reviewId);
 							reviewDiv2.find(".nickName").html(r.nickName);
@@ -286,15 +302,15 @@
 							reviewDiv2.find(".ratingStar").html(ratingStar);
 							
 							if(r.rating==5) {
-								reviewDiv2.find(".ratingEmoji").text("😍");
+								reviewDiv2.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/5.svg");
 							} else if(r.rating==4) {
-								reviewDiv2.find(".ratingEmoji").text("😀");
+								reviewDiv2.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/4.svg");
 							} else if(r.rating==3) {
-								reviewDiv2.find(".ratingEmoji").text("🙂");
+								reviewDiv2.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/3.svg");
 							} else if(r.rating==2) {
-								reviewDiv2.find(".ratingEmoji").text("😐");
+								reviewDiv2.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/2.svg");
 							} else {
-								reviewDiv2.find(".ratingEmoji").text("🙁");
+								reviewDiv2.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/1.svg");
 							}
 							
 							$("#reviewList").append(reviewDiv2.clone());
