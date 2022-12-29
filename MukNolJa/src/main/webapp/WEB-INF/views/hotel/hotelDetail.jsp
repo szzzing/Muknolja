@@ -211,8 +211,8 @@
 		<!-- 객실 리스트 시작 -->
 		<div id="roomList" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 gy-5">
 			
-			<div id="hasNoRoom" class="col-lg-12 text-center pb-5">
-				<h1>🙏</h1>
+			<div id="hasNoRoom" class="col-lg-12 text-center pt-5 pb-5">
+				<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/1f64f.svg">
 				<h4 class="fw-bold">예약 가능한 객실이 없습니다</h4>
 				<div class="fw-bold mukSubText">다음 기회에 찾아주세요</div>
 			</div>
@@ -227,11 +227,11 @@
 			<!-- 객실 리스트 div -->
 			<div id="hasRoom2" class="col col-lg-9">
 				<div id="roomCategory">
-					<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
-						<option selected>최신순</option>
-						<option>낮은가격순</option>
-						<option>높은가격순</option>
-					</select>
+<!-- 					<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;"> -->
+<!-- 						<option selected>최신순</option> -->
+<!-- 						<option>낮은가격순</option> -->
+<!-- 						<option>높은가격순</option> -->
+<!-- 					</select> -->
 				</div>
 				<div id="roomDivList" class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 g-5">
 					<div id="roomDiv" class="col pb-3" style="border-bottom:1px solid #e9e9e9; display:none">
@@ -278,7 +278,7 @@
 		<div id="reviewList" class="mukDisplayNone">
 			<div id="hasReview">
 				<div class="text-center pb-5" style="border-bottom:1px solid #e9e9e9">
-<%-- 					<h2 class="fw-bold">${hotel.hotelName }</h2> --%>
+					<img id="starInfo" class="mb-2" style="width:50px;"><br>
 					<div style="display:inline-block">
 						<h2 id="ratingStar"></h2>
 					</div>
@@ -297,16 +297,19 @@
 			</div>
 			
 			<div id="hasNoSubReview" class="col text-center pt-5 pb-5">
-				<h1>😅</h1>
+				<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/0.svg">
 				<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
 				<div class="fw-bold mukSubText" onclick='$("#roomListButton").click();' style="cursor:pointer">${hotel.hotelName }의 첫번째 리뷰어가 되어주세요</div>
 			</div>
+			
 			<div id="reviewListRow" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
 				<div id="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9; display:none">
 					<input type="hidden" name="reviewId">
 					<table class="table table-borderless">
 						<tr>
-							<td rowspan="5" style="width:60px;"><span class="ratingEmoji" style="font-size:60px"></span></td>
+							<td rowspan="5" style="width:80px;">
+								<img class="ratingEmoji img-fluid mukRound" style="width:100%;" src="${contextPath }/resources/img/5.svg">
+							</td>
 							<td>
 								<h5 class="ratingInfo fw-bold"></h5>
 								<span class="ratingStar"></span>
@@ -477,8 +480,10 @@
 						}
 						
 						if(avgRating==0) {
+							$("#starInfo").prop("src", "${contextPath }/resources/img/1.svg");
 							$(".avgRating").text("");
 						} else {
+							$("#starInfo").prop("src", "${contextPath }/resources/img/"+avgRating.toFixed(0)+".svg");
 							$(".avgRating").text(avgRating.toFixed(1));
 						}
 						$(".reviewCount").text(reviewCount);
@@ -516,19 +521,19 @@
 							
 							if(r.rating==5) {
 								reviewDiv.find(".ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
-								reviewDiv.find(".ratingEmoji").text("😍");
+								reviewDiv.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/5.svg");
 							} else if(r.rating==4) {
 								reviewDiv.find(".ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
-								reviewDiv.find(".ratingEmoji").text("😀");
+								reviewDiv.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/4.svg");
 							} else if(r.rating==3) {
 								reviewDiv.find(".ratingInfo").text("기대 이상이네요.");
-								reviewDiv.find(".ratingEmoji").text("🙂");
+								reviewDiv.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/3.svg");
 							} else if(r.rating==2) {
 								reviewDiv.find(".ratingInfo").text("조금만 더 신경 써 주세요.");
-								reviewDiv.find(".ratingEmoji").text("😐");
+								reviewDiv.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/2.svg");
 							} else {
 								reviewDiv.find(".ratingInfo").text("별로예요.");
-								reviewDiv.find(".ratingEmoji").text("🙁");
+								reviewDiv.find(".ratingEmoji").prop("src", "${contextPath }/resources/img/1.svg");
 							}
 							
 							if(r.businessReply!=null) {

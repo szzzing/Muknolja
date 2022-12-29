@@ -159,6 +159,10 @@
 					</select>
 				</div>
 				
+				<div id="hasNoRoom" class="col-lg-12 text-center pt-5 pb-5">
+					<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/1f64f.svg">
+					<h4 class="fw-bold">객실이 없습니다</h4>
+				</div>
 				
 				<div id="roomDivList" class="row row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
 					<div id="roomDiv" class="room col pb-4 mb-4" style="border-bottom:1px solid #e9e9e9; display:none">
@@ -211,6 +215,12 @@
 					success: (data)=>{
 						$("#roomDivList").html("");
 						console.log(data);
+						
+						if(data.length==0) {
+							$("#hasNoRoom").prop("style").removeProperty("display");
+						} else {
+							$("#hasNoRoom").css("display", "none");
+						}
 						
 						$("#roomDivList").html("");
 						for(var i of data) {
