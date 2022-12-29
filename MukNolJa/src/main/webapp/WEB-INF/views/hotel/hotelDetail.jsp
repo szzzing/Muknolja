@@ -278,7 +278,7 @@
 		<div id="reviewList" class="mukDisplayNone">
 			<div id="hasReview">
 				<div class="text-center pb-5" style="border-bottom:1px solid #e9e9e9">
-					<h2 class="fw-bold">${hotel.hotelName }</h2>
+<%-- 					<h2 class="fw-bold">${hotel.hotelName }</h2> --%>
 					<div style="display:inline-block">
 						<h2 id="ratingStar"></h2>
 					</div>
@@ -294,12 +294,6 @@
 						<option>별점순</option>
 					</select>
 				</div>
-			</div>
-			
-			<div id="hasNoReview" class="text-center pb-5">
-				<h1>😅</h1>
-				<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
-				<div class="fw-bold mukSubText" onclick='$("#roomListButton").click();' style="cursor:pointer">${hotel.hotelName }의 첫번째 리뷰어가 되어주세요</div>
 			</div>
 			
 			<div id="hasNoSubReview" class="col text-center pt-5 pb-5">
@@ -391,7 +385,6 @@
 				var diff = checkout - checkin;
 				var currDay = 24 * 60 * 60 * 1000;
 				var journey = parseInt(diff/currDay);
-				console.log(journey);
 	
 				$.ajax({
 					url: "${contextPath}/selectAllRoom.ho",
@@ -407,7 +400,6 @@
 						if(data.length==0) {
 							$("#hasRoom1").css("display", "none");
 							$("#hasRoom2").css("display", "none");
-							console.log($("#hasRoom2").css("display"));
 							$("#hasNoRoom").prop("style").removeProperty("display");
 						} else {
 							$("#hasNoRoom").css("display", "none");
@@ -455,16 +447,6 @@
 		$(document).ready(function(){
 			var reviewDiv = $("#review").clone();
 			reviewDiv.prop("style").removeProperty("display");
-			const hasNoReview = false;
-			
-// 			if(reviewList.length==0) {
-// 				$("#hasReview").css("display", "none");
-// 				$("#hasNoReview").prop("style").removeProperty("display");
-// 				hasNoReview = true;
-// 			} else {
-// 				$("#hasNoReview").css("display", "none");
-// 				$("#hasReview").prop("style").removeProperty("display");
-// 			}
 			
 			$.reviewList = function(){
 				// 리뷰 불러오기
@@ -481,16 +463,24 @@
 						const avgRating = data.avgRating;
 						const reviewCount = data.reviewCount;
 						
-						if(!hasNoReview && reviewList.length==0) {
+						if(reviewList.length==0) {
 							$("#hasNoSubReview").prop("style").removeProperty("display");
-							var selectedRoom = $("#reviewCategory select[name=searchByRoom]").val();
-							selectedRoom = $("option[value="+selectedRoom+"]").html();
-							$("#hasNoSubReview").find(".mukSubText").html(selectedRoom+"의 첫번째 리뷰어가 되어주세요");
+							if($("#reviewCategory select[name=searchByRoom]").val()!=0) {
+								var selectedRoom = $("#reviewCategory select[name=searchByRoom]").val();
+								selectedRoom = $("option[value="+selectedRoom+"]").html();
+								$("#hasNoSubReview").find(".mukSubText").html(selectedRoom+"의 첫번째 리뷰어가 되어주세요");
+							} else {
+								$("#hasNoSubReview").find(".mukSubText").html("${hotel.hotelName}의 첫번째 리뷰어가 되어주세요");
+							}
 						} else {
 							$("#hasNoSubReview").css("display", "none");
 						}
 						
-						$(".avgRating").text(avgRating.toFixed(1));
+						if(avgRating==0) {
+							$(".avgRating").text("");
+						} else {
+							$(".avgRating").text(avgRating.toFixed(1));
+						}
 						$(".reviewCount").text(reviewCount);
 						
 						var ratingStar="";
@@ -499,7 +489,6 @@
 								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#FFD600"></i>';
 							} else if(j-avgRating>0 && j-avgRating<1) {
 								var x = (1-(j-avgRating))*100;
-								console.log("x"+x);
 								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="background:linear-gradient(90deg, #FFD600 '+x+'%, #f1f1f1 '+x+'%); color:transparent; -webkit-background-clip:text;"></i>';
 							} else {
 								ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#f1f1f1"></i>';
@@ -558,16 +547,7 @@
 				});
 			}
 			$.reviewList();
-			
-			if(reviewList.length==0) {
-				$("#hasReview").css("display", "none");
-				$("#hasNoReview").prop("style").removeProperty("display");
-				hasNoReview = true;
-			} else {
-				$("#hasNoReview").css("display", "none");
-				$("#hasReview").prop("style").removeProperty("display");
-			}
-			
+
 			$("#reviewCategory select").change(function(){
 				$.reviewList();
 			});
@@ -594,10 +574,8 @@
 								hotelId: ${hotel.hotelId}
 							},
 							success: (data)=>{
-								console.log(data);
 							},
 							error: (data)=>{
-								console.log(data);
 							}
 						});
 					} else {
@@ -652,8 +630,6 @@
 							hotelId: ${hotel.hotelId}
 						},
 						success: (data)=>{
-							console.log("리뷰");
-							console.log(data);
 							if(data.length>0) {
 								for(const i of data) {
 									$("#writableReviewModal").modal('show');
@@ -668,7 +644,6 @@
 							}
 						},
 						error: (data)=>{
-							console.log(data);
 						}
 					});
 				}
@@ -781,7 +756,6 @@
 						$.reviewList();
 					},
 					error: (data)=>{
-						console.log(data);
 					}
 				});
 			});
@@ -876,7 +850,6 @@
 		var diff = checkout - checkin;
 		var currDay = 24 * 60 * 60 * 1000;
 		var journey = parseInt(diff/currDay);
-		console.log(journey);
 		$("#daterangepicker").parent().find("label").text(journey+"박 "+(journey+1)+"일");
 		
 		$("#daterangepicker").on("change", function(){
@@ -982,7 +955,6 @@
 			var roomImgDiv = $("#roomDetailModal_roomImgDiv").clone();
 			
 			$(document).on("click", ".roomImg", function(){
-				console.log("클릭");
 				$.ajax({
 					url: "${contextPath}/roomDetail.ho",
 					data: {
@@ -1016,7 +988,6 @@
 						});
 					},
 					error: (data)=>{
-						console.log(data);
 					}
 				});
 			});
