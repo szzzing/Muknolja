@@ -136,6 +136,8 @@ public interface MemberService {
 
 	int insertQA(QA q);
 
+	QA selectQAOne(String id);
+
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
 
 

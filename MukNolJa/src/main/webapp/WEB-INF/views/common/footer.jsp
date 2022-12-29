@@ -95,6 +95,7 @@
 				<input type="text" class="form-control" id="qaTitle">
 			</div>
 		</div>
+		<br>
 		<div class="row">
 			<div class="col text-center">
 				<label>내용</label><br>

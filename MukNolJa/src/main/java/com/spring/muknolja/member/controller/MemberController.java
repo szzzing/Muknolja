@@ -882,4 +882,19 @@ public class MemberController {
 			return result;
 		}
 		
+		@RequestMapping("selectQA.me")
+		public void selectQA(@RequestParam("id") String id, HttpServletResponse response) {
+			QA q = mService.selectQAOne(id);
+			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			
+			try {
+				gson.toJson(q, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 }

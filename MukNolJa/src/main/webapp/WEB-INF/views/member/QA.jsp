@@ -10,6 +10,7 @@
 <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.104.2">
 
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <meta name="theme-color" content="#712cf9">
@@ -82,6 +83,35 @@
       	text-decoration: none;
       	color: black;
       }
+      #qa_modal{
+		display: none;
+		width: 350px;
+		height: 450px;
+		padding: 20px 20px;
+		background-color: #fefefe;
+		border: 1px solid #888;
+		border-radius: 3px;
+	}
+	.mukButton {
+		transition: all 0.3s;
+		background: #6BB6EC;
+		color:white;
+		height:30px;
+		border-radius: 8px;
+		padding:0px 10px;
+		border: 1px solid #6BB6EC;
+		cursor:pointer;
+	}
+	 .mukButton:hover{
+	 	background: white;
+	 	color: #6BB6EC;
+	 	border: 1px solid #6BB6EC;
+	}
+	#qaContent{
+		width: 100%;
+		height: 250px;
+ 		resize: none;
+	}
     </style>
    
 </head>
@@ -122,7 +152,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="QA.me">
-              <i class="bi bi-camera-video"></i>
+              <i class="bi bi-question-circle"></i>
               <span data-feather="users" class="align-text-bottom"></span>
               문의 내역
             </a>
@@ -144,20 +174,23 @@
         <table class="table table-striped table-sm">
           <thead>
             <tr>
+              <th scope="col">번호</th>
               <th scope="col">문의자</th>
               <th scope="col">제목</th>
               <th scope="col">문의일</th>
-              <th scope="col">확인여부</th>
+              <th scope="col">답변여부</th>
             </tr>
           </thead>
           <tbody>
           	
           	<c:forEach items="${ qList }" var="q">
 	            <tr>
+	              <td>${ q.qaId }</td>
 	              <td>${ q.qaWriter }</td>
 	              <td>${ q.qaTitle }</td>
 	              <td>${ q.qaCreateDate }</td>
 	              <td>${ q.qaYn }</td>
+	              <td><button class="mukButton" id="qaDetail">상세</button></td>
 	            </tr>
             </c:forEach>
           </tbody>
@@ -165,6 +198,28 @@
       </div>
     </main>
   </div>
+</div>
+
+<div id="qa_modal">
+	<div class="row">
+		<div class="col text-center">
+			<label>제목</label><br>
+			<input type="text" class="form-control" id="qaTitle" readonly>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col text-center">
+			<label>내용</label><br>
+			<textarea class="form-control" id="qaContent" readonly></textarea>
+		</div>
+	</div>
+	<div class="row text-center" style="margin-top: 20px;">
+		<div class="col">
+			<button type="button" class="mukButton" id="qa_btn">답장</button>
+			<button type="button" class="mukButton" id="close_btn">닫기</button>
+		</div>
+	</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
@@ -207,6 +262,59 @@
                     }
                 }
             });
+            
+            function Modal(id) {
+    	        var zIndex = 9999;
+    	        var modal = document.getElementById(id);
+    	
+    	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+    	        modal.querySelector('#close_btn').addEventListener('click', function() {
+    	            modal.style.display = 'none';
+    	        });
+    	
+    	        modal.setStyle({
+    	            position: 'fixed',
+    	            display: 'block',
+    	            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+    	
+    	            // 시꺼먼 레이어 보다 한칸 위에 보이기
+    	            zIndex: zIndex + 1,
+    	
+    	            // div center 정렬
+    	            top: '50%',
+    	            left: '50%',
+    	            transform: 'translate(-50%, -50%)',
+    	            msTransform: 'translate(-50%, -50%)',
+    	            webkitTransform: 'translate(-50%, -50%)'
+    	        });
+    	    }
+    	
+    	    // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+    	    Element.prototype.setStyle = function(styles) {
+    	        for (var k in styles) this.style[k] = styles[k];
+    	        return this;
+    	    };
+    	    
+    	    document.getElementById('qaDetail').addEventListener('click', function(){
+    	    	const id = this.parentNode.parentNode.querySelector('td').innerText;
+    	    	
+    	    	$.ajax({
+    	    		url: 'selectQA.me',
+    	    		data: {id:id},
+    	    		success: (data) => {
+    	    			document.getElementById('qaTitle').value = data.qaTitle;
+    	    			document.getElementById('qaContent').value = data.qaContent;
+    	    		},
+    	    		error: (data) => {
+    	    			console.log(data);
+    	    		}
+    	    		
+    	    	});
+    	    	console.log(id);
+    	    	
+    	    	
+    	    	Modal('qa_modal');
+    	    });
         </script>
 </body>
 </html>

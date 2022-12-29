@@ -274,6 +274,10 @@ public class MemberDAO {
 	public int insertQA(SqlSessionTemplate sqlSession, QA q) {
 		return sqlSession.insert("memberMapper.insertQA", q);
 	}
+
+	public QA selectQAOne(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("memberMapper.selectQAOne", id);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int

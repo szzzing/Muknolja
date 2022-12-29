@@ -550,4 +550,10 @@
 		insert into qa
 		values(seq_qaid.nextval, #{qaWriter}, #{qaTitle}, #{qaContent}, default, null, sysdate, default)
 	</insert>
+	
+	<select id="selectQAOne" resultMap="qaResultSet">
+		select *
+		from qa
+		where QA_ID = #{id}
+	</select>
   </mapper>
