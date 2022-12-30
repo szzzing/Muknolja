@@ -12,5 +12,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Travel {
-	private String addr, contentId, firstImage, mapx, mapy, readCount, tel, title;
+	private String addr, contentId, firstImage, mapx, mapy, readCount, tel, title, contentTypeId;
 }

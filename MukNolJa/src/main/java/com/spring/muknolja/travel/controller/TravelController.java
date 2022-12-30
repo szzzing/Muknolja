@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.common.model.vo.Reply;
@@ -314,7 +315,7 @@ public class TravelController {
 		return "travelDetail";
 	}
 	
-	@RequestMapping("insertReply.pa")
+	@RequestMapping("insertReply.tr")
 	@ResponseBody
 	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
 		int result = tService.insertReply(r);
@@ -332,4 +333,20 @@ public class TravelController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping("deleteReply.tr")
+	public String deleteReply(@RequestParam("realDeleteRepId") int replyId, @RequestParam("contentId") int contentId) {
+		int result = tService.deleteReply(replyId);
+		if(result > 0) {
+			return "redirect:travelDetail.tr?contentId=" + contentId;
+		}else {
+			throw new CommonException("댓글 삭제를 실패하였습니다.");
+		}
+	}
+	
+	
+	
+	
+	
+	
 }

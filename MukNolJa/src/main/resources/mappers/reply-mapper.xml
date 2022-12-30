@@ -21,6 +21,13 @@
 		from reply
 			 join member on(reply_writer = id)
 		where ref_board_id=#{refBoardId}
+			  and reply_status='Y'
 		order by reply_id desc
 	</select>
+	
+	<update id="deleteReply">
+		update reply
+		set reply_status='N'
+		where reply_id=#{replyId}
+	</update>
 </mapper>
