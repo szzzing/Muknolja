@@ -16,7 +16,7 @@
 	#datepicker{cursor: pointer;}
 	#title{margin-bottom: 30px;}
  	.compDate label{color: #6BB6EC; font-size: 13px;}
-	#gender label{color: #6BB6EC; font-size: 13px;}
+	
 	#location label{color: #6BB6EC; font-size: 13px;}
 	.compNum input{accent-color: #6BB6EC;}
 	.compNum label{color: #6BB6EC; font-size: 13px;}
@@ -56,6 +56,7 @@
 	  margin-top: 25px;
 	  position: relative;
 	}
+	
 	ol.numbered li {
 	  font-size: 16px;
 	  line-height: 1.2;
@@ -84,10 +85,17 @@
 	  text-align: center;
 	  padding-top:-10px;
 	}
+	.tx{
+	background: linear-gradient(#BAF0FF 0% 0%, #0096FF 100% 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+	
+	}
 	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
  	#select{float: left;}
- 	#thumbnail{width: 100%; height: 400px; border-radius: 15px; margin-bottom: 30px; background: lightgray; color: white;}
+ 	#thumbnail{width: 100%; height:400px;   background: lightgray; color: white;}
  	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
 </style>
@@ -100,10 +108,11 @@
 	<div class="container">
 	
 	<br><br><br><br><br><br>
-		<img src="${ contextPath }/resources/img/noImage.png" class="img-fluid" alt="..." id="thumbnail">
-	
+		 
+		<div class="tx" style="text-align:center; font-weight:600;font-size:80px; text-shadow:1px 1px 4px #cacaca,
+			 "><img alt="1" src="${contextPath }/resources/img/toto.png" style="position: relative; margin-top: -50px; width:100px; height:100px;margin-left:-80px;; margin-right:40px;" >후기 게시판</div>
 		<!-- 제목 -->
-		<div id="title" class="input-group input-group-lg">
+		<div id="title" class="input-group input-group-lg" style="margin-top:40px;">
 		  <span class="input-group-text" id="inputGroup-sizing-lg" style="background: #6BB6EC; color: white">제목</span>
 		  <input type="text" class="title form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" required>
 		</div>
@@ -153,7 +162,7 @@
 					
 					<div class="col">
 						<div class="input-group" id="input">
-							<input type="text" id="searchInput" class="form-control" placeholder="여행지 검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+							<input type="text" id="searchInput" class="form-control" placeholder="여행지 검색하기" aria-label="Recipient's username" aria-describedby="button-addon2" >
 							<button class="btn btn-outline-secondary" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 						</div>
 					</div>
@@ -164,24 +173,34 @@
 			</div>
 			
 			<div class="col">
-				<div class="location2">
+				<div class="location2" style="padding-top:40px;">
 					<ol class="numbered">
 					</ol>
 				</div>
 				<h6 style="text-align: right; color: gray; font-size: 13px; margin-bottom: 15px;"><i class="fa-solid fa-check"></i>클릭시 삭제가능</h6>
-				
+			
 			</div>
 		</div>
+		<div></div>
 		
-		<!-- 내용 -->
-	<form action="${contextPath}/insertParty.pa" method="POST" enctype="multipart/form-data">
-		<div class="content form-floating">
-		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none;" name="partyContent"></textarea>
-		  <label for="floatingTextarea2">내용</label>
+		
+	<div class = "row">	  
+	<form action="${contextPath}/reviewWrite.re" action="url" method="post" enctype="multipart/form-data" style="margin-top:40px;">
+	<h6 style="color: gray; font-size: 13px; ">이름을 클릭하여 맞게 작성해주세요</h6>
+	<div style="height:60px; background:RGB(107, 182, 236);  border-radius:0px; padding-left:10px; " id="ti"> </div>
+	<div style="display:flex">
+		<div class="col-6">
+		<div class="content form-floating are" style="height:450px;">
+		  	<textarea class="form-control ttt" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none; border-radius:0px;" name="partyContent"></textarea>
+		</div>
 		</div>
 		
+		<div class="col-6 are2" style="height:400px; border: 1px solid #E4E8EB" >
+		<img class="ttt" src="${ contextPath }/resources/img/noImage.png"  alt="..." id="thumbnail">
+		</div>
+		</div>
 		<div class="d-grid gap-2">
-			<button type="submit" class="writeButton mukButton" style="width: 100%;" id="writeButton">작성하기</button>
+			<button type="submit" class="writeButton mukButton " style="width: 100%;" id="writeButton">작성하기</button>
  		</div>
  		
  		<!-- hidden값 -->
@@ -194,9 +213,9 @@
  		<input type="hidden" name="maxParticipate" id="hiddenNum">
  		<input type="hidden" name="partyCourse" id="hiddenCourse">
  	</form>
-		
+		</div>
 		<br><br>
-		
+		</div>
 		
 	</div>
 	
@@ -232,22 +251,7 @@
 		
 		
 		
- 		<!-- 첨부파일 -->
-	    $("#thumbnail").click(function(){
-	    	$('#myFile').click();
-	    });
-
-	    const myFile = document.querySelector('#myFile');
-	    const thumbnail = document.querySelector('#thumbnail');
-	    
-		    myFile.addEventListener('change', ()=>{
-		    	const reader = new FileReader();
-		    	reader.onload = function(e){
-					console.log(e);		    		
-		    		thumbnail.src = e.target.result;
-		    	};
-		    	reader.readAsDataURL(myFile.files[0]);
-		    });
+ 	
 		    
  		<!-- 코스검색API -->
 		const searchButton = document.getElementById('button-addon2');  
@@ -277,13 +281,16 @@
 					for(let i = 0; i < items.length; i++){
 						
 						let title = items[i]["title"];
+						let contentId = items[i]["contentid"];
 						let addr = items[i]["addr1"];
 						
 						var span = '<span>' + title + '</span>';
 						var p = '<p>' + addr + '</p>';
-						var searchDiv = '<div class="searchInfo" style="cursor: pointer;">' + span + p +'</div><hr>';
+						var searchDiv = '<div id="'+contentId+'"class="searchInfo" style="cursor: pointer;">' + span + p +'</div><hr>';
+						
 						
 						document.querySelector('.location1').innerHTML += searchDiv;
+						
 					}
 				},
 				error: (data)=>{
@@ -292,16 +299,102 @@
 			});
 			
    		});
-	   	
+	   	var list = new Array();
  	   	<!-- 코스선택 후 리스트에 추가 -->
 	   	$(document).on('click', '.searchInfo', function(){
-	   		var li = '<li class="numberLi" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
+	   		var contentId = $(this).attr('id');
+	   		var Yn = true;
+	   		var li = '<li class="numberLi '+contentId+'" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
 	   		var numLi = document.querySelector('.numbered');
+	   		console.log($('.numberLi').length);
+	   	
+	   		for(var i = 0; i <= list.length; i++){
+	   			if( list[i] != contentId){
+	   				Yn = true;
+	   					
+	   			}else{
+	   				alert("중복되었습니다")
+	   				Yn = false;
+	   				
+	   				break;
+	   			}
+	   			
+	   			
+	   			
+	   		}
+	   		list.push(contentId);
+	   		
+	   		
+	   		if(Yn){
+	   		
+	   		var cll = document.querySelector('#ti');
 	   		numLi.innerHTML += li;
-
+	   		
+	   		
+	   		$('.ttt').remove();
+	   		
+	   		
+	   		var bor = '';
+	   		var are = '<textarea class="form-control  t'+contentId+'" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none; border-radius:0px;" name="partyContent"></textarea>';
+	   		var are2 = '<img src="${ contextPath }/resources/img/noImage.png"   alt="..." id="thumbnail'+contentId+'" height = 100%; width = 100% >'+
+	   				   '<input id="myFile'+contentId+'" type="file" accept="image/*" style="display:none; name="thumbnail">'
+	   		
+	   		$('.are').append(are);
+	   		$('.are2').append(are2);
+	   		if( numLi.childElementCount < 2){
+	   			bor = 'border : 1px solid white; border-radius:5px height:60px;';
+	   		}else{
+	   		
+	   			bor= 'border: none;';
+	   			$('.t'+contentId).hide();
+	   			
+	   			$('#thumbnail'+contentId).hide();
+	   		}
+	   		var tag1 ='<button type="button" class="wow '+contentId+'" id="'+contentId+'" style="'+bor+'color:white; background:none; font-size:18px;  margin-top:14px;">'+this.querySelector('span').innerText+'</button>'
+	   		$('#ti').append(tag1);
+	   		}
+	   		$('#thumbnail'+contentId).click(function(){
+		    	$('#myFile'+contentId).click();
+		    });
+			
+		    const myFile = document.querySelector('#myFile'+contentId);
+		    const thumbnail = document.querySelector('#thumbnail'+contentId);
+		    
+			    myFile.addEventListener('change', ()=>{
+			    	const reader = new FileReader();
+			    	reader.onload = function(e){
+						console.log(e);		    		
+			    		thumbnail.src = e.target.result;
+			    	};
+			    	reader.readAsDataURL(myFile.files[0]);
+			    });
+	   		
+	   		
+	  	
 			const locDiv = document.getElementsByClassName('location2')[0];
 			locDiv.isScrollBottom = true;
-				
+			
+			$('.numberLi').click(function(){
+		   		
+		   		var cla =  $(this).attr('class').substr(9);
+		   		
+		   		$('.'+cla ).remove();
+
+		   	});
+			
+			$('.'+contentId).click(function(){
+				const idResult = $('.'+contentId);
+				$('textarea').hide();
+				$('img').hide();
+				$('.wow').css('border','none');
+				 $('.'+contentId).css('border','1px solid white');
+	   			$('.t'+contentId).show();
+	   			$('#thumbnail'+contentId).show();
+	   			
+	   			console.log("123");
+	   			
+	   		});
+			
 			locDiv.addEventListener("scroll", (event) => {
 				if (event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight) {
 					locDiv.isScrollBottom = true;
@@ -314,16 +407,17 @@
 				locDiv.scrollTop = locDiv.scrollHeight;
 			}
 
-	   		if(numLi.childElementCount > 20){
-	   			alert('20개 까지만 선택할 수 있습니다.');
+	   		if(numLi.childElementCount > 5){
+	   			alert('5개 까지만 선택할 수 있습니다.');
 	   			numLi.removeChild(numLi.lastChild);
+	   			cll.removeChild(cll.lastChild);
 	   		}
 	   	});
+	   
+   		
 	   	
  	   	<!-- 코스지우기 -->
-	   	$(document).on('click', '.numberLi', function(){
-	   		this.remove(this);
-	   	});
+	   
 	</script>
 	
 	<script>

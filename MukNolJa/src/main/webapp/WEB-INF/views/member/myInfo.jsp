@@ -69,7 +69,7 @@
 			      </div>
 			      <div class="row justify-content-center " style="padding-left:0px; padding-right:0px; height:70px; margin-top:30px; ">
 	            		<div  class="col-9" style=" height:650px; ">
-	            		<div class="row" id="bb">
+	            		<div class="row" id="bb" >
 	            			
 	            			
 	            				

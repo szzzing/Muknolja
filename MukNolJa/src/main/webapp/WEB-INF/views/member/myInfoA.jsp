@@ -156,13 +156,13 @@
 					$('#dd').append(dHtml);
 					
 				}
-				$(".cll").click(function(){
+				$('.cll').click(function(){
 					var idNum = $(this).attr('id').substr(1);
 					var st = list[idNum].hotelId
 					console.log('번호' + st)
 					location.href="${ contextPath }/hotelDetail.ho?hotelId="+ st;
 				});
-				$(".imo").click(function(){
+				$('.imo').click(function(){
 					var idNum = $(this).attr('id').substr(1);
 					var st = list[idNum].hotelId
 					
