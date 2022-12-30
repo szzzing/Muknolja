@@ -343,6 +343,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.updateQAReply(sqlSession, q);
 	}
 
+	@Override
+	public ArrayList<String> selectAd(String type) {
+		return mDAO.selectAd(sqlSession, type);
+	}
+
 	
 
 	

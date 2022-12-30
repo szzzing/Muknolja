@@ -141,6 +141,8 @@ public interface MemberService {
 
 	int updateQAReply(QA q);
 
+	ArrayList<String> selectAd(String type);
+
 
 
 

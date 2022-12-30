@@ -48,7 +48,7 @@
 			height: 100%;
         }
         
-        #addAd_modal::-webkit-scrollbar{
+        #addAd_modal::-webkit-scrollbar, #addModify_modal::-webkit-scrollbar{
 			width: 8px;
 		}
             
@@ -322,7 +322,7 @@
 			</div>
 			<div class="row text-center">
 				<div class="col">
-					<button type="submit" class="btn btn-outline-primary" id="add">수정</button>
+					<button type="submit" class="btn btn-outline-primary" id="addM" onclick="imgCheckM();">수정</button>
 					<button type="button" class="btn btn-outline-danger modal_close_btn">취소</button>
 				</div>
 			</div>
@@ -507,7 +507,7 @@
     				alert('이미지를 넣어주세요.');
     				event.preventDefault();
     			}
-    		} 
+    		}
     		
     		const addModifyBtns = document.getElementsByClassName('adModify');
     		for(const addModify of addModifyBtns){

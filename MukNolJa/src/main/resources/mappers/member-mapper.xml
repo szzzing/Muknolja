@@ -250,7 +250,7 @@
   	<select id="selectADList" resultMap="ADResultSet">
   		select *
   		from AD
-  		where to_char(DEADLINE, 'yy-mm-dd') <![CDATA[>=]]> to_char(sysdate, 'yy-mm-dd')
+  		where to_char(DEADLINE, 'yymmdd') <![CDATA[>=]]> to_char(sysdate, 'yymmdd')
   		<if test="category == 0">
   			and BOARD_TYPE = 'M'
   		</if>
@@ -543,7 +543,7 @@
 	<select id="selectQAList" resultMap="qaResultSet">
 		select *
 		from qa
-		order by to_char(QA_CREATE_DATE, 'yy.mm.dd')
+		order by to_char(QA_CREATE_DATE, 'yymmdd')
 	</select>
 	
 	<insert id="insertQA">
@@ -562,4 +562,11 @@
 		set QA_REPLY_CONTENT = #{qaReplyContent}, QA_YN = 'Y'
 		where QA_ID = #{qaId}
 	</update>
+	
+	<select id="selectAd" resultType="String">
+		select FILE_MODIFY_NAME
+		from ATTACHED_FILE
+		    join AD using(FILE_ID)
+		where BOARD_TYPE = #{type} and to_char(deadline, 'yymmdd') <![CDATA[>=]]> to_char(sysdate, 'yymmdd')
+	</select>
   </mapper>

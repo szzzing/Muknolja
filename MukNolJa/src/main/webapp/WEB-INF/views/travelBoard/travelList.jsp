@@ -7,8 +7,8 @@
 	
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<style>
-		#carouselExampleInterval{height: 550px; margin-top: 80px;}
-		#carouselExampleInterval img{height:550px;}
+		#carouselExampleInterval{height: 350px; margin-top: 80px;}
+		#carouselExampleInterval img{height:350px;}
 		.travelInfo a{color: black; font-size: 25px; text-decoration: none;}
 		.travelInfo p{color: gray; font-size: 15px; margin-top: 20px;}
 		.pagination a{color: #6BB6EC;}

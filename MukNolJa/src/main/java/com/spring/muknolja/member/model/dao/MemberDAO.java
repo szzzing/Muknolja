@@ -282,6 +282,10 @@ public class MemberDAO {
 	public int updateQAReply(SqlSessionTemplate sqlSession, QA q) {
 		return sqlSession.update("memberMapper.updateQAReply", q);
 	}
+
+	public ArrayList<String> selectAd(SqlSessionTemplate sqlSession, String type) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectAd", type);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int

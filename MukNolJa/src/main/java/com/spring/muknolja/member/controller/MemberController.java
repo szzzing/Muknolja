@@ -808,8 +808,10 @@ public class MemberController {
 				a.setBoardType("H");
 			}
 			
+			int result = 0;
 			String fileName = file.getOriginalFilename();
 			
+			if(!fileName.equals("")) {
 			AttachedFile attm = new AttachedFile();
 			
 			String[] returnArr = AttachedFile.saveFile(file, request);
@@ -822,14 +824,16 @@ public class MemberController {
 			map.put("attm", attm);
 			map.put("beforeFileId", beforeFileId);
 			
+			result += mService.updateAttm(map);
+			}
+			
 			HashMap<String, Object> aMap = new HashMap<>();
 			aMap.put("beforeFileId", beforeFileId);
 			aMap.put("a", a);
 			
-			int result = mService.updateAttm(map);
 			result += mService.updateAd(aMap);
 			
-			if(result >= 2) {
+			if(result > 0) {
 				AttachedFile.deleteFile(beforeFileName, request);
 				return "redirect:adManagement.me";
 			} else {
@@ -904,5 +908,20 @@ public class MemberController {
 			int result = mService.updateQAReply(q);
 			
 			return result;
+		}
+		
+		@RequestMapping("selectAd.me")
+		public void selectAd(@RequestParam("type") String type, HttpServletResponse response) {
+			ArrayList<String> iList = mService.selectAd(type);
+			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			
+			try {
+				gson.toJson(iList, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 }
