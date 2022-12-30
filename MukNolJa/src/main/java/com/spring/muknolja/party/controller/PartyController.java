@@ -1,9 +1,11 @@
 ﻿package com.spring.muknolja.party.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
+import com.spring.muknolja.common.model.vo.Reply;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.party.model.service.PartyService;
 import com.spring.muknolja.party.model.vo.Party;
@@ -53,8 +59,10 @@ public class PartyController {
 	@RequestMapping("selectParty.pa")
 	public String partyDetail(@RequestParam("pId") int pId, @RequestParam(value="writer", required=false) String writer, HttpSession session, Model model) {
 		Party p = pService.selectParty(pId);
+		ArrayList<Reply> rList = pService.selectReply(pId);
 		if(p != null) {
 			model.addAttribute("p", p);
+			model.addAttribute("rList", rList);
 			return "partyDetail";
 		}else {
 			throw new CommonException("동행 상세보기 조회에 실패하였습니다.");
@@ -141,6 +149,22 @@ public class PartyController {
 		return "redirect:partyList.pa";
 	}
 	
+	@RequestMapping("insertReply.pa")
+	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
+		int result = pService.insertReply(r);
+		ArrayList<Reply> rList = pService.selectReply(r.getRefBoardId());
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(rList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

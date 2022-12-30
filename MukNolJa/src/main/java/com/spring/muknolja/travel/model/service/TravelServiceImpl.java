@@ -28,4 +28,9 @@ public class TravelServiceImpl implements TravelService{
 		return tDAO.selectReply(sqlSession, refBoardId);
 	}
 
+	@Override
+	public int deleteReply(int replyId) {
+		return tDAO.deleteReply(sqlSession, replyId);
+	}
+
 }

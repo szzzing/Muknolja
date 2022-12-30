@@ -77,12 +77,22 @@
 	#updateButton:hover{color: #6BB6EC; border: none; background: white; text-decoration: underline; font-weight: 700;}
 	#deleteButton{color: #424242; border: none; background: white;}
 	#deleteButton:hover{color: #6BB6EC; border: none; background: white; text-decoration: underline; font-weight: 700;}
-	
 	.replyProfile img{border-radius: 50%; width: 40px; height: 40px; margin-bottom: 10px; float:left;}
 	.replyProfile table{font-size: 12px; vertical-align: middle;}
-	.buttons{background: white !important; border: none; font-size: 13px;}
-	.buttons:hover{background: white !important; border: none; font-size: 13px; color: black!important; font-weight: 700;}
+	.reReplyProfile img{border-radius: 50%; width: 40px; height: 40px; margin-bottom: 10px; float:left;}
+	.reReplyProfile table{font-size: 12px; vertical-align: middle;}
+	.buttons{background: white !important; border: none; font-size: 13px; opacity: 0.7;}
+	.buttons:hover{background: white !important; border: none; font-size: 13px; color: tomato!important; font-weight: 700;}
 	.travelList{cursor: pointer;}
+	.replyContent{clear:both; margin-left: 33px; margin-top: 15px;}
+	.replyContent textarea{resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;}
+	.reReplyContent{clear:both; margin-left: 33px; margin-top: 15px;}
+	.reReplyContent textarea{resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;}
+	#partyReply input[readonly]{background: white;}
+	.well{margin-top: 20px; padding-left: 60px;}
+	.well input[readonly]{background: white;}
+	#reReplyInput{color: white;}
+	#reReplyInput:hover{color: #6BB6EC; border-color: lightgray;}
 </style>
 </head>
 <body>
@@ -180,35 +190,109 @@
 			<div id="partyReply" style="margin-top:40px">
 				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h5>
 				<div class="input-group mb-3">
-					<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-					<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
+					<c:if test="${ loginUser == null }">
+						<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
+						<button class="btn btn-outline-secondary" type="button" disabled><i class="bi bi-send"></i></button>
+					</c:if>
+					<c:if test="${ loginUser != null }">
+						<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" id="replyContent">
+						<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
+					</c:if>
 				</div>
 			</div>
 			
 			<!-- 댓글내용 -->
-			<div style="margin-top: 30px;">
-				<div class="replyProfile">
-					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
-					<table style="float:left;">
-						<tr>
-							<td>슬픈고양이</td>
-						</tr>
-						<tr>
-							<td style="color: gray;">2022.12.28</td>
-						</tr>
-					</table>
-					<div style="float:right;">
-						<button class="buttons">수정</button>
-						<button class="buttons">삭제</button>
+			<div id="reply" style="margin-top: 30px;">
+				<c:forEach items="${ rList }" var="r">
+					<div class="replyProfile">
+						<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
+						<table style="float:left; margin-left: 10px;">
+							<tr>
+								<td>${ r.nickName }</td>
+							</tr>
+							<tr>
+								<td style="color: gray;">${ r.replyModifyDate }</td>
+							</tr>
+						</table>
+						<c:if test="${ r.replyWriter == loginUser.id }">
+							<div style="float:right;">
+								<button class="buttons deleteReply"><i class="fa-solid fa-trash-can"></i></button>
+								<input type="hidden" value="${ r.replyId }" name="replyId">
+							</div>
+						</c:if>
+						<c:if test="${ r.replyWriter != loginUser.id }">
+							<div style="float:right;">
+								<button class="buttons" type="button">신고하기</button>
+							</div>
+						</c:if>
 					</div>
-				</div>
-				<div style="clear:both; margin-left: 33px; margin-top: 15px;">
-					<textarea style="resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;" readonly>여수 현지인분께 여쭤보니 거문도 방문을 추천해주시더라구요. 이미 인터넷에서 유명한 곳들은 다 방문하실 거 같으니.. 여수항에서 거문도 한 번 들러보시길 추천드립니다 :)</textarea>
-				</div>
-				<div>
-					<button class="buttons">답글달기</button>
-				</div>
-				<hr style="margin-top: 10px; border-color: gray;">
+					<div class="replyContent">
+						<textarea readonly>${ r.replyContent }</textarea>
+					</div>
+					
+					<!-- 대댓글 -->
+					<div class="reReply">
+						<button class="buttons reReplyButton" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">답글달기</button>
+						<div class="collapse" id="collapseExample">
+						  <div class="well">
+						  
+						  
+						  
+						  	<!-- 대댓글 작성 -->
+						  	<div class="input-group mb-3">
+								<c:if test="${ loginUser == null }">
+									<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
+									<button class="btn btn-outline-secondary" type="button" disabled><i class="bi bi-send"></i></button>
+								</c:if>
+								<c:if test="${ loginUser != null }">
+									<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" id="reReplyContent">
+									<button class="btn btn-outline-secondary" type="button" id="reReplyInput"><i class="bi bi-send"></i></button>
+								</c:if>
+							</div>
+							
+							<!-- 대댓글 프로필 -->
+							<div class="reReplyProfile">
+								<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">
+								<table style="float:left; margin-left: 10px;">
+									<tr>
+										<td>${ r.nickName }</td>
+									</tr>
+									<tr>
+										<td style="color: gray;">${ r.replyModifyDate }</td>
+									</tr>
+								</table>
+								<c:if test="${ r.replyWriter == loginUser.id }">
+									<div style="float:right;">
+										<button class="buttons deleteReReply"><i class="fa-solid fa-trash-can"></i></button>
+										<input type="hidden" value="${ r.replyId }" name="replyId">
+									</div>
+								</c:if>
+								<c:if test="${ r.replyWriter != loginUser.id }">
+									<div style="float:right;">
+										<button class="buttons" type="button">신고하기</button>
+									</div>
+								</c:if>
+							</div>
+							
+							<!-- 대댓글 내용 -->
+							<div class="reReplyContent">
+								<textarea readonly>${ r.replyContent }</textarea>
+							</div>
+							
+							<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">
+							
+							
+							
+							
+							
+							
+						  </div>
+						</div>
+					</div>
+					<hr style="margin-top: 10px; border-color: gray;">
+				</c:forEach>
+				
+				<input type="hidden" name="realDeleteRepId">
 			</div>
 			
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -244,7 +328,53 @@
 				form.action = '${contextPath}/deleteParty.pa';
 				form.submit();
 			});
+			
+			document.getElementById('button-addon2').addEventListener('click', function(){
+				$.ajax({
+					url: '${contextPath}/insertReply.pa',
+					data: {replyContent:document.getElementById('replyContent').value,
+						   refBoardId:${p.partyId}, replyWriter:"${loginUser.id}"},
+					success: (data) =>{
+						console.log(data);
+						
+						document.getElementById('reply').innerHTML = '';
+						
+						for(const r of data){
+							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">';
+							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + r.nickName + '</td></tr><tr><td style="color: gray;">' + r.replyModifyDate + '</td></tr></table>';
+							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + r.replyId + '" name="replyId"></div>';
+							var reportR = '<div style="float:right;"><button class="buttons" type="button">신고하기</button></div>';
+							var reReply = '<div><button class="buttons" type="button">답글달기</button></div>';
+							var replyContent = '<div class="replyContent"><textarea readonly>' + r.replyContent +'</textarea></div>';
+							var hr = '<hr style="margin-top: 10px; border-color: gray;">';
+							var realDeleteRepId = '<input type="hidden" name="realDeleteRepId">';
+							var replyProfile = '';
+							if(r.replyWriter == '${loginUser.id}'){
+								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + deleteR + '</div>';
+							}else{
+								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + reportR + '</div>';
+							}
+							document.getElementById('reply').innerHTML += (replyProfile + replyContent + reReply + hr) + realDeleteRepId;
+						}
+						
+						document.getElementById('replyContent').value = '';
+					},
+					error: (data) =>{
+						console.log(data);
+					}
+				});
+			});
+			
 		}
+		
+		$(document).on('click', '.reReplyButton', function () {
+			var collapses = $(this).parent().find('.collapse');
+			collapses.each(function(){
+				$(this).collapse('show');
+				$(this).collapse('hide');
+			});
+		});
+		
 	</script>
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
