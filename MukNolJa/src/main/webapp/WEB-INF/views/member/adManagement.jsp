@@ -134,6 +134,11 @@
       	margin-bottom: 20px;
 		border-bottom: 1px solid lightgray;
 	  }
+	  #logout{
+      	position: relative;
+      	top: 480px;
+      	font-size: 12px;
+      }
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -174,7 +179,15 @@
               광고 관리
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="QA.me">
+              <i class="bi bi-question-circle"></i>
+              <span data-feather="users" class="align-text-bottom"></span>
+              문의 내역
+            </a>
+          </li>
         </ul>
+        <a href="${ contextPath }/logout.me" id="logout"><i class="bi bi-box-arrow-right"></i> 로그아웃</a>
       </div>
     </nav>
 
@@ -215,15 +228,15 @@
 	              <td>${ a.price }</td>
 	              <td>${ a.start }</td>
 	              <td>${ a.deadline }</td>
-	              <td width="80"><button type="button" class="btn btn-outline-primary btn-sm adDetail">확인</button></td>
-	              <td width="80"><button type="button" class="btn btn-outline-primary btn-sm adModify">수정</button></td>
+	              <td width="80"><button type="button" class="mukButton adDetail">확인</button></td>
+	              <td width="80"><button type="button" class="mukButton adModify">수정</button></td>
 	              <input type="hidden" value="${ a.fileId }">
 	            </tr>
             </c:forEach>
             <c:forEach begin="1" end="${ 3 - fn:length(aList) }">
             	<tr>
             		<td colspan="6">
-            			<button type="button" class="btn btn-outline-secondary addAd">광고 추가</button>
+            			<button type="button" class="mukButton addAd">광고 추가</button>
             		</td>
             	</tr>
             </c:forEach>
@@ -267,7 +280,7 @@
 			</div>
 			<div class="row text-center">
 				<div class="col">
-					<button type="submit" class="btn btn-outline-primary" id="add">추가</button>
+					<button type="submit" class="btn btn-outline-primary" id="add" onclick="imgCheck();">추가</button>
 					<button type="button" class="btn btn-outline-danger modal_close_btn">취소</button>
 				</div>
 			</div>
@@ -488,6 +501,13 @@
     				});
     			});
     		}
+    		
+    		function imgCheck() {
+    			if(document.getElementById('myFile').value == ''){
+    				alert('이미지를 넣어주세요.');
+    				event.preventDefault();
+    			}
+    		} 
     		
     		const addModifyBtns = document.getElementsByClassName('adModify');
     		for(const addModify of addModifyBtns){

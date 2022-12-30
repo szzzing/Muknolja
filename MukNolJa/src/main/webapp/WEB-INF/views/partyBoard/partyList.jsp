@@ -103,6 +103,8 @@
 	.card td{width: 80px; font-size: 14px; color: gray; margin-right: auto;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
+	.pagination a{color: #6BB6EC;}
+	.pagination a:hover{background: #6BB6EC; color: white;}
 </style>
 </head>
 <body style="background-color:white;">
@@ -170,10 +172,9 @@
 						  	  <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
 							  <ol class="numbered">
 								  <c:forEach items="${ courseList }" var="course" end="3">
-								  	<li>${ course }</li>
+								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
 								  </c:forEach>
 							  </ol>
-							 
 							 <table>
 							 	<tr>
 							 		<td><i class="fa-solid fa-users"></i> 0/${ p.maxParticipate }</td>
@@ -193,17 +194,26 @@
 			<nav aria-label="Page navigation example">
 			  <ul class="pagination d-flex justify-content-center">
 			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
+			    	<c:url var="goBack" value="${ loc }">
+			    		<c:param name="page" value="${ pi.currentPage-1 }"/>
+			    	</c:url>
+			      	<a class="page-link" href="${ goBack }" aria-label="Previous">
+			        	<span aria-hidden="true"><i class="fa-solid fa-angle-left"></i></span>
+			      	</a>
 			    </li>
-			    <li class="page-item"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
+			    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+			    	<c:url var="goNum" value="${ loc }">
+			    		<c:param name="page" value="${ p }"/>
+			    	</c:url>
+				    <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
+			    </c:forEach>
 			    <li class="page-item">
-			      <a class="page-link" href="#" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
+			    	<c:url var="goNext" value="${ loc }">
+			    		<c:param name="page" value="${ pi.currentPage+1 }"/>
+			    	</c:url>
+				    <a class="page-link" href="${ goNext }" aria-label="Next">
+				    	<span aria-hidden="true"><i class="fa-solid fa-angle-right"></i></span>
+				    </a>
 			    </li>
 			  </ul>
 			</nav>
@@ -216,7 +226,7 @@
 				partyCard.addEventListener('click', function(){
 				var partyId = partyCard.querySelectorAll('input')[0].value;
 				var nickName = partyCard.querySelectorAll('input')[1].value;
-					location.href = '${contextPath}/partyDetail.pa?pId=' + partyId + '&writer=' + nickName;
+					location.href = '${contextPath}/selectParty.pa?pId=' + partyId + '&writer=' + nickName;
 				});
 			}
 			

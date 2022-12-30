@@ -17,4 +17,8 @@ public interface PartyService {
 
 	Party selectParty(int pId);
 
+	int updateParty(HashMap<String, Object> map);
+
+	int deleteParty(HashMap<String, Integer> map);
+
 }

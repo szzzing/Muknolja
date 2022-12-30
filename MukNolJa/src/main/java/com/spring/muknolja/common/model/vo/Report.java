@@ -13,11 +13,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class QA {
-	private int qaId;
-	private String qaWriter;
-	private String qaTitle, qaContent, qaYn, qaReplyContent;
-	private Date qaCreateDate;
-	private String qaStatus;
-	
+public class Report {
+	private int reportId;
+	private String memberId;
+	private int targetId;
+	private String reportClassification;
+	private String reportContent;
+	private Date createDate;
+	private String processing;
+	private String reportTitle;
 }

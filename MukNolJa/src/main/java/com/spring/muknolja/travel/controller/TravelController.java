@@ -1,26 +1,40 @@
 package com.spring.muknolja.travel.controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
+import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.travel.model.service.TravelService;
 import com.spring.muknolja.travel.model.vo.Travel;
 
 @Controller
 public class TravelController {
+	
+	@Autowired
+	private TravelService tService;
 	
 	private String serviceKey = "yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D";
 	
@@ -113,7 +127,7 @@ public class TravelController {
 			String urlStr;
 			String keyword = URLEncoder.encode(searchValue, "UTF-8");
 			
-			urlStr = "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=" + serviceKey + "&MobileApp=AppTest&MobileOS=ETC&pageNo=" + pageNo + "&numOfRows=20&listYN=Y&&arrange=A&keyword=" + keyword + "&contentTypeId=12&_type=json";
+			urlStr = "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=" + serviceKey + "&MobileApp=AppTest&MobileOS=ETC&pageNo=" + pageNo + "&numOfRows=20&listYN=Y&&arrange=A&keyword=" + keyword + "&_type=json";
 			
 			URL url = new URL(urlStr);
 			BufferedReader bf;
@@ -168,7 +182,7 @@ public class TravelController {
 	}
 	
 	@RequestMapping("travelDetail.tr")
-	public String travelDetail(@RequestParam("contentId") String contentId, @RequestParam(value="page", required=false) Integer page, Model model) {
+	public String travelDetail(@RequestParam("contentId") int contentId, @RequestParam(value="page", required=false) Integer page, Model model) {
 		
 		try {
 			String urlStr = "http://apis.data.go.kr/B551011/KorService/detailCommon?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileOS=ETC&MobileApp=AppTest&contentId=" + contentId + "&defaultYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&_type=json";
@@ -295,6 +309,27 @@ public class TravelController {
 			e.printStackTrace();
 		}
 		
+		ArrayList<Reply> list = tService.selectReply(contentId);
+		model.addAttribute("rlist", list);
 		return "travelDetail";
+	}
+	
+	@RequestMapping("insertReply.pa")
+	@ResponseBody
+	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
+		int result = tService.insertReply(r);
+		ArrayList<Reply> rlist = tService.selectReply(r.getRefBoardId());
+		System.out.println(r);
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(rlist, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

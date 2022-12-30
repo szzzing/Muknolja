@@ -80,6 +80,11 @@
       .cate{
       	width: 88px;
       }
+      #logout{
+      	position: relative;
+      	top: 480px;
+      	font-size: 12px;
+      }
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -114,20 +119,21 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="adStats.me">
-              <i class="bi bi-bar-chart-line"></i>
-              <span data-feather="users" class="align-text-bottom"></span>
-              광고 통계
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="adManagement.me">
               <i class="bi bi-camera-video"></i>
               <span data-feather="users" class="align-text-bottom"></span>
               광고 관리
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="QA.me">
+              <i class="bi bi-question-circle"></i>
+              <span data-feather="users" class="align-text-bottom"></span>
+              문의 내역
+            </a>
+          </li>
         </ul>
+        <a href="${ contextPath }/logout.me" id="logout"><i class="bi bi-box-arrow-right"></i> 로그아웃</a>
       </div>
     </nav>
 
@@ -160,26 +166,55 @@
         <table class="table table-striped table-sm">
           <thead>
             <tr>
-              <th scope="col">번호</th>
-              <th scope="col">제목</th>
-              <th scope="col">작성자</th>
-              <th scope="col">신고</th>
-              <th scope="col">작성일</th>
+            	<c:if test="${ category != 2 }">
+	            	<th scope="col">번호</th>
+	            	<th scope="col">제목</th>
+	            	<th scope="col">작성자</th>
+	            	<th scope="col">신고</th>
+	            	<th scope="col">작성일</th>
+            	</c:if>
+            	<c:if test="${ category == 2 }">
+            		<th scope="col">번호</th>
+            		<th scope="col">제목</th>
+	            	<th scope="col">신고자</th>
+	            	<th scope="col">분류</th>
+	            	<th scope="col">신고일</th>
+            	</c:if>
             </tr>
           </thead>
           <tbody>
-          	
-          	<c:forEach items="${ bList }" var="b">
-	            <tr>
-	              <td>${ b.boardId }</td>
-	              <td>${ b.boardTitle }</td>
-	              <td>${ b.boardWriter }</td>
-	              <td>${ b.createDate }</td>
-	              <td>${ b.createDate }</td>
-	              <td><button class="mukButton">삭제</button></td>
-		          <td><button class="mukButton">상세</button></td>
-	            </tr>
-            </c:forEach>
+          	<c:if test="${ category != 2 }">
+	          	<c:forEach items="${ bList }" var="b">
+		            <tr>
+		              <td>${ b.boardId }</td>
+		              <td>${ b.boardTitle }</td>
+		              <td>${ b.boardWriter }</td>
+		              <td>${ b.createDate }</td>
+		              <td>${ b.createDate }</td>
+		              <td width="100"><button class="mukButton">삭제</button></td>
+			          <td width="100"><button class="mukButton boardDetail">상세</button></td>
+		            </tr>
+	            </c:forEach>
+            </c:if>
+            <c:if test="${ category == 2 }">
+	            <c:forEach items="${ bList }" var="b">
+		            <tr>
+		              <td>${ b.targetId }</td>
+		              <td>${ b.reportTitle }</td>
+		              <td>${ b.memberId }</td>
+		              <td>${ b.reportClassification }</td>
+		              <td>${ b.createDate }</td>
+		              <input type="hidden" value="${ b.reportId }">
+			          <td width="100"><button class="mukButton boardDetail">상세</button></td>
+			          <c:if test="${ b.processing == 'N' }">
+			         	 <td width="100"><button class="mukButton processing">처리</button></td>
+			          </c:if>
+			          <c:if test="${ b.processing == 'Y' }">
+			         	 <td width="100"><button class="mukButton" disabled>처리완료</button></td>
+			          </c:if>
+		            </tr>
+	            </c:forEach>
+            </c:if>
           </tbody>
         </table>
       </div>
@@ -262,6 +297,27 @@
            	document.getElementById('report').addEventListener('click', function(){
 				location.href = 'boardManagement.me?category=2';
            	});
+           	
+           	const boardDetails = document.getElementsByClassName('boardDetail');
+           	for(const boardDetail of boardDetails){
+           		boardDetail.addEventListener('click', function(){
+	           		const tr = this.parentNode.parentNode;
+	           		const type = tr.querySelectorAll('td')[2].innerText;
+	           		const id = tr.querySelectorAll('td')[0].innerText;
+	           		
+	           		if(type != '댓글'){
+	           			location.href = 'reportDetail.me?id=' + id + '&type=' + type;
+	           		}
+           		});
+           	}
+           	
+           	const processings = document.getElementsByClassName('processing');
+           	for(const processing of processings){
+           		processing.addEventListener('click', function(){
+           			const id = this.parentNode.parentNode.querySelector('input[type="hidden"]').value;
+           			location.href = 'processing.me?id=' + id;
+           		});
+           	}
         </script>
 </body>
 </html>

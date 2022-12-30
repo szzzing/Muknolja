@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="replyMapper">
+	<resultMap type="Reply" id="replyResultMap">
+		<id column="REPLY_ID" property="replyId"/>
+		<result column="REPLY_WRITER" property="replyWriter"/>
+		<result column="REF_BOARD_ID" property="refBoardId"/>
+		<result column="REPLY_CONTENT" property="replyContent"/>
+		<result column="REPLY_CREATE_DATE" property="replyCreateDate"/>
+		<result column="REPLY_MODIFY_DATE" property="replyModifyDate"/>
+		<result column="REPLY_STATUS" property="replyStatus"/>
+		<result column="REF_REPLY_ID" property="refReplyId"/>
+		<result column="NICKNAME" property="nickName"/>
+	</resultMap>
+	<insert id="insertReply">
+		insert into reply
+		values(seq_replyid.nextval, #{replyWriter}, #{refBoardId}, #{replyContent}, sysdate, sysdate, default, #{refReplyId})
+	</insert>
+	<select id="selectReply" resultMap="replyResultMap">
+		select *
+		from reply
+			 join member on(reply_writer = id)
+		where ref_board_id=#{refBoardId}
+		order by reply_id desc
+	</select>
+</mapper>

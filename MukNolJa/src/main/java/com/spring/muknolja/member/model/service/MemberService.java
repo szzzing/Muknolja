@@ -66,7 +66,7 @@ public interface MemberService {
 
 	int boardListCount();
 
-	ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi);
+	ArrayList<Object> selectBoardList(HashMap<String, Object> map, PageInfo pi);
 
 	ArrayList<Map<String, Integer>> incomeCount();
 
@@ -122,7 +122,24 @@ public interface MemberService {
 
 	int updateAd(HashMap<String, Object> aMap);
 
+	int reportListCount();
+
+	ArrayList<Object> selectReportList(String search, PageInfo pi);
+
+	String selectBoardType(String id);
+
+	int updateProcessing(String id);
+
+	ArrayList<Map<String, Integer>> QACount();
+
+	ArrayList<QA> selectQAList();
+
+	int insertQA(QA q);
+
+	QA selectQAOne(String id);
 	/* ArrayList<AttachedFile> selectImg(int hotelId); */
+
+	int updateQAReply(QA q);
 
 
 
