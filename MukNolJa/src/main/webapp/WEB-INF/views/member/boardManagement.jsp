@@ -189,9 +189,9 @@
 		              <td>${ b.boardId }</td>
 		              <td>${ b.boardTitle }</td>
 		              <td>${ b.boardWriter }</td>
+		              <td>${ b.reportCount }</td>
 		              <td>${ b.createDate }</td>
-		              <td>${ b.createDate }</td>
-		              <td width="100"><button class="mukButton">삭제</button></td>
+		              <td width="100"><button class="mukButton boardDelete">삭제</button></td>
 			          <td width="100"><button class="mukButton boardDetail">상세</button></td>
 		            </tr>
 	            </c:forEach>
@@ -317,6 +317,22 @@
            			const id = this.parentNode.parentNode.querySelector('input[type="hidden"]').value;
            			location.href = 'processing.me?id=' + id;
            		});
+           	}
+           	
+           	const boardDeletes = document.getElementsByClassName('boardDelete');
+           	for(const boardDelete of boardDeletes){
+           		boardDelete.addEventListener('click', function(){
+           			const tr = this.parentNode.parentNode;
+           			const id = tr.querySelectorAll('td')[0].innerText;
+           			
+           			if(confirm('정말 삭제하시겠습니까?')){
+           				if(${ category == 0 }){
+           					location.href = ''
+           				} else if(${ category == 1}){
+           					
+           				}
+           			}
+           		})
            	}
         </script>
 </body>

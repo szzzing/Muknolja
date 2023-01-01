@@ -25,4 +25,5 @@ public class Board {
 	private String boardArea;
 	private String boardStatus;
 	private String fileModifyName;
+	private int reportCount;
 }

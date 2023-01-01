@@ -201,8 +201,9 @@
   	</select>
   	
   	<select id="selectBoardList" resultMap="BoardResultSet">
-  		select *
+  		select BOARD_ID, BOARD_WRITER, BOARD_TYPE, BOARD_TITLE, BOARD_CREATE_DATE, count(REPORT_ID) COUNT
   		from board
+  			left join report on(BOARD_ID = TARGET_ID)
   		where board_status = 'Y' and
   		<if test="category == 0">
   			BOARD_TYPE = 'R'
@@ -213,6 +214,7 @@
   		<if test="search != null">
 	    	and BOARD_TITLE LIKE '%'||#{search}||'%'
 	    </if>
+	    group by (BOARD_ID, BOARD_WRITER, BOARD_TYPE, BOARD_TITLE, BOARD_CREATE_DATE)
 	    order by board_id desc
   	</select>
   	
@@ -228,6 +230,7 @@
   		<result column="BOARD_AREA" property="boardArea"/>
   		<result column="BOARD_STATUS" property="boardStatus"/>
   		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
+  		<result column="COUNT" property="reportCount"/>
   	</resultMap>
   	
   	<resultMap type="AD" id="ADResultSet">
