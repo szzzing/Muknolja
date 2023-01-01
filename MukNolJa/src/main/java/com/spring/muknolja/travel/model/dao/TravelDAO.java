@@ -18,4 +18,8 @@ public class TravelDAO {
 		return (ArrayList)sqlSession.selectList("replyMapper.selectReply", refBoardId);
 	}
 
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyId) {
+		return sqlSession.update("replyMapper.deleteReply", replyId);
+	}
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.Reply;
 import com.spring.muknolja.party.model.dao.PartyDAO;
 import com.spring.muknolja.party.model.vo.Party;
 
@@ -50,6 +51,16 @@ public class PartyServiceImpl implements PartyService{
 	@Override
 	public int deleteParty(HashMap<String, Integer> map) {
 		return pDAO.deleteParty(sqlSession, map);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		return pDAO.insertReply(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReply(int refBoardId) {
+		return pDAO.selectReply(sqlSession, refBoardId);
 	}
 
 }

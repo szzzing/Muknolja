@@ -10,4 +10,6 @@ public interface TravelService {
 
 	ArrayList<Reply> selectReply(int refBoardId);
 
+	int deleteReply(int replyId);
+
 }

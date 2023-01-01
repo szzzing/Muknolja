@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.Reply;
 import com.spring.muknolja.party.model.vo.Party;
 
 @Repository("pDAO")
@@ -45,6 +46,14 @@ public class PartyDAO {
 		int board = sqlSession.update("partyMapper.deleteBoard", map);
 		int attm = sqlSession.update("partyMapper.deleteAttm", map);
 		return board + attm;
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("replyMapper.insertReply", r);
+	}
+
+	public ArrayList<Reply> selectReply(SqlSessionTemplate sqlSession, int refBoardId) {
+		return (ArrayList)sqlSession.selectList("replyMapper.selectReply", refBoardId);
 	}
 
 }
