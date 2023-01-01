@@ -206,10 +206,10 @@
   			left join report on(BOARD_ID = TARGET_ID)
   		where board_status = 'Y' and
   		<if test="category == 0">
-  			BOARD_TYPE = 'R'
+  			BOARD_TYPE = 'P'
   		</if>
   		<if test="category == 1">
-  			BOARD_TYPE = 'P'
+  			BOARD_TYPE = 'R'
   		</if>
   		<if test="search != null">
 	    	and BOARD_TITLE LIKE '%'||#{search}||'%'
@@ -520,6 +520,7 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="PROCESSING" property="processing"/>
 		<result column="REPORT_TITLE" property="reportTitle"/>
+		<result column="REPORT_REPLY" property="reportReply"/>
 	</resultMap>
 	
 	<select id="selectBoardType" resultType="String">
@@ -572,4 +573,18 @@
 		    join AD using(FILE_ID)
 		where BOARD_TYPE = #{type} and to_char(deadline, 'yymmdd') <![CDATA[>=]]> to_char(sysdate, 'yymmdd')
 	</select>
+	
+	<select id="selectPBoardFileId" resultType="_int">
+		select FILE_ID
+		from ATTACHED_FILE
+		left join BOARD_IMG using(FILE_ID)
+		left join BOARD using(BOARD_ID)
+		where BOARD_ID = #{id}
+	</select>
+	
+	<update id="reportReply">
+		update REPORT
+		set  REPORT_CONTENT = #{content}
+		where REPORT_ID = #{id}
+	</update>
   </mapper>

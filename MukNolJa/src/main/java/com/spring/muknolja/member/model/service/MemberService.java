@@ -143,6 +143,10 @@ public interface MemberService {
 
 	ArrayList<String> selectAd(String type);
 
+	int selectPBoardFileId(int id);
+
+	int reportReply(HashMap<String, Object> map);
+
 
 
 

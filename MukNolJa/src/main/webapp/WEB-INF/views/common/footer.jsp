@@ -105,18 +105,18 @@
 		<div class="row text-center" style="margin-top: 20px;">
 			<div class="col">
 				<button type="button" class="mukButton" id="qa_btn">문의</button>
-				<button type="button" class="mukButton" id="close_btn">닫기</button>
+				<button type="button" class="mukButton" id="closeBtn">닫기</button>
 			</div>
 		</div>
 	</div>
 	
 	<script>
-		function Modal(id) {
+		function ModalF(id) {
 	        var zIndex = 9999;
 	        var modal = document.getElementById(id);
 	
 	        // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
-	        modal.querySelector('#close_btn').addEventListener('click', function() {
+	        modal.querySelector('#closeBtn').addEventListener('click', function() {
 	            modal.style.display = 'none';
 	        });
 	
@@ -144,7 +144,7 @@
 	    };
 	    
 	    document.getElementById('qa').addEventListener('click', function(){
-	    	Modal('qa_modal');
+	    	ModalF('qa_modal');
 	    });
 	    
 	    document.getElementById('qa_btn').addEventListener('click', function(){

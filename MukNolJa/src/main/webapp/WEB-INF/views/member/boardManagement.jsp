@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,6 +86,28 @@
       	top: 480px;
       	font-size: 12px;
       }
+      #report_modal, #reply_modal{
+      	display: none;
+		width: 350px;
+		height: 500px;
+		padding: 20px 20px;
+		background-color: #fefefe;
+		border: 1px solid #888;
+		border-radius: 3px;
+      }
+      #reportContent{
+		width: 100%;
+		height: 250px;
+ 		resize: none;
+	}
+	#replyContent{
+		width: 100%;
+		height: 300px;
+ 		resize: none;
+	}
+	input, textarea{
+		text-align: center;
+	}
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -205,7 +228,8 @@
 		              <td>${ b.reportClassification }</td>
 		              <td>${ b.createDate }</td>
 		              <input type="hidden" value="${ b.reportId }">
-			          <td width="100"><button class="mukButton boardDetail">상세</button></td>
+		              <input type="hidden" value="${ b.reportContent }">
+			          <td width="100"><button class="mukButton reportDetailBtn">상세</button></td>
 			          <c:if test="${ b.processing == 'N' }">
 			         	 <td width="100"><button class="mukButton processing">처리</button></td>
 			          </c:if>
@@ -220,6 +244,48 @@
       </div>
     </main>
   </div>
+</div>
+
+<div id="report_modal">
+	<div class="row">
+		<div class="col-8 text-center">
+			<label>제목</label><br>
+			<input type="text" class="form-control reportDetail" id="reportTitle" readonly>
+		</div>
+		<div class="col-4 text-center">
+			<label>작성자</label><br>
+			<input type="text" class="form-control reportDetail" id="reportWriter" readonly>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col text-center">
+			<label>내용</label><br>
+			<textarea class="form-control reportDetail" id="reportContent" readonly></textarea>
+		</div>
+	</div>
+	<div class="row text-center" style="margin-top: 20px;">
+		<div class="col">
+			<button type="button" class="mukButton" id="reportBoardDetail_btn">상세</button>
+			<button type="button" class="mukButton" id="reply_btn">답장</button>
+			<button type="button" class="mukButton modal_close_btn">닫기</button>
+		</div>
+	</div>
+</div>
+
+<div id="reply_modal">
+	<div class="row">
+		<div class="col text-center">
+			<label>답장</label><br>
+			<textarea class="form-control" id="replyContent"></textarea>
+		</div>
+	</div>
+	<div class="row text-center" style="margin-top: 20px;">
+		<div class="col">
+			<button type="button" class="mukButton" id="reply_btn2">답장</button>
+			<button type="button" class="mukButton modal_close_btn">닫기</button>
+		</div>
+	</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
@@ -286,6 +352,38 @@
                 }
             });
             
+            function Modal(id) {
+                var zIndex = 9999;
+                var modal = document.getElementById(id);
+
+                // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+                modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+
+                modal.setStyle({
+                    position: 'fixed',
+                    display: 'block',
+                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                    // 시꺼먼 레이어 보다 한칸 위에 보이기
+                    zIndex: zIndex + 1,
+
+                    // div center 정렬
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    msTransform: 'translate(-50%, -50%)',
+                    webkitTransform: 'translate(-50%, -50%)'
+                });
+            }
+
+            // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+            Element.prototype.setStyle = function(styles) {
+                for (var k in styles) this.style[k] = styles[k];
+                return this;
+            };
+            
             document.getElementById('party').addEventListener('click', function(){
 				location.href = 'boardManagement.me?category=0';
            	});
@@ -302,12 +400,45 @@
            	for(const boardDetail of boardDetails){
            		boardDetail.addEventListener('click', function(){
 	           		const tr = this.parentNode.parentNode;
-	           		const type = tr.querySelectorAll('td')[2].innerText;
 	           		const id = tr.querySelectorAll('td')[0].innerText;
 	           		
-	           		if(type != '댓글'){
-	           			location.href = 'reportDetail.me?id=' + id + '&type=' + type;
-	           		}
+	           		location.href = 'reportDetail.me?id=' + id;
+           		});
+           	}
+           	
+           	const reportDetailBtns = document.getElementsByClassName('reportDetailBtn');
+           	for(const reportDetailBtn of reportDetailBtns){
+           		reportDetailBtn.addEventListener('click', function(){
+           			const tr = this.parentNode.parentNode;
+           			const id = tr.querySelectorAll('input[type="hidden"]')[0].value;
+           			const content = tr.querySelectorAll('input[type="hidden"]')[1].value;
+           			const title = tr.querySelectorAll('td')[1].innerText;
+           			const writer = tr.querySelectorAll('td')[2].innerText;
+           			const rId = tr.querySelectorAll('td')[0].innerText;
+           			const r = document.getElementsByClassName('reportDetail');
+           			const type = tr.querySelectorAll('td')[3].innerText;
+           			
+           			r[0].value = title;
+           			r[1].value = writer;
+           			r[2].value = content;
+
+           			Modal('report_modal');
+           			
+           			document.getElementById('reportBoardDetail_btn').addEventListener('click', function(){
+           				if(type != '댓글'){
+    	           			location.href = 'reportDetail.me?id=' + rId;
+    	           		}
+           			});
+           			
+           			document.getElementById('reply_btn').addEventListener('click', function(){
+           				Modal('reply_modal');
+           				
+           				document.getElementById('reply_btn2').addEventListener('click', function(){
+           					const reportContent = document.getElementById('reportContent').value;
+               				location.href = 'reportReply.me?id=' + id + '&content=' + content;
+           				});
+           			});
+           			
            		});
            	}
            	
@@ -327,9 +458,9 @@
            			
            			if(confirm('정말 삭제하시겠습니까?')){
            				if(${ category == 0 }){
-           					location.href = ''
+           					location.href = 'pBoardDelete.me?id=' + id;
            				} else if(${ category == 1}){
-           					
+           					location.href = 'rBoardDelete.me?id=' + id;
            				}
            			}
            		})

@@ -845,11 +845,11 @@ public class MemberController {
 		public String reportDetail(@RequestParam("id") String id, Model model) {
 			String type = mService.selectBoardType(id);
 			
-			model.addAttribute("id", id);
-			
 			if(type.equals("P")) {
-				return "redirect:partyDetail.pa";
+				model.addAttribute("pId", id);
+				return "redirect:selectParty.pa";
 			} else {
+				model.addAttribute("id", id);
 				return "redirect:reviewDetail.re";
 			}
 		}
@@ -923,5 +923,27 @@ public class MemberController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		
+		@RequestMapping("pBoardDelete.me")
+		public String pBoardDelete(@RequestParam("id") int id, Model model) {
+			int fileId = mService.selectPBoardFileId(id);
+			
+			model.addAttribute("partyId", id);
+			model.addAttribute("fileId", fileId);
+			model.addAttribute("managerCheck", 0);
+			
+			return "redirect:deleteParty.pa";
+		}
+		
+		@RequestMapping("reportReply.me")
+		public String reportReply(@RequestParam("id") int id, @RequestParam("content") String content) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("content", content);
+			map.put("id", id);
+			
+			int result = mService.reportReply(map);
+			
+			return "redirect:boardManagement.me";
 		}
 }

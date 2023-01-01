@@ -22,4 +22,5 @@ public class Report {
 	private Date createDate;
 	private String processing;
 	private String reportTitle;
+	private String reportReply;
 }

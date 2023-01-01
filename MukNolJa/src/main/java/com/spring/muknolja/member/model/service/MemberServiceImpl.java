@@ -348,6 +348,16 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.selectAd(sqlSession, type);
 	}
 
+	@Override
+	public int selectPBoardFileId(int id) {
+		return mDAO.selectPBoardFileId(sqlSession, id);
+	}
+
+	@Override
+	public int reportReply(HashMap<String, Object> map) {
+		return mDAO.reportReply(sqlSession, map);
+	}
+
 	
 
 	
