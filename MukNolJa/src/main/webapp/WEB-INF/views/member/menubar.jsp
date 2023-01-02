@@ -191,8 +191,8 @@
 						  </button>
 						  <ul class="dropdown-menu" >
 						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600;"  href="${ contextPath }/travelList.tr">관광지</a></li>
-						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600; href="#">맛집</a></li>
-						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600; href="#">축제</a></li>
+						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600;" href="${ contextPath }/foodList.tr">맛집</a></li>
+						    <li><a class="dropdown-item iv" style="font-size:14px;font-weight:600;" href="${ contextPath }/festivalList.tr">축제</a></li>
 						  </ul>
 						</div>				
 					</div>
