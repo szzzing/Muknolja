@@ -202,6 +202,7 @@
 	            	<th scope="col">신고자</th>
 	            	<th scope="col">분류</th>
 	            	<th scope="col">신고일</th>
+	            	<th scope="col">처리여부</th>
             	</c:if>
             </tr>
           </thead>
@@ -227,15 +228,11 @@
 		              <td>${ b.memberId }</td>
 		              <td>${ b.reportClassification }</td>
 		              <td>${ b.createDate }</td>
+		              <td>${ b.processing }</td>
 		              <input type="hidden" value="${ b.reportId }">
 		              <input type="hidden" value="${ b.reportContent }">
+		              <input type="hidden" value="${ b.reportReply }">
 			          <td width="100"><button class="mukButton reportDetailBtn">상세</button></td>
-			          <c:if test="${ b.processing == 'N' }">
-			         	 <td width="100"><button class="mukButton processing">처리</button></td>
-			          </c:if>
-			          <c:if test="${ b.processing == 'Y' }">
-			         	 <td width="100"><button class="mukButton" disabled>처리완료</button></td>
-			          </c:if>
 		            </tr>
 	            </c:forEach>
             </c:if>
@@ -412,6 +409,7 @@
            			const tr = this.parentNode.parentNode;
            			const id = tr.querySelectorAll('input[type="hidden"]')[0].value;
            			const content = tr.querySelectorAll('input[type="hidden"]')[1].value;
+           			const reply = tr.querySelectorAll('input[type="hidden"]')[2].value;
            			const title = tr.querySelectorAll('td')[1].innerText;
            			const writer = tr.querySelectorAll('td')[2].innerText;
            			const rId = tr.querySelectorAll('td')[0].innerText;
@@ -431,11 +429,12 @@
            			});
            			
            			document.getElementById('reply_btn').addEventListener('click', function(){
+           				document.getElementById('replyContent').value = reply;
            				Modal('reply_modal');
            				
            				document.getElementById('reply_btn2').addEventListener('click', function(){
-           					const reportContent = document.getElementById('reportContent').value;
-               				location.href = 'reportReply.me?id=' + id + '&content=' + content;
+           					const replyContent = document.getElementById('replyContent').value;
+               				location.href = 'reportReply.me?id=' + id + '&content=' + replyContent;
            				});
            			});
            			
