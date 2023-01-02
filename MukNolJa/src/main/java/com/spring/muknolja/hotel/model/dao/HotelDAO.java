@@ -107,8 +107,8 @@ public class HotelDAO {
 		return sqlSession.selectOne("hotelmapper.selectHotelById", id);
 	}
 
-	public int getListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("hotelmapper.getListCount");
+	public int getSearchListCount(SqlSessionTemplate sqlSession, HashMap searchMap) {
+		return sqlSession.selectOne("hotelmapper.getSearchListCount", searchMap);
 	}
 	
 	public int getSearchListCount(SqlSessionTemplate sqlSession) {
@@ -159,6 +159,16 @@ public class HotelDAO {
 
 	public int insertReply(SqlSessionTemplate sqlSession, HashMap map) {
 		return sqlSession.update("hotelmapper.insertReply", map);
+	}
+
+	public int getReservationListCount(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.selectOne("hotelmapper.getReservationListCount", map);
+	}
+
+	public ArrayList<Reservation> selectReservationList(SqlSessionTemplate sqlSession, HashMap map, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectReservationList", map, rowBounds);
 	}
 
 }

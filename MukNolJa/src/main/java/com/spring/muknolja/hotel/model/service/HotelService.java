@@ -57,7 +57,7 @@ public interface HotelService {
 
 	Hotel selectHotelbyId(String id);
 
-	int getListCount();
+	int getSearchListCount(HashMap searchMap);
 	
 	int getSearchListCount();
 
@@ -82,5 +82,9 @@ public interface HotelService {
 	int deleteRoomImg(int roomId);
 
 	int insertReply(HashMap map);
+
+	int getReservationListCount(HashMap map);
+
+	ArrayList<Reservation> selectReservationList(HashMap map, PageInfo pi);
 
 }

@@ -14,12 +14,12 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <meta name="theme-color" content="#6bb6ec">
-<title>리뷰 관리</title>
+<title>예약 관리 :: ${hotel.hotelName }</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
-	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-control {border:2px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:2px solid #e9e9e9 !important; border-radius:20px !important}
 	input:focus {outline: none !important;} /* outline 테두리 없애기 */
 	textarea:focus {outline: none !important;} /* outline 테두리 없애기 */
 	
@@ -147,6 +147,57 @@
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-3 mb-5" style="border-bottom:1px solid #e9e9e9">
 					<h1 class="h2 fw-bold">예약 관리</h1>
 				</div>
+				<div id="category" class="row justify-content-between">
+					<div class="col-auto">
+						<select class="form-select" name="roomCategory" style="width:300px; display:inline-block;">
+							<option selected value="0">전체 객실</option>
+							<c:forEach items="${roomList }" var="r">
+								<option value="${r.roomId }">${r.roomName }</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="col-auto">
+						<select class="form-select" name="statusCategory" style="width:120px; display:inline-block;">
+							<option selected value="all">전체</option>
+							<option value="before">미이용</option>
+							<option value="using">이용중</option>
+							<option value="after">이용완료</option>
+							<option value="Y">정상예약</option>
+							<option value="N">예약취소</option>
+						</select>
+					</div>
+				</div>
+				
+				<div id="hasNoReservation" class="text-center mt-3 mb-3 pt-5 pb-5" style="display:none">
+					<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/1f64f.svg">
+					<h4 class="fw-bold">등록된 예약이 없습니다</h4>
+				</div>
+				
+				<div class="pt-5 pb-5 text-center">
+					<table id="reservationList" class="table table-borderless text-center align-middle mt-3" style="font-size:14px;">
+						<tr id="reservationCategory" class="fw-bold" style="border-bottom:1px solid #f1f1f1">
+							<td class="pb-3">예약번호</td>
+							<td class="pb-3">성명</td>
+							<td class="pb-3">전화번호</td>
+							<td class="pb-3">객실 이름</td>
+							<td class="pb-3">체크인</td>
+							<td class="pb-3">체크아웃</td>
+							<td class="pb-3">예약상태</td>
+						</tr>
+						<tr id="reservationDiv" style="display:none;">
+							<input type="hidden" name="reservationId">
+							<td class="p-2 reservationId">11</td>
+							<td class="p-2 reservationName">일반인</td>
+							<td class="p-2 reservationPhone">010-1111-2222</td>
+							<td class="p-2 roomName">디럭스 스위트 룸</td>
+							<td class="p-2 checkin">22.12.14 11:00</td>
+							<td class="p-2 checkout">22.12.15 16:00</td>
+							<td class="p-2 reservationStatus">사용완료</td>
+						</tr>
+					</table>
+					<h4 id="pageButton" class="bi bi-chevron-down mukMutedText" style="display:inline-block; margin-bottom:0px; cursor:pointer;"></h4>
+				</div>
+				
 				
 			</main>
 
@@ -154,73 +205,67 @@
 	</div>
 	
 	
-	<!-- 리뷰리스트 보기 시작 -->
+	<!-- 예약리스트 보기 시작 -->
 	<script>
 		$(document).ready(function(){
-			var reviewDiv = $("#reviewDiv").clone();
-			reviewDiv.prop("style").removeProperty("display");
+			var maxPage;
+			var page = 1;
+			var reservationDiv = $("#reservationDiv").clone();
+			reservationDiv.prop("style").removeProperty("display");
+			var reservationCategory = $("#reservationCategory").clone();
 			
-			$.reviewList = function(){
-				
-				// 리뷰 불러오기
+			$.reservationList = function(){
+			
 				$.ajax({
-					url: "${contextPath}/reviewList.ho",
+					url: "${contextPath}/selectReservationList.ho",
 					data: {
+						page: page,
 						hotelId: ${hotel.hotelId},
-						orderBy: $("select[name=orderBy]").val(),
-						searchByRoom: $("select[name=searchByRoom]").val()
+						statusCategory: $("select[name=statusCategory]").val(),
+						roomCategory: $("select[name=roomCategory]").val(),
+						searchValue: ""
 					},
 					success: (data)=>{
-						$("#reviewList").html("");
+						maxPage = data.maxPage;
+						console.log(data.list);
 						
-						const reviewDiv2 = reviewDiv.clone();
-						const reviewList = data.reviewList;
-						for(const r of reviewList) {
-							reviewDiv2.find("input[name=reviewId]").val(r.reviewId);
-							reviewDiv2.find(".nickName").html(r.nickName);
-							reviewDiv2.find(".roomName").html(r.roomName);
-							reviewDiv2.find(".reservationId").html(r.reservationId);
-							reviewDiv2.find(".reviewContent").html(r.reviewContent.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
-							reviewDiv2.find(".rating").html(r.rating.toFixed(1));
-							reviewDiv2.find(".createDate").html(r.createDate);
-							reviewDiv2.find(".checkinDate").html(r.createDate);
-							reviewDiv2.find(".checkoutDate").html(r.createDate);
-							if(r.businessReply!=null) {
-								reviewDiv2.find("textarea").val(r.businessReply);
-								reviewDiv2.find(".businessReply").html(r.businessReply.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
-								reviewDiv2.find(".writeReplyTr").css("display", "none");
-								reviewDiv2.find(".viewReplyTr").prop("style").removeProperty("display");
-								reviewDiv2.find(".hasReply").prop("style").removeProperty("display");
+						if(data.list.length==0) {
+							console.log("0");
+							$("#reservationList").html("");
+							$("#pageButton").css("display", "none");
+							$("#hasNoReservation").prop("style").removeProperty("display","none");
+						
+						} else if(page==1) {
+							$("#reservationList").html("");
+							$("#reservationList").append(reservationCategory.clone());
+							$("#hasNoReservation").css("display", "none");
+							
+							if(page==maxPage) {
+								$("#pageButton").css("display", "none");
 							} else {
-								reviewDiv2.find("textarea").val("");
-								reviewDiv2.find(".writeReplyTr").prop("style").removeProperty("display");
-								reviewDiv2.find(".viewReplyTr").css("display", "none");
-								reviewDiv2.find(".hasReply").css("display", "none");
+								$("#pageButton").prop("style").removeProperty("display");
 							}
-							
-							ratingStar="";
-							for(var j=1;j<=5;j++) {
-								if(j<=r.rating) {
-									ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#FFD600"></i>';
-								} else {
-									ratingStar = ratingStar+'<i class="fa-solid fa-star" style="color:#e9e9e9"></i>';
-								}
-							}
-							reviewDiv2.find(".ratingStar").html(ratingStar);
-							
-							if(r.rating==5) {
-								reviewDiv2.find(".ratingEmoji").text("😍");
-							} else if(r.rating==4) {
-								reviewDiv2.find(".ratingEmoji").text("😀");
-							} else if(r.rating==3) {
-								reviewDiv2.find(".ratingEmoji").text("🙂");
-							} else if(r.rating==2) {
-								reviewDiv2.find(".ratingEmoji").text("😐");
+						}
+						
+						for(i of data.list) {
+							reservationDiv.find(".reservationId").html(i.reservationId);
+							reservationDiv.find(".reservationName").html(i.reservationName);
+							reservationDiv.find(".reservationPhone").html(i.reservationPhone);
+							reservationDiv.find(".roomName").html(i.roomName);
+							reservationDiv.find(".checkin").html(i.checkinDate+"<br>"+i.checkinTime);
+							reservationDiv.find(".checkout").html(i.checkoutDate+"<br>"+i.checkoutTime);
+							if(i.reservationStatus=='Y') {
+								reservationDiv.find(".reservationStatus").html("예약완료");
 							} else {
-								reviewDiv2.find(".ratingEmoji").text("🙁");
+								reservationDiv.find(".reservationStatus").html("예약취소");
+							}
+							if(i.isCheckin>0 && i.isCheckout>0 && i.reservationStatus=='Y') {
+								reservationDiv.find(".reservationStatus").html("이용완료");
+							} else if(i.isCheckin>0 && i.isCheckout<0 && i.reservationStatus=='Y') {
+								reservationDiv.find(".reservationStatus").html("이용중");
 							}
 							
-							$("#reviewList").append(reviewDiv2.clone());
+							$("#reservationList").append(reservationDiv.clone());
 						}
 					},
 					error: (data)=>{
@@ -228,58 +273,29 @@
 					}
 				});
 			}
-			$.reviewList();
-		});
+			$.reservationList();
 		
-		$("select").change(function(){
-			$.reviewList();
+			$("select[name=roomCategory]").change(function(){
+				page=1;
+				$.reservationList();
+			});
+			$("select[name=statusCategory]").change(function(){
+				page=1;
+				$.reservationList();
+			});
+			
+			$("#pageButton").on("click", function(){
+				if(page<maxPage) {
+					page+=1;
+					$.reservationList();
+				}
+				if(page==maxPage) {
+					$(this).css("display", "none");
+				}
+			});
 		});
 	</script>
-	<!-- 리뷰리스트 보기 끝 -->
+	<!-- 예약리스트 보기 끝 -->
 	
-	<!-- 댓글 작성 버튼 -->
-	<script>
-		$(document).on("click", ".writeReplyButton", function(){
-			const table = $(this).parents("table");
-			if(table.find(".textarea").css("display")=="none") {
-				table.find(".textarea").prop("style").removeProperty("display");
-				$(this).addClass("bi-chevron-up");
-				$(this).removeClass("bi-chevron-down");
-			} else {
-				table.find(".textarea").css("display", "none");
-				$(this).addClass("bi-chevron-down");
-				$(this).removeClass("bi-chevron-up");
-			}
-		});
-		
-		$(document).on("click", ".modifyReplyButton", function(){
-			$(this).closest("table").find(".viewReplyTr").css("display","none");
-			$(this).closest("table").find(".writeReplyTr").prop("style").removeProperty("display");
-		});
-		
-		$(document).on("click", ".insertReplyButton", function(){
-			if($(this).closest(".review").find("textarea").val().trim()!="") {
-				$.ajax({
-					url: "${contextPath}/insertReply.ho",
-					data: {
-						reviewId: $(this).closest(".review").find("input[name=reviewId]").val(),
-						businessReply: $(this).closest("tr").find("textarea").val()
-					},
-					success: (data)=>{
-						console.log(data);
-						$(this).closest("table").find(".businessReply").html($(this).closest("tr").find("textarea").val().replace(/(?:\r\n|\r|\n)/g, '<br/>'));
-						$(this).closest("table").find(".writeReplyTr").css("display", "none");
-						$(this).closest("table").find(".viewReplyTr").prop("style").removeProperty("display");
-					},
-					error: (data)=>{
-						console.log(data);
-					}
-				});
-			} else {
-				alert("내용을 입력해주세요.");
-			}
-		});
-	</script>
-	<!-- 댓글 작성 버튼 -->
 </body>
 </html>
