@@ -44,7 +44,7 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public Member selectUser(String nick) {
+	public ArrayList<Member> selectUser(String nick) {
 		return cDAO.selectUser(sqlSession, nick);
 	}
 

@@ -165,11 +165,19 @@ public class ChatroomController {
     
     // 닉네임 검색
     @RequestMapping("searchNick.ch")
-    @ResponseBody
-    public Member searchNick(@RequestParam("nick") String nick) {
-    	Member m = cService.selectUser(nick);
+    public void searchNick(@RequestParam("nick") String nick, HttpServletResponse response) {
+    	ArrayList<Member> mList = cService.selectUser(nick);
     	
-    	return m;
+    	Gson gson = new Gson();
+    	
+    	response.setContentType("application/json; charset=UTF-8");
+    	
+    	try {
+			gson.toJson(mList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     // 채팅방 초대

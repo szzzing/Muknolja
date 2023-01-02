@@ -139,9 +139,12 @@
             .chatNcik{
             	font-size: 5px;
             }
-            #invite:hover, #createRoom:hover{
+            .inviteUser:hover, #createRoom:hover{
             	text-decoration: underline;
             	cursor: pointer;
+            }
+            .inviteUser{
+            	float: right;
             }
             .ba{
             width:200px;font-size:30px; margin-top:15px; color:#6BB6EC; font-weight: 900;
@@ -163,7 +166,7 @@
 			  	
 			  }
 }
-			.coco{width:70px; font-size:15px; margin-top:32px;}
+			.coco{width:70px; font-size:15px; margin-top:32px; color: black; text-decoration: none; font-weight:600;}
 			 @media (max-width: 840px) {
 			  .coco{
 			  width:45px;
@@ -185,7 +188,7 @@
             	<div  style=" height:80px; "> 
             		<div class="row row-cols-9" style=height:80px;>
             		<div onclick= "location.href='${contextPath }/home.do'" class="col-5 ba"style=" ">MUKNOLJA</div>
-            		<div class="col-1 coco" style=" font-weight:600; "><div class="dropdown">
+            		<div class="col-1 coco"><div class="dropdown">
 						  <button class="" style="background:none; margin-left:-15px;width:70px;padding-top:0px; padding-left:-10px;font-align:center;font-weight:600; border: none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 						   여행
 						  </button>
@@ -196,9 +199,9 @@
 						  </ul>
 						</div>				
 					</div>
-            		<div class="col-1 coco" style="  font-weight:600;"><a href="${contextPath }/hotelList.ho">호텔</a></div>
-            		<div class="col-1 coco" style="  font-weight:600;"><a href="${ contextPath }/partyList.pa">동행</a></div>
-            		<a href="${ contextPath }/reviewList.re"class="col-1 coco" style="  font-weight:600;">후기</a>
+            		<a class="col-1 coco" href="${contextPath }/hotelList.ho">호텔</a>
+            		<a class="col-1 coco" href="${ contextPath }/partyList.pa">동행</a>
+            		<a href="${ contextPath }/reviewList.re"class="col-1 coco">후기</a>
             		<div class="col d-none d-sm-block"></div>
             		<c:if test="${ !empty loginUser }">
             		<div class="col-1 co" style="font-size:25px; margin-top:22px; ">
@@ -273,11 +276,12 @@
      	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
      	<div class="row">
      		<div class="col text-center">
-     			<label for="chatRoomName">채팅방 이름</label><br>
-     			<input type = "text" class = "form-control" id="chatRoomName" name="chatRoomName">
-	            <div class = "input-group-btn">
-	               	<button class="btn btn-outline-secondary" type="button" id="chatRoomBtn">채팅방 생성</button>
-	           	</div>
+     			<h3>채팅방 만들기</h3>
+     			<hr>
+     			<div class = "input-group input-group-sm">
+	     		<input type ="text" class = "form-control" id="chatRoomName" name="chatRoomName" placeholder="채팅방 이름">
+		        <button class="btn btn-outline-secondary" type="button" id="chatRoomBtn">채팅방 생성</button>
+     			</div>
      		</div>
      	</div>
      </div>
@@ -296,7 +300,7 @@
     	<div class="row">
     		<div class="col text-center" style="margin-top: 20px;">
     			<h4>초대하기</h4>
-    			<div class = "input-group input-group-sm">
+    			<div class = "input-group input-group-sm" style="margin: 10px 0px;">
     				<input type = "text" class = "form-control" id="searchNick" placeholder = "닉네임">
 	  				<div class = "input-group-btn">
 	  		  			<button class="btn btn-outline-secondary" type="button" id="searchNickBtn"><i class="bi bi-search"></i></button>
@@ -621,32 +625,41 @@
 							            		success: (data) => {
 							            			document.getElementById('friends').innerHTML = '';
 							            			if(data != ''){
-
-							            				let str = '<div class="row nicks" style="border-bottom: 1px solid RGB(160, 160, 160, 0.5);">';
-							            				str += '<div class="col">';
-							            				str += '<b class="nick">' + data.nickName + '</b> <small id="invite">초대하기</small>';
-							            				str += '</div></div>';
+														for(const d of data){
+															
+								            				let str = '<div class="row nicks" style="border-bottom: 1px solid RGB(160, 160, 160, 0.5);">';
+								            				str += '<div class="col">';
+								            				str += '<b class="nick">' + d.nickName + '</b> <small class="inviteUser">초대하기</small>';
+								            				str += '</div></div>';
+								            				
+								            				document.getElementById('friends').innerHTML += str;
 							            				
-							            				document.getElementById('friends').innerHTML += str;
+														}
 							            				
-							            				const invite = document.getElementById('invite');
+							            				const invites = document.getElementsByClassName('inviteUser');
 							            				
-							            				invite.addEventListener('click', () => {
-
-							                        		const roomName = document.getElementById('chatRoomName').value;
-							                        		$.ajax({
-							                            		url: 'inviteChat.ch',
-							                            		data: {roomCode: roomCode, recipentId: data.id},
-							                            		success: (data) => {
-							                            			Modal('success_modal');
-							                            			document.getElementById('text').innerText = '초대 성공';
-							                            			
-							                            			document.getElementById('friends').innerHTML = '';
-							                            			document.getElementById('searchNick').value = '';
-							                            		}
-							                            	});
-
-							                        	});
+							            				for(const i in invites){
+							            					console.log(invites[i]);
+							            					invites[i].addEventListener('click', function() {
+																console.log(data[i].id);
+								                        		const roomName = document.getElementById('chatRoomName').value;
+								                        		$.ajax({
+								                            		url: 'inviteChat.ch',
+								                            		data: {roomCode: roomCode, recipentId: data[i].id},
+								                            		success: (data) => {
+								                            			Modal('success_modal');
+								                            			document.getElementById('text').innerText = '초대 성공';
+								                            			
+								                            			document.getElementById('friends').innerHTML = '';
+								                            			document.getElementById('searchNick').value = '';
+								                            		},
+								                            		error: (data) => {
+								                            			alert('초대 불가한 회원입니다.');
+								                            		}
+								                            	});
+	
+								                        	});
+							            				}
 							            			}
 							            		}
 							            	});

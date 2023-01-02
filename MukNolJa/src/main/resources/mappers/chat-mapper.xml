@@ -80,7 +80,7 @@
   	<select id="selectUser" resultMap="memberResultSet">
   		select *
   		from member
-  		where NICKNAME = #{nick}
+  		where NICKNAME LIKE '%'||#{nick}||'%' and MEMBER_TYPE = 'N' and STATUS = 'Y'
   	</select>
   	
   	<select id="selectChatRoom" resultMap="ChatRoomResultSet">

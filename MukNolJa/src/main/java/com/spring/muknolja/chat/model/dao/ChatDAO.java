@@ -31,8 +31,8 @@ public class ChatDAO {
 		sqlSession.insert("chatmapper.insertMessage", map);
 	}
 
-	public Member selectUser(SqlSessionTemplate sqlSession, String nick) {
-		return sqlSession.selectOne("chatmapper.selectUser", nick);
+	public ArrayList<Member> selectUser(SqlSessionTemplate sqlSession, String nick) {
+		return (ArrayList)sqlSession.selectList("chatmapper.selectUser", nick);
 	}
 
 	public ChatRoom selectChatRoom(SqlSessionTemplate sqlSession, String roomCode) {

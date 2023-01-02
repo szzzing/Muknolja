@@ -141,6 +141,9 @@
 		    <if test="category == 2">
 		    	MEMBER_TYPE = 'A'
 		    </if>
+		    <if test="category == 4">
+		    	MEMBER_TYPE = 'D'
+		    </if>
 	    </if>
 	    <if test="category == 3">
 	    	where status = 'S'

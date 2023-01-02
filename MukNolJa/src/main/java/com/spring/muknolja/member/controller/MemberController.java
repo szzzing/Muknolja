@@ -253,7 +253,7 @@ public class MemberController {
 									   @RequestParam(value="search", required=false) String search, Model model){
 			
 			int category = 0;
-			if(cate != null && cate > 0 && cate <= 3) {
+			if(cate != null && cate > 0 && cate <= 4) {
 				category = cate;
 			}
 			

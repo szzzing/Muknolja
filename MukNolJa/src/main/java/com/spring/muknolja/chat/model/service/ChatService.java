@@ -19,7 +19,7 @@ public interface ChatService {
 
 	void insertMessage(HashMap<String, Object> map);
 
-	Member selectUser(String nick);
+	ArrayList<Member> selectUser(String nick);
 
 	ChatRoom selectChatRoom(String roomCode);
 

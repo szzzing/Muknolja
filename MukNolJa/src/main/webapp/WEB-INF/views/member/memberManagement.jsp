@@ -152,6 +152,7 @@
 		  <button type="button" class="btn btn-outline-dark cate" id="hotel">호텔사업자</button>
 		  <button type="button" class="btn btn-outline-dark cate" id="admin">관리자</button>
 		  <button type="button" class="btn btn-outline-dark cate" id="stop">정지회원</button>
+		  <button type="button" class="btn btn-outline-dark cate" id="wait">사업자신청</button>
 		</div>
       	<form action="memberManagement.me">
       		<div class = "input-group input-group-sm" style="margin-top: 10px;">
@@ -174,7 +175,7 @@
               <th scope="col">전화번호</th>
               <th scope="col">가입일</th>
               <th scope="col">경고</th>
-              <c:if test="${ category != 3 }">
+              <c:if test="${ category != 3 && category != 4 }">
               	<th scope="col">최근 접속일</th>
               </c:if>
               <c:if test="${ category == 3 }">
@@ -191,18 +192,22 @@
 	              <td>${ m.phone }</td>
 	              <td>${ m.enrollDate }</td>
 	              <td>${ m.report }</td>
-	              <c:if test="${ category != 3 }">
+	              <c:if test="${ category != 3 && category != 4 }">
 	             	<td>${ m.lastVisit }</td>
 	              </c:if>
 	               <c:if test="${ category == 3 }">
 	             	<td>${ m.stopDate }</td>
 	              </c:if>
-	              <c:if test="${ m.memberType != 'A' && m.status != 'S' }">
+	              <c:if test="${ category < 2 }">
 		              <td><button class="mukButton">경고</button></td>
 		              <td><button class="mukButton">정지</button></td>
 	              </c:if>
-	              <c:if test="${ m.status == 'S' }">
+	              <c:if test="${ category == 3 }">
 	              	<td><button class="mukButton">정지해제</button></td>
+	              </c:if>
+	              <c:if test="${ category == 4 }">
+	              	<td><button class="mukButton">등록증확인</button></td>
+	              	<td><button class="mukButton">승인</button></td>
 	              </c:if>
 	            </tr>
 	            </c:forEach>
@@ -283,7 +288,7 @@
            		const buttons = m.querySelectorAll('button');
            		
            		if(buttons.length != 0){
-	           		if(${ category < 3 }){
+	           		if(${ category < 2 }){
 	           			buttons[0].addEventListener('click', function(){
 		           			if(confirm('정말 회원을 경고하시겠습니까?')){
 			           			$.ajax({
@@ -306,7 +311,7 @@
 			           			});
 							}
 		           		});
-	           		} else{
+	           		} else if(${ category == 3}){
 	           			buttons[0].addEventListener('click', function(){
 		           			if(confirm('정말 정지해제 하시겠습니까?')){
 			           			$.ajax({
@@ -318,6 +323,10 @@
 			           			});
 		           			}
 		           		});
+	           		} else if(${ category == 4}){
+	           			buttons[0].addEventListener('click', function(){
+	           				
+	           			});
 	           		}
 	           		
            		}
@@ -337,6 +346,10 @@
            	
            	document.getElementById('stop').addEventListener('click', function(){
 				location.href = 'memberManagement.me?category=3';
+           	});
+           	
+           	document.getElementById('wait').addEventListener('click', function(){
+				location.href = 'memberManagement.me?category=4';
            	});
             
         </script>

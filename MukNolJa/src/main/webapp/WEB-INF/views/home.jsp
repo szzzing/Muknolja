@@ -177,14 +177,8 @@ li{list-style:none;}
    
 
     <jsp:include page="member/menubar.jsp"/>
-		
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-     <div class="container-fluid text-center">
-	  	<div class="row justify-content-center shadow" style=" min-height:100vh; border-radius:30px;   ">
-            <div class="col-9 " style=" min-height:100vh;">
-	  	
-	  	    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 			  <div class="carousel-inner">
 			    <div class="carousel-item active" data-bs-interval="10000">
 			      <img src="resources/img/noImg.png" class="d-block w-100 adimg" alt="...">
@@ -205,6 +199,12 @@ li{list-style:none;}
 			    <span class="visually-hidden">Next</span>
 			  </button>
 			</div>
+		
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+     <div class="container-fluid text-center">
+	  	<div class="row justify-content-center shadow" style=" min-height:100vh; border-radius:30px;   ">
+            <div class="col-9 " style=" min-height:100vh;">
 	  		
             <br>
             <div class="row justify-content-center " style="  ">
