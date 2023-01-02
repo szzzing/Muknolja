@@ -136,8 +136,8 @@ public class HotelServiceImpl implements HotelService{
 	}
 	
 	@Override
-	public int getListCount() {
-		return hDAO.getListCount(sqlSession);
+	public int getSearchListCount(HashMap searchMap) {
+		return hDAO.getSearchListCount(sqlSession, searchMap);
 	}
 	
 	@Override
@@ -198,5 +198,15 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public int insertReply(HashMap map) {
 		return hDAO.insertReply(sqlSession, map);
+	}
+	
+	@Override
+	public int getReservationListCount(HashMap map) {
+		return hDAO.getReservationListCount(sqlSession, map);
+	}
+	
+	@Override
+	public ArrayList<Reservation> selectReservationList(HashMap map, PageInfo pi) {
+		return hDAO.selectReservationList(sqlSession, map, pi);
 	}
 }

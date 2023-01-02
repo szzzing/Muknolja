@@ -18,8 +18,8 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
-	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-control {border:2px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:2px solid #e9e9e9 !important; border-radius:20px !important}
 	input:focus {outline: none !important;} /* outline 테두리 없애기 */
 	textarea:focus {outline: none !important;} /* outline 테두리 없애기 */
 	
@@ -164,8 +164,8 @@
 					
 					
 					<!-- 리뷰 리스트 시작 -->
-					<div id="hasNoSubReview" class="text-center mt-3 mb-3 pt-5 pb-5">
-						<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/0.svg">
+					<div id="hasNoSubReview" class="text-center mt-3 mb-3 pt-5 pb-5" style="display:none">
+						<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/1f64f.svg">
 						<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
 					</div>
 						
