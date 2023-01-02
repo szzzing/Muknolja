@@ -199,7 +199,19 @@
 			</div>
 			
 			<div class="col col-lg-9">
-			
+				<div class="row text-center">
+					<div class="col-lg-10 col-sm-9 col-md-9 mb-5">
+						<input class="form-control" type="text" name="searchValue" placeholder="찾고싶은 호텔의 이름, 지역명으로 검색하세요.">
+					</div>
+					<div class="col-lg-2 col-sm-3 col-md-3">
+						<select class="form-select" name="orderBy">
+							<option selected value="new">최신순</option>
+							<option value="priceHigh">높은가격순</option>
+							<option value="priceLow">낮은가격순</option>
+							<option value="distance">거리순</option>
+						</select>
+					</div>
+				</div>
 				<div id="hotelList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-1 justify-content-start g-5">
 					<div id="hotelDiv" class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1; display:none">
 						<div class="row g-3">
@@ -229,9 +241,9 @@
 						</div>
 					</div>
 				</div>
-					<div id="hotelScrollerFooter" class="mb-5"></div>	<!-- 무한스크롤 감지 -->
 			</div>
 		</div>
+					<div id="hotelScrollerFooter" class="mb-5"></div>	<!-- 무한스크롤 감지 -->
 	</div>
 	
 
@@ -240,6 +252,7 @@
 	<script>
 		var page = 1;
 		var maxPage = 1;
+		var currValue = "";
 		
 		$(document).ready(function(){
 			
@@ -249,7 +262,8 @@
 			var install = new Array('N','N','N','N','N','N');
 			
 			$.search = function(){
-				var searchValue = "";
+				var searchValue = $("input[name=searchValue]").val();
+				var orderBy = $("select[name=orderBy]").val();
 				var checkinDate = $("input[name=checkinDate]").val()+"";
 				var checkoutDate = $("input[name=checkoutDate]").val()+"";
 				var minPrice = $("input[name=minPrice]").val();
@@ -264,6 +278,7 @@
 					data: {
 						page: page,
 						searchValue: searchValue,
+						orderBy: orderBy,
 						checkinDate: checkinDate,
 						checkoutDate: checkoutDate,
 						minPrice: minPrice,
@@ -318,8 +333,6 @@
 							}
 							$("#hotelList").append('<div class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1">'+hotelDiv2.html()+'</div>');
 							
-							console.log("메서드 실행 후 페이지 "+page);
-							console.log("메서드 실행 후 맥스페이지 "+maxPage);
 						}
 						page+=1;
 					},
@@ -344,10 +357,23 @@
 			mio.observe(document.getElementById('hotelScrollerFooter'));
 			
 			$("input").change(function() {
-				console.log("search");
 				page=1;
 				$.search();
-				console.log("searchEnd");
+			});
+			
+			$("select").change(function() {
+				console.log($(this).val());
+				page=1;
+				$.search();
+			});
+			
+			$("input[name=searchValue]").keyup(function(){
+				if(currValue!=$(this).val()) {
+					page=1;
+					console.log($(this).val());
+					currValue = $(this).val();
+					$.search();
+				}
 			});
 			
 			$("input[name=star]").on("click", function(){
@@ -480,8 +506,8 @@
 				"daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
 				"monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 				},
-			minDate: new Date(),
-			startDate: startDate,
+			minDate: today,
+			startDate: today,
 			endDate: endDate,
 			autoApply: true
 		});

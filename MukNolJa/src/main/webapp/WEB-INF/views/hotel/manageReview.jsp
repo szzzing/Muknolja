@@ -231,6 +231,7 @@
 						</div>
 					</div>
 					<!-- 리뷰 리스트 끝 -->
+					<div id="reviewScrollerFooter" class="mb-5"></div>	<!-- 무한스크롤 감지 -->
 				</div>
 			</main>
 
@@ -244,22 +245,31 @@
 			var reviewDiv = $("#reviewDiv").clone();
 			reviewDiv.prop("style").removeProperty("display");
 			
+			var page = 1;
+			var maxPage;
+			
 			$.reviewList = function(){
 				
 				// 리뷰 불러오기
 				$.ajax({
 					url: "${contextPath}/reviewList.ho",
 					data: {
+						page: page,
 						hotelId: ${hotel.hotelId},
 						orderBy: $("select[name=orderBy]").val(),
 						searchByRoom: $("select[name=searchByRoom]").val()
 					},
 					success: (data)=>{
-						$("#reviewList").html("");
 						
 						const reviewDiv2 = reviewDiv.clone();
 						const reviewList = data.reviewList;
 						
+						maxPage = data.maxPage;
+						
+						if(page==1 || reviewList.length==0) {
+							$("#reviewList").html("");
+						}
+
 						if(reviewList.length==0) {
 							$("#hasNoSubReview").prop("style").removeProperty("display");
 							console.log('dd');
@@ -315,6 +325,7 @@
 							
 							$("#reviewList").append(reviewDiv2.clone());
 						}
+						page+=1;
 					},
 					error: (data)=>{
 						console.log(data);
@@ -322,10 +333,26 @@
 				});
 			}
 			$.reviewList();
-		});
-		
-		$("select").change(function(){
-			$.reviewList();
+			
+			
+			$("select").change(function(){
+				page=1;
+				$.reviewList();
+			});
+			
+			const mio = new IntersectionObserver((entries, observer)=>{
+				entries.forEach(entry=>{
+					if(!entry.isIntersecting) {
+						return; 
+					}
+					observer.observe(document.getElementById('reviewScrollerFooter'));
+					console.log("스크롤");
+					if(page<=maxPage) {
+						$.reviewList();
+					}
+				});
+			});
+			mio.observe(document.getElementById('reviewScrollerFooter'));
 		});
 	</script>
 	<!-- 리뷰리스트 보기 끝 -->

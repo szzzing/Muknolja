@@ -47,7 +47,7 @@ public interface HotelService {
 
 	int insertReview(Review reply);
 
-	ArrayList<Review> selectReviewList(HashMap map);
+	ArrayList<Review> selectReviewList(HashMap map, PageInfo pi);
 
 	ArrayList<AttachedFile> selectAllRoomThumbnail(int hotelId);
 
@@ -86,5 +86,9 @@ public interface HotelService {
 	int getReservationListCount(HashMap map);
 
 	ArrayList<Reservation> selectReservationList(HashMap map, PageInfo pi);
+
+	int getReviewListCount(HashMap map);
+
+	int deleteReservation(int reservationId);
 
 }
