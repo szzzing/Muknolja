@@ -9,7 +9,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -71,6 +71,7 @@ public class Payment {
 				JSONObject jsonObj = (JSONObject)jsonParser.parse(sb.toString());
 				JSONObject responseData = (JSONObject)jsonObj.get("response");
 				token = (String)responseData.get("access_token");
+				System.out.println(token);
 				
 			} else {
 				System.out.println(conn.getResponseCode());
@@ -83,33 +84,6 @@ public class Payment {
 		}
 		return token;
 	}
-
-
-	public static int paymentInfo(String imp_uid, String access_token) {
-		HttpsURLConnection conn = null;
-		Response response = null;
-		
-		try {
-			URL url = new URL("https://api.iamport.kr/payments/" + imp_uid);
-
-			conn = (HttpsURLConnection)url.openConnection();
-			System.out.println("token : " + access_token);
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Authorization", access_token);
-			conn.setDoOutput(true);
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-			Gson gson = new Gson();
-			response = gson.fromJson(br.readLine(), Response.class);
-
-			br.close();
-			conn.disconnect();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return response.getResponse().getAmount();
-	}
-
 
 
 	public static void paymentCancle(String access_token, String imp_uid, int amount, String reason) {

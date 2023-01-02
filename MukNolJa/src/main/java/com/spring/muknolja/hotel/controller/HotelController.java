@@ -589,7 +589,7 @@ public class HotelController {
 	
 	@RequestMapping(value="searchHotelList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void searchHotelList(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, @RequestParam(value="maxPrice", required=false) int maxPrice, @RequestParam(value="minPrice", required=false) int minPrice, @RequestParam(value="maxDistance", required=false) Integer maxDistance, @RequestParam(value="geoX", required=false) Double geoX, @RequestParam(value="geoY", required=false) Double geoY, @RequestParam(value="star", required=false) ArrayList<Integer> star, @RequestParam(value="install", required=false) ArrayList<String> install, HttpServletResponse response) {
+	public void searchHotelList(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam(value="orderBy", required=false) String orderBy, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, @RequestParam(value="maxPrice", required=false) int maxPrice, @RequestParam(value="minPrice", required=false) int minPrice, @RequestParam(value="maxDistance", required=false) Integer maxDistance, @RequestParam(value="geoX", required=false) Double geoX, @RequestParam(value="geoY", required=false) Double geoY, @RequestParam(value="star", required=false) ArrayList<Integer> star, @RequestParam(value="install", required=false) ArrayList<String> install, HttpServletResponse response) {
 		
 		String wifi=install.get(0);
 		String breakfast=install.get(1);
@@ -600,6 +600,7 @@ public class HotelController {
 		
 		HashMap searchMap = new HashMap();
 		searchMap.put("searchValue", searchValue);
+		searchMap.put("orderBy", orderBy);
 		searchMap.put("checkinDate", checkinDate);
 		searchMap.put("checkoutDate", checkoutDate);
 		searchMap.put("minPrice", minPrice*10000);
@@ -614,6 +615,8 @@ public class HotelController {
 		searchMap.put("park", park);
 		searchMap.put("swim", swim);
 		searchMap.put("fitness", fitness);
+		
+		System.out.println(searchMap);
 		
 		int listCount = hService.getSearchListCount(searchMap);
 		int currentPage = 1;
