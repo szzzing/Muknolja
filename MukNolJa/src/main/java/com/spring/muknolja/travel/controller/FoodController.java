@@ -116,7 +116,7 @@ public class FoodController {
 		return "travelList";
 	}
 	
-	@RequestMapping("searchTravel.tr")
+	@RequestMapping("searchFood.tr")
 	public String searchTravel(@RequestParam("searchValue") String searchValue, @RequestParam(value="page", required=false) Integer page, Model model) {
 		int currentPage = 1;
 		if(page != null) {
@@ -182,7 +182,7 @@ public class FoodController {
 		return "travelList";
 	}
 	
-	@RequestMapping("travelDetail.tr")
+	@RequestMapping("foodDetail.tr")
 	public String travelDetail(@RequestParam("contentId") int contentId, @RequestParam(value="page", required=false) Integer page, Model model) {
 		
 		try {
@@ -315,34 +315,34 @@ public class FoodController {
 		return "travelDetail";
 	}
 	
-	@RequestMapping("insertReply.tr")
-	@ResponseBody
-	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
-		int result = tService.insertReply(r);
-		ArrayList<Reply> rlist = tService.selectReply(r.getRefBoardId());
-		System.out.println(r);
-		response.setContentType("application/json; charset=UTF-8");
-		GsonBuilder gb = new GsonBuilder();
-		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
-		Gson gson = gb2.create();
-		try {
-			gson.toJson(rlist, response.getWriter());
-		} catch (JsonIOException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@RequestMapping("deleteReply.tr")
-	public String deleteReply(@RequestParam("realDeleteRepId") int replyId, @RequestParam("contentId") int contentId) {
-		int result = tService.deleteReply(replyId);
-		if(result > 0) {
-			return "redirect:travelDetail.tr?contentId=" + contentId;
-		}else {
-			throw new CommonException("댓글 삭제를 실패하였습니다.");
-		}
-	}
+//	@RequestMapping("insertReply.tr")
+//	@ResponseBody
+//	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
+//		int result = tService.insertReply(r);
+//		ArrayList<Reply> rlist = tService.selectReply(r.getRefBoardId());
+//		System.out.println(r);
+//		response.setContentType("application/json; charset=UTF-8");
+//		GsonBuilder gb = new GsonBuilder();
+//		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
+//		Gson gson = gb2.create();
+//		try {
+//			gson.toJson(rlist, response.getWriter());
+//		} catch (JsonIOException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	@RequestMapping("deleteReply.tr")
+//	public String deleteReply(@RequestParam("realDeleteRepId") int replyId, @RequestParam("contentId") int contentId) {
+//		int result = tService.deleteReply(replyId);
+//		if(result > 0) {
+//			return "redirect:travelDetail.tr?contentId=" + contentId;
+//		}else {
+//			throw new CommonException("댓글 삭제를 실패하였습니다.");
+//		}
+//	}
 	
 	
 	
