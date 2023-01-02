@@ -24,6 +24,7 @@
 
 	<mappers>
 		<mapper resource="mappers/chat-mapper.xml"/>
+		<mapper resource="mappers/review-mapper.xml"/>
 		<mapper resource="mappers/hotel-mapper.xml"/>
 		<mapper resource="mappers/member-mapper.xml"/>
 		<mapper resource="mappers/party-mapper.xml"/>
