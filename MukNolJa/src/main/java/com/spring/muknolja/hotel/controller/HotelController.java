@@ -1,12 +1,9 @@
 package com.spring.muknolja.hotel.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +28,7 @@ import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
+import com.spring.muknolja.hotel.model.vo.Payment;
 import com.spring.muknolja.hotel.model.vo.Reservation;
 import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.hotel.model.vo.ReserveDate;
@@ -554,6 +552,29 @@ public class HotelController {
 	}
 	
 	
+	@RequestMapping(value="deleteReservation.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void deleteReservation(@RequestParam("reservationId") int reservationId, HttpServletResponse response) {
+		int result = hService.deleteReservation(reservationId);
+		String imp_uid = String.valueOf(reservationId);
+		
+		String token = Payment.getToken();
+//		int amount = Payment.paymentInfo(imp_uid, token);
+		Payment.paymentCancle(token, imp_uid, 100, "관리자 취소");
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	
 	
@@ -659,8 +680,6 @@ public class HotelController {
 		map.put("searchValue", searchValue);
 		map.put("orderBy", orderBy);
 		
-		System.out.println(map);
-		
 		ArrayList<Room> roomList = hService.selectAllRoom(map);
 		
 		response.setContentType("application/json; charset=UTF-8");
@@ -727,13 +746,21 @@ public class HotelController {
 	//리뷰 전체보기
 	@RequestMapping(value="reviewList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void reviewList(@RequestParam("hotelId") int hotelId, @RequestParam(value="searchByRoom", required=false) Integer searchByRoom, @RequestParam(value="orderBy", required=false) String orderBy, HttpServletResponse response) {
+	public void reviewList(@RequestParam(value="page", required=false) Integer page, @RequestParam("hotelId") int hotelId, @RequestParam(value="searchByRoom", required=false) Integer searchByRoom, @RequestParam(value="orderBy", required=false) String orderBy, HttpServletResponse response) {
 		HashMap map = new HashMap();
 		map.put("hotelId", hotelId);
 		map.put("searchByRoom", searchByRoom);
 		map.put("orderBy", orderBy);
 		
-		ArrayList<Review> reviewList = hService.selectReviewList(map);
+		int listCount = hService.getReviewListCount(map);
+		int currentPage = 1;
+		if(page!=null) {
+			currentPage = page;
+		}
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
+		int maxPage = pi.getMaxPage();
+		
+		ArrayList<Review> reviewList = hService.selectReviewList(map, pi);
 		int reviewCount = hService.selectReviewCount(hotelId);
 		double avgRating = hService.selectAvgRating(hotelId);
 		
@@ -741,6 +768,7 @@ public class HotelController {
 		map2.put("reviewList", reviewList);
 		map2.put("reviewCount", reviewCount);
 		map2.put("avgRating", avgRating);
+		map2.put("maxPage", maxPage);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();

@@ -18,8 +18,8 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-	.form-control {border:2px solid #e9e9e9 !important; border-radius:20px !important}
-	.form-select {border:2px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
 	input:focus {outline: none !important;} /* outline 테두리 없애기 */
 	textarea:focus {outline: none !important;} /* outline 테두리 없애기 */
 	
@@ -86,6 +86,10 @@
 	.insertReplyButton:hover {transition: all 0.3s; opacity:0.8;}
 	
 	.replyTable tr td {padding:0px;}
+	
+	.dropdown-item:hover {
+		background:#fafafa !important;
+	}
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -95,7 +99,18 @@
 <body>
 
 	<div class="container">
-	
+		
+		<div id="mukModal" class="modal fade modal-sm" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered text-center">
+				<div class="modal-content">
+					<div class="modal-body m-3">
+						<p class="modalContent mb-3">예약을 취소하시겠습니까?</p>
+						<button type="button" id="modal_deleteReservationButton" class="mukButton" style="width:100%" data-bs-dismiss="modal">확인</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 		<div class="row">
 			<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar shadow collapse" style="height:100%; left:0px; position:fixed;">
 				<div class="position-sticky sidebar-sticky">
@@ -182,9 +197,10 @@
 							<td class="pb-3">객실 이름</td>
 							<td class="pb-3">체크인</td>
 							<td class="pb-3">체크아웃</td>
+							<td class="pb-3">결제수단</td>
 							<td class="pb-3">예약상태</td>
 						</tr>
-						<tr id="reservationDiv" style="display:none;">
+						<tr id="reservationDiv" class="reservation" style="display:none;">
 							<input type="hidden" name="reservationId">
 							<td class="p-2 reservationId">11</td>
 							<td class="p-2 reservationName">일반인</td>
@@ -192,7 +208,15 @@
 							<td class="p-2 roomName">디럭스 스위트 룸</td>
 							<td class="p-2 checkin">22.12.14 11:00</td>
 							<td class="p-2 checkout">22.12.15 16:00</td>
-							<td class="p-2 reservationStatus">사용완료</td>
+							<td class="p-2 paymentMethod">카카오페이</td>
+							<td class="p-2">
+								<div class="nav-item dropdown">
+									<a class="reservationStatus nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"></a>
+									<ul class="dropdown-menu" style="background:white; border:1px solid #f1f1f1; font-size:14px;">
+										<li><a class="dropdown-item deleteReservationButton" data-bs-toggle="modal" data-bs-target="#mukModal">예약 취소/환불</a></li>
+									</ul>
+								</div>
+							</td>
 						</tr>
 					</table>
 					<h4 id="pageButton" class="bi bi-chevron-down mukMutedText" style="display:inline-block; margin-bottom:0px; cursor:pointer;"></h4>
@@ -215,7 +239,7 @@
 			var reservationCategory = $("#reservationCategory").clone();
 			
 			$.reservationList = function(){
-			
+				console.log($("select[name=statusCategory]").val());
 				$.ajax({
 					url: "${contextPath}/selectReservationList.ho",
 					data: {
@@ -230,7 +254,6 @@
 						console.log(data.list);
 						
 						if(data.list.length==0) {
-							console.log("0");
 							$("#reservationList").html("");
 							$("#pageButton").css("display", "none");
 							$("#hasNoReservation").prop("style").removeProperty("display","none");
@@ -254,6 +277,13 @@
 							reservationDiv.find(".roomName").html(i.roomName);
 							reservationDiv.find(".checkin").html(i.checkinDate+"<br>"+i.checkinTime);
 							reservationDiv.find(".checkout").html(i.checkoutDate+"<br>"+i.checkoutTime);
+							if(i.paymentMethod=='kakaopay') {
+								reservationDiv.find(".paymentMethod").html('카카오페이');
+							} else if(i.paymentMethod=='tosspay') {
+								reservationDiv.find(".paymentMethod").html('토스페이');
+							} else {
+								reservationDiv.find(".paymentMethod").html('신용카드');
+							}
 							if(i.reservationStatus=='Y') {
 								reservationDiv.find(".reservationStatus").html("예약완료");
 							} else {
@@ -297,5 +327,41 @@
 	</script>
 	<!-- 예약리스트 보기 끝 -->
 	
+	
+	<script>
+		var reservationId;
+		
+		$(document).on("click", ".deleteReservationButton", function(){
+			reservationId = $(this).closest(".reservation").find(".reservationId").text();
+			$("#mukModal").find(".modalContent").text(reservationId+"번 예약을 취소하시겠습니까?");
+		});
+		
+		$("#modal_deleteReservationButton").on("click", function(){
+			console.log(reservationId);
+			$.ajax({
+				url: "${contextPath}/deleteReservation.ho",
+				data: {
+					reservationId: reservationId
+				},
+				success: (data)=>{
+					console.log(data);
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			});
+// 			$.ajax({
+// 				url: "${contextPath}/cancelPay.ho",
+// 				type: "POST",
+// 				contentType: "application/json",
+// 				data: JSON.stringify({
+// 				  merchant_uid: reservationId,
+// 				  cancel_request_amount: 100, // 환불금액
+// 				  reason: "테스트 결제 환불" // 환불사유
+// 				}),
+// 				dataType: "json"
+// 			});
+		});
+	</script>
 </body>
 </html>

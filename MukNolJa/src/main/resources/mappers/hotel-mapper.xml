@@ -251,6 +251,19 @@
 		</if>
 	</select>
 	
+	<select id="getReviewListCount" resultType="_int">
+		select count(*)
+		from review
+			join reservation using(reservation_id)
+			join room using(room_id)
+			join hotel using(hotel_id)
+			join member on(review.member_id=id)
+		where hotel_id=#{hotelId} and review_status='Y'
+		<if test="searchByRoom!=null and searchByRoom!=0">
+			and room_id=#{searchByRoom}
+		</if>
+	</select>
+	
 	<select id="selectAvgRating" resultType="_double">
 		select nvl(round(avg(rating), 1), 0)
 		from review
@@ -391,13 +404,13 @@
 			join hotel using(hotel_id)
 		where hotel_id=#{hotelId}
 		<if	test='statusCategory.equals("before")'>
-			<![CDATA[and (sysdate-checkin_date)<0 and (sysdate-checkin_date)<0 and reservation_status='Y']]>
+			<![CDATA[and floor(sysdate-checkin_date)<0 and floor(sysdate-checkout_date)<0 and reservation_status='Y']]>
 		</if>
 		<if	test='statusCategory.equals("using")'>
-			<![CDATA[and (sysdate-checkin_date)>0 and (sysdate-checkin_date)<0 and reservation_status='Y']]>
+			<![CDATA[and floor(sysdate-checkin_date)>=0 and floor(sysdate-checkout_date)<=0 and reservation_status='Y']]>
 		</if>
 		<if	test='statusCategory.equals("after")'>
-			<![CDATA[and (sysdate-checkin_date)>0 and (sysdate-checkin_date)>0 and reservation_status='Y']]>
+			<![CDATA[and floor(sysdate-checkin_date)>=1 and floor(sysdate-checkout_date)>=1 and reservation_status='Y']]>
 		</if>
 		<if	test='statusCategory.equals("Y")'>
 			<![CDATA[and reservation_status='Y']]>
@@ -409,7 +422,7 @@
 			and room_id=#{roomCategory}
 		</if>
 		<if test='searchValue!=null and !searchValue.equals("")'>
-			<![CDATA[and (instr(reservation_id, #{searchValue}) > 0 or instr(reservation_name, #{searchValue}) > 0)]]>
+			and (instr(reservation_id, #{searchValue}) > 0 or instr(reservation_name, #{searchValue}) > 0)
 		</if>
 		order by reservation_id desc
 	</select>
@@ -429,7 +442,7 @@
 			<![CDATA[and floor(sysdate-checkin_date)>=0 and floor(sysdate-checkout_date)<=0 and reservation_status='Y']]>
 		</if>
 		<if	test='statusCategory.equals("after")'>
-			<![CDATA[and floor(sysdate-checkin_date)>0 and floor(sysdate-checkout_date)>0 and reservation_status='Y']]>
+			<![CDATA[and floor(sysdate-checkin_date)>=1 and floor(sysdate-checkout_date)>=1 and reservation_status='Y']]>
 		</if>
 		<if	test='statusCategory.equals("Y")'>
 			<![CDATA[and reservation_status='Y']]>
@@ -441,10 +454,23 @@
 			and room_id=#{roomCategory}
 		</if>
 		<if test='searchValue!=null and !searchValue.equals("")'>
-			and instr(reservation_id, #{searchValue}) > 0
-			or instr(reservation_name, #{searchValue}) > 0
+			and (instr(reservation_id, #{searchValue}) > 0 or instr(reservation_name, #{searchValue}) > 0)
 		</if>
 	</select>
+	
+	
+	<delete id="deleteReserve">
+		delete from reserve
+		where reservation_id=#{reservationId}
+	</delete>
+	
+	
+	<update id="deleteReservation">
+		update reservation
+		set reservation_status='N'
+		where reservation_id=#{reservationId}
+	</update>
+	
 	
 	
 	

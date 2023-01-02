@@ -87,8 +87,10 @@ public class HotelDAO {
 		return sqlSession.insert("hotelmapper.insertReview", review);
 	}
 
-	public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession, HashMap map) {
-		return (ArrayList)sqlSession.selectList("hotelmapper.selectReviewList", map);
+	public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession, HashMap map, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectReviewList", map, rowBounds);
 	}
 
 	public ArrayList<AttachedFile> selectAllRoomThumbnail(SqlSessionTemplate sqlSession, int hotelId) {
@@ -169,6 +171,15 @@ public class HotelDAO {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("hotelmapper.selectReservationList", map, rowBounds);
+	}
+
+	public int getReviewListCount(SqlSessionTemplate sqlSession, HashMap map) {
+		return sqlSession.selectOne("hotelmapper.getReviewListCount", map);
+	}
+
+	public int deleteReservation(SqlSessionTemplate sqlSession, int reservationId) {
+		int result = sqlSession.delete("hotelmapper.deleteReserve", reservationId) + sqlSession.update("hotelmapper.deleteReservation", reservationId);
+		return result;
 	}
 
 }

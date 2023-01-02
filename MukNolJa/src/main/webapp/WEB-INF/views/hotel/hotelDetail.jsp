@@ -127,7 +127,7 @@
 		<div class="modal-dialog modal-dialog-centered text-center">
 			<div class="modal-content">
 				<div class="modal-body m-3">
-					<p class="modalContentmb-3">로그인 후 이용해주세요.</p>
+					<p class="modalContent mb-3">로그인 후 이용해주세요.</p>
 					<button type="button" class="mukButton" style="width:100%" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
@@ -348,6 +348,7 @@
 					</table>
 				</div>
 			</div>
+			<div id="reviewScrollerFooter" class="mb-5"></div>	<!-- 무한스크롤 감지 -->
 		</div>
 		<!-- 리뷰 리스트 끝 -->
 		
@@ -445,13 +446,15 @@
 		$(document).ready(function(){
 			var reviewDiv = $("#review").clone();
 			reviewDiv.prop("style").removeProperty("display");
+			var page = 1;
+			var maxPage;
 			
 			$.reviewList = function(){
-				// 리뷰 불러오기
-				$("#reviewListRow").html("");
+				
 				$.ajax({
 					url: "${contextPath}/reviewList.ho",
 					data: {
+						page: page,
 						hotelId: ${hotel.hotelId},
 						orderBy: $("#reviewCategory select[name=orderBy]").val(),
 						searchByRoom: $("#reviewCategory select[name=searchByRoom]").val()
@@ -460,6 +463,11 @@
 						reviewList = data.reviewList;
 						const avgRating = data.avgRating;
 						const reviewCount = data.reviewCount;
+						maxPage = data.maxPage;
+						
+						if(page==1 || reviewList.length==0) {
+							$("#reviewListRow").html("");
+						}
 						
 						if(reviewList.length==0) {
 							$("#hasNoSubReview").prop("style").removeProperty("display");
@@ -539,7 +547,9 @@
 							}
 							
 							$("#reviewListRow").append(reviewDiv.clone());
+							
 						}
+						page+=1;
 					},
 					error: (data)=>{
 						console.log(data);
@@ -549,7 +559,87 @@
 			$.reviewList();
 
 			$("#reviewCategory select").change(function(){
+				page=1;
 				$.reviewList();
+			});
+			
+			const mio = new IntersectionObserver((entries, observer)=>{
+				entries.forEach(entry=>{
+					if(!entry.isIntersecting) {
+						return; 
+					}
+					observer.observe(document.getElementById('reviewScrollerFooter'));
+					console.log("스크롤");
+					if(page<=maxPage) {
+						$.reviewList();
+					}
+				});
+			});
+			mio.observe(document.getElementById('reviewScrollerFooter'));
+			
+			
+			$.writeReviewModal = function(reservationId) {
+				$("#writeReviewModal").modal('show');
+				$("#writeReviewModal").find('input[name=reservationId]').val(reservationId);
+			};
+			var nowRating="별점을 채워주세요.";
+			$(".starLabel").on("mouseleave", function(){
+				$("#ratingInfo").text(nowRating);
+			});
+			$(".starLabel").on("mouseover", function(){
+				if($(this).prev().val()==5) {
+					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
+				} else if($(this).prev().val()==4) {
+					$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
+				} else if($(this).prev().val()==3) {
+					$("#ratingInfo").text("기대 이상이네요.");
+				} else if($(this).prev().val()==2) {
+					$("#ratingInfo").text("조금만 더 신경 써 주세요.");
+				} else {
+					$("#ratingInfo").text("별로예요.");
+				}
+			});
+			$("input[type=radio]").on("click", function(){
+				if($(this).val()==5) {
+					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
+					nowRating="여기만한 곳은 어디에도 없을 거예요.";
+				} else if($(this).val()==4) {
+					$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
+					nowRating="여기라면 다음에 또 이용할 거예요.";
+				} else if($(this).val()==3) {
+					$("#ratingInfo").text("기대 이상이네요.");
+					nowRating="기대 이상이네요.";
+				} else if($(this).val()==2) {
+					$("#ratingInfo").text("조금만 더 신경 써 주세요.");
+					nowRating="조금만 더 신경 써 주세요.";
+				} else {
+					$("#ratingInfo").text("별로예요.");
+					nowRating="별로예요.";
+				}
+			});
+			// 리뷰 작성 버튼
+			$("#insertReviewButton").on("click", function(){
+				for(var i=1;i<=5;i++) {
+					if($("#"+i+"-star").is(":checked")) {
+						$("input[name=rating]").val(i);
+					}
+				}
+				$.ajax({
+					url: "${contextPath}/insertReview.ho",
+					data: {
+						memberId: "${loginUser.id}",
+						reservationId: $("input[name=reservationId]").val(),
+						rating: $("input[name=rating]").val(),
+						reviewContent: $("textarea[name=reviewContent]").val()
+					},
+					success: (data)=>{
+						$("#writeReviewModal").find("textarea").val("");
+						page=1;
+						$.reviewList();
+					},
+					error: (data)=>{
+					}
+				});
 			});
 		});
 	</script>
@@ -697,68 +787,68 @@
 	</div>
 	<script>
 		$(document).ready(function(){
-			$.writeReviewModal = function(reservationId) {
-				$("#writeReviewModal").modal('show');
-				$("#writeReviewModal").find('input[name=reservationId]').val(reservationId);
-			};
-			var nowRating="별점을 채워주세요.";
-			$(".starLabel").on("mouseleave", function(){
-				$("#ratingInfo").text(nowRating);
-			});
-			$(".starLabel").on("mouseover", function(){
-				if($(this).prev().val()==5) {
-					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
-				} else if($(this).prev().val()==4) {
-					$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
-				} else if($(this).prev().val()==3) {
-					$("#ratingInfo").text("기대 이상이네요.");
-				} else if($(this).prev().val()==2) {
-					$("#ratingInfo").text("조금만 더 신경 써 주세요.");
-				} else {
-					$("#ratingInfo").text("별로예요.");
-				}
-			});
-			$("input[type=radio]").on("click", function(){
-				if($(this).val()==5) {
-					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
-					nowRating="여기만한 곳은 어디에도 없을 거예요.";
-				} else if($(this).val()==4) {
-					$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
-					nowRating="여기라면 다음에 또 이용할 거예요.";
-				} else if($(this).val()==3) {
-					$("#ratingInfo").text("기대 이상이네요.");
-					nowRating="기대 이상이네요.";
-				} else if($(this).val()==2) {
-					$("#ratingInfo").text("조금만 더 신경 써 주세요.");
-					nowRating="조금만 더 신경 써 주세요.";
-				} else {
-					$("#ratingInfo").text("별로예요.");
-					nowRating="별로예요.";
-				}
-			});
-			// 리뷰 작성 버튼
-			$("#insertReviewButton").on("click", function(){
-				for(var i=1;i<=5;i++) {
-					if($("#"+i+"-star").is(":checked")) {
-						$("input[name=rating]").val(i);
-					}
-				}
-				$.ajax({
-					url: "${contextPath}/insertReview.ho",
-					data: {
-						memberId: "${loginUser.id}",
-						reservationId: $("input[name=reservationId]").val(),
-						rating: $("input[name=rating]").val(),
-						reviewContent: $("textarea[name=reviewContent]").val()
-					},
-					success: (data)=>{
-						$("#writeReviewModal").find("textarea").val("");
-						$.reviewList();
-					},
-					error: (data)=>{
-					}
-				});
-			});
+// 			$.writeReviewModal = function(reservationId) {
+// 				$("#writeReviewModal").modal('show');
+// 				$("#writeReviewModal").find('input[name=reservationId]').val(reservationId);
+// 			};
+// 			var nowRating="별점을 채워주세요.";
+// 			$(".starLabel").on("mouseleave", function(){
+// 				$("#ratingInfo").text(nowRating);
+// 			});
+// 			$(".starLabel").on("mouseover", function(){
+// 				if($(this).prev().val()==5) {
+// 					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
+// 				} else if($(this).prev().val()==4) {
+// 					$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
+// 				} else if($(this).prev().val()==3) {
+// 					$("#ratingInfo").text("기대 이상이네요.");
+// 				} else if($(this).prev().val()==2) {
+// 					$("#ratingInfo").text("조금만 더 신경 써 주세요.");
+// 				} else {
+// 					$("#ratingInfo").text("별로예요.");
+// 				}
+// 			});
+// 			$("input[type=radio]").on("click", function(){
+// 				if($(this).val()==5) {
+// 					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
+// 					nowRating="여기만한 곳은 어디에도 없을 거예요.";
+// 				} else if($(this).val()==4) {
+// 					$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
+// 					nowRating="여기라면 다음에 또 이용할 거예요.";
+// 				} else if($(this).val()==3) {
+// 					$("#ratingInfo").text("기대 이상이네요.");
+// 					nowRating="기대 이상이네요.";
+// 				} else if($(this).val()==2) {
+// 					$("#ratingInfo").text("조금만 더 신경 써 주세요.");
+// 					nowRating="조금만 더 신경 써 주세요.";
+// 				} else {
+// 					$("#ratingInfo").text("별로예요.");
+// 					nowRating="별로예요.";
+// 				}
+// 			});
+// 			// 리뷰 작성 버튼
+// 			$("#insertReviewButton").on("click", function(){
+// 				for(var i=1;i<=5;i++) {
+// 					if($("#"+i+"-star").is(":checked")) {
+// 						$("input[name=rating]").val(i);
+// 					}
+// 				}
+// 				$.ajax({
+// 					url: "${contextPath}/insertReview.ho",
+// 					data: {
+// 						memberId: "${loginUser.id}",
+// 						reservationId: $("input[name=reservationId]").val(),
+// 						rating: $("input[name=rating]").val(),
+// 						reviewContent: $("textarea[name=reviewContent]").val()
+// 					},
+// 					success: (data)=>{
+// 						$("#writeReviewModal").find("textarea").val("");
+// 						$.reviewList();
+// 					},
+// 					error: (data)=>{
+// 					}
+// 				});
+// 			});
 		});
 	</script>
 	<!-- 리뷰 작성 모달 끝 -->

@@ -318,8 +318,6 @@
 							}
 							$("#hotelList").append('<div class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1">'+hotelDiv2.html()+'</div>');
 							
-							console.log("메서드 실행 후 페이지 "+page);
-							console.log("메서드 실행 후 맥스페이지 "+maxPage);
 						}
 						page+=1;
 					},
@@ -480,8 +478,8 @@
 				"daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
 				"monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 				},
-			minDate: new Date(),
-			startDate: startDate,
+			minDate: today,
+			startDate: today,
 			endDate: endDate,
 			autoApply: true
 		});

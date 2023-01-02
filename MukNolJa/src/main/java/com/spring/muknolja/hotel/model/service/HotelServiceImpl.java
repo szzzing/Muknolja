@@ -111,8 +111,8 @@ public class HotelServiceImpl implements HotelService{
 	}
 	
 	@Override
-	public ArrayList<Review> selectReviewList(HashMap map) {
-		return hDAO.selectReviewList(sqlSession, map);
+	public ArrayList<Review> selectReviewList(HashMap map, PageInfo pi) {
+		return hDAO.selectReviewList(sqlSession, map, pi);
 	}
 	
 	@Override
@@ -208,5 +208,15 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public ArrayList<Reservation> selectReservationList(HashMap map, PageInfo pi) {
 		return hDAO.selectReservationList(sqlSession, map, pi);
+	}
+	
+	@Override
+	public int getReviewListCount(HashMap map) {
+		return hDAO.getReviewListCount(sqlSession, map);
+	}
+	
+	@Override
+	public int deleteReservation(int reservationId) {
+		return hDAO.deleteReservation(sqlSession, reservationId);
 	}
 }
