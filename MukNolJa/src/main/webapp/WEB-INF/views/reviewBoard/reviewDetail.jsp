@@ -5,57 +5,52 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" 
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" 
+        crossorigin="anonymous"></script>
+    
+    <style>
+    	#album{
+    		margin: 5% auto;
+    		width 100%;
+    		height: 100%;
+    		}
+    		.d1{
+    		background-size:100% 100%;}
+    </style>
   </head>
   <body style="">
+  	<jsp:include page="../member/menubar.jsp"/>
    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <jsp:include page="../member/menubar.jsp"/>
+  
    	
-     <div class="container-fluid text-center">
-	  	<div class="row justify-content-center shadow" style="  box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+     
+		<br><br><br>	<br><br><br>
+		<div class="container-fluid text-center">
+	  	<div class="row justify-content-center shadow" style=" min-height:100vh; border-radius:30px;   ">
             <div class="col-9 " style=" min-height:100vh;">
-		<br><br><br>
-	  	
-	  		
-            <br><br>
-	            <div class="row justify-content-center " style="  ">
-	            	<div class="col" style="padding-left:0px; padding-right:0px;"  >
-	    				<img alt="1" src="${contextPath }/resources/img/1.jpg" width=100%; height=450px; style="border-radius:10px" >
-	    				
-	    				<div style="float:left; font-size:30px; margin-top:30px; font-weight:500">00산</div>
-	    			</div>
-				</div>
-	    					<div class="row justify-content-center " style=" border-radius:10px; ">
-	            				<div class="col-xl-8" style="padding-left:0px"  >
-	            					<div style="float:left; padding:20px; font-weight:500; margin-bottom:30px;border:1px solid lightgray;  border-radius:10px;height:450px; width:99.5%; text-align:left" >
-	            					왜
-	            					</div>
-	            				
-								</div>
-								<div class="col" style="margin-top:0px; margin-bottom:30px; padding-:0px; background:; height:450px; border-radius:10px;  border:1px solid lightgray;"   >
-									<img alt="1" src="${contextPath }/resources/img/1.jpg" width=100%; height=300px; style="border-radius:10px; margin-top:10px;" >
-							</div>
-						</div>
-						
-						
-	    					<div class="row" style=" border-radius:10px; ">
-	            				
-								<div class="col" style="padding:0px; "  >
-									<h4 class="" style=" padding:0px; float:left;"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h4>
-									<div class="input-group ">
-										<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
-										<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
-									</div>
-								
-								</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
+		<div id ="album">
+				<div class="d1" style="background-image: url('${contextPath}/resources/img/sky.jpg');"></div>
+	  			<div class="d1" style="background-image: url('${contextPath}/resources/img/water4.png');"></div>
+	  			<div class="d1" style="background-image: url('${contextPath}/resources/img/2.jpg');"></div>
+	  			<div class="d1" style="background-image: url('${contextPath}/resources/img/3.jpg');"></div>
+	  			<div class="d1" style="background-image: url('${contextPath}/resources/img/4.jpg');"></div>
+	  	</div>	
+        
+		</div>
+		</div>
+		</div>
+		
+
 	
+	
+	 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<script src="${contextPath }/resources/turn.js"></script>
+	
+	<script>
+	
+	$('#album').turn({gradients: true, acceleration: true});
+	</script>
   </body>
 </html>
 

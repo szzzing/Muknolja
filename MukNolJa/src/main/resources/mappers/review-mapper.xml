@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+
+	<!-- partyResultMap -->
+	<resultMap type="Board" id="boardResultSet">
+		<id column="BOARD_ID" property="boardId"/>
+		<result column="BOARD_WRITER" property="boardWriter"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="BOARD_COURSE" property="boardCourse"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_CREATE_DATE" property="createDate"/>
+		<result column="BOARD_MODIFY_DATE" property="modifyDate"/>
+		<result column="BOARD_AREA" property="boardArea"/>
+		<result column="BOARD_STATUS" property="boardStatus"/>
+		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
+		<result column="CONTENT_COURSE" property="contentCourse"/>
+		<result column="FILE_ID" property="fileId"/>
+	</resultMap>
+	
+	<select id="getSelectBoard" resultType="_int">
+	
+	select count(*)
+	from board join BOARD_IMG using(BOARD_ID) join ATTACHED_FILE using(FILE_ID)
+	where BOARD_STATUS ='Y' AND FILE_THUMBNAIL = 'Y' AND FILE_TYPE = 'R'
+	</select>
+	
+	<select id="selectBoard" resultMap="boardResultSet">
+	
+	select *
+	from board join BOARD_IMG using(BOARD_ID) join ATTACHED_FILE using(FILE_ID)
+	where BOARD_STATUS ='Y' AND FILE_THUMBNAIL = 'Y' AND FILE_TYPE = 'R'
+	</select>
+	
+</mapper>

@@ -155,24 +155,50 @@
 		
 		<hr id="hr2" >
 		<br>
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start">
-			<c:forEach items="${ list }" var="t">
-				 <div class="allCard col">
-		            <div class="card card-cover h-100 overflow-hidden\">
-		               <c:if test="${ t.firstImage == '' }">
-		               	  <img class="card-img-top"  style="height:300px;"  src="${ contextPath }/resources/img/basicImage.png">
-		               </c:if>
-		               <c:if test="${ t.firstImage != '' }">
-		               <img class="card-img-top"  style="height:300px;"  src="${ t.firstImage }">
-		               </c:if>
-		               <div class="card-body p-4 mb-auto">
-		                  <h5 class="card-title lh-1 fw-bold">${ t.title }</h5>
-		                  <div class="card-text text-muted">${ t.addr }</div>
-		                  <input class="contentId" type="hidden" name="contentId" value="${ t.contentId }">
-		               </div>
-		            </div>
-		         </div>
+		<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4 justify-content-start">
+			<c:forEach items="${ board }" var="b">
+			<div style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:265px;">
+			<div style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
+		
+		                <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=250px; >
+		                <br>
+		              	 
+			</div>
+			</div>
 	         </c:forEach>
+	         <c:forEach items="${ board }" var="b">
+			<div style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:265px;">
+			<div style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
+		
+		                <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=250px; >
+		                <br>
+		              	 
+			</div>
+			</div>
+	         </c:forEach>
+	         <c:forEach items="${ board }" var="b">
+			<div style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:265px;">
+			<div style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
+		
+		                <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=250px; >
+		                <br>
+		              	 
+			</div>
+			</div>
+	         </c:forEach>
+	         <c:forEach items="${ board }" var="b">
+			<div style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:265px;">
+			<div style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
+		
+		                <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=250px; >
+		                <br>
+		              	 
+			</div>
+			</div>
+	         </c:forEach>
+
+	        
+	         
 	      </div>
 	         
 		

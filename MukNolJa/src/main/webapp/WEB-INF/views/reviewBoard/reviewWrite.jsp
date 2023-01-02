@@ -185,7 +185,7 @@
 		
 		
 	<div class = "row">	  
-	<form action="${contextPath}/reviewWrite.re" action="url" method="post" enctype="multipart/form-data" style="margin-top:40px;">
+	<form action="${contextPath}/reviewWrite2.re" id="form"  method="post" enctype="multipart/form-data" style="margin-top:40px;">
 	<h6 style="color: gray; font-size: 13px; ">이름을 클릭하여 맞게 작성해주세요</h6>
 	<div style="height:60px; background:RGB(107, 182, 236);  border-radius:0px; padding-left:10px; " id="ti"> </div>
 	<div style="display:flex">
@@ -200,18 +200,22 @@
 		</div>
 		</div>
 		<div class="d-grid gap-2">
-			<button type="submit" class="writeButton mukButton " style="width: 100%;" id="writeButton">작성하기</button>
+			<button type="button" class="writeButton mukButton " style="width: 100%;" id="bd">작성하기</button>
  		</div>
  		
  		<!-- hidden값 -->
- 		<input id="myFile" type="file" accept="image/*" style="display:none;" name="thumbnail">
+ 		<div class="di" style="display:none;"></div>
  		<input type="hidden" name="partyTitle" id="hiddenTitle">
  		<input type="hidden" name="partyArea" id="hiddenLocation">
  		<input type="hidden" name="partyStartDate" id="hiddenStartDate">
  		<input type="hidden" name="partyEndDate" id="hiddenEndDate">
- 		<input type="hidden" name="gender" id="hiddenGender">
+ 		
  		<input type="hidden" name="maxParticipate" id="hiddenNum">
  		<input type="hidden" name="partyCourse" id="hiddenCourse">
+ 		<input type="hidden" name="contentCourse" id="contentCourse">
+ 		<input type="hidden" name="Course" id="Course">
+ 		<input  type="hidden" name="content" id="content">
+ 		
  	</form>
 		</div>
 		<br><br>
@@ -220,6 +224,7 @@
 	</div>
 	
 	<script>
+	var list = new Array();
 		<!-- 제목넣기 -->
 		const hiddenTitle = document.getElementById('hiddenTitle');
 		const title = document.getElementsByClassName('title')[0];
@@ -228,9 +233,10 @@
 			console.log(hiddenTitle.value);
 		});
 		
-	
+		
 		const hiddenLocation = document.getElementById('hiddenLocation');
 		const selectLocation = document.getElementById('selectLocation');
+		
 		selectLocation.addEventListener('change', function(){
 			hiddenLocation.value = selectLocation.value;
 			console.log(hiddenLocation.value);
@@ -238,16 +244,6 @@
 		
 		
 		<!-- 코스넣기 -->
-		const writeButton = document.getElementById('writeButton');
-		const numberLis = document.getElementsByClassName('numberLi');
-		const hiddenCourse = document.getElementById('hiddenCourse');
-		var courseTest = "";
-		writeButton.addEventListener('click', function(){
-			for(const numberLi of numberLis){
-				courseTest += numberLi.innerHTML + '/';
-			}
-			hiddenCourse.value = courseTest.slice(0, -1);
-		});
 		
 		
 		
@@ -258,11 +254,11 @@
 		const locationDiv = document.getElementById('location1');
 	   	const searchInput = document.getElementById('searchInput');
 		
-	   	searchInput.addEventListener('keypress', function(e){
-	   		if (e.keyCode === '13') {
+	   	searchInput.addEventListener('keyup', function(e){
+	   	
 	   	        event.preventDefault();
 	   	        searchButton.click();
-	   	    }
+	   	 
 			
 			while(locationDiv.firstChild){
 				locationDiv.removeChild(locationDiv.firstChild);
@@ -272,8 +268,10 @@
 			$.ajax({
 				method: "GET",
 				url: "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D&MobileApp=AppTest&MobileOS=ETC&pageNo=1&numOfRows=20&listYN=Y&&arrange=A&keyword=" + keyword +"&_type=json",
+				 
 				data: {},
 				success: (response) =>{
+					
 					let items = response["response"]["body"]["items"]["item"];
 					
 					var all = '';
@@ -299,68 +297,80 @@
 			});
 			
    		});
-	   	var list = new Array();
- 	   	<!-- 코스선택 후 리스트에 추가 -->
+   		$('.ttt').click(function(){
+	   		
+	   		alert("코스를 선택해주세요")
+	   	});
+	   	
+ 	
 	   	$(document).on('click', '.searchInfo', function(){
 	   		var contentId = $(this).attr('id');
+	   		var val = $(this).value;
+	   		console.log(val);
+	   		console.log(this.querySelector('span').innerText);
 	   		var Yn = true;
 	   		var li = '<li class="numberLi '+contentId+'" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
+	   		var di = '<li class="con" style="display:none;">'+contentId+'</li>';
 	   		var numLi = document.querySelector('.numbered');
-	   		console.log($('.numberLi').length);
+	   		var dll = document.querySelector('.di');
 	   	
-	   		for(var i = 0; i <= list.length; i++){
+	   		for(var i = 0; i <= list.length-1; i++){
 	   			if( list[i] != contentId){
 	   				Yn = true;
-	   					
 	   			}else{
 	   				alert("중복되었습니다")
 	   				Yn = false;
 	   				
 	   				break;
 	   			}
-	   			
-	   			
-	   			
 	   		}
-	   		list.push(contentId);
-	   		
-	   		
 	   		if(Yn){
-	   		
-	   		var cll = document.querySelector('#ti');
-	   		numLi.innerHTML += li;
-	   		
-	   		
-	   		$('.ttt').remove();
-	   		
-	   		
-	   		var bor = '';
-	   		var are = '<textarea class="form-control  t'+contentId+'" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 400px; resize: none; border-radius:0px;" name="partyContent"></textarea>';
-	   		var are2 = '<img src="${ contextPath }/resources/img/noImage.png"   alt="..." id="thumbnail'+contentId+'" height = 100%; width = 100% >'+
-	   				   '<input id="myFile'+contentId+'" type="file" accept="image/*" style="display:none; name="thumbnail">'
-	   		
-	   		$('.are').append(are);
-	   		$('.are2').append(are2);
-	   		if( numLi.childElementCount < 2){
-	   			bor = 'border : 1px solid white; border-radius:5px height:60px;';
-	   		}else{
-	   		
-	   			bor= 'border: none;';
-	   			$('.t'+contentId).hide();
-	   			
-	   			$('#thumbnail'+contentId).hide();
+	   			list.push(contentId);
 	   		}
-	   		var tag1 ='<button type="button" class="wow '+contentId+'" id="'+contentId+'" style="'+bor+'color:white; background:none; font-size:18px;  margin-top:14px;">'+this.querySelector('span').innerText+'</button>'
-	   		$('#ti').append(tag1);
+	   		
+	   		
+	   		if(Yn == true){
+	   			if(numLi.childElementCount < 5){
+		   		var cll = document.querySelector('#ti');
+		   		numLi.innerHTML += li;
+		   		dll.innerHTML += di;
+		   		
+		   		$('.ttt').remove();
+		   		
+		   		
+		   		var bor = '';
+		   		var are = '<textarea class="t'+contentId+' vl"   style="height: 400px;  border-radius:0px;" name="partyContent"></textarea>';
+		   		var are2 = '<img src="${ contextPath }/resources/img/noImage.png"   alt="..." id="thumbnail'+contentId+'" height = 100%; width = 100% >'+
+		   				   '<input id="myFile'+contentId+'" name="file" type="file" accept="image/*" style=display:none; >'
+		   		
+		   		$('.are').append(are);
+		   		$('.are2').append(are2);
+		   		if( numLi.childElementCount < 2){
+		   			bor = 'border : 1px solid white; border-radius:5px height:60px;';
+		   		}else{
+		   		
+		   			bor= 'border: none;';
+		   			$('.t'+contentId).hide();
+		   			
+		   			$('#thumbnail'+contentId).hide();
+		   		}
+		   		var tag1 ='<button type="button" class="wow '+contentId+'" id="'+contentId+'" style="'+bor+'color:white; background:none; font-size:18px;  margin-top:14px;">'+this.querySelector('span').innerText+'</button>'
+		   		$('#ti').append(tag1);
+		   		}else{
+		   			alert('5개 까지만 선택할 수 있습니다.');
+		   		}
 	   		}
+	   		
 	   		$('#thumbnail'+contentId).click(function(){
 		    	$('#myFile'+contentId).click();
 		    });
-			
+	   	
+	   		
 		    const myFile = document.querySelector('#myFile'+contentId);
 		    const thumbnail = document.querySelector('#thumbnail'+contentId);
 		    
 			    myFile.addEventListener('change', ()=>{
+			    	console.log(myFile);
 			    	const reader = new FileReader();
 			    	reader.onload = function(e){
 						console.log(e);		    		
@@ -374,6 +384,7 @@
 			const locDiv = document.getElementsByClassName('location2')[0];
 			locDiv.isScrollBottom = true;
 			
+			//클릭
 			$('.numberLi').click(function(){
 		   		
 		   		var cla =  $(this).attr('class').substr(9);
@@ -391,7 +402,7 @@
 	   			$('.t'+contentId).show();
 	   			$('#thumbnail'+contentId).show();
 	   			
-	   			console.log("123");
+	   			
 	   			
 	   		});
 			
@@ -406,15 +417,69 @@
 			if (locDiv.isScrollBottom) {
 				locDiv.scrollTop = locDiv.scrollHeight;
 			}
+				
+			const writeButton = document.getElementById('writeButton');
+			const numberLis = document.getElementsByClassName('numberLi');
+			const hiddenCourse = document.getElementById('hiddenCourse');
+			const tt = document.getElementsByClassName('vl');
+			const con = document.getElementsByClassName('con');
+			var cll = document.querySelector('.di');
+			var dll = document.querySelector('.are');
+			console.log(dll.innerText);
+			console.log(cll.innerHTML);
+			var courseTest = "";
+			var courseTest1 = "";
+			var tx = "";
+		
+			
+			//파일추가부분
+			 $('#bd').click(function(){
+				 for(const dll of tt){
+						tx += dll.innerText + '!@#$';}
+				 for(const numberLi of numberLis){
+						courseTest += numberLi.innerHTML + '/';}
+				 for(const cll of con){
+						courseTest1 += cll.innerHTML + '/';}
+		 		
+				
+		 		
+		 		const cour = document.getElementById('Course');
+		 		const cour1 = document.getElementById('contentCourse');
+		 		const cour2 = document.getElementById('content');
+				cour.value = courseTest;
+				cour1.value = courseTest1;
+				cour2.value = tt;
+			
+				
+				console.log(courseTest.split("/"));
+				console.log(courseTest1.split("/")[1]);
+			
+				
+		 		var next = true;
+		 		if(selectLocation == ""){
+		 			alert("지역을 선택해주세요")
+		 		}else{
+			   		for(var v = 0; v< list.length; v++){
+			   				
+			   				if($('#myFile'+list[i]).val() == ""){
+			   					next = false;
+			   					
+							}
+			   					
+			   				}
+			   			
+			   			if(next == true){
+		   					$('form').submit();
+			   			}else{
+			   				alert("각각 사진1개를 추가해주세요");
+			   			}
+		 		}
+			 
+	   				});
 
-	   		if(numLi.childElementCount > 5){
-	   			alert('5개 까지만 선택할 수 있습니다.');
-	   			numLi.removeChild(numLi.lastChild);
-	   			cll.removeChild(cll.lastChild);
-	   		}
-	   	});
-	   
-   		
+				});
+
+		
 	   	
  	   	<!-- 코스지우기 -->
 	   
@@ -444,7 +509,7 @@
 			});
 			
 		});
-		
+			
 	</script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>

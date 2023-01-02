@@ -1,4 +1,4 @@
-package com.spring.muknolja.common.model.vo;
+﻿package com.spring.muknolja.common.model.vo;
 
 import java.sql.Date;
 
@@ -25,5 +25,8 @@ public class Board {
 	private String boardArea;
 	private String boardStatus;
 	private String fileModifyName;
+	private String contentCourse;
+	private int fileId;
+	
 	private int reportCount;
 }
