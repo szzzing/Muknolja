@@ -23,4 +23,5 @@ public class Report {
 	private String processing;
 	private String reportTitle;
 	private String reportReply;
+	private String replyContent;
 }

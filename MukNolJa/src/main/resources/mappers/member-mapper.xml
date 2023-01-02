@@ -512,10 +512,11 @@
 	<select id="selectReportList" resultMap="ReportResultSet">
 		select *
 		from report
+		left join REPLY on(TARGET_ID = REPLY_ID)
 		<if test="search != null">
 			where REPORT_TITLE LIKE '%'||#{search}||'%'
 		</if>
-		order by REPORT_ID desc
+		order by REPORT_ID
 	</select>
 	
 	<resultMap type="Report" id="ReportResultSet">
@@ -528,6 +529,7 @@
 		<result column="PROCESSING" property="processing"/>
 		<result column="REPORT_TITLE" property="reportTitle"/>
 		<result column="REPORT_REPLY" property="reportReply"/>
+		<result column="REPLY_CONTENT" property="replyContent"/>
 	</resultMap>
 	
 	<select id="selectBoardType" resultType="String">
@@ -594,4 +596,10 @@
 		set  REPORT_REPLY = #{content}, PROCESSING = 'Y'
 		where REPORT_ID = #{id}
 	</update>
+	
+	<select id="selectBoardId" resultType="String">
+		select REF_BOARD_ID
+		from reply
+		where REPLY_ID = #{id}
+	</select>
   </mapper>

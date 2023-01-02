@@ -358,6 +358,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.reportReply(sqlSession, map);
 	}
 
+	@Override
+	public String selectBoardId(String id) {
+		return mDAO.selectBoardId(sqlSession, id);
+	}
+
 	
 
 	

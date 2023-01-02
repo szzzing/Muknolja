@@ -147,6 +147,8 @@ public interface MemberService {
 
 	int reportReply(HashMap<String, Object> map);
 
+	String selectBoardId(String id);
+
 
 
 

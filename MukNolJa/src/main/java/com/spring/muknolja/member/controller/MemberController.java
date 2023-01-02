@@ -309,7 +309,6 @@ public class MemberController {
 			bList = mService.selectBoardList(map, pi);
 			
 			} else {
-				System.out.println(search);
 				int listCount = mService.reportListCount();
 				
 				PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 30);
@@ -842,7 +841,11 @@ public class MemberController {
 		}
 		
 		@RequestMapping("reportDetail.me")
-		public String reportDetail(@RequestParam("id") String id, Model model) {
+		public String reportDetail(@RequestParam("id") String id, @RequestParam("type") String reportType, Model model) {
+			if(reportType.equals("댓글")) {
+				id = mService.selectBoardId(id);
+			}
+			
 			String type = mService.selectBoardType(id);
 			
 			if(type.equals("P")) {

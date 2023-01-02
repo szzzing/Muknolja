@@ -108,6 +108,9 @@
 	input, textarea{
 		text-align: center;
 	}
+	#replyReportContent{
+		display: none;
+	}
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -232,6 +235,7 @@
 		              <input type="hidden" value="${ b.reportId }">
 		              <input type="hidden" value="${ b.reportContent }">
 		              <input type="hidden" value="${ b.reportReply }">
+		              <input type="hidden" value="${ b.replyContent }">
 			          <td width="100"><button class="mukButton reportDetailBtn">상세</button></td>
 		            </tr>
 	            </c:forEach>
@@ -254,11 +258,16 @@
 			<input type="text" class="form-control reportDetail" id="reportWriter" readonly>
 		</div>
 	</div>
-	<br>
 	<div class="row">
 		<div class="col text-center">
 			<label>내용</label><br>
 			<textarea class="form-control reportDetail" id="reportContent" readonly></textarea>
+		</div>
+	</div>
+	<div class="row" id="replyReportContent">
+		<div class="col text-center">
+			<label>댓글 내용</label><br>
+			<input type="text" class="form-control reportDetail" readonly>
 		</div>
 	</div>
 	<div class="row text-center" style="margin-top: 20px;">
@@ -410,6 +419,7 @@
            			const id = tr.querySelectorAll('input[type="hidden"]')[0].value;
            			const content = tr.querySelectorAll('input[type="hidden"]')[1].value;
            			const reply = tr.querySelectorAll('input[type="hidden"]')[2].value;
+           			const replyContent = tr.querySelectorAll('input[type="hidden"]')[3].value;
            			const title = tr.querySelectorAll('td')[1].innerText;
            			const writer = tr.querySelectorAll('td')[2].innerText;
            			const rId = tr.querySelectorAll('td')[0].innerText;
@@ -419,13 +429,18 @@
            			r[0].value = title;
            			r[1].value = writer;
            			r[2].value = content;
+           			r[3].value = replyContent;
+           			
+           			if(type == '댓글'){
+           				document.getElementById('replyReportContent').style.display = 'block';
+           			} else {
+           				document.getElementById('replyReportContent').style.display = 'none';
+           			}
 
            			Modal('report_modal');
            			
            			document.getElementById('reportBoardDetail_btn').addEventListener('click', function(){
-           				if(type != '댓글'){
-    	           			location.href = 'reportDetail.me?id=' + rId;
-    	           		}
+    	           		location.href = 'reportDetail.me?id=' + rId + '&type=' + type;
            			});
            			
            			document.getElementById('reply_btn').addEventListener('click', function(){

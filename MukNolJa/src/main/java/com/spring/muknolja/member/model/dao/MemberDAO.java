@@ -294,6 +294,10 @@ public class MemberDAO {
 	public int reportReply(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		return sqlSession.update("memberMapper.reportReply", map);
 	}
+
+	public String selectBoardId(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("memberMapper.selectBoardId", id);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int
