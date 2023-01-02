@@ -574,7 +574,7 @@
 									    		stomp.subscribe("/sub/chat/room/" + roomCode, function (chat) {
 									    			const content = JSON.parse(chat.body);
 									    			const chatDiv = document.getElementById('chat');
-									    			
+									    			console.log(content);
 									    			$.ajax({
 									    				url: 'availablilty.ch',
 									    				data: {chatId:content.chatId, id:'${loginUser.id}'},

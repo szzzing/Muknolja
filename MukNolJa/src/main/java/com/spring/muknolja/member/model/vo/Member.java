@@ -27,6 +27,6 @@ public class Member {
 	    private String status;
 	    private int report;
 	    private String lastVisit;
-
+	    private Date stopDate;
 
 }

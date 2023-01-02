@@ -44,6 +44,8 @@ public class ChatController {
     	map.put("iList", iList);
     	
     	cService.insertMessage(map);
+    	
+    	message.setChatId(cService.selectChatId());
  
     	template.convertAndSend("/sub/chat/room/" + message.getRoomCode(), message);
     }

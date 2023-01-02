@@ -107,4 +107,9 @@ public class ChatServiceImpl implements ChatService{
 	public ArrayList<ChatRoom> selectCount(String id) {
 		return cDAO.selectCount(sqlSession, id);
 	}
+
+	@Override
+	public int selectChatId() {
+		return cDAO.selectChatId(sqlSession);
+	}
 }

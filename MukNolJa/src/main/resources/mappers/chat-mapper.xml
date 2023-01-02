@@ -165,4 +165,8 @@
 		where u.PARTICIPANT_ID = #{id} and a.PARTICIPANT_ID = #{id} and RECEIVING_STATUS = 'N'
         group by CHAT_ROOM_CODE, CHAT_ROOM_NAME
 	</select>
+	
+	<select id="selectChatId" resultType="_int">
+		select SEQ_CHATID.currval from dual
+	</select>
 </mapper>

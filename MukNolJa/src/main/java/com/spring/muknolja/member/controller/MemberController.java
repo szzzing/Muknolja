@@ -253,7 +253,7 @@ public class MemberController {
 									   @RequestParam(value="search", required=false) String search, Model model){
 			
 			int category = 0;
-			if(cate != null && cate > 0 && cate <= 2) {
+			if(cate != null && cate > 0 && cate <= 3) {
 				category = cate;
 			}
 			
@@ -941,6 +941,8 @@ public class MemberController {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("content", content);
 			map.put("id", id);
+			
+			System.out.println(map);
 			
 			int result = mService.reportReply(map);
 			

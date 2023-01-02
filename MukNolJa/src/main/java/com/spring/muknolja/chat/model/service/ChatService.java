@@ -45,4 +45,6 @@ public interface ChatService {
 
 	ArrayList<ChatRoom> selectCount(String id);
 
+	int selectChatId();
+
 }

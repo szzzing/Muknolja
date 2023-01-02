@@ -22,11 +22,12 @@
   		<result column="STATUS" property="status"/>
   		<result column="REPORT" property="report"/>
   		<result column="LAST_VISIT" property="lastVisit"/>
+  		<result column="STOP_DATE" property="stopDate"/>
   	</resultMap>
   	
   	<insert id="insertM">
   	insert into member
-  	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, default, default, default)
+  	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, default, default, default, null)
   </insert>
   
   	
@@ -101,19 +102,19 @@
   	
   	<select id="selectVisitList" resultType="map">
   		select visit_date, visit_count
-		from (select to_char(visit_time, 'mm.dd') visit_date, count(*) visit_count
+		from (select to_char(visit_time, 'yy.mm.dd') visit_date, count(*) visit_count
 		      from visit
 		      where MEMBER_YN = 'Y'
-		      GROUP by to_char(visit_time, 'mm.dd')
+		      GROUP by to_char(visit_time, 'yy.mm.dd')
 		      order by visit_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
   	
   	<select id="selectVisitAllList" resultType="map">
   		select visit_date, visit_count
-		from (select to_char(visit_time, 'mm.dd') visit_date, count(*) visit_count
+		from (select to_char(visit_time, 'yy.mm.dd') visit_date, count(*) visit_count
 		      from visit
-		      GROUP by to_char(visit_time, 'mm.dd')
+		      GROUP by to_char(visit_time, 'yy.mm.dd')
 		      order by visit_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
@@ -125,30 +126,36 @@
   	</select>
   	
   	<select id="selectMemberList" resultMap="memberResultSet">
-		select id, name, nickname, phone, enroll_date, report, member_type, max(to_char(visit_time, 'yy-mm-dd')) LAST_VISIT
+		select id, name, nickname, phone, enroll_date, report, member_type, stop_date, status, max(to_char(visit_time, 'yy-mm-dd')) LAST_VISIT
 	    from member
 	    left join VISIT using(id)
-	    where status = 'Y' and
-	    <if test="category == 0">
-	    	MEMBER_TYPE = 'N'
+	    
+	    <if test="category != 3">
+		    where status = 'Y' and
+		    <if test="category == 0">
+		    	MEMBER_TYPE = 'N'
+		    </if>
+		    <if test="category == 1">
+		    	MEMBER_TYPE = 'H'
+		    </if>
+		    <if test="category == 2">
+		    	MEMBER_TYPE = 'A'
+		    </if>
 	    </if>
-	    <if test="category == 1">
-	    	MEMBER_TYPE = 'H'
-	    </if>
-	    <if test="category == 2">
-	    	MEMBER_TYPE = 'A'
+	    <if test="category == 3">
+	    	where status = 'S'
 	    </if>
 	    <if test="search != null">
 	    	and id LIKE '%'||#{search}||'%'
 	    </if>
-	    GROUP by (id, name, nickname, phone, enroll_date, report, member_type)
+	    GROUP by (id, name, nickname, phone, enroll_date, report, member_type, stop_date, status)
   	</select>
   	
   	<select id="enrollCount" resultType="map">
   		select enroll_date, member_count
-		from (select to_char(enroll_date, 'mm.dd') enroll_date, count(*) member_count
+		from (select to_char(enroll_date, 'yy.mm.dd') enroll_date, count(*) member_count
 		      from member
-		      group by to_char(enroll_date, 'mm.dd')
+		      group by to_char(enroll_date, 'yy.mm.dd')
 		      order by enroll_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
@@ -172,7 +179,7 @@
   	
   	<update id="stop">
   		update member
-  		set status = 'S'
+  		set status = 'S', stop_date = sysdate
   		where id = #{id}
   	</update>
   	<update id="changePassword">
@@ -243,9 +250,9 @@
   	
   	<select id="incomeCount" resultType="map">
   		select start_date, count
-		from (select to_char(start_date, 'mm.dd') start_date, sum(ad_price) count
+		from (select to_char(start_date, 'yy.mm.dd') start_date, sum(ad_price) count
 		      from AD
-		      group by to_char(start_date, 'mm.dd')
+		      group by to_char(start_date, 'yy.mm.dd')
 		      order by start_date desc)
 		where rownum <![CDATA[<=]]> 7
   	</select>
@@ -537,9 +544,9 @@
 	
 	<select id="QACount" resultType="map">
 		select qa_date, count
-		from (select to_char(QA_CREATE_DATE, 'mm.dd') qa_date, count(*) count
+		from (select to_char(QA_CREATE_DATE, 'yy.mm.dd') qa_date, count(*) count
 		      from qa
-		      GROUP by to_char(QA_CREATE_DATE, 'mm.dd')
+		      GROUP by to_char(QA_CREATE_DATE, 'yy.mm.dd')
 		      order by qa_date desc)
 		where rownum <![CDATA[<=]]> 7
 	</select>
@@ -584,7 +591,7 @@
 	
 	<update id="reportReply">
 		update REPORT
-		set  REPORT_CONTENT = #{content}
+		set  REPORT_REPLY = #{content}, PROCESSING = 'Y'
 		where REPORT_ID = #{id}
 	</update>
   </mapper>
