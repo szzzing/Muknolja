@@ -74,8 +74,8 @@
       	text-align: center;
       }
       #logout{
-      	position: relative;
-      	top: 480px;
+      	position: fixed;
+      	bottom: 30px;
       	font-size: 12px;
       }
       a{

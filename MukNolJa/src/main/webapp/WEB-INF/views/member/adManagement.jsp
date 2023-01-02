@@ -135,8 +135,8 @@
 		border-bottom: 1px solid lightgray;
 	  }
 	  #logout{
-      	position: relative;
-      	top: 480px;
+      	position: fixed;
+      	bottom: 30px;
       	font-size: 12px;
       }
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}

@@ -82,8 +82,8 @@
       	width: 88px;
       }
       #logout{
-      	position: relative;
-      	top: 480px;
+      	position: fixed;
+      	bottom: 30px;
       	font-size: 12px;
       }
       #report_modal, #reply_modal{
