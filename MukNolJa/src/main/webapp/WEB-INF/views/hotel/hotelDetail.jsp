@@ -292,7 +292,7 @@
 			</div>
 			
 			<div id="hasNoSubReview" class="col text-center pt-5 pb-5" style="display:none">
-				<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/0.svg">
+				<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/1f64f.svg">
 				<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
 				<div class="fw-bold mukSubText" onclick='$("#roomListButton").click();' style="cursor:pointer">${hotel.hotelName }의 첫번째 리뷰어가 되어주세요</div>
 			</div>

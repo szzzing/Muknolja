@@ -11,9 +11,10 @@
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	* {font-family: 'Noto Sans KR', sans-serif;}
-  	.form-control {border:1px solid #e9e9e9 !important}
   	input {font-family: 'Noto Sans KR', sans-serif;}
-  	.form-control {border:1px solid #e9e9e9 !important}
+  	select {font-family: 'Noto Sans KR', sans-serif;}
+  	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
   	::-webkit-scrollbar {width:5px;}
 	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
 	::-webkit-scrollbar-track {opacity:0;}

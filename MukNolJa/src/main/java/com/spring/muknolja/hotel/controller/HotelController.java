@@ -517,9 +517,44 @@ public class HotelController {
 	
 	@RequestMapping(value="selectReservationList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void selectReservationList(HttpServletResponse response, @RequestParam("reviewId") int hotelId) {
-//		ArrayList<Reservation> list = hService.selectReservationList(hotelId);
+	public void selectReservationList(HttpServletResponse response, @RequestParam("page") Integer page, @RequestParam("statusCategory") String statusCategory, @RequestParam("roomCategory") int roomCategory, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam("hotelId") int hotelId) {
+		
+		HashMap map = new HashMap();
+		map.put("hotelId", hotelId);
+		map.put("statusCategory", statusCategory);
+		map.put("roomCategory", roomCategory);
+		map.put("searchValue", searchValue);
+		
+		System.out.println(map);
+		
+		int currentPage = 1;
+		if(page!=null) {
+			currentPage = page;
+		}
+		int listCount = hService.getReservationListCount(map);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
+		int maxPage = pi.getMaxPage();
+		
+		ArrayList<Reservation> list = hService.selectReservationList(map, pi);
+		
+		HashMap map2 = new HashMap();
+		map2.put("list", list);
+		map2.put("maxPage", maxPage);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(map2, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
+	
 	
 	
 	
@@ -534,12 +569,6 @@ public class HotelController {
 	@RequestMapping(value="searchHotelList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
 	public void searchHotelList(@RequestParam(value="page", required=false) Integer page, @RequestParam(value="searchValue", required=false) String searchValue, @RequestParam("checkinDate") Date checkinDate, @RequestParam("checkoutDate") Date checkoutDate, @RequestParam(value="maxPrice", required=false) int maxPrice, @RequestParam(value="minPrice", required=false) int minPrice, @RequestParam(value="maxDistance", required=false) Integer maxDistance, @RequestParam(value="geoX", required=false) Double geoX, @RequestParam(value="geoY", required=false) Double geoY, @RequestParam(value="star", required=false) ArrayList<Integer> star, @RequestParam(value="install", required=false) ArrayList<String> install, HttpServletResponse response) {
-		int listCount = hService.getListCount();
-		int currentPage = 1;
-		if(page!=null) {
-			currentPage = page;
-		}
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
 		
 		String wifi=install.get(0);
 		String breakfast=install.get(1);
@@ -565,11 +594,19 @@ public class HotelController {
 		searchMap.put("swim", swim);
 		searchMap.put("fitness", fitness);
 		
-		System.out.println(searchMap);
+		int listCount = hService.getSearchListCount(searchMap);
+		int currentPage = 1;
+		if(page!=null) {
+			currentPage = page;
+		}
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 3);
+		int maxPage = pi.getMaxPage();
 		
 		ArrayList<Hotel> hotelList = hService.searchHotelList(searchMap, pi);
-//		System.out.println(hotelList);
-		System.out.println(hotelList.size());
+		
+		HashMap map = new HashMap();
+		map.put("hotelList", hotelList);
+		map.put("maxPage", maxPage);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		Gson gson = new Gson();
@@ -577,7 +614,7 @@ public class HotelController {
 		gson = gb.create();
 		
 		try {
-			gson.toJson(hotelList, response.getWriter());
+			gson.toJson(map, response.getWriter());
 		} catch (JsonIOException | IOException e) {
 			e.printStackTrace();
 		}

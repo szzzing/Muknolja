@@ -13,10 +13,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <style>
-	.form-control {border:1px solid #e9e9e9 !important}
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	* {font-family: 'Noto Sans KR', sans-serif;}
   	input {font-family: 'Noto Sans KR', sans-serif;}
+  	select {font-family: 'Noto Sans KR', sans-serif;}
+  	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
   	::-webkit-scrollbar {width:5px;}
 	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
 	::-webkit-scrollbar-track {opacity:0;}

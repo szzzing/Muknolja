@@ -31,4 +31,6 @@ public class Reservation {
 	private String checkinTime;
 	private String checkoutTime;
 	private String fileModifyName;
+	private int isCheckin;
+	private int isCheckout;
 }

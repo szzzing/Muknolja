@@ -229,44 +229,26 @@
 						</div>
 					</div>
 				</div>
+					<div id="hotelScrollerFooter" class="mb-5"></div>	<!-- 무한스크롤 감지 -->
 			</div>
 		</div>
 	</div>
 	
-	<script>
-		$("input[name=minPrice]").val("10");
-		$("input[name=maxPrice]").val("100");
-		
-		(function() {
-		
-			var init = function () {
-				var slider = new rSlider({
-					target: '#slider',
-					values: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-					range: true,
-					set: [0, 100],
-					onChange: function (vals) {
-					    const prices = vals.split(",");
-					    $("input[name=minPrice]").val(Number(prices[0]));
-						$("input[name=maxPrice]").val(Number(prices[1]));
-						$.search();
-					}
-				});
-			};
-			window.onload = init;
-		})();
-	</script>
+
 	
 	<!-- 호텔 검색 시작 -->
 	<script>
+		var page = 1;
+		var maxPage = 1;
+		
 		$(document).ready(function(){
+			
 			var hotelDiv = $("#hotelDiv").clone();
 			
 			var star = new Array();
 			var install = new Array('N','N','N','N','N','N');
 			
 			$.search = function(){
-				var page = 1;
 				var searchValue = "";
 				var checkinDate = $("input[name=checkinDate]").val()+"";
 				var checkoutDate = $("input[name=checkoutDate]").val()+"";
@@ -275,8 +257,6 @@
 				var maxDistance = $("input[name=maxDistance]").val();
 				var geoX = Number($("input[name=geoX]").val());
 				var geoY = Number($("input[name=geoY]").val());
-				
-// 				var maxDistance = 0;
 				
 				$.ajax({
 					url: "${contextPath}/searchHotelList.ho",
@@ -296,6 +276,7 @@
 					},
 					success: (data)=>{
 						var hotelDiv2 = hotelDiv.clone();
+						maxPage = data.maxPage;
 						
 						const inout = $("#daterangepicker").val().split(" - ");
 						
@@ -307,9 +288,14 @@
 						var journey = parseInt(diff/currDay);
 						
 						console.log(data);
-						$("#hotelList").html("");
+						
+						if(page==1 || data.hotelList.length==0) {
+							$("#hotelList").html("");
+							console.log("삭제");
+						}
+						
 						hotelDiv.prop("style").removeProperty("display");
-						for(var i of data) {
+						for(var i of data.hotelList) {
 							hotelDiv2.find(".hotelId").val(i.hotelId);
 							hotelDiv2.find(".hotelName").html(i.hotelName);
 							hotelDiv2.find(".hotelAddress").html(i.hotelAddress);
@@ -331,15 +317,38 @@
 								hotelDiv2.find(".avgRating").html(i.avgRating.toFixed(0));
 							}
 							$("#hotelList").append('<div class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1">'+hotelDiv2.html()+'</div>');
+							
+							console.log("메서드 실행 후 페이지 "+page);
+							console.log("메서드 실행 후 맥스페이지 "+maxPage);
 						}
+						page+=1;
 					},
 					error: (data)=>{
 						console.log(data);
 					}
 				});
 			}
-			$.search();
 			
+			const mio = new IntersectionObserver((entries, observer)=>{
+				entries.forEach(entry=>{
+					if(!entry.isIntersecting) {
+						return; 
+					}
+					observer.observe(document.getElementById('hotelScrollerFooter'));
+					console.log("스크롤");
+					if(page<=maxPage) {
+						$.search();
+					}
+				});
+			});
+			mio.observe(document.getElementById('hotelScrollerFooter'));
+			
+			$("input").change(function() {
+				console.log("search");
+				page=1;
+				$.search();
+				console.log("searchEnd");
+			});
 			
 			$("input[name=star]").on("click", function(){
 				star = new Array();
@@ -348,9 +357,8 @@
 						star.push(i.value);
 					}
 				}
-				$.search();
 			});
-		
+			
 			$("input[name=install]").on("click", function(){
 				install = new Array();
 				for(var i of $("input[name='install']")) {
@@ -360,14 +368,44 @@
 						install.push("N");
 					}
 				}
-				$.search();
 			});
 			
 			$(document).on('click', '.hotel', function(){
 				$("input[name=hotelId]").val($(this).find(".hotelId").val());
 				$("form").submit();
 			});
+			
+			$(".distance").on("click", function(){
+	 			const checkboxes = $(".distance").find("input[type=checkbox]");
+	 			for(cb of checkboxes) {
+	 				cb.checked = false;
+	 			}
+	 			$(this).find("input[type=checkbox]").prop('checked',true);
+	 			$("input[name=maxDistance]").val($(this).find("input[type=checkbox]").val());
+	 		});
+			
+			
+			$("input[name=minPrice]").val("10");
+			$("input[name=maxPrice]").val("100");
+			
+			$.init = function() {
+				var slider = new rSlider({
+					target: '#slider',
+					values: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+					range: true,
+					set: [0, 100],
+					onChange: function (vals) {
+					    const prices = vals.split(",");
+					    $("input[name=minPrice]").val(Number(prices[0]));
+						$("input[name=maxPrice]").val(Number(prices[1]));
+						page=1;
+						$.search();
+					}
+				});
+			};
+			$.init();
 		});
+		
 	</script>
 	<!-- 호텔 검색 끝 -->
 	
@@ -375,18 +413,7 @@
 	<!-- 위치 -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4aaeb935cb2fd15933272e12d906ced0&libraries=services"></script>
 	<script>
-	$("input[name=maxDistance]").val(0);
-		$(".distance").on("click", function(){
-			const checkboxes = $(".distance").find("input[type=checkbox]");
-			for(cb of checkboxes) {
-				cb.checked = false;
-			}
-			$(this).find("input[type=checkbox]").prop('checked',true);
-			$("input[name=maxDistance]").val($(this).find("input[type=checkbox]").val());
-			console.log($("input[name=maxDistance]").val());
-			
-			$.search();
-		});
+		$("input[name=maxDistance]").val(0);
 		
 		function geoFindMe() {
 		
@@ -477,8 +504,6 @@
 			var currDay = 24 * 60 * 60 * 1000;
 			const journey = parseInt(diff/currDay);
 			$(this).parent().find(".value").text(journey+"박 "+(journey+1)+"일");
-			
-			$.search();
 		});
 	</script>
 	<!-- daterangepicker 기본설정, 날짜 기입 끝 -->

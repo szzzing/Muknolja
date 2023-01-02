@@ -9,10 +9,12 @@
 <title>호텔 수정하기</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
-	.form-control {border:1px solid #e9e9e9 !important}
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	* {font-family: 'Noto Sans KR', sans-serif;}
   	input {font-family: 'Noto Sans KR', sans-serif;}
+  	select {font-family: 'Noto Sans KR', sans-serif;}
+  	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
   	::-webkit-scrollbar {width:5px;}
 	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
 	::-webkit-scrollbar-track {opacity:0;}

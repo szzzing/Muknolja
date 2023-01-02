@@ -282,7 +282,38 @@
 	<select id="getSearchListCount" resultType="_int">
 		select count(*)
 		from hotel
-		where hotel_status='Y'
+			join hotel_img using(hotel_id)
+            join attached_file using(file_id)
+		where hotel_status='Y' and file_thumbnail='Y'
+		<if test="maxPrice!=1000000">
+			and min_price(hotel_id)<![CDATA[>=#{minPrice}]]>
+			and min_price(hotel_id)<![CDATA[<=#{maxPrice}]]>
+		</if>
+		<if test="maxDistance!=0 and geoX!=0 and geoY!=0">
+			and DISTNACE_WGS84(round(hotel_geo_x, 10), round(hotel_geo_y, 10), #{geoX}, #{geoY})<![CDATA[<#{maxDistance}]]>
+		</if>
+		<if test="star!=null">
+			and star in
+			<foreach collection="star" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		</if>
+		<if test='wifi.equals("Y")'>
+			and wifi='Y'
+		</if>
+		<if test='breakfast.equals("Y")'>
+			and breakfast='Y'
+		</if>
+		<if test='amenity.equals("Y")'>
+			and amenity='Y'
+		</if>
+		<if test='park.equals("Y")'>
+			and park='Y'
+		</if>
+		<if test='swim.equals("Y")'>
+			and swim='Y'
+		</if>
+		<if test='fitness.equals("Y")'>
+			and fitness='Y'
+		</if>
 	</select>
 	
 	<select id="selectHotelList" resultMap="hotelResultSet">
@@ -351,6 +382,70 @@
 	</update>
 	
 	
+	<select id="selectReservationList" resultMap="reservationResultSet">
+		select
+			reservation_id, member_id, hotel_id, room_id, hotel_name, room_name, checkin_date, checkout_date, checkin_time, checkout_time, reservation_status, payment_method, payment_amount, payment_date, reservation_name, reservation_phone,
+			round((sysdate-checkin_date), 0) as is_checkin, round((sysdate-checkout_date),0) as is_checkout
+		from reservation
+			join room using(room_id)
+			join hotel using(hotel_id)
+		where hotel_id=#{hotelId}
+		<if	test='statusCategory.equals("before")'>
+			<![CDATA[and (sysdate-checkin_date)<0 and (sysdate-checkin_date)<0 and reservation_status='Y']]>
+		</if>
+		<if	test='statusCategory.equals("using")'>
+			<![CDATA[and (sysdate-checkin_date)>0 and (sysdate-checkin_date)<0 and reservation_status='Y']]>
+		</if>
+		<if	test='statusCategory.equals("after")'>
+			<![CDATA[and (sysdate-checkin_date)>0 and (sysdate-checkin_date)>0 and reservation_status='Y']]>
+		</if>
+		<if	test='statusCategory.equals("Y")'>
+			<![CDATA[and reservation_status='Y']]>
+		</if>
+		<if	test='statusCategory.equals("N")'>
+			<![CDATA[and reservation_status='N']]>
+		</if>
+		<if test="roomCategory!=0">
+			and room_id=#{roomCategory}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			<![CDATA[and (instr(reservation_id, #{searchValue}) > 0 or instr(reservation_name, #{searchValue}) > 0)]]>
+		</if>
+		order by reservation_id desc
+	</select>
+	
+	
+	
+	<select id="getReservationListCount" resultType="_int">
+		select count(*)
+		from reservation
+			join room using(room_id)
+			join hotel using(hotel_id)
+		where hotel_id=#{hotelId}
+		<if	test='statusCategory.equals("before")'>
+			<![CDATA[and floor(sysdate-checkin_date)<0 and floor(sysdate-checkout_date)<0 and reservation_status='Y']]>
+		</if>
+		<if	test='statusCategory.equals("using")'>
+			<![CDATA[and floor(sysdate-checkin_date)>=0 and floor(sysdate-checkout_date)<=0 and reservation_status='Y']]>
+		</if>
+		<if	test='statusCategory.equals("after")'>
+			<![CDATA[and floor(sysdate-checkin_date)>0 and floor(sysdate-checkout_date)>0 and reservation_status='Y']]>
+		</if>
+		<if	test='statusCategory.equals("Y")'>
+			<![CDATA[and reservation_status='Y']]>
+		</if>
+		<if	test='statusCategory.equals("N")'>
+			<![CDATA[and reservation_status='N']]>
+		</if>
+		<if test="roomCategory!=0">
+			and room_id=#{roomCategory}
+		</if>
+		<if test='searchValue!=null and !searchValue.equals("")'>
+			and instr(reservation_id, #{searchValue}) > 0
+			or instr(reservation_name, #{searchValue}) > 0
+		</if>
+	</select>
+	
 	
 	
 	
@@ -418,6 +513,8 @@
 		<result column="CHECKIN_DATE" property="checkinDate"/>
 		<result column="CHECKOUT_DATE" property="checkoutDate"/>
 		<result column="RESERVATION_STATUS" property="reservationStatus"/>
+		<result column="IS_CHECKIN" property="isCheckin"/>
+		<result column="IS_CHECKOUT" property="isCheckout"/>
 		<result column="PAYMENT_METHOD" property="paymentMethod"/>
 		<result column="PAYMENT_AMOUNT" property="paymentAmount"/>
 		<result column="PAYMENT_DATE" property="paymentDate"/>
