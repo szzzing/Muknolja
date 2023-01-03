@@ -303,6 +303,13 @@
 			           				data: {id:id},
 			           				success: (data) => {
 			           					alert('회원을 경고하였습니다.');
+			           					const reportCount = this.parentNode.parentNode.querySelectorAll('td')[5].innerText;
+			           					
+			           					if(reportCount > 1){
+			           						this.parentNode.parentNode.remove();
+			           					} else {
+			           						this.parentNode.parentNode.querySelectorAll('td')[5].innerText = reportCount * 1 + 1;
+			           					}
 			           				}
 			           			});
 		           			}
@@ -314,6 +321,7 @@
 			           				data: {id:id},
 			           				success: (data) => {
 			           					alert('회원을 정지시켰습니다.');
+			           					this.parentNode.parentNode.remove();
 			           				}
 			           			});
 							}
@@ -326,13 +334,27 @@
 			           				data: {id:id},
 			           				success: (data) => {
 			           					alert('정지해제 하였습니다.');
+			           					this.parentNode.parentNode.remove();
 			           				}
 			           			});
 		           			}
 		           		});
 	           		} else if(${ category == 4}){
 	           			buttons[0].addEventListener('click', function(){
-	           				
+	           				console.log(this);
+	           			});
+	           			
+	           			buttons[1].addEventListener('click', function(){
+	           				if(confirm('정말 승인 하시겠습니까?')){
+	           					$.ajax({
+	           						url: 'approval.me',
+	           						data: {id:id},
+	           						success: (data) => {
+	           							alert('승인 완료');
+	           							this.parentNode.parentNode.remove();
+	           						}
+	           					});
+	           				}
 	           			});
 	           		}
 	           		

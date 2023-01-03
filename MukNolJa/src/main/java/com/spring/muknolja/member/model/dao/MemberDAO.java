@@ -327,6 +327,14 @@ public class MemberDAO {
 	public int deleteNotice(SqlSessionTemplate sqlSession, int id) {
 		return sqlSession.update("memberMapper.deleteNotice", id);
 	}
+
+	public int approval(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.update("memberMapper.approval", id);
+	}
+
+	public int soptClrear(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.update("memberMapper.soptClrear", id);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int

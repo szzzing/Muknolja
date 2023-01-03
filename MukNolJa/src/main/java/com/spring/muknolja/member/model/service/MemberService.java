@@ -163,6 +163,10 @@ public interface MemberService {
 
 	int deleteNotice(int id);
 
+	int approval(String id);
+
+	int soptClrear(String id);
+
 
 
 

@@ -666,4 +666,16 @@
 		set BOARD_STATUS = 'N'
 		where BOARD_ID = #{id}
 	</update>
+	
+	<update id="approval">
+		update member
+		set MEMBER_TYPE = 'H'
+		where id = #{id}
+	</update>
+	
+	<update id="soptClrear">
+		update member
+		set STATUS = 'Y', REPORT = 0, STOP_DATE = null
+		where id = #{id}
+	</update>
   </mapper>

@@ -76,7 +76,7 @@ public class MemberController {
 					model.addAttribute("today", today);
 					model.addAttribute("visitList", visitList);
 					
-					return "adminPage";
+					return "redirect:adminPage.me";
 					
 				} else if(loginUser.getMemberType().equals("H")) {
 					return "redirect:admin.ho";
@@ -1084,5 +1084,17 @@ public class MemberController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		
+		@RequestMapping("approval.me")
+		@ResponseBody
+		public int approval(@RequestParam("id") String id) {
+			return mService.approval(id);
+		}
+		
+		@RequestMapping("soptClrear.me")
+		@ResponseBody
+		public int soptClrear(@RequestParam("id") String id) {
+			return mService.soptClrear(id);
 		}
 }

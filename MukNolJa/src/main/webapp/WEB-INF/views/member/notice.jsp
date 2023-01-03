@@ -93,6 +93,10 @@
 		background-color: #fefefe;
 		border: 1px solid #888;
 		border-radius: 3px;
+		overflow: auto;
+      }
+      #notice_modal::-webkit-scrollbar, #noticeDetail_modal::-webkit-scrollbar, #noticeModify_modal::-webkit-scrollbar{
+      	width: 8px;
       }
       textarea {
       	width: 100%;
@@ -106,6 +110,7 @@
 		text-decoration: none;
 		color: black;
 	  }
+	  
     </style>
    
 </head>
@@ -248,7 +253,7 @@
 	<a class="close_btn cn"><i class="bi bi-x-circle"></i></a>
 	<div class="container">
 		<div class="row text-center">
-			<div class="col"><h1 id="noticeTitleDiv"></h1></div>
+			<div class="col"><h2 id="noticeTitleDiv"></h2></div>
 		</div>
 		<br>
 		<div class="row text-center">

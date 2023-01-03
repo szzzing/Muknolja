@@ -398,6 +398,16 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.deleteNotice(sqlSession, id);
 	}
 
+	@Override
+	public int approval(String id) {
+		return mDAO.approval(sqlSession, id);
+	}
+	
+	@Override
+	public int soptClrear(String id) {
+		return mDAO.soptClrear(sqlSession, id);
+	}
+
 	
 
 	
