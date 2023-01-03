@@ -140,9 +140,16 @@
 					</c:if>
 				</div>
 			</div>
-			<div>
-			
-				 <c:forEach items="${ reply }" var="r">
+		</div>
+			<div class="row justify-content-center">
+			<div id="rep" style="disply:flex; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+			<c:forEach items="${ reply }" var="r">
+				<div class="col-2" style="background:black">1</div>
+				
+				 
+				 	<div class="replyContent col-10" style="display:flex">
+				 	<div>${ r.replyWriter}</div><div>${r.replyContent}</div>
+				 	</div>
 				 	
 				 </c:forEach>
 				 
