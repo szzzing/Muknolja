@@ -58,8 +58,10 @@ public class ReviewController {
 			currentPage = page;
 		}
 		int listCount = rService.getselectBoard();
+		System.out.println(boardId);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
 		ArrayList<Reply> reply = rService.selectReply(pi,boardId);
+		
 		model.addAttribute("reply",reply);
 		return "reviewDetail";
 	}

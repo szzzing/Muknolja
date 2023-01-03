@@ -48,6 +48,9 @@ public class ReviewDAO {
 	public ArrayList<Reply> selectReply(SqlSessionTemplate sqlSession, PageInfo pi, int boardId) {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		System.out.println("/////////");
+	System.out.println(boardId);
+	System.out.println(pi);
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectReply", boardId, rowBounds);
 	}
 	

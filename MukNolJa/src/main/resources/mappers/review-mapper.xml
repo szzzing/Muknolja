@@ -72,8 +72,8 @@
 	</select>
 	
 	<select id="selectReply" resultMap="replyResultSet">
-		select count(*)
+		select *
 		from Reply 
-		where REPLY_STATUS = 'Y' and REF_BOARD_ID = #{boardId} and  REF_REPLY_ID= '0'	
+		where REPLY_STATUS = 'Y' and REF_BOARD_ID = #{boardId} and REF_REPLY_ID='0'
 	</select>
 </mapper>
