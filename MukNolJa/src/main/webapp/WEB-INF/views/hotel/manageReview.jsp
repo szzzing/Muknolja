@@ -14,7 +14,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <meta name="theme-color" content="#6bb6ec">
-<title>리뷰 관리</title>
+<title>${hotel.hotelName } :: 리뷰 관리</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
@@ -127,7 +127,7 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="${contextPath }/manageReserve.ho">
-								<i class="fa-solid fa-door-closed"></i>
+								<i class="fa-solid fa-book"></i>
 								<span data-feather="file" class="align-text-bottom"></span>
 								예약 관리
 							</a>

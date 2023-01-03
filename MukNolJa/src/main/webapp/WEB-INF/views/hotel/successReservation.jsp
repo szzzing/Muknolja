@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예약하기</title>
+<title>먹놀자</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	.form-control {border:1px solid #e9e9e9 !important}
@@ -14,7 +14,9 @@
 	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.mukMutedText {color:#B9B9B9;}
-	
+	::-webkit-scrollbar {width:5px;}
+	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
+	::-webkit-scrollbar-track {opacity:0;}
 	#reservationInfo {
 		background: #F9F9F9;
 		border-radius: 20px;

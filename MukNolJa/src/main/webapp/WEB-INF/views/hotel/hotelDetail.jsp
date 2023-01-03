@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>호텔 상세페이지</title>
+<title>먹놀자 :: ${hotel.hotelName}</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
@@ -75,7 +75,7 @@
 	.mukRound {border-radius:10px;}
 	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius:20px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
-	.disabledMukButton {height:40px; border-radius: 8px; padding:0px 10px; cursor:pointer; background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.disabledMukButton {height:40px; border-radius: 20px; padding:0px 10px; cursor:pointer; background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
 	.mukMutedText {color:#B9B9B9;}
 	.mukSubText {color:rgba(0,0,0,.56);}
@@ -110,9 +110,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 <body>
-	<script>
-		document.title="먹놀자 :: ${hotel.hotelName}";
-	</script>
 	<jsp:include page="../member/menubar.jsp"/>
 	
 	<!-- 예약 전송용 form 시작 -->

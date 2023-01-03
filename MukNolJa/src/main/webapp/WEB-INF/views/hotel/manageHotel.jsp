@@ -14,7 +14,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <meta name="theme-color" content="#6bb6ec">
-<title>호텔 관리</title>
+<title>${hotel.hotelName } :: 호텔 관리</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
@@ -133,7 +133,7 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="${contextPath }/manageReserve.ho">
-								<i class="fa-solid fa-door-closed"></i>
+								<i class="fa-solid fa-book"></i>
 								<span data-feather="file" class="align-text-bottom"></span>
 								예약 관리
 							</a>
@@ -199,6 +199,36 @@
 				</div>
 				<h4 class="fw-bold pb-3">기본 정보</h4>
 				<div id="hotelInfo">${hotel.hotelInfo }</div>
+				
+				<h4 class="fw-bold pt-5 pb-3">편의시설 및 서비스</h4>
+				<div class="p-4" style="background:#fafafa; border-radius:20px;">
+					<div class="row justify-content-start">
+						<div class="col-auto text-center" <c:if test="${hotel.wifi=='N' }">style="opacity:40%"</c:if>>
+							<img src="${contextPath }/resources/img/wifi.svg" style="width:48px; height:48px;"><br>
+							<small class="mukSubText">와이파이</small>
+						</div>
+						<div class="col-auto text-center" <c:if test="${hotel.breakfast=='N' }">style="opacity:40%"</c:if>>
+							<img src="${contextPath }/resources/img/breakfast.svg" style="width:48px; height:48px;"><br>
+							<small class="mukSubText">조식</small>
+						</div>
+						<div class="col-auto text-center" <c:if test="${hotel.amenity=='N' }">style="opacity:40%"</c:if>>
+							<img src="${contextPath }/resources/img/amenity.svg" style="width:48px; height:48px;"><br>
+							<small class="mukSubText">어메니티</small>
+						</div>
+						<div class="col-auto text-center" <c:if test="${hotel.park=='N' }">style="opacity:40%"</c:if>>
+							<img src="${contextPath }/resources/img/park.svg" style="width:48px; height:48px;"><br>
+							<small class="mukSubText">주차</small>
+						</div>
+						<div class="col-auto text-center" <c:if test="${hotel.swim=='N' }">style="opacity:40%"</c:if>>
+							<img src="${contextPath }/resources/img/swim.svg" style="width:48px; height:48px;"><br>
+							<small class="mukSubText">수영장</small>
+						</div>
+						<div class="col-auto text-center" <c:if test="${hotel.fitness=='N' }">style="opacity:40%"</c:if>>
+							<img src="${contextPath }/resources/img/fitness.svg" style="width:48px; height:48px;"><br>
+							<small class="mukSubText">피트니스</small>
+						</div>
+					</div>
+				</div>
 				
 				<h4 class="fw-bold pt-5 pb-3">위치</h4>
 				<div class="pb-3">${hotel.hotelAddress }</div>

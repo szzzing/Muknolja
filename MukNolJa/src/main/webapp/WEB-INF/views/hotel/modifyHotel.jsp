@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>호텔 수정하기</title>
+<title>${hotel.hotelName } :: 호텔 정보 수정</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');

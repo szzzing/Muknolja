@@ -4,7 +4,7 @@
 <html class="h-100">
 <head>
 <meta charset="UTF-8">
-<title>호텔 게시판</title>
+<title>먹놀자</title>
 <meta charset="utf-8">
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -22,6 +22,9 @@
   	* {font-family: 'Noto Sans KR', sans-serif;}
   	.form-control {border:2px solid #f1f1f1 !important; border-radius:20px !important}
 	.form-select {border:2px solid #f1f1f1 !important; border-radius:20px !important}
+	.form-control::placeholder {color:#B9B9B9 !important;}
+	.form-control::-webkit-input-placeholder {color:#B9B9B9;}
+	.form-control:-ms-input-placeholder {color:#B9B9B9;}
   	input {font-family: 'Noto Sans KR', sans-serif;}
   	::-webkit-scrollbar {width:5px;}
 	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}

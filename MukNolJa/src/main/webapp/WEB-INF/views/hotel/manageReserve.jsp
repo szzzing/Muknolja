@@ -14,12 +14,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <meta name="theme-color" content="#6bb6ec">
-<title>예약 관리 :: ${hotel.hotelName }</title>
+<title>${hotel.hotelName } :: 예약 관리</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
 	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-control::placeholder {color:#B9B9B9 !important;}
+	.form-control::-webkit-input-placeholder {color:#B9B9B9;}
+	.form-control:-ms-input-placeholder {color:#B9B9B9;}
 	input:focus {outline: none !important;} /* outline 테두리 없애기 */
 	textarea:focus {outline: none !important;} /* outline 테두리 없애기 */
 	
@@ -160,25 +163,28 @@
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-3 mb-5" style="border-bottom:1px solid #e9e9e9">
 					<h1 class="h2 fw-bold">예약 관리</h1>
 				</div>
-				<div id="category" class="row justify-content-between">
-					<div class="col-auto">
-						<select class="form-select" name="roomCategory" style="width:300px; display:inline-block;">
-							<option selected value="0">전체 객실</option>
-							<c:forEach items="${roomList }" var="r">
-								<option value="${r.roomId }">${r.roomName }</option>
-							</c:forEach>
-						</select>
+				<div id="category">
+					<div class="row justify-content-between">
+						<div class="col-auto">
+							<select class="form-select" name="roomCategory" style="width:300px; display:inline-block;">
+								<option selected value="0">전체 객실</option>
+								<c:forEach items="${roomList }" var="r">
+									<option value="${r.roomId }">${r.roomName }</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="col-auto">
+							<select class="form-select" name="statusCategory" style="width:120px; display:inline-block;">
+								<option selected value="all">전체</option>
+								<option value="before">미이용</option>
+								<option value="using">이용중</option>
+								<option value="after">이용완료</option>
+								<option value="Y">정상예약</option>
+								<option value="N">예약취소</option>
+							</select>
+						</div>
 					</div>
-					<div class="col-auto">
-						<select class="form-select" name="statusCategory" style="width:120px; display:inline-block;">
-							<option selected value="all">전체</option>
-							<option value="before">미이용</option>
-							<option value="using">이용중</option>
-							<option value="after">이용완료</option>
-							<option value="Y">정상예약</option>
-							<option value="N">예약취소</option>
-						</select>
-					</div>
+					<input class="form-control mt-2" style="width:300px;" type="text" name="searchValue" placeholder="예약번호, 예약자 이름으로 검색">
 				</div>
 				
 				<div id="hasNoReservation" class="text-center mt-3 mb-3 pt-5 pb-5" style="display:none">
@@ -235,6 +241,7 @@
 			var reservationDiv2 = $("#reservationDiv").clone();
 			reservationDiv2.prop("style").removeProperty("display");
 			var reservationCategory = $("#reservationCategory").clone();
+			var currValue = "";
 			
 			$.reservationList = function(){
 				console.log($("select[name=statusCategory]").val());
@@ -245,7 +252,7 @@
 						hotelId: ${hotel.hotelId},
 						statusCategory: $("select[name=statusCategory]").val(),
 						roomCategory: $("select[name=roomCategory]").val(),
-						searchValue: ""
+						searchValue: $("input[name=searchValue]").val()
 					},
 					success: (data)=>{
 						maxPage = data.maxPage;
@@ -305,7 +312,14 @@
 				});
 			}
 			$.reservationList();
-		
+			
+			$("input[name=searchValue]").keyup(function(){
+				if($(this).val()!=currValue) {
+					currValue = $(this).val();
+					page=1;
+					$.reservationList();
+				}
+			});
 			$("select[name=roomCategory]").change(function(){
 				page=1;
 				$.reservationList();

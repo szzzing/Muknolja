@@ -14,13 +14,16 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 <meta name="theme-color" content="#6bb6ec">
-<title>객실 관리</title>
+<title>${hotel.hotelName } :: 객실 관리</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	* {font-family: 'Noto Sans KR', sans-serif;}
 	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
 	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-control::placeholder {color:#B9B9B9 !important;}
+	.form-control::-webkit-input-placeholder {color:#B9B9B9;}
+	.form-control:-ms-input-placeholder {color:#B9B9B9;}
 	input:focus {outline: none !important;} /* outline 테두리 없애기 */
 	textarea:focus {outline: none !important;} /* outline 테두리 없애기 */
 	::-webkit-scrollbar {width:5px;}
@@ -126,7 +129,7 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="${contextPath }/manageReserve.ho">
-								<i class="fa-solid fa-door-closed"></i>
+								<i class="fa-solid fa-book"></i>
 								<span data-feather="file" class="align-text-bottom"></span>
 								예약 관리
 							</a>
@@ -151,7 +154,7 @@
 				</div>
 				
 				<div id="category">
-					<input type="text" class="form-control" name="searchValue" style="width:300px; display:inline-block;">
+					<input type="text" class="form-control" name="searchValue" style="width:300px; display:inline-block;" placeholder="객실 이름으로 검색">
 					<select class="form-select" name="orderBy" style="width:100px; display:inline-block; float:right;">
 						<option selected>최신순</option>
 						<option>낮은가격순</option>

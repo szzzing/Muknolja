@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>예약하기</title>
+<title>먹놀자 :: 호텔 예약</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	.form-control {border:2px solid #f1f1f1 !important; border-radius:20px !important}
