@@ -235,6 +235,11 @@
 						</select>
 					</div>
 				</div>
+				<div id="hasNoHotel" class="col text-center pt-5 pb-5" style="display:none">
+					<img class="mb-2" style="width:60px;" src="${contextPath }/resources/img/1f64f.svg">
+					<h4 class="fw-bold">일치하는 호텔이 없습니다</h4>
+					<div class="fw-bold mukSubText">다른 조건으로 찾아보세요</div>
+				</div>
 				<div id="hotelList" class="row row-cols-1 row-cols-sm-1 row-cols-lg-1 justify-content-start g-5">
 					<div id="hotelDiv" class="hotel col pb-3" style="border-bottom:1px solid #f1f1f1; display:none">
 						<div class="row g-3">
@@ -345,6 +350,11 @@
 						
 						console.log(data);
 						
+						if(data.hotelList.length==0) {
+							$("#hasNoHotel").prop("style").removeProperty("display");
+						} else {
+							$("#hasNoHotel").css("display", "none");
+						}
 						if(page==1 || data.hotelList.length==0) {
 							$("#hotelList").html("");
 							console.log("삭제");
