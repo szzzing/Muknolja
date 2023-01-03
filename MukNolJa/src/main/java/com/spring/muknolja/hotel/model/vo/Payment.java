@@ -54,10 +54,10 @@ public class Payment {
 			bw.write(json.toString());
 			bw.flush();
 			bw.close();
-			
+
 			int responseCode = conn.getResponseCode();
 			System.out.println("응답코드 : "+responseCode);
-			
+
 			if(responseCode == 200) {
 				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
 				StringBuilder sb = new StringBuilder();
@@ -66,13 +66,13 @@ public class Payment {
 					sb.append(line+"\n");
 				}
 				br.close();
-				
+
 				JSONParser jsonParser = new JSONParser();
 				JSONObject jsonObj = (JSONObject)jsonParser.parse(sb.toString());
 				JSONObject responseData = (JSONObject)jsonObj.get("response");
 				token = (String)responseData.get("access_token");
 				System.out.println(token);
-				
+
 			} else {
 				System.out.println(conn.getResponseCode());
 			}
@@ -86,35 +86,39 @@ public class Payment {
 	}
 
 
-	public static void paymentCancle(String access_token, String imp_uid, int amount, String reason) {
+	public static void paymentCancle(String access_token, String merchant_uid, int amount, String reason) {
 		System.out.println("결제 취소");
 		try {
 			HttpsURLConnection conn = null;
 			URL url = new URL("https://api.iamport.kr/payments/cancel");
-	
-			conn = (HttpsURLConnection) url.openConnection();
+
+			conn = (HttpsURLConnection)url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-type", "application/json");
 			conn.setRequestProperty("Accept", "application/json");
 			conn.setRequestProperty("Authorization", access_token);
 			conn.setDoOutput(true);
-	
+
 			JsonObject json = new JsonObject();
-			json.addProperty("reason", reason);
-			json.addProperty("imp_uid", imp_uid);
-			json.addProperty("amount", amount);
-			json.addProperty("checksum", amount);
-	
+			json.addProperty("reason", reason);	// 취소사유
+			json.addProperty("merchant_uid", merchant_uid);	// 결제번호
+			json.addProperty("amount", amount);	// 환불금액
+			json.addProperty("checksum", amount);	// 환불금액
+
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-	
+
 			bw.write(json.toString());
 			bw.flush();
 			bw.close();
-	
+			
+			int responseCode = conn.getResponseCode();
+			System.out.println("응답코드 : "+responseCode);
+
 			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-	
+
 			br.close();
 			conn.disconnect();
+
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

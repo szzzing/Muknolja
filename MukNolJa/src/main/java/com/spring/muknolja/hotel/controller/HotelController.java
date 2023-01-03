@@ -227,6 +227,8 @@ public class HotelController {
 		
 		h.setEntId(m.getId());
 		
+		int hotelResult = hService.insertHotel(h);
+		
 		ArrayList<AttachedFile> list = new ArrayList();
 		for(MultipartFile file : files) {
 			String fileName = file.getOriginalFilename();
@@ -265,7 +267,6 @@ public class HotelController {
 		if(!list.isEmpty()) {
 			imgResult = hService.insertHotelImg(list);
 		}
-		int hotelResult = hService.insertHotel(h);
 		
 		if(hotelResult + imgResult == list.size()*2+1) {
 			return "redirect:admin.ho";
@@ -416,6 +417,7 @@ public class HotelController {
 			System.out.println("originalImgCount"+originalImgCount);
 			System.out.println("deleteImgList.size()"+deleteImgList.size());
 			System.out.println("deleteAllExisting"+deleteAllExisting);
+			System.out.println("newThumbnail"+newThumbnail);
 			System.out.println("newImg"+newImg);
 			
 			// 새로운 이미지가 있는 경우
@@ -446,18 +448,24 @@ public class HotelController {
 				map.put("roomId", r.getRoomId());
 				
 				// 썸네일 관련
-				for(int i = 0; i < newImgList.size(); i++) {
-					AttachedFile a = newImgList.get(i);
-					if(deleteAllExisting && i==0) {
-						a.setFileThumbnail("Y");
-					} else {
-						a.setFileThumbnail("N");
+				if(newThumbnail) {
+					for(int i = 0; i < newImgList.size(); i++) {
+						AttachedFile a = newImgList.get(i);
+						if(deleteAllExisting && i==0) {
+							a.setFileThumbnail("Y");
+						} else {
+							a.setFileThumbnail("N");
+						}
+					}
+					if(!deleteAllExisting) {
+						hService.updateRoomThumbnail(r.getRoomId());
 					}
 				}
 				int imgResult = hService.updateRoomImg(map);
 				
 			// 새로운 이미지가 없는 경우 + 썸네일을 삭제한 경우
 			} else if(newThumbnail && !deleteAllExisting) {
+				System.out.println("썸네일");
 				int updateRoomThumbnailResult = hService.updateRoomThumbnail(r.getRoomId());
 			}
 			
@@ -838,6 +846,9 @@ public class HotelController {
 		
 		int reservationResult = hService.insertReservation(map);
 		
+		// 예약번호 불러오기
+		int reservationId = hService.getCurrReservationId();
+		r.setReservationId(reservationId);
 		model.addAttribute("r", r);
 		
 		return "successReservation";

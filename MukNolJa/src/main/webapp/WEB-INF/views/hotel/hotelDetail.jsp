@@ -195,7 +195,7 @@
 		
 		
 		<div class="row row-cols-4 justify-content-start text-center mt-5 mb-5" style="border-bottom:1px solid #e9e9e9">
-			<div class="col col-auto p-2 mukMutedText mukCategory" id="roomListButton" scope="col">
+			<div class="col col-auto p-2 mukMutedText mukCategory" id="roomListButton" scope="col" style="cursor:pointer">
 				예약하기
 			</div>
 			<div class="col col-auto p-2 mukMutedText" id="hotelInfoButton" scope="col" style="cursor:pointer">
@@ -924,8 +924,8 @@
 				"daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
 				"monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 				},
-			minDate: new Date(),
-			startDate: startDate,
+			minDate: today,
+			startDate: today,
 			endDate: endDate,
 			autoApply: true
 		});

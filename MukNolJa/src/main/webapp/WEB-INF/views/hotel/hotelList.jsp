@@ -64,8 +64,8 @@
 	</form>
 	<!-- 호텔 상세페이지용 폼 -->
 	
-	<div class="container container-sm" style="margin-top:120px">
-		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gx-5 gy-5">
+	<div class="container-sm mt-5 mb-5" style="padding-top:80px">
+		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gx-5 gy-5 pb-5">
 			<div class="col col-lg-3">
 				<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 p-3 pt-4 pb-4 mb-5" style="border:1px solid #f1f1f1">
 					
@@ -78,8 +78,8 @@
 					</div>
 					<div id="subCategory" class="col">
 						<div class="mb-5 pb-4" style="border-bottom:1px solid #f1f1f1">
-							<div class="fw-bold pb-2" style="display:inline-block; padding-right:4px;">거리</div>
-							<div id="status" style="font-size:14px; color:#6bb6ec; display:inline-block"></div>
+							<div class="fw-bold" style="display:inline-block; padding-right:4px;">거리</div>
+							<div id="status" class="pb-2" style="font-size:14px; color:#6bb6ec; display:inline-block"></div>
 							<input type="hidden" name="geoX">
 							<input type="hidden" name="geoY">
 							<input type="hidden" name="maxDistance">

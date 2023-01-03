@@ -9,16 +9,19 @@
 <title>예약하기</title>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
-	.form-control {border:1px solid #e9e9e9 !important}
+	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+	.form-control {border:2px solid #f1f1f1 !important; border-radius:20px !important}
+	.form-select {border:2px solid #f1f1f1 !important; border-radius:20px !important}
+  	* {font-family: 'Noto Sans KR', sans-serif;}
+	::-webkit-scrollbar {width:5px;}
+	::-webkit-scrollbar-thumb {background-color:#e9e9e9; border-radius:10px;}
+	::-webkit-scrollbar-track {opacity:0;}
 	.mukRound {border-radius: 10px;}
 	.mukButton {background: #6BB6EC; color:white; height:40px; border-radius: 10px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.mukMutedText {color:#B9B9B9;}
-	
-	#reservationInfo {
-		background: #F9F9F9;
-		border-radius: 20px;
-	}
+	.mukSubText {color:rgba(0,0,0,.56);}
+	.table tr td {padding:0;}
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -28,7 +31,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <!-- iamport.payment.js -->
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-
 </head>
 <body>
 	<div class="container text-center mt-5 mb-5">
@@ -44,47 +46,40 @@
 						<table class="table table-borderless align-middle">
 							<tr>
 								<td class="mukSubText mb-1" style="width:100px;"><small>객실 정보</small></td>
-								<td><h5>${r.hotelName } ${r.roomName }</h5></td>
+								<td><h5>시그니엘 서울 디럭스 더블</h5></td>
 							</tr>
 							<tr>
 								<td class="mukSubText mb-1" style="width:100px;"><small>예약 번호</small></td>
-								<td><h5>${r.reservationId }</h5></td>
+								<td><h5>42</h5></td>
 							</tr>
 							<tr>
 								<td class="mukSubText mb-1" style="width:100px;"><small>예약자 이름</small></td>
-								<td><h5>${r.reservationName }</h5></td>
+								<td><h5>남나눔</h5></td>
 							</tr>
 							<tr>
 								<td class="mukSubText mb-1" style="width:100px;"><small>휴대폰 번호</small></td>
-								<td><h5>${r.reservationPhone }</h5></td>
+								<td><h5>010-1111-2222</h5></td>
 							</tr>
 							<tr>
 								<td class="mukSubText mb-1"><small>체크인</small></td>
-								<td><h5><fmt:formatDate value="${r.checkinDate }" pattern="MM.dd E" /> ${r.checkinTime }</h5></td>
+								<td><h5>2022.12.30 11:00</h5></td>
 							</tr>
 							<tr>
 								<td class="mukSubText mb-1"><small>체크아웃</small></td>
-								<td><h5><fmt:formatDate value="${r.checkoutDate }" pattern="MM.dd E" /> ${r.checkoutTime }</h5></td>
+								<td><h5>2022.12.31 16:00</h5></td>
 							</tr>
 							<tr>
 								<td class="mb-1">
 									<small class="mukSubText">총 결제 금액</small>
 								</td>
-								<td><h5><fmt:formatNumber value="${r.paymentAmount }" pattern="#,###원"/></h5></td>
+								<td><h5>1,000,000원</h5></td>
 							</tr>
 						</table>
 					</div>
 				</div>
 			</div>
 		</div>
-		<button type="button" class="mukButton mt-3">메인으로</button>
+		<button type="button" class="mukButton mb-3">메인으로</button>
 	</div>
-	
-	
-	<script>
-		$("button").on("click", function(){
-			location.href="${contextPath}/hotelList.ho";
-		});
-	</script>
 </body>
 </html>

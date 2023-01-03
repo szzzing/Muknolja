@@ -219,4 +219,9 @@ public class HotelServiceImpl implements HotelService{
 	public int deleteReservation(int reservationId) {
 		return hDAO.deleteReservation(sqlSession, reservationId);
 	}
+	
+	@Override
+	public int getCurrReservationId() {
+		return hDAO.getCurrReservationId(sqlSession);
+	}
 }

@@ -331,14 +331,19 @@
 		IMP.init("imp30848876"); // 예: imp00000000
 		
 		$("#reservationButton").on("click", function(){
-			
-			for(i of $("input[name=terms]")) {
-				if(!i.checked) {
-					alert("약관에 동의해주세요.");
-					console.log(i.checked);
-					break;
-				} else {
-					requestPay();
+			if($("input[name=reservationName]").val().trim()=="") {
+				alert("예약자 이름을 입력해주세요.");
+			} else if($("input[name=reservationPhone]").val().trim()=="") {
+				alert("휴대폰 번호를 입력해주세요.");
+			} else {
+				for(i of $("input[name=terms]")) {
+					if(!i.checked) {
+						alert("약관에 동의해주세요.");
+						console.log(i.checked);
+						break;
+					} else {
+						requestPay();
+					}
 				}
 			}
 		});
