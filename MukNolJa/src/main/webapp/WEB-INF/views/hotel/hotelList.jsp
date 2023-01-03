@@ -52,9 +52,32 @@
 	.mukMutedText {color:#B9B9B9;}
 	.mukSubText {color:rgba(0,0,0,.56);}
 	
+	#carouselExampleInterval{margin-top: 80px;}
 </style>
 <body>
 	<jsp:include page="../member/menubar.jsp"/>
+	
+	<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-inner">
+			<div class="carousel-item active" data-bs-interval="10000">
+				<img src="resources/img/adadad.png" class="d-block w-100 adimg" alt="...">
+			</div>
+			<div class="carousel-item" data-bs-interval="2000">
+				<img src="resources/img/adadad.png" class="d-block w-100 adimg" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="resources/img/adadad.png" class="d-block w-100 adimg" alt="...">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
 	
 	<!-- 호텔 상세페이지용 폼 -->
 	<form action="${contextPath }/hotelDetail.ho">
@@ -247,6 +270,24 @@
 	</div>
 	
 
+	
+	<script>
+		// 광고 삽입
+		window.onload = () => {
+			$.ajax({
+	    		url: 'selectAd.me',
+	    		data: {type:'H'},
+	    		success: (data) => {
+	    			const adimgs = document.getElementsByClassName('adimg');
+	
+	    			for(const i in data){
+	    				adimgs[i].src = 'resources/uploadFiles/' + data[i];
+	    			}
+	    		}
+	    	});
+			
+		}
+	</script>
 	
 	<!-- 호텔 검색 시작 -->
 	<script>

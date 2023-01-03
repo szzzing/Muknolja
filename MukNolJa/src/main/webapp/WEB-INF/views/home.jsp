@@ -195,26 +195,26 @@ li{list-style:none;}
     <jsp:include page="member/menubar.jsp"/>
     
     <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-			  <div class="carousel-inner">
-			    <div class="carousel-item active" data-bs-interval="10000">
-			      <img src="resources/img/noImg.png" class="d-block w-100 adimg" alt="...">
-			    </div>
-			    <div class="carousel-item" data-bs-interval="2000">
-			      <img src="resources/img/noImg.png" class="d-block w-100 adimg" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img src="resources/img/noImg.png" class="d-block w-100 adimg" alt="...">
-			    </div>
-			  </div>
-			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Previous</span>
-			  </button>
-			  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="visually-hidden">Next</span>
-			  </button>
+		<div class="carousel-inner">
+			<div class="carousel-item active" data-bs-interval="10000">
+				<img src="resources/img/adadad.png" class="d-block w-100 adimg" alt="...">
 			</div>
+			<div class="carousel-item" data-bs-interval="2000">
+				<img src="resources/img/adadad.png" class="d-block w-100 adimg" alt="...">
+			</div>
+			<div class="carousel-item">
+				<img src="resources/img/adadad.png" class="d-block w-100 adimg" alt="...">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+	</div>
 		
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
