@@ -1,11 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page session="false" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
 	<title>Home</title>
 	
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 	<style>
 		#carouselExampleInterval{height: 350px; margin-top: 80px;}
 		#carouselExampleInterval img{height:350px;}
@@ -54,26 +58,54 @@
 		    
 		    #39{background: #6BB6EC; color:white;}  
     
-		hr{margin: auto;}
-		#hr1{height: 2px;}
-		#num{margin: auto;}
-		#num td:first-child{text-align:right;}
-		#num td:nth-child(2){text-align:right;}
-		#num button::after{content: "|"}
-		#number{color: #6BB6EC;}
-		#btn button{border: none; background: #fff; color: gray;}
-		#btn button:hover{color: black; font-weight: 700;}
-		.allCard{margin-bottom: 35px; cursor: pointer;}
-		.card-text{font-size: 13px;}
-		
-		#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
-		#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
+		ol.numbered {
+	padding-left:10px;
+	  list-style: none;
+	  border-left: 3px solid RGB(107, 182, 236,0.7);
+	  counter-reset: numbered-list;
+	  margin-left: 10px;
+	  position: relative;
+	  
+	  
+	}
+	ol.numbered li {
+	  font-size: 16px;
+	  line-height: 1.2;
+	  margin-bottom: 30px;
+	  padding-left: 10px;
+	  
+	}
+	ol.numbered li:last-child {
+	  border-left: 3px solid white;
+	  margin-left: -3px;
+	}
+	ol.numbered li:before {
+	  background-color: #6BB6EC;
+	 
+	  border-radius: 50%;
+	  color: white;
+	  content: counter(numbered-list, decimal);
+	  counter-increment: numbered-list;
+	  display: block;
+	  font-weight: bold;
+	  width: 30px;
+	  height: 30px;
+	  margin-top: -0.4em;
+	  line-height: 30px;
+	  position: absolute;
+	  left: -17px;
+	  text-align: center;
+	  padding-top:-10px;
+	  
+	}
 	</style>
 	
 </head>
 <body>
+
 	<jsp:include page="../member/menubar.jsp"/>
-	
+	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+	<c:set var="contextPath" value="${ pageContext.request.contextPath }" scope="application"/>
 	 <div class="container-fluid text-center">
 	  	<div class="row justify-content-center shadow" style=" min-height:100vh; border-radius:30px;   ">
             <div class="col-9 " style=" min-height:100vh;">
@@ -137,7 +169,7 @@
 		
 		
 		<div class="input-group" id="input" style="">
-			<input type="text" style=""" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+			<input type="text" style="" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
 			<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 			
 			<button class="btn btn-outline-secondary" type="button" id="button-addon2" style="width:200px; font-weight:600" onclick="location.href='${contextPath}/reviewWrite.re'">글쓰기</button>
@@ -157,48 +189,85 @@
 		<br>
 		<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4 justify-content-start">
 			<c:forEach items="${ board }" var="b">
-			<div style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:265px;">
-			<div style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
-		
-		                <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=250px; >
-		                <br>
-		              	 
-			</div>
-			</div>
+				<div  style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:315px;">
+				<div  class="detail" style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
+		            <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=300px; >
+		            <br>
+		              
+		            	<c:set var="courseList" value="${fn:split(b.boardCourse,'/')}" />
+		                <div class="corseall" style="padding-left:10px; padding-top:20px; height: 270px;">
+							  <ol class="numbered">
+								  <c:forEach items="${ courseList }" var="course" end="4">
+								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
+								  </c:forEach>
+		              			</ol>
+		              		</div>
+		              		<div class="id" style="display:none;">${ b.boardId }</div>
+						</div>
+					</div>
 	         </c:forEach>
-	         <c:forEach items="${ board }" var="b">
-			<div style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:265px;">
-			<div style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
-		
-		                <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=250px; >
-		                <br>
-		              	 
-			</div>
-			</div>
-	         </c:forEach>
-	         <c:forEach items="${ board }" var="b">
-			<div style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:265px;">
-			<div style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
-		
-		                <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=250px; >
-		                <br>
-		              	 
-			</div>
-			</div>
-	         </c:forEach>
-	         <c:forEach items="${ board }" var="b">
-			<div style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:265px;">
-			<div style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
-		
-		                <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=250px; >
-		                <br>
-		              	 
-			</div>
-			</div>
-	         </c:forEach>
-
-	        
 	         
+	         			<c:forEach items="${ board }" var="b">
+				<div  style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:315px;">
+				<div  class="detail" style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
+		            <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=300px; >
+		            <br>
+		              
+		            	<c:set var="courseList" value="${fn:split(b.boardCourse,'/')}" />
+		                <div class="corseall" style="padding-left:10px; padding-top:20px; height: 270px;">
+							  <ol class="numbered">
+								  <c:forEach items="${ courseList }" var="course" end="4">
+								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
+								  </c:forEach>
+		              			</ol>
+		              		</div>
+		              		<div class="id" style="display:none;">${ b.boardId }</div>
+						</div>
+					</div>
+	         </c:forEach>
+	         
+	         			<c:forEach items="${ board }" var="b">
+				<div  style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:315px;">
+				<div  class="detail" style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
+		            <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=300px; >
+		            <br>
+		              
+		            	<c:set var="courseList" value="${fn:split(b.boardCourse,'/')}" />
+		                <div class="corseall" style="padding-left:10px; padding-top:20px; height: 270px;">
+							  <ol class="numbered">
+								  <c:forEach items="${ courseList }" var="course" end="4">
+								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
+								  </c:forEach>
+		              		  </ol>
+		              	</div>
+		              	<div class="id" style="display:none;">${ b.boardId }</div>
+						</div>
+					</div>
+	         </c:forEach>
+	         
+	         			<c:forEach items="${ board }" var="b">
+				<div  style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:315px;">
+				<div  class="detail" style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
+		            <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=300px; >
+		            <br>
+		              
+		            	<c:set var="courseList" value="${fn:split(b.boardCourse,'/')}" />
+		                <div class="corseall" style="padding-left:10px; padding-top:20px; height: 270px;">
+							  <ol class="numbered">
+								  <c:forEach items="${ courseList }" var="course" end="4">
+								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
+								  </c:forEach>
+		              			</ol>
+		              		</div>
+		              		<div class="id" style="">${ b.boardId }</div>
+						</div>
+					</div>
+	         </c:forEach>
+	         
+			
+			<div>
+	      
+	         </div>
 	      </div>
 	         
 		
@@ -238,23 +307,29 @@
 		</div>
 		</div>
 		<script>
-	
+		$('.corseall').hide();
+			$('.detail').hover(function(){
+				$(this).find('img').hide();
+				$(this).find('.corseall').show();
+			},function(){
+				$(this).find('img').show();
+				$(this).find('.corseall').hide();
+			});
+			
+		$('.detail').click(function(){
+			
+			var boardId = $(this).find('.id').text();
+			 location.href="${ contextPath }/reviewDetail.re?boardId="+boardId;
+		})
 		</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script>
-	window.onload = () => {
-		$.ajax({
-    		url: 'selectAd.me',
-    		data: {type:'R'},
-    		success: (data) => {
-    			const adimgs = document.getElementsByClassName('adimg');
-
-    			for(const i in data){
-    				adimgs[i].src = 'resources/uploadFiles/' + data[i];
-    			}
-    		}
-    	});
-	}
+	
 </script>
 </body>
 </html>
