@@ -12,4 +12,6 @@ public interface TravelService {
 
 	int deleteReply(int replyId);
 
+	int countReply(int contentId);
+
 }

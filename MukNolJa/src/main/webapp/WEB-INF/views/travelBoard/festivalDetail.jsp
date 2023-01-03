@@ -49,6 +49,7 @@
 			
 			<div id="travelBtn">
 				<button id="print"><span><i class="fa-solid fa-print"></i></span></button>
+				<button id="travelCount"><span><i class="fa-solid fa-eye"></i> 30</span></button>
 			</div>
 			
 		<table class="table text-center mt-5 mb-5">
@@ -101,59 +102,83 @@
 		<div id="detailContent">
 			${overview}
 		</div>
-		
+		${infoList }
 		<div id="map" style="width:100%;height:350px;"></div>
 		
 		<div class="row" style="margin-top: 30px;">
 			<div class="travelInfo col">
 				<table>
 					<tr>
-						<td width="150px;"> 문의 및 안내</td>
-						<td>${ infoList[0] }</td>
+						<td  width="150px;"> 행사장소</td>
+						<td>${ infoList[5] }</td>
 					</tr>
 					<tr>
 						<td> 주소</td>
 						<td>${ addr }</td>
 					</tr>
 					<tr>
-						<td> 휴일</td>
-						<td>${ infoList[3] }</td>
-					</tr>
-					<tr>
-						<td> 유모차대여정보</td>
-						<td>${ infoList[5] }</td>
-					</tr>
-					<tr>
-						<td> 애완동물동반</td>
-						<td>${ infoList[6] }</td>
-					</tr>
-					<tr>
-						<td> 신용카드가능정보</td>
+						<td> 행사장위치안내</td>
 						<td>${ infoList[7] }</td>
+					</tr>
+					<tr>
+						<td> 관람가능연령</td>
+						<td>${ infoList[0] }</td>
+					</tr>
+					<tr>
+						<td> 공연시간</td>
+						<td>${ infoList[8] }</td>
+					</tr>
+					<tr>
+						<td> 행사프로그램</td>
+						<td>${ infoList[9] }</td>
+					</tr>
+					<tr>
+						<td> 주최자정보</td>
+						<td>${ infoList[11] }</td>
+					</tr>
+					<tr>
+						<td> 주최자연락처</td>
+						<td>${ infoList[12] }</td>
+					</tr>
+					<tr>
+						<td> 이용요금</td>
+						<td>${ infoList[15] }</td>
 					</tr>
 				</table>
 			</div>
 			<div class="travelInfo col">
 				<table>
 					<tr>
-						<td width="130px;"> 개장일</td>
-						<td>${ infoList[1] }</td>
+						<td width="150px;"> 행사시작일</td>
+						<td>${ infoList[6] }</td>
 					</tr>
 					<tr>
-						<td> 이용시간</td>
-						<td>${ infoList[4] }</td>
+						<td> 행사종료일</td>
+						<td>${ infoList[3] }</td>
 					</tr>
 					<tr>
-						<td> 주차</td>
+						<td> 할인정보</td>
 						<td>${ infoList[2] }</td>
 					</tr>
 					<tr>
-						<td> 체험안내</td>
-						<td>${ infoList[9] }</td>
+						<td> 예매처</td>
+						<td>${ infoList[1] }</td>
 					</tr>
 					<tr>
-						<td> 체험가능연령</td>
-						<td>${ infoList[8] }</td>
+						<td> 행사홈페이지</td>
+						<td>${ infoList[4] }</td>
+					</tr>
+					<tr>
+						<td> 관람소요시간</td>
+						<td>${ infoList[10] }</td>
+					</tr>
+					<tr>
+						<td> 주관사정보</td>
+						<td>${ infoList[13] }</td>
+					</tr>
+					<tr>
+						<td> 주관사연락처</td>
+						<td>${ infoList[14] }</td>
 					</tr>
 				</table>
 			</div>
@@ -163,7 +188,7 @@
 		<form method="POST" id="replyForm">
 			<input type="hidden" name="contentId" value="${ contentId }">
 			<div id="travelReply">
-				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>${ replyCount }</span></h5>
+				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h5>
 				<div class="input-group mb-3">
 					<c:if test="${ loginUser == null }">
 						<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>

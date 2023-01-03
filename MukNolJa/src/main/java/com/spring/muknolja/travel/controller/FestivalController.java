@@ -52,9 +52,9 @@ public class FestivalController {
 			String urlStr;
 			
 			if(areaCode ==null) {
-				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12";
+				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=15";
 			}else {
-				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12&areaCode=" + areaCode;
+				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=15&areaCode=" + areaCode;
 			}
 			
 			URL url = new URL(urlStr);
@@ -62,24 +62,17 @@ public class FestivalController {
 			String line = "";
 			String result = "";
 			
-			// 관광정보 받아오기
 			bf = new BufferedReader(new InputStreamReader(url.openStream()));
 			
-			//버퍼에 있는 정보를 하나의 문자열로 변환
 			while((line=bf.readLine())!=null){
                 result=result.concat(line);
-//                System.out.println(result);  // 받아온 데이터를 확인해봅니다.
             }
 			
-			// Json parser를 만들어 만들어진 문자열 데이터를 객체화
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject)parser.parse(result);
 			
-			// Top레벨 단계인 response 키를 가지고 데이터 파싱
 			JSONObject parseResponse = (JSONObject)obj.get("response");
-			// response로부터 body 찾기
 			JSONObject parseBody = (JSONObject)parseResponse.get("body");
-			// body로부터 items찾기
 			JSONObject parseItems = (JSONObject)parseBody.get("items");
 			
 			JSONArray parseItem = (JSONArray)parseItems.get("item");
@@ -113,7 +106,7 @@ public class FestivalController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "travelList";
+		return "festivalList";
 	}
 	
 	@RequestMapping("searchFestival.tr")
@@ -151,7 +144,6 @@ public class FestivalController {
 			ArrayList<Travel> list = new ArrayList<Travel>();
 			for(Object arr : parseItem) {
 				JSONObject tr = (JSONObject)arr;
-				System.out.println(tr);
 				
 				Travel travel = new Travel();
 				travel.setAddr(tr.get("addr1").toString());
@@ -179,7 +171,7 @@ public class FestivalController {
 			e.printStackTrace();
 		}
 		
-		return "travelList";
+		return "festivalList";
 	}
 	
 	@RequestMapping("festivalDetail.tr")
@@ -207,15 +199,15 @@ public class FestivalController {
 			JSONArray parseItem = (JSONArray)parseItems.get("item");
 			
 			for(int i = 0; i < parseItem.size(); i++) {
-				JSONObject tDetail = (JSONObject)parseItem.get(i);
+				JSONObject feDetail = (JSONObject)parseItem.get(i);
 				
-				String title = tDetail.get("title").toString();
-				String tel = tDetail.get("tel").toString();
-				String homePage = tDetail.get("homepage").toString();
-				String addr = tDetail.get("addr1").toString();
-				String overview = tDetail.get("overview").toString();
-				String mapx = tDetail.get("mapx").toString();
-				String mapy = tDetail.get("mapy").toString();
+				String title = feDetail.get("title").toString();
+				String tel = feDetail.get("tel").toString();
+				String homePage = feDetail.get("homepage").toString();
+				String addr = feDetail.get("addr1").toString();
+				String overview = feDetail.get("overview").toString();
+				String mapx = feDetail.get("mapx").toString();
+				String mapy = feDetail.get("mapy").toString();
 				
 				model.addAttribute("title", title);
 				model.addAttribute("tel", tel);
@@ -257,7 +249,7 @@ public class FestivalController {
 			}
 			model.addAttribute("tList", tList);
 			
-			String urlStr3 = "http://apis.data.go.kr/B551011/KorService/detailIntro?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileApp=AppTest&MobileOS=ETC&contentId=" + contentId + "&contentTypeId=12&_type=json";
+			String urlStr3 = "http://apis.data.go.kr/B551011/KorService/detailIntro?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileApp=AppTest&MobileOS=ETC&contentId=" + contentId + "&contentTypeId=15&_type=json";
 			URL url3 = new URL(urlStr3);
 			BufferedReader bf3;
 			String line3 = "";
@@ -279,29 +271,41 @@ public class FestivalController {
 			
 			List<String> infoList = new ArrayList<String>();
 			for(int i = 0; i < parseItem3.size(); i++) {
-				JSONObject tInfo = (JSONObject)parseItem3.get(i);
+				JSONObject feInfo = (JSONObject)parseItem3.get(i);
 				
-				String infocenter = tInfo.get("infocenter").toString();
-				String opendate = tInfo.get("opendate").toString();
-				String parking = tInfo.get("parking").toString();
-				String restdate = tInfo.get("restdate").toString();
-				String usetime = tInfo.get("usetime").toString();
-				String chkbabycarriage = tInfo.get("chkbabycarriage").toString();
-				String chkpet = tInfo.get("chkpet").toString();
-				String chkcreditcard = tInfo.get("chkcreditcard").toString();
-				String expagerange = tInfo.get("expagerange").toString();
-				String expguide = tInfo.get("expguide").toString();
+				String agelimit = feInfo.get("agelimit").toString();
+				String bookingplace = feInfo.get("bookingplace").toString();
+				String discountinfofestival = feInfo.get("discountinfofestival").toString();
+				String eventenddate = feInfo.get("eventenddate").toString();
+				String eventhomepage = feInfo.get("eventhomepage").toString();
+				String eventplace = feInfo.get("eventplace").toString();
+				String eventstartdate = feInfo.get("eventstartdate").toString();
+				String placeinfo = feInfo.get("placeinfo").toString();
+				String playtime = feInfo.get("playtime").toString();
+				String program = feInfo.get("program").toString();
+				String spendtimefestival = feInfo.get("spendtimefestival").toString();
+				String sponsor1 = feInfo.get("sponsor1").toString();
+				String sponsor1tel = feInfo.get("sponsor1tel").toString();
+				String sponsor2 = feInfo.get("sponsor2").toString();
+				String sponsor2tel = feInfo.get("sponsor2tel").toString();
+				String usetimefestival = feInfo.get("usetimefestival").toString();
 				
-				infoList.add(infocenter);
-				infoList.add(opendate);
-				infoList.add(parking);
-				infoList.add(restdate);
-				infoList.add(usetime);
-				infoList.add(chkbabycarriage);
-				infoList.add(chkpet);
-				infoList.add(chkcreditcard);
-				infoList.add(expagerange);
-				infoList.add(expguide);
+				infoList.add(agelimit);
+				infoList.add(bookingplace);
+				infoList.add(discountinfofestival);
+				infoList.add(eventenddate);
+				infoList.add(eventhomepage);
+				infoList.add(eventplace);
+				infoList.add(eventstartdate);
+				infoList.add(placeinfo);
+				infoList.add(playtime);
+				infoList.add(program);
+				infoList.add(spendtimefestival);
+				infoList.add(sponsor1);
+				infoList.add(sponsor1tel);
+				infoList.add(sponsor2);
+				infoList.add(sponsor2tel);
+				infoList.add(usetimefestival);
 				
 				model.addAttribute("infoList", infoList);
 			}
@@ -312,35 +316,6 @@ public class FestivalController {
 		
 		ArrayList<Reply> list = tService.selectReply(contentId);
 		model.addAttribute("rlist", list);
-		return "travelDetail";
+		return "festivalDetail";
 	}
-	
-//	@RequestMapping("insertReply.tr")
-//	@ResponseBody
-//	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
-//		int result = tService.insertReply(r);
-//		ArrayList<Reply> rlist = tService.selectReply(r.getRefBoardId());
-//		System.out.println(r);
-//		response.setContentType("application/json; charset=UTF-8");
-//		GsonBuilder gb = new GsonBuilder();
-//		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
-//		Gson gson = gb2.create();
-//		try {
-//			gson.toJson(rlist, response.getWriter());
-//		} catch (JsonIOException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	@RequestMapping("deleteReply.tr")
-//	public String deleteReply(@RequestParam("realDeleteRepId") int replyId, @RequestParam("contentId") int contentId) {
-//		int result = tService.deleteReply(replyId);
-//		if(result > 0) {
-//			return "redirect:travelDetail.tr?contentId=" + contentId;
-//		}else {
-//			throw new CommonException("댓글 삭제를 실패하였습니다.");
-//		}
-//	}
 }

@@ -8,14 +8,15 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	*{font-family: 'Noto Sans KR', sans-serif;}
 	.list-group li{width: 100px; height: 70px; text-align: center; padding: 20px;}
 	#list1{margin-top:50px; margin-bottom: 50px;}
 	h1{text-align: center; font-weight: 900;}
-	#input{width: 500px;}
 	.page-link{color:#3C988D;}
+	#input{height: 78%;}
 	.page-link:focus, .page-link:hover {color: #fff; background-color: #3C988D;}
 	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
@@ -55,49 +56,6 @@
 	  padding-top:-10px;
 	  
 	}
-	.ur{
-			 box-shadow: 0px 8px 8px 0px rgba(0,0,0,0.3);
-			 padding-left:0px;
-			 padding-bottom:0px;
-			 margin-left:0px;
-			 border-radius:10px;
-			 border: 2px solid  RGB(107, 182, 236, 0.3);
-			 margin-top: 50px;
-			 margin-bottom: 40px;
-			 cursor: pointer;
-		}
-		li{list-style:none;}
-		
-		.ll{
-			font-size: 20px;
-			font-weight: 600;
-			width:100%;
-			
-			color: #575757;
-			text-align: center;
-			height: 60px;
-			float:left;
-			vertical-align: middle;
-			line-height: 3em;
-			border: 1px solid #fffcfb;
-			border-radius:10px;
-			position: relative;
-			display: block;
-			text-decoration: none;
-			box-shadow: 0em 1.5em 0 ,lightgrey;
-			transition: all .25s linear;
-		}
-		.ll:hover {
-			background: #6BB6EC;
-			color: #fffcfb;
-			transform: translate(-.9em, -.9em);
-			transition: all .25s linear;
-			box-shadow: 0.5em 2em 0 #e1e1e1;
-		}
-		  
-		.ll{
-		    transition: all .25s linear; 
-		}
  	.card img{height: 250px;}
 	.card{margin-bottom: 30px; cursor: pointer;}
 	.card td{width: 80px; font-size: 14px; color: gray; margin-right: auto;}
@@ -107,6 +65,9 @@
 	.pagination a:hover{background: #6BB6EC; color: white;}
 	#carouselExampleInterval{height: 350px; margin-top: 80px;}
 	#carouselExampleInterval img{height:350px;}
+	.compDate label{color: #6BB6EC; font-size: 13px;}
+	#gender label{color: #6BB6EC; font-size: 13px;}
+	#location label{color: #6BB6EC; font-size: 13px;}
 </style>
 </head>
 <body style="background-color:white;">
@@ -139,52 +100,72 @@
 			</div>
 		
 		<br>
-		<h1 class="fw-bold" style="color: #6BB6EC; font-size: 55px;">여행친구찾기</h1>
-		<!-- 카테고리 -->
-		<ul id="category" class="ur" >
-				<div style="display:flex;" lass="ur1">
-					<li class="ll 0">전체</li>
-					<li class="ll 1">서울</li>
-					<li class="ll 2">인천</li>
-					<li class="ll 3">대전</li>
-					<li class="ll 4">대구</li>
-					<li class="ll 5">광주</li>
-					<li class="ll 6">부산</li>
-					<li class="ll 7">울산</li>
-					<li class="ll 8">세종</li>
+		<h1 class="fw-bold" style="color: #6BB6EC; font-size: 55px; margin-bottom: 50px; margin-top: 20px;">여행친구찾기</h1>
+		
+		<!-- 글쓰기버튼 -->
+			<c:if test="${ loginUser == null }">
+				<button type="button" class="writeButton mukButton" style="width: 150px; display: none;" id="writeButton">글쓰기</button>
+			</c:if>
+			<c:if test="${ loginUser != null }">
+				<div  style="float: right; margin-bottom: 30px;">
+					<button type="button" class="writeButton mukButton" style="width: 150px;" id="writeButton">글쓰기</button>
 				</div>
-				<div style="display:flex;">
-					<li class="ll 31">경기</li>
-					<li class="ll 32">강원</li>
-					<li class="ll 33">충북</li>
-					<li class="ll 34">충남</li>
-					<li class="ll 35">경북</li>
-					<li class="ll 36">경남</li>
-					<li class="ll 37">전북</li>
-					<li class="ll 38">전남</li>
-					<li class="ll 38">제주</li>
-				</div>
-		</ul>
+			</c:if>
 		
 		<!-- 검색하기 -->
-			<div style="display: inline-block">
+			<div class="row" style="clear: both;">
+			<div class="col">
+				<div id="location" class="form-floating">
+					<select id="selectLocation"class="form-select" aria-label="Default select example">
+						<option selected disabled>지역</option>
+						<option value="서울">서울</option>
+						<option value="인천">인천</option>
+						<option value="대전">대전</option>
+						<option value="대구">대구</option>
+						<option value="광주">광주</option>
+						<option value="부산">부산</option>
+						<option value="울산">울산</option>
+						<option value="세종">세종</option>
+						<option value="경기">경기</option>
+						<option value="강원">강원</option>
+						<option value="충북">충북</option>
+						<option value="충남">충남</option>
+						<option value="경북">경북</option>
+						<option value="경남">경남</option>
+						<option value="전북">전북</option>
+						<option value="전남">전남</option>
+						<option value="제주">제주</option>
+					</select>
+					<label for="floatingSelect">지역</label>
+				</div>
+			</div>
+			
+			<div class="col">
+				<div class="compDate form-floating mb-3">
+					<input type="text" class="travelDate form-control" id="daterangepicker" name="daterangepicker">
+					<label for="floatingInput">날짜선택</label>
+				</div>
+			</div>
+			
+			<div class="col">
+				<div id="gender" class="form-floating">
+				  <select class="gender form-select" id="floatingSelect" aria-label="Floating label select example">
+				    <option selected disabled>성별</option>
+				    <option value="여자만">여자만</option>
+				    <option value="남자만">남자만</option>
+				    <option value="무관">무관</option>
+				  </select>
+				  <label for="floatingSelect">성별</label>
+				</div>
+			</div>
+			
+			<div class="col">
 				<div class="input-group" id="input">
 					<input type="text" class="searchInput1 form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
 					<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 				</div>
 			</div>
-			
-		<!-- 글쓰기버튼 -->
-			<c:if test="${ loginUser == null }">
-				<div  style="float: right;">
-					<button type="button" class="writeButton mukButton" style="width: 150px; display: none;" id="writeButton">글쓰기</button>
-				</div>
-			</c:if>
-			<c:if test="${ loginUser != null }">
-				<div  style="float: right;">
-					<button type="button" class="writeButton mukButton" style="width: 150px;" id="writeButton">글쓰기</button>
-				</div>
-			</c:if>
+			</div>
 			
 		<!-- list카드 -->
 			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;">
@@ -272,8 +253,37 @@
 		    			}
 		    		}
 		    	});
+				
 			}
+			
+			
+			
+			
+			
+		</script>
+		<script>
+			<!-- datepicker -->
+			$(function(){
+				$('#daterangepicker').daterangepicker();
+				$("#daterangepicker").daterangepicker({
+				    locale: {
+				    "separator": " ~ ",                     // 시작일시와 종료일시 구분자
+				    "format": 'YYYY-MM-DD',     // 일시 노출 포맷
+				    "applyLabel": "확인",                    // 확인 버튼 텍스트
+				    "cancelLabel": "취소",                   // 취소 버튼 텍스트
+				    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+				    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+				    },
+				    minDate: new Date(),
+				    autoApply: true,                         // 확인/취소 버튼 사용여부
+				});
+				
+			});
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 </body>
 </html>

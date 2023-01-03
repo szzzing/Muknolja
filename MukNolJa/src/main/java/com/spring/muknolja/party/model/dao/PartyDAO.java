@@ -56,4 +56,12 @@ public class PartyDAO {
 		return (ArrayList)sqlSession.selectList("replyMapper.selectReply", refBoardId);
 	}
 
+	public ArrayList<Reply> selectReReply(SqlSessionTemplate sqlSession, int refReplyId) {
+		return (ArrayList)sqlSession.selectList("replyMapper.selectReReply", refReplyId);
+	}
+
+	public int insertReReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("replyMapper.insertReReply", r);
+	}
+
 }
