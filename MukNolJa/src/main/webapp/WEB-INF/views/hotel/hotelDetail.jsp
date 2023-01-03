@@ -354,8 +354,39 @@
 		
 		<!-- 호텔 정보 시작 -->
 		<div id="hotelInfoList" class="mukDisplayNone">
+			
 			<h4 class="fw-bold pb-3">기본 정보</h4>
 			<div id="hotelInfo">${hotel.hotelInfo }</div>
+			
+			<h4 class="fw-bold pt-5 pb-3">편의시설 및 서비스</h4>
+			<div class="p-4" style="background:#fafafa; border-radius:20px;">
+				<div class="row justify-content-start">
+					<div class="col-auto text-center" <c:if test="${hotel.wifi=='N' }">style="opacity:40%"</c:if>>
+						<img src="${contextPath }/resources/img/wifi.svg" style="width:48px; height:48px;"><br>
+						<small class="mukSubText">와이파이</small>
+					</div>
+					<div class="col-auto text-center" <c:if test="${hotel.breakfast=='N' }">style="opacity:40%"</c:if>>
+						<img src="${contextPath }/resources/img/breakfast.svg" style="width:48px; height:48px;"><br>
+						<small class="mukSubText">조식</small>
+					</div>
+					<div class="col-auto text-center" <c:if test="${hotel.amenity=='N' }">style="opacity:40%"</c:if>>
+						<img src="${contextPath }/resources/img/amenity.svg" style="width:48px; height:48px;"><br>
+						<small class="mukSubText">어메니티</small>
+					</div>
+					<div class="col-auto text-center" <c:if test="${hotel.park=='N' }">style="opacity:40%"</c:if>>
+						<img src="${contextPath }/resources/img/park.svg" style="width:48px; height:48px;"><br>
+						<small class="mukSubText">주차</small>
+					</div>
+					<div class="col-auto text-center" <c:if test="${hotel.swim=='N' }">style="opacity:40%"</c:if>>
+						<img src="${contextPath }/resources/img/swim.svg" style="width:48px; height:48px;"><br>
+						<small class="mukSubText">수영장</small>
+					</div>
+					<div class="col-auto text-center" <c:if test="${hotel.fitness=='N' }">style="opacity:40%"</c:if>>
+						<img src="${contextPath }/resources/img/fitness.svg" style="width:48px; height:48px;"><br>
+						<small class="mukSubText">피트니스</small>
+					</div>
+				</div>
+			</div>
 			
 			<h4 class="fw-bold pt-5 pb-3">위치</h4>
 			<div class="pb-3">${hotel.hotelAddress }<span id="searchMap" class="p-1 fw-bold">길찾기</span></div>
