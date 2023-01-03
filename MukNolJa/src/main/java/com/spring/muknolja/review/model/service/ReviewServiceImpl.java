@@ -52,5 +52,15 @@ public class ReviewServiceImpl implements ReviewService{
 		// TODO Auto-generated method stub
 		return rDAO.selectReply(sqlSession,pi,boardId);
 	}
+	@Override
+	public ArrayList<Reply> selectRe(int refReplyId) {
+		// TODO Auto-generated method stub
+		return rDAO.selectRe(sqlSession,refReplyId);
+	}
+	@Override
+	public int insertReply(Reply reply) {
+		// TODO Auto-generated method stub
+		return rDAO.insertReply(sqlSession,reply);
+	}
 
 }

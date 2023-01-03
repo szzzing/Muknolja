@@ -21,4 +21,8 @@ public interface ReviewService {
 
 	ArrayList<Reply> selectReply(PageInfo pi, int boardId);
 
+	ArrayList<Reply> selectRe(int refReplyId);
+
+	int insertReply(Reply reply);
+
 }

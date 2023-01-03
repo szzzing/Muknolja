@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
@@ -84,8 +85,7 @@
 	  		<div class="row justify-content-center" style="  border-radius:30px;  ">
 	            <div class="col-12 col-lg-9" style="" >
 	            <div class="tx" style="font-size:70px; position:absolute; font-weight:900; margin-top:18%; margin-left: 8%;">MUKNOLJA<br>
-	            	<h1 id="nHeart" class="heart" style="color:#6BB6EC; position:absolute; margin-left:50%"><i class="bi bi-heart"></i></h1>
-	     			<h1 id="yHeart" class="heart" style="color:#6BB6EC; position:absolute; margin-left:50%"><i class="bi bi-heart-fill"></i></h1></div>
+	            	</div>
 	     			
 	     			<div id ="album">
      				<div style="width: 100%; height:100%;   float:left;  font-size: 40px; font-weight:1000; background: white; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); "><div  style="color: white; margin:15px; background: radial-gradient(ellipse at bottom, #C0DEFF 0%, #89C4E1 100%);  ">${board.boardTitle }</div><br>
@@ -121,9 +121,9 @@
 				
 	  			</div>
 	  	</div>	
-        	
+        </div>
 		</div>
-		</div>
+		
 		<div class="container-fluid" style="">
 	  		<div class="row justify-content-center" style="   border-radius:30px;  ">
 	            <div class="col-12 col-lg-9" style="" >
@@ -142,17 +142,50 @@
 			</div>
 		</div>
 			<div class="row justify-content-center">
-			<div id="rep" style="disply:flex; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3);">
+			<div class="col-9"  style=" box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); ">
+			<div id="rep" style="disply:flex; ">
+			
+			<div class="row">
 			<c:forEach items="${ reply }" var="r">
-				<div class="col-2" style="background:black">1</div>
-				
-				 
-				 	<div class="replyContent col-10" style="display:flex">
-				 	<div>${ r.replyWriter}</div><div>${r.replyContent}</div>
+			<div class="selectRe">
+			<div style="margin-top:10px; display:flex;  border-bottom: 1px solid #F2F2F2" >
+				<div class="col-2 col-lg-1 sele" style="background:black; height:60px;" >11</div>
+					
+				 	<div class="replyId" style="display:none">${r.replyId}</div>
+				 	<div class="replyContent col-8 col-lg-7" style="height:90px; padding-left:10px;"><div class="sele">
+				 	<div style="width:100%; height:60px;display:flex;">${ r.replyWriter }님<div style="margin-left:2%">${r.replyContent}</div></div></div>
+				 	<div>${r.replyModifyDate }<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button>
 				 	</div>
+				 	</div>
+				 	<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal">신고</button></div>
 				 	
+				 	</div>
+				 	<div class= "ref"></div>
+				 </div>
 				 </c:forEach>
-				 
+				 	  
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h1 class="modal-title fs-5 title" id="exampleModalLabel" >신고하기</h1>
+								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								      </div>
+								      <textarea class="modal-body mbody" style="text-align:left; float:left; border:none;height:200px;border-bottom:1px solid #DEE2E6">
+								       
+								      </textarea>
+								       
+								      <div class="modal-footer foot">
+								        <button type="button" class="btn btn-secondary" id="see">신고</button>
+								        <button type="button" class="btn btn-primary" id="dro" data-bs-dismiss="modal">닫기</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+				 	
+				 </div>
+				 </div>
 		<nav aria-label="Page navigation example">
 		  <ul class="pagination d-flex justify-content-center">
 		    <li class="page-item">
@@ -186,7 +219,7 @@
 	    </div>
 		<div id="id" style="display: none">${ loginUser.id }</div>
 
-	
+	<br><br><br><br><br><br><br>
 	
 	 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 	<script src="${contextPath }/resources/turn.js"></script>
@@ -195,28 +228,64 @@
 	$('#album').turn({gradients: true, acceleration: true});
 	
 	
+	$('.refReply').click(function(){
+		
+	})
 	
-	var userId = $('#id').text();
-	console.log(userId);
-	if( userId != "" ){
-		console.log("확인");
+	//신고
+	$('.sin').click(function(){
+		
+		console.log("지금");
+		
+	});
+	$('#see').click(function(){
+		var tet = $('.mbody').val();
+		var id = $(this).parent().parent().parent().find(".replyId").text();
+		console.log(id);
+		
+	});
+	//대댓글
+	
+	$('.sele').click(function(){
+		var replyId = $(this).parent().parent().find('.replyId').text();
+		var ref = $(this).parent().parent().parent().find('.ref');
+		console.log(ref);
+		console.log(ref.text());
+		console.log(replyId);
+		if( ref.text() == ""){
+			console.log(ref.text());
 		$.ajax({
-			url: "${ contextPath}/checkHeart.re",
-			data: { boardId: ${ board.boardId},
-					id : userId
-					},
+		 url: "${ contextPath}/selectRe.re",
+		 data: { replyId : replyId },
 			success: (data)=>{
-				
+				console.log(data);
+				var list = data;
+					for(var i =0; i<list.length; i++){
+						 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" font-size: 40px;"class="bi bi-arrow-return-right"></i></div>'+
+								    '<div class="col-2 col-lg-1" style=" height:60px; background:black;" >11</div>'+
+								   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
+								   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+								   '<div>'+list[i].replyModifyDate+'</div></div>'+
+								 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
+								 	'</div></div>';
+								$(ref).empty();
+						 		$(ref).append(Html);
+						 	}
+						 	
+							
 			},
 			error: (data)=>{
 				
 			}
 		});
-	}else{
-		$('#yHeart').hide();
-		$('#nHeart').show();
-	}
+		}else{
+			console.log("안돼");
+			$(ref).empty();
+		}
+	});
 	
+
+	//관광지 이동
 	$(".firstE").click(function(){
 		var contentId = $(this).find('.firstC').text();
 		
@@ -225,22 +294,25 @@
 	});
 	const searchButton = document.getElementById('button-addon2');  
 	const replyEnter = document.getElementById('replyContent');
+	
+	//댓글
 	replyEnter.addEventListener('keypress', function(e){
 		if(e.keyCode == 13){
 	 	replyContent = $(this).val();
 	 	console.log(replyContent);
-	 	var nickName = "${ loginUser.nickName }";
+	 	var nickName = "${ loginUser.id }";
 	 $.ajax({
 		 
 		 url: "${ contextPath}/insertReply.re",
+		 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			data: { replyContent: replyContent,
 					writer : nickName,
 					boardId: ${ board.boardId},
 					
 					},
 			success: (data)=>{
+				$(replyContent).empty();
 				
-				location.href="";
 			},
 			error: (data)=>{
 				
