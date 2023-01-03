@@ -169,12 +169,12 @@
 						<h4 class="fw-bold">등록된 리뷰가 없습니다</h4>
 					</div>
 						
-					<div id="reviewList" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
+					<div id="reviewList" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5">
 					
 					
 						<div id="reviewDiv" class="review col mt-3 mb-3" style="border-bottom:1px solid #e9e9e9; display:none">
-							<input type="hidden" name="reviewId">
 							<table class="table table-borderless">
+								<input type="hidden" name="reviewId">
 								<tr>
 									<td class="text-center" rowspan="5" style="width:80px;">
 										<img class="ratingEmoji img-fluid mukRound" style="width:100%;" src="${contextPath }/resources/img/5.svg">
@@ -202,7 +202,10 @@
 									<td colspan="2" class="reviewContent"></td>
 								</tr>
 								<tr>
-									<td class="mukMutedText"><span class="createDate"></span></td>
+									<td class="mukMutedText">
+										<span class="createDate"></span>
+										<span class="reportButton ms-3" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#reportModal">신고</span>
+									</td>
 									<td class="text-end mukMutedText">
 										<h4 class="writeReplyButton bi bi-chevron-down" style="display:inline-block; margin-bottom:0px; cursor:pointer;"></h4>
 									</td>
@@ -235,6 +238,22 @@
 				</div>
 			</main>
 
+		</div>
+	</div>
+	
+	<div id="reportModal" class="modal fade" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered text-center">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="text-center mt-3 mb-3">
+						<textarea class="form-control" name="reportTitle" rows="1" style="resize:none" placeholder="제목" required></textarea>
+					</div>
+					<input type="hidden" name="memberId" value="${loginUser.id }">
+					<input type="hidden" name="reviewId">
+					<textarea class="form-control mb-3" name="reportContent" rows="5" style="height:200px; resize:none" placeholder="내용" required></textarea>
+					<button id="insertReportButton" class="mukButton mb-3" style="width:100%" data-bs-dismiss="modal">신고하기</button>
+				</div>
+			</div>
 		</div>
 	</div>
 	
@@ -272,10 +291,8 @@
 
 						if(reviewList.length==0) {
 							$("#hasNoSubReview").prop("style").removeProperty("display");
-							console.log('dd');
 						} else {
 							$("#hasNoSubReview").css("display", "none");
-							console.log('ss');
 						}
 						
 						for(const r of reviewList) {
@@ -299,6 +316,19 @@
 								reviewDiv2.find(".writeReplyTr").prop("style").removeProperty("display");
 								reviewDiv2.find(".viewReplyTr").css("display", "none");
 								reviewDiv2.find(".hasReply").css("display", "none");
+							}
+							
+							if(${!empty loginUser} && "${loginUser.id}"!=r.memberId) {
+								reviewDiv2.find(".reportButton").prop("style").removeProperty("display");
+							} else {
+								reviewDiv2.find(".reportButton").css("display", "none");
+							}
+							if(r.isReported==0) {
+								console.log("신고안함");
+								reviewDiv2.find(".reportButton").prop("style").removeProperty("display");
+							} else {
+								console.log("신고함");
+								reviewDiv2.find(".reportButton").css("display", "none");
 							}
 							
 							ratingStar="";
@@ -353,6 +383,46 @@
 				});
 			});
 			mio.observe(document.getElementById('reviewScrollerFooter'));
+
+			
+			// 리뷰 신고하기
+			var reportTarget;
+			$(document).on("click", ".reportButton", function(){
+				$("#reportModal").find("input[name=reviewId]").val($(this).closest("table").find("input[name=reviewId]").val());
+				$("#reportModal").find("textArea[name=reportTitle]").val("");
+				$("#reportModal").find("textArea[name=reportContent]").val("");
+				reportTarget = $(this).closest("table").find(".reportButton");
+			});
+			
+			$("#insertReportButton").on("click", function(){
+				if($(this).parent().find("textArea[name=reportTitle]").val()=="") {
+					alert("제목을 입력해주세요.");
+				} else if($(this).parent().find("textArea[name=reportContent]").val()=="") {
+					alert("내용을 입력해주세요.");
+				} else {
+					const memberId = "${loginUser.id}";
+					const targetId = $("#reportModal").find("input[name=reviewId]").val();
+					const reportTitle = $("#reportModal").find("textArea[name=reportTitle]").val();
+					const reportContent = $("#reportModal").find("textArea[name=reportContent]").val();
+					
+					$.ajax({
+						url: "${contextPath}/insertReport.ho",
+						data: {
+							memberId: memberId,
+							targetId: targetId,
+							reportTitle: reportTitle,
+							reportContent: reportContent
+						},
+						success: (data)=>{
+							reportTarget.css("display", "none");
+							alert("리뷰를 신고했습니다.");
+						},
+						error: (data)=>{
+							console.log(data);
+						}
+					});
+				}
+			});
 		});
 	</script>
 	<!-- 리뷰리스트 보기 끝 -->

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.hotel.model.dao.HotelDAO;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
@@ -223,5 +224,10 @@ public class HotelServiceImpl implements HotelService{
 	@Override
 	public int getCurrReservationId() {
 		return hDAO.getCurrReservationId(sqlSession);
+	}
+	
+	@Override
+	public int insertReport(Report report) {
+		return hDAO.insertReport(sqlSession, report);
 	}
 }

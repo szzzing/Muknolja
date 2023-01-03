@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Review;
@@ -92,5 +93,7 @@ public interface HotelService {
 	int deleteReservation(int reservationId);
 
 	int getCurrReservationId();
+
+	int insertReport(Report report);
 
 }

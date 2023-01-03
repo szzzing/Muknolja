@@ -25,6 +25,7 @@ import com.spring.muknolja.common.exception.CommonException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.hotel.model.service.HotelService;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
@@ -757,9 +758,11 @@ public class HotelController {
 	//리뷰 전체보기
 	@RequestMapping(value="reviewList.ho", produces="application/json; charset=UTF-8")
 	@ResponseBody
-	public void reviewList(@RequestParam(value="page", required=false) Integer page, @RequestParam("hotelId") int hotelId, @RequestParam(value="searchByRoom", required=false) Integer searchByRoom, @RequestParam(value="orderBy", required=false) String orderBy, HttpServletResponse response) {
+	public void reviewList(HttpSession session, @RequestParam(value="page", required=false) Integer page, @RequestParam("hotelId") int hotelId, @RequestParam(value="searchByRoom", required=false) Integer searchByRoom, @RequestParam(value="orderBy", required=false) String orderBy, HttpServletResponse response) {
+		String id = (Member)session.getAttribute("loginUser")==null ? null : ((Member)session.getAttribute("loginUser")).getId();
 		HashMap map = new HashMap();
 		map.put("hotelId", hotelId);
+		map.put("id", id);
 		map.put("searchByRoom", searchByRoom);
 		map.put("orderBy", orderBy);
 		
@@ -867,6 +870,24 @@ public class HotelController {
 	}
 	
 	
+	@RequestMapping(value="insertReport.ho", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public void insertReport(HttpServletResponse response, @ModelAttribute Report report) {
+		report.setReportClassification("H");
+		System.out.println(report);
+		int result = hService.insertReport(report);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		Gson gson = new Gson();
+		GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+		gson = gb.create();
+		
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

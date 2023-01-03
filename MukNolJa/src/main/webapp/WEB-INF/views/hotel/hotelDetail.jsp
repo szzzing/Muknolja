@@ -69,11 +69,11 @@
 	.hotelImg {transition: all 0.3s;}
 	.hotelImg:hover {opacity:0.5;}
 	.roomDetailModal_roomImg {transition: all 0.3s;}
-	.roomDetailModal_roomImg:hover { opacity:0.5; }
+	.roomDetailModal_roomImg:hover { opacity:0.5;}
 	.mukCategory {color:#6BB6EC !important; border-bottom:3px solid #6BB6EC; font-weight:bold;}
 	.mukDisplayNone {display:none !important;}
-	.mukRound {border-radius: 8px;}
-	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukRound {border-radius:10px;}
+	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius:20px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.disabledMukButton {height:40px; border-radius: 8px; padding:0px 10px; cursor:pointer; background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
@@ -133,6 +133,23 @@
 			</div>
 		</div>
 	</div>
+	
+	
+<!-- 	<div id="reportModal" class="modal fade" tabindex="-1" aria-hidden="true"> -->
+<!-- 		<div class="modal-dialog modal-dialog-centered text-center"> -->
+<!-- 			<div class="modal-content"> -->
+<!-- 				<div class="modal-body"> -->
+<!-- 					<div class="text-center mt-3 mb-3"> -->
+<!-- 						<textarea class="form-control" name="reportTitle" rows="1" style="resize:none" placeholder="제목" required></textarea> -->
+<!-- 					</div> -->
+<%-- 					<input type="hidden" name="memberId" value="${loginUser.id }"> --%>
+<!-- 					<input type="hidden" name="reviewId"> -->
+<!-- 					<textarea class="form-control mb-3" name="reportContent" rows="5" style="height:200px; resize:none" placeholder="내용" required></textarea> -->
+<!-- 					<button id="insertReportButton" class="mukButton mb-3" style="width:100%" data-bs-dismiss="modal">신고하기</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
 	
 	<div class="container-sm mt-5 mb-5" style="padding-top:80px">
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 pb-5 justify-content-start gy-5">
@@ -299,8 +316,8 @@
 			
 			<div id="reviewListRow" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 pt-5 pb-5">
 				<div id="review" class="col mt-3 mb-3" style="border-bottom: 1px solid #e9e9e9; display:none">
-					<input type="hidden" name="reviewId">
 					<table class="table table-borderless">
+						<input type="hidden" name="reviewId">
 						<tr>
 							<td rowspan="5" style="width:80px;">
 								<img class="ratingEmoji img-fluid mukRound" style="width:100%;" src="${contextPath }/resources/img/5.svg">
@@ -312,17 +329,18 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="mukSubText">
+							<td colspan="2" class="mukSubText">
 								<span class="nickName"></span>
 								·
 								<span class="roomName"></span>
 							</td>
 						</tr>
 						<tr>
-							<td class="reviewContent"></td>
+							<td colspan="2" class="reviewContent"></td>
 						</tr>
 						<tr>
 							<td class="createDate mukMutedText"></td>
+							<td class="mukMutedText text-end" style="width:50px;"><div class="reportButton" style="cursor:pointer" data-bs-toggle="modal" data-bs-target="#reportModal">신고</div></td>
 						</tr>
 						<tr>
 							<td class="align-middle businessReplyTable pt-3 pb-3" colspan="2" style="display:none">
@@ -542,6 +560,16 @@
 							reviewDiv.find(".reviewContent").html(r.reviewContent.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 							reviewDiv.find(".rating").html(r.rating.toFixed(1));
 							reviewDiv.find(".createDate").html(r.createDate);
+							if(${!empty loginUser} && "${loginUser.id}"!=r.memberId) {
+								reviewDiv.find(".reportButton").prop("style").removeProperty("display");
+							} else {
+								reviewDiv.find(".reportButton").css("display", "none");
+							}
+							if(r.isReported==0) {
+								reviewDiv.find(".reportButton").prop("style").removeProperty("display");
+							} else {
+								reviewDiv.find(".reportButton").css("display", "none");
+							}
 							
 							ratingStar="";
 							for(var j=1;j<=5;j++) {
@@ -672,10 +700,65 @@
 					}
 				});
 			});
+			
+			
+			var reportTarget;
+			// 리뷰 신고하기
+			$(document).on("click", ".reportButton", function(){
+				$("#reportModal").find("input[name=reviewId]").val($(this).closest("table").find("input[name=reviewId]").val());
+				$("#reportModal").find("textArea[name=reportTitle]").val("");
+				$("#reportModal").find("textArea[name=reportContent]").val("");
+				reportTarget = $(this).closest("table").find(".reportButton");
+			});
+			
+			$("#insertReportButton").on("click", function(){
+				if($(this).parent().find("textArea[name=reportTitle]").val()=="") {
+					alert("제목을 입력해주세요.");
+				} else if($(this).parent().find("textArea[name=reportContent]").val()=="") {
+					alert("내용을 입력해주세요.");
+				} else {
+					const memberId = "${loginUser.id}";
+					const targetId = $("#reportModal").find("input[name=reviewId]").val();
+					const reportTitle = $("#reportModal").find("textArea[name=reportTitle]").val();
+					const reportContent = $("#reportModal").find("textArea[name=reportContent]").val();
+					
+					$.ajax({
+						url: "${contextPath}/insertReport.ho",
+						data: {
+							memberId: memberId,
+							targetId: targetId,
+							reportTitle: reportTitle,
+							reportContent: reportContent
+						},
+						success: (data)=>{
+							reportTarget.css("display", "none");
+							alert("리뷰를 신고했습니다.");
+						},
+						error: (data)=>{
+							console.log(data);
+						}
+					});
+				}
+			});
 		});
 	</script>
 	<!-- 리뷰리스트 보기 끝 -->
 	
+	<div id="reportModal" class="modal fade" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered text-center">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="text-center mt-3 mb-3">
+						<textarea class="form-control" name="reportTitle" rows="1" style="resize:none" placeholder="제목" required></textarea>
+					</div>
+					<input type="hidden" name="memberId" value="${loginUser.id }">
+					<input type="hidden" name="reviewId">
+					<textarea class="form-control mb-3" name="reportContent" rows="5" style="height:200px; resize:none" placeholder="내용" required></textarea>
+					<button id="insertReportButton" class="mukButton mb-3" style="width:100%" data-bs-dismiss="modal">신고하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	
 	
@@ -816,73 +899,6 @@
 			</div>
 		</div>
 	</div>
-	<script>
-		$(document).ready(function(){
-// 			$.writeReviewModal = function(reservationId) {
-// 				$("#writeReviewModal").modal('show');
-// 				$("#writeReviewModal").find('input[name=reservationId]').val(reservationId);
-// 			};
-// 			var nowRating="별점을 채워주세요.";
-// 			$(".starLabel").on("mouseleave", function(){
-// 				$("#ratingInfo").text(nowRating);
-// 			});
-// 			$(".starLabel").on("mouseover", function(){
-// 				if($(this).prev().val()==5) {
-// 					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
-// 				} else if($(this).prev().val()==4) {
-// 					$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
-// 				} else if($(this).prev().val()==3) {
-// 					$("#ratingInfo").text("기대 이상이네요.");
-// 				} else if($(this).prev().val()==2) {
-// 					$("#ratingInfo").text("조금만 더 신경 써 주세요.");
-// 				} else {
-// 					$("#ratingInfo").text("별로예요.");
-// 				}
-// 			});
-// 			$("input[type=radio]").on("click", function(){
-// 				if($(this).val()==5) {
-// 					$("#ratingInfo").text("여기만한 곳은 어디에도 없을 거예요.");
-// 					nowRating="여기만한 곳은 어디에도 없을 거예요.";
-// 				} else if($(this).val()==4) {
-// 					$("#ratingInfo").text("여기라면 다음에 또 이용할 거예요.");
-// 					nowRating="여기라면 다음에 또 이용할 거예요.";
-// 				} else if($(this).val()==3) {
-// 					$("#ratingInfo").text("기대 이상이네요.");
-// 					nowRating="기대 이상이네요.";
-// 				} else if($(this).val()==2) {
-// 					$("#ratingInfo").text("조금만 더 신경 써 주세요.");
-// 					nowRating="조금만 더 신경 써 주세요.";
-// 				} else {
-// 					$("#ratingInfo").text("별로예요.");
-// 					nowRating="별로예요.";
-// 				}
-// 			});
-// 			// 리뷰 작성 버튼
-// 			$("#insertReviewButton").on("click", function(){
-// 				for(var i=1;i<=5;i++) {
-// 					if($("#"+i+"-star").is(":checked")) {
-// 						$("input[name=rating]").val(i);
-// 					}
-// 				}
-// 				$.ajax({
-// 					url: "${contextPath}/insertReview.ho",
-// 					data: {
-// 						memberId: "${loginUser.id}",
-// 						reservationId: $("input[name=reservationId]").val(),
-// 						rating: $("input[name=rating]").val(),
-// 						reviewContent: $("textarea[name=reviewContent]").val()
-// 					},
-// 					success: (data)=>{
-// 						$("#writeReviewModal").find("textarea").val("");
-// 						$.reviewList();
-// 					},
-// 					error: (data)=>{
-// 					}
-// 				});
-// 			});
-		});
-	</script>
-	<!-- 리뷰 작성 모달 끝 -->
 	
 	
 	
