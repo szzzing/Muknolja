@@ -188,7 +188,7 @@
 			
 			<!-- 댓글작성 -->
 			<div id="partyReply" style="margin-top:40px">
-				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h5>
+				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span id="replyCount">&nbsp;${replyCount}</span></h5>
 				<div class="input-group mb-3">
 					<c:if test="${ loginUser == null }">
 						<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
@@ -323,6 +323,7 @@
 						}
 						
 						document.getElementById('replyContent').value = '';
+// 						document.getElementById('replyCount').innerText = Number(document.getElementById('replyCount').innerText) + 1;
 					},
 					error: (data) =>{
 						console.log(data);

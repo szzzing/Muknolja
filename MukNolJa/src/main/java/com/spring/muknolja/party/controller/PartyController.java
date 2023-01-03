@@ -60,9 +60,12 @@ public class PartyController {
 	public String partyDetail(@RequestParam("pId") int pId, @RequestParam(value="writer", required=false) String writer, HttpSession session, Model model) {
 		Party p = pService.selectParty(pId);
 		ArrayList<Reply> rList = pService.selectReply(pId);
+		int result = pService.countReply(pId);
+		
 		if(p != null) {
 			model.addAttribute("p", p);
 			model.addAttribute("rList", rList);
+			model.addAttribute("replyCount", result);
 			return "partyDetail";
 		}else {
 			throw new CommonException("동행 상세보기 조회에 실패하였습니다.");

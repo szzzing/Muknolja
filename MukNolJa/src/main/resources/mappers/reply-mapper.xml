@@ -57,7 +57,13 @@
 	<select id="countReply" resultType="_int">
 		select count(*)
 		from reply
+		<if test="contentId != null and pId == null">
 		where ref_board_id=#{contentId}
+		</if>
+		<if test="pId != null">
+		where ref_board_id=#{pId}
+		</if>
 			  and reply_status='Y'
+			  and ref_reply_id=0
 	</select>
 </mapper>
