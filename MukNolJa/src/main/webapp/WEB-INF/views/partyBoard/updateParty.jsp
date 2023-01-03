@@ -148,9 +148,9 @@
 				<div id="gender" class="form-floating">
 				  <select class="gender form-select" id="floatingSelect" aria-label="Floating label select example">
 				    <option selected disabled>성별</option>
-				    <option value="여자만" <c:if test="${ p.gender == '여자만' }">selected</c:if>>여자만</option>
-				    <option value="남자만" <c:if test="${ p.gender == '남자만' }">selected</c:if>>남자만</option>
-				    <option value="무관" <c:if test="${ p.gender == '무관' }">selected</c:if>>무관</option>
+				    <option value="여자만" <c:if test="${ p.partyGender == '여자만' }">selected</c:if>>여자만</option>
+				    <option value="남자만" <c:if test="${ p.partyGender == '남자만' }">selected</c:if>>남자만</option>
+				    <option value="무관" <c:if test="${ p.partyGender == '무관' }">selected</c:if>>무관</option>
 				  </select>
 				  <label for="floatingSelect">성별</label>
 				</div>
@@ -158,7 +158,7 @@
 			
 			<div class="col">
 				<div class="compNum form-floating mb-3">
-					<input type="number" class="partyNum form-control" min="1" max="20" value="${ p.maxParticipate }">
+					<input type="number" class="partyNum form-control" min="${ p.nowParticipate }" max="20" value="${ p.maxParticipate }">
 					<label for="floatingInput">동행인원(최대 20명)</label>
 				</div>
 			</div>
@@ -216,7 +216,7 @@
  		<input type="hidden" name="partyArea" id="hiddenLocation" value="${ p.partyArea }">
  		<input type="hidden" name="partyStartDate" id="hiddenStartDate" value="${ p.partyStartDate }">
  		<input type="hidden" name="partyEndDate" id="hiddenEndDate" value="${ p.partyEndDate }">
- 		<input type="hidden" name="gender" id="hiddenGender" value="${ p.gender }">
+ 		<input type="hidden" name="partyGender" id="hiddenGender" value="${ p.partyGender }">
  		<input type="hidden" name="maxParticipate" id="hiddenNum" value="${ p.maxParticipate }">
  		<input type="hidden" name="partyCourse" id="hiddenCourse" value="${ p.partyCourse }">
  		<input type="hidden" name="contentCourse" id="hiddenCourse2" value="${ p.contentCourse }">

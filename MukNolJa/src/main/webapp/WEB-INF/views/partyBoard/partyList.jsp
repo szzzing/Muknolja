@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>먹놀자 - 여행친구찾기</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
@@ -58,7 +58,7 @@
 	}
  	.card img{height: 250px;}
 	.card{margin-bottom: 30px; cursor: pointer;}
-	.card td{width: 80px; font-size: 14px; color: gray; margin-right: auto;}
+	.card td{width: 85px; font-size: 14px; color: gray; margin-right: auto;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
 	.pagination a{color: #6BB6EC;}
@@ -183,9 +183,10 @@
 							  </ol>
 							 <table>
 							 	<tr>
-							 		<td><i class="fa-solid fa-users"></i> 0/${ p.maxParticipate }</td>
-							 		<td><i class="fa-solid fa-heart"></i> ${ p.gender }</td>
-							 		<td><i class="fa-regular fa-comment-dots"></i> 5개</td>
+							 		<td><i class="fa-solid fa-location-dot"></i> ${ p.partyArea }</td>
+							 		<td><i class="fa-solid fa-users"></i> ${ p.nowParticipate }/${ p.maxParticipate }</td>
+							 		<td><i class="fa-solid fa-heart"></i> ${ p.partyGender }</td>
+							 		<td><i class="fa-regular fa-comment-dots"></i> ${ p.replyCount }개</td>
 							 	</tr>
 							 </table>
 							 <input type="hidden" value="${ p.partyId }" class="partyId">

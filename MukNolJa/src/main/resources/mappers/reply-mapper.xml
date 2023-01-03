@@ -74,4 +74,10 @@
 			  and reply_status='Y'
 			  and ref_reply_id=0
 	</select>
+	
+	<update id="deleteReReply">
+		update reply
+		set reply_status='N'
+		where ref_reply_id=#{replyId}
+	</update>
 </mapper>

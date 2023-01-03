@@ -78,4 +78,29 @@ public class PartyServiceImpl implements PartyService{
 		return pDAO.countReply(sqlSession, pId);
 	}
 
+	@Override
+	public int deleteReply(int replyId) {
+		return pDAO.deleteReply(sqlSession, replyId);
+	}
+
+	@Override
+	public int participate(HashMap<String, Object> map) {
+		return pDAO.paticipate(sqlSession, map);
+	}
+
+	@Override
+	public int countParty(int pId) {
+		return pDAO.countParty(sqlSession, pId);
+	}
+
+	@Override
+	public int checkParty(HashMap<String, Object> map) {
+		return pDAO.checkParty(sqlSession, map);
+	}
+
+	@Override
+	public void deleteParticipate(HashMap<String, Object> map) {
+		pDAO.deleteParticipate(sqlSession, map);
+	}
+
 }

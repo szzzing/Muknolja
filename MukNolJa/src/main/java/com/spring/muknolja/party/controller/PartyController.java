@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
@@ -58,14 +59,26 @@ public class PartyController {
 	
 	@RequestMapping("selectParty.pa")
 	public String partyDetail(@RequestParam("pId") int pId, @RequestParam(value="writer", required=false) String writer, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
 		Party p = pService.selectParty(pId);
 		ArrayList<Reply> rList = pService.selectReply(pId);
 		int result = pService.countReply(pId);
+		int partyCount = pService.countParty(pId);
+		int checkParty = 0;
+		
+		if(m != null) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("boardId", pId);
+			map.put("memberId", ((Member)session.getAttribute("loginUser")).getId());
+			checkParty = pService.checkParty(map);
+		}
 		
 		if(p != null) {
 			model.addAttribute("p", p);
 			model.addAttribute("rList", rList);
 			model.addAttribute("replyCount", result);
+			model.addAttribute("partyCount", partyCount);
+			model.addAttribute("checkParty", checkParty);
 			return "partyDetail";
 		}else {
 			throw new CommonException("동행 상세보기 조회에 실패하였습니다.");
@@ -106,14 +119,15 @@ public class PartyController {
 	}
 	
 	@RequestMapping("updateForm.pa")
-	public String updateForm(@RequestParam("partyId") int pId, Model model) {
+	public String updateForm(@RequestParam("partyId") int pId,@RequestParam("nowParticipate") int nowParticipate, Model model) {
 		Party p = pService.selectParty(pId);
+		p.setNowParticipate(nowParticipate);
 		model.addAttribute("p", p);
 		return "updateParty";
 	}
 	
 	@RequestMapping("updateParty.pa")
-	public String updateParty(@ModelAttribute Party p, @ModelAttribute AttachedFile af, @RequestParam("firstFile") MultipartFile firstFile, HttpSession session, HttpServletRequest request, Model model) {
+	public String updateParty(@ModelAttribute Party p, @ModelAttribute AttachedFile af, @RequestParam(value="firstFile", required=false) MultipartFile firstFile, HttpSession session, HttpServletRequest request, Model model) {
 		
 		if(!firstFile.getOriginalFilename().equals("")) {
 			String[] returnArr = AttachedFile.saveFile(firstFile, request);
@@ -207,7 +221,53 @@ public class PartyController {
 		}
 	}
 	
+	@RequestMapping("deleteReply.pa")
+	public String deleteReply(@RequestParam("realDeleteRepId") int replyId, @RequestParam("partyId") int partyId, @RequestParam("writer") String writer) {
+		int result = pService.deleteReply(replyId);
+		if(result > 0) {
+			return "redirect:selectParty.pa?pId=" + partyId + "&writer=" + writer;
+		}else {
+			throw new CommonException("댓글 삭제를 실패하였습니다.");
+		}
+	}
 	
+	@RequestMapping(value="participate.pa", produces="application/text;charset=UTF-8")
+	@ResponseBody
+	public String participate(@RequestParam("boardId") int boardId, @RequestParam("memberId") String memberId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("boardId", boardId);
+		map.put("memberId", memberId);
+		
+		int checkParty = pService.checkParty(map);
+		
+		if(checkParty == 0) {
+			pService.participate(map);
+		}
+		
+		int partyCount = pService.countParty(boardId);
+		
+		return partyCount + "";
+	}
+	
+	@RequestMapping(value="deleteParticipate.pa", produces="application/text;charset=UTF-8")
+	@ResponseBody
+	public String deleteParticipate(@RequestParam("boardId") int boardId, @RequestParam("memberId") String memberId, Model model) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("boardId", boardId);
+		map.put("memberId", memberId);
+		
+		int checkParty = pService.checkParty(map);
+		
+		if(checkParty == 1) {
+			pService.deleteParticipate(map);
+		}
+		
+		int partyCount = pService.countParty(boardId);
+		
+		model.addAttribute(checkParty);
+		
+		return partyCount + "";
+	}
 	
 	
 	

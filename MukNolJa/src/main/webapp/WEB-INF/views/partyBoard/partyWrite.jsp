@@ -207,7 +207,7 @@
  		<input type="hidden" name="partyArea" id="hiddenLocation">
  		<input type="hidden" name="partyStartDate" id="hiddenStartDate">
  		<input type="hidden" name="partyEndDate" id="hiddenEndDate">
- 		<input type="hidden" name="gender" id="hiddenGender">
+ 		<input type="hidden" name="partyGender" id="hiddenGender">
  		<input type="hidden" name="maxParticipate" id="hiddenNum">
  		<input type="hidden" name="partyCourse" id="hiddenCourse">
  		<input type="hidden" name="contentCourse" id="hiddenCourse2">
