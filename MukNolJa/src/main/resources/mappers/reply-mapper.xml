@@ -47,6 +47,14 @@
 		order by reply_id desc
 	</select>
 	
+	<select id="selectReReply1" resultMap="replyResultMap">
+		select *
+		from reply
+			 join member on(reply_writer = id)
+		where REF_BOARD_ID=#{refReplyId}
+			  and reply_status='Y' and REF_REPLY_ID != '0'
+		order by reply_id desc
+	</select>
 	<!-- 대댓 입력 -->
 	<insert id="insertReReply">
 		insert into reply

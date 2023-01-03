@@ -1,8 +1,12 @@
 package com.spring.muknolja.review.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
@@ -62,6 +69,9 @@ public class ReviewController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
 		ArrayList<Reply> reply = rService.selectReply(pi,boardId);
 		
+		Reply re = reply.get(0);	
+		ArrayList<Reply> refReply = rService.selectRe(boardId);
+		
 		model.addAttribute("reply",reply);
 		return "reviewDetail";
 	}
@@ -87,12 +97,37 @@ public class ReviewController {
 		return "1";
 	}
 	
-	@RequestMapping("insertReply.re")
+	@RequestMapping(value="insertReply.re", produces = "application/text; charset=UTF-8")
 	@ResponseBody
-	public String insertReply(@RequestParam("boardId")int boardId,@RequestParam("replyContent")String replyContent,Reply reply, @RequestParam("writer")String writer) {
-		reply.setReplyWriter(writer);
+	public int insertReply(HttpServletRequest request, HttpServletResponse response,@RequestParam("boardId")int refBoardId,@RequestParam("replyContent")String replyContent,Reply reply, @RequestParam("writer")String replyWriter) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
+		
+		reply.setReplyWriter(replyWriter);
 		reply.setReplyContent(replyContent);
-		reply.setRefBoardId(boardId);
-		return "1";
+		reply.setRefBoardId(refBoardId);
+		System.out.println(replyWriter);
+		System.out.println(replyContent);
+		System.out.println(refBoardId);
+		int insert = rService.insertReply(reply);
+		
+		return insert;
+	}
+
+	@RequestMapping("selectRe.re")
+	@ResponseBody
+	public void selectReReply(@RequestParam("replyId") int refReplyId, HttpServletResponse response) {
+		ArrayList<Reply> rrList = rService.selectRe(refReplyId);
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(rrList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

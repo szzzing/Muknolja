@@ -432,16 +432,17 @@
 		const tt = document.getElementsByClassName('vl');
 		const con = document.getElementsByClassName('con');
 		var cll = document.querySelector('.di');
-		var dll = document.querySelectorAll('.vl');
-		var courseTest = "";
-		var courseTest1 = "";
-		var tx = "";
-	
+		var dll = document.querySelector('.vl');
+		var cl = $(".vl").val();
+		
 		
 		//파일추가부분
 		 $('#bd').click(function(){
-			 for(const dll of tt){
-					tx += $(".vl").val() + '!@#$';}
+			 var courseTest = "";
+				var courseTest1 = "";
+				var tx = "";
+			 for(const  dll of tt){
+					tx += dll.value + '!@#$';}
 			 for(const numberLi of numberLis){
 					courseTest += numberLi.innerHTML + '/';}
 			 for(const cll of con){
@@ -471,6 +472,9 @@
 		   				}
 		   			
 		   			if(next == true){
+		   				cour.value = "";
+		   				cour1.value = "";
+		   				cour2.value = "";
 		   				cour.value = courseTest;
 		   				cour1.value = courseTest1;
 		   				cour2.value = tx;

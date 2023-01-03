@@ -49,9 +49,18 @@ public class ReviewDAO {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		System.out.println("/////////");
-	System.out.println(boardId);
-	System.out.println(pi);
+	
 		return (ArrayList)sqlSession.selectList("reviewMapper.selectReply", boardId, rowBounds);
+	}
+
+	public ArrayList<Reply> selectRe(SqlSessionTemplate sqlSession, int refReplyId) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("replyMapper.selectReReply",refReplyId);
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, Reply reply) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("replyMapper.insertReply",reply);
 	}
 	
 }
