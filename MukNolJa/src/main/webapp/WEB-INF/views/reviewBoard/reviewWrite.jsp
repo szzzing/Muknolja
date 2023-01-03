@@ -205,16 +205,16 @@
  		
  		<!-- hidden값 -->
  		<div class="di" style="display:none;"></div>
- 		<input type="hidden" name="partyTitle" id="hiddenTitle">
- 		<input type="hidden" name="partyArea" id="hiddenLocation">
+ 		<input type="hidden" name="boardTitle" id="hiddenTitle">
+ 		<input type="hidden" name="boardArea" id="hiddenLocation">
  		<input type="hidden" name="partyStartDate" id="hiddenStartDate">
  		<input type="hidden" name="partyEndDate" id="hiddenEndDate">
  		
  		<input type="hidden" name="maxParticipate" id="hiddenNum">
  		<input type="hidden" name="partyCourse" id="hiddenCourse">
  		<input type="hidden" name="contentCourse" id="contentCourse">
- 		<input type="hidden" name="Course" id="Course">
- 		<input  type="hidden" name="content" id="content">
+ 		<input type="hidden" name="boardCourse" id="Course">
+ 		<input  type="hidden" name="boardContent" id="content">
  		
  	</form>
 		</div>
@@ -314,9 +314,9 @@
 	   		var numLi = document.querySelector('.numbered');
 	   		var dll = document.querySelector('.di');
 	   	
-	   		for(var i = 0; i <= list.length-1; i++){
-	   			if( list[i] != contentId){
-	   				Yn = true;
+	   		for(var t = 0; t <= list.length-1; t++){
+	   			if( list[t] != contentId){
+	   			
 	   			}else{
 	   				alert("중복되었습니다")
 	   				Yn = false;
@@ -418,70 +418,69 @@
 				locDiv.scrollTop = locDiv.scrollHeight;
 			}
 				
-			const writeButton = document.getElementById('writeButton');
-			const numberLis = document.getElementsByClassName('numberLi');
-			const hiddenCourse = document.getElementById('hiddenCourse');
-			const tt = document.getElementsByClassName('vl');
-			const con = document.getElementsByClassName('con');
-			var cll = document.querySelector('.di');
-			var dll = document.querySelector('.are');
-			console.log(dll.innerText);
-			console.log(cll.innerHTML);
-			var courseTest = "";
-			var courseTest1 = "";
-			var tx = "";
 		
-			
-			//파일추가부분
-			 $('#bd').click(function(){
-				 for(const dll of tt){
-						tx += dll.innerText + '!@#$';}
-				 for(const numberLi of numberLis){
-						courseTest += numberLi.innerHTML + '/';}
-				 for(const cll of con){
-						courseTest1 += cll.innerHTML + '/';}
-		 		
-				
-		 		
-		 		const cour = document.getElementById('Course');
-		 		const cour1 = document.getElementById('contentCourse');
-		 		const cour2 = document.getElementById('content');
-				cour.value = courseTest;
-				cour1.value = courseTest1;
-				cour2.value = tt;
-			
-				
-				console.log(courseTest.split("/"));
-				console.log(courseTest1.split("/")[1]);
-			
-				
-		 		var next = true;
-		 		if(selectLocation == ""){
-		 			alert("지역을 선택해주세요")
-		 		}else{
-			   		for(var v = 0; v< list.length; v++){
-			   				
-			   				if($('#myFile'+list[i]).val() == ""){
-			   					next = false;
-			   					
-							}
-			   					
-			   				}
-			   			
-			   			if(next == true){
-		   					$('form').submit();
-			   			}else{
-			   				alert("각각 사진1개를 추가해주세요");
-			   			}
-		 		}
-			 
-	   				});
 
 				});
 
 		
 	   	
  	   	<!-- 코스지우기 -->
+ 	  	 var numLi = document.querySelector('.numbered');
+ 		const writeButton = document.getElementById('writeButton');
+		const numberLis = document.getElementsByClassName('numberLi');
+		const hiddenCourse = document.getElementById('hiddenCourse');
+		const tt = document.getElementsByClassName('vl');
+		const con = document.getElementsByClassName('con');
+		var cll = document.querySelector('.di');
+		var dll = document.querySelectorAll('.vl');
+		var courseTest = "";
+		var courseTest1 = "";
+		var tx = "";
+	
+		
+		//파일추가부분
+		 $('#bd').click(function(){
+			 for(const dll of tt){
+					tx += $(".vl").val() + '!@#$';}
+			 for(const numberLi of numberLis){
+					courseTest += numberLi.innerHTML + '/';}
+			 for(const cll of con){
+					courseTest1 += cll.innerHTML + '/';}
+	 		
+			
+			const selectLocation = document.getElementById('selectLocation').value;
+	 		const cour = document.getElementById('Course');
+	 		const cour1 = document.getElementById('contentCourse');
+	 		const cour2 = document.getElementById('content');
+			
+		
+			console.log(tx);
+		
+			console.log("지역"+selectLocation);
+	 		var next = true;
+	 		if(selectLocation == "지역"){
+	 			alert("지역을 선택해주세요")
+	 		}else{
+		   		for(var v = 0; v< list.length; v++){
+		   				
+		   				if($('#myFile'+list[v]).val() == ""){
+		   					next = false;
+		   					console.log( next);
+						}
+		   					
+		   				}
+		   			
+		   			if(next == true){
+		   				cour.value = courseTest;
+		   				cour1.value = courseTest1;
+		   				cour2.value = tx;
+	   					$('form').submit();
+		   			}else{
+		   				alert("각각 사진1개를 추가해주세요");
+		   			}
+	 		}
+		 
+   				});
 	   
 	</script>
 	
