@@ -811,19 +811,19 @@ public class MemberController {
 			String fileName = file.getOriginalFilename();
 			
 			if(!fileName.equals("")) {
-			AttachedFile attm = new AttachedFile();
-			
-			String[] returnArr = AttachedFile.saveFile(file, request);
-			
-			attm.setFileName(fileName);
-			attm.setFileLink(returnArr[0]);
-			attm.setFileModifyName(returnArr[1]);
-			
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("attm", attm);
-			map.put("beforeFileId", beforeFileId);
-			
-			result += mService.updateAttm(map);
+				AttachedFile attm = new AttachedFile();
+				
+				String[] returnArr = AttachedFile.saveFile(file, request);
+				
+				attm.setFileName(fileName);
+				attm.setFileLink(returnArr[0]);
+				attm.setFileModifyName(returnArr[1]);
+				
+				HashMap<String, Object> map = new HashMap<>();
+				map.put("attm", attm);
+				map.put("beforeFileId", beforeFileId);
+				
+				result += mService.updateAttm(map);
 			}
 			
 			HashMap<String, Object> aMap = new HashMap<>();
@@ -841,8 +841,8 @@ public class MemberController {
 		}
 		
 		@RequestMapping("reportDetail.me")
-		public String reportDetail(@RequestParam("id") String id, @RequestParam("type") String reportType, Model model) {
-			if(reportType.equals("댓글")) {
+		public String reportDetail(@RequestParam("id") String id, @RequestParam(value="type", required=false) String reportType, Model model) {
+			if(reportType != null && reportType.equals("댓글")) {
 				id = mService.selectBoardId(id);
 			}
 			
@@ -945,10 +945,144 @@ public class MemberController {
 			map.put("content", content);
 			map.put("id", id);
 			
-			System.out.println(map);
-			
 			int result = mService.reportReply(map);
 			
 			return "redirect:boardManagement.me";
+		}
+		
+		@RequestMapping("notice.me")
+		public String notice(@RequestParam(value="search", required = false) String search ,Model model) {
+			ArrayList<Board> nList = mService.selectNList(search);
+			
+			model.addAttribute("nList", nList);
+			
+			return "notice";
+		}
+		
+		@RequestMapping("insertNotice.me")
+		public String insertNotice(@ModelAttribute Board b, @RequestParam("file") MultipartFile file, HttpServletRequest request, HttpSession session) {
+			String fileName = file.getOriginalFilename();
+			
+			b.setBoardWriter(((Member)session.getAttribute("loginUser")).getId());
+			
+			AttachedFile attm = null;
+			
+			if(!fileName.equals("")) {
+
+				attm = new AttachedFile();
+			
+				String[] returnArr = AttachedFile.saveFile(file, request);
+				
+				attm.setFileName(fileName);
+				attm.setFileType("N");
+				attm.setFileLink(returnArr[0]);
+				attm.setFileModifyName(returnArr[1]);
+				attm.setFileThumbnail("Y");
+			
+			}
+			
+			HashMap<String, Object> map = new HashMap<>();
+			
+			map.put("b", b);
+			map.put("attm", attm);
+			
+			int result = mService.insertNotice(map);
+			
+			return "redirect:notice.me";
+		}
+		
+		@RequestMapping("selectNAttm.me")
+		public void selectNAttm(@RequestParam("id") int id, HttpServletResponse response) {
+			AttachedFile attm = mService.selectNAttm(id);
+			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			
+			try {
+				gson.toJson(attm, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		@RequestMapping("modifyNotice.me")
+		public String modifyNotice(@ModelAttribute Board b, @RequestParam(value="beforeFileName", required=false) String beforeFileName,@RequestParam(value="beforeFileId", required=false) String beforeFileId, @RequestParam("file") MultipartFile file, HttpServletRequest request) {
+			System.out.println(file);
+			String fileName = file.getOriginalFilename();
+			int bId = b.getBoardId();
+			
+			int result = 0;
+			
+			AttachedFile attm = new AttachedFile();
+			
+			if(!fileName.equals("")) {
+				if(!beforeFileName.equals("")) {
+					AttachedFile.deleteFile(beforeFileName, request);
+					
+					String[] returnArr = AttachedFile.saveFile(file, request);
+					
+					attm.setFileName(fileName);
+					attm.setFileLink(returnArr[0]);
+					attm.setFileModifyName(returnArr[1]);
+					if(!beforeFileId.equals("")) {
+						attm.setFileId(Integer.parseInt(beforeFileId));
+					}
+					
+					result = mService.updateNAttm(attm);
+				} else {
+					String[] returnArr = AttachedFile.saveFile(file, request);
+					
+					attm.setFileName(fileName);
+					attm.setFileType("N");
+					attm.setFileLink(returnArr[0]);
+					attm.setFileModifyName(returnArr[1]);
+					attm.setFileThumbnail("Y");
+					
+					HashMap<String, Object> map = new HashMap<>();
+					
+					map.put("bId", bId);
+					map.put("attm", attm);
+					
+					result += mService.insertNAttm(map);
+				}
+			}
+			
+			result += mService.updateNotice(b);
+
+			if(result > 0) {
+				return "redirect:notice.me";
+			} else {
+				throw new CommonException("공지 수정 실패.");
+			}
+		}
+		
+		@RequestMapping("deleteNotice.me")
+		public String deleteNotice(@RequestParam("id") int id) {
+			int result = mService.deleteNotice(id);
+			
+			if(result > 0) {
+				return "redirect:notice.me";
+			} else {
+				throw new CommonException("공지 삭제 실패.");
+			}
+		}
+		
+		@RequestMapping("selectNoticeList.me")
+		public void selectNoticeList(HttpServletResponse response) {
+			ArrayList<Board> bList = mService.selectNList(null);
+			
+			response.setContentType("application/json; charset=UTF-8");
+			
+			Gson gson = new Gson();
+			
+			try {
+				gson.toJson(bList, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 }

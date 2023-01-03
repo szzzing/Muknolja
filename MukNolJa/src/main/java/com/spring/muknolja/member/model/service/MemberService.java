@@ -149,6 +149,20 @@ public interface MemberService {
 
 	String selectBoardId(String id);
 
+	ArrayList<Board> selectNList(String search);
+
+	int insertNotice(HashMap<String, Object> map);
+
+	AttachedFile selectNAttm(int id);
+
+	int updateNAttm(AttachedFile attm);
+
+	int updateNotice(Board b);
+
+	int insertNAttm(HashMap<String, Object> map);
+
+	int deleteNotice(int id);
+
 
 
 

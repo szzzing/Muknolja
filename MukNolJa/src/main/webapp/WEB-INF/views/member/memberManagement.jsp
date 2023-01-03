@@ -133,6 +133,13 @@
               문의 내역
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="notice.me">
+              <i class="bi bi-exclamation-octagon"></i>
+              <span data-feather="users" class="align-text-bottom"></span>
+              공지 관리
+            </a>
+          </li>
         </ul>
         <a href="${ contextPath }/logout.me" id="logout"><i class="bi bi-box-arrow-right"></i> 로그아웃</a>
       </div>

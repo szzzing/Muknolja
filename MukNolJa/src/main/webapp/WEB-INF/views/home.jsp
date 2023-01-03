@@ -170,6 +170,22 @@ li{list-style:none;}
 		 }
 		 #carouselExampleInterval{height: 350px; margin-top: 80px;}
 		 #carouselExampleInterval img{height:350px;}
+		 #notice_modal1, #notice_modal2{
+	      	display: none;
+			width: 400px;
+			height: 400px;
+			padding: 20px 20px;
+			background-color: #fefefe;
+			border: 1px solid #888;
+			border-radius: 3px;
+	      }
+	      .cn{
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			text-decoration: none;
+			color: black;
+		  }
     </style>
   </head>
   <body style="">
@@ -328,28 +344,76 @@ li{list-style:none;}
             </div>
        </div>
     </div>
-    <a href="${ contextPath }/member.me">membedsewhtwhtjkWWWWsssssdss</a>
-  		   <a href="${ contextPath }/createRoom.ch?roomName=CHAT&BoardId=23" >채팅방 생성</a>
-  		   <a href="${ contextPath }/chatRoomList.ch" >채팅방 목록</a>
-  		   <a href="${ contextPath }/admin.ho">호텔 사업자 페이지</a>
-  		   <a href="${ contextPath }/hotelList.ho">호텔 리스트</a>
-  		   <a href="${ contextPath }/writeHotel.ho">호텔만들기</a>
-  		   <a href="${ contextPath }/writeRoom.ho">객실만들기</a>
-  		   <a href="${ contextPath }/adminPage.me" >관리자 페이지</a>
-  		   <a href="${ contextPath }/partyList.pa">동행 리스트</a>
-  		   <a href="${ contextPath }/partyDetail.pa">동행 상세보기</a>
-  		   <a href="${ contextPath }/partyWrite.pa">동행 글쓰기</a>
-  		   <a href="${ contextPath }/travelList.tr">여행 리스트</a>
-  		   <a href="${ contextPath }/travelDetail.tr">여행 상세보기</a>
-  		   
-  		   
-  		   <a href="${ contextPath }/enrollE.me">회원가입1</a>
-  		    <a href="${ contextPath }/pra.me">연습</a>
+    
+    <div id="notice_modal1">
+    	<a class="close_btn cn"><i class="bi bi-x-circle"></i></a>
+    	<div class="container">
+		<div class="row text-center">
+			<div class="col"><h2 id="noticeTitleDiv"></h2></div>
+		</div>
+		<br>
+		<div class="row text-center">
+			<div class="col" id="noticeContentDiv"></div>
+		</div>
+		<br>
+		<div class="row text-center">
+			<div class="col">
+				<img id="noticeImg" alt="..." src="" style="display:none; max-width: 100%">
+			</div>
+		</div>
+	</div>
+    </div>
+    <div id="notice_modal2">
+    	<a class="close_btn cn"><i class="bi bi-x-circle"></i></a>
+    	<div class="container">
+		<div class="row text-center">
+			<div class="col"><h2 id="noticeTitleDiv2"></h2></div>
+		</div>
+		<br>
+		<div class="row text-center">
+			<div class="col" id="noticeContentDiv2"></div>
+		</div>
+		<br>
+		<div class="row text-center">
+			<div class="col">
+				<img id="noticeImg2" alt="..." src="" style="display:none; max-width: 100%">
+			</div>
+		</div>
+	</div>
+    </div>
   		    
     <jsp:include page="common/footer.jsp"/>
     <script>
     
 	window.onload = () =>{
+		
+		// 공지 불러오기
+		$.ajax({
+			url: 'selectNoticeList.me',
+			success: (data) => {
+				if(data != null){
+					document.getElementById('noticeImg').style.display = 'none';
+					
+					document.getElementById('noticeTitleDiv').innerText = data[0].boardTitle;
+					document.getElementById('noticeContentDiv').innerText = data[0].boardContent;
+					document.getElementById('noticeImg').src = 'resources/uploadFiles/' + data[0].fileModifyName;
+					document.getElementById('noticeImg').style.display = 'block';
+					
+					ModalN('notice_modal1');
+					if(data[1] != null){
+						document.getElementById('noticeImg2').style.display = 'none';
+						
+						document.getElementById('noticeTitleDiv2').innerText = data[1].boardTitle;
+						document.getElementById('noticeContentDiv2').innerText = data[1].boardContent;
+						document.getElementById('noticeImg2').src = 'resources/uploadFiles/' + data[1].fileModifyName;
+						document.getElementById('noticeImg2').style.display = 'block';
+						
+						ModalN2('notice_modal2');
+					}
+				}
+			}
+		});
+		
     var area = "";
     var serviceKey = "\yYiPRe2yVa7guL2Njhvw%2BYtE7ElhOYjn4TqI3gBgD5OUZXhCHXU%2BXYs0vyzWxDH%2FWylixM81RDErIKEfOlZx0Q%3D%3D";
     
@@ -593,6 +657,67 @@ li{list-style:none;}
   				
   			});
   			
+  			function ModalN(id) {
+  			    var zIndex = 9999;
+  			    var modal = document.getElementById(id);
+  			    console.log(id);
+  			
+  			    // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+  			    modal.querySelector('.close_btn').addEventListener('click', function() {
+  			        modal.style.display = 'none';
+  			    });
+  			
+  			    modal.setStyle({
+  			        position: 'fixed',
+  			        display: 'block',
+  			        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+  			
+  			        // 시꺼먼 레이어 보다 한칸 위에 보이기
+  			        zIndex: zIndex + 1,
+  					
+  			        // div center 정렬
+  			        top: '45%',
+  			        left: '30%',
+
+  			        transform: 'translate(-50%, -50%)',
+  			        msTransform: 'translate(-50%, -50%)',
+  			        webkitTransform: 'translate(-50%, -50%)'
+  			    });
+  			}
+  			
+  			function ModalN2(id) {
+  			    var zIndex = 9999;
+  			    var modal = document.getElementById(id);
+  			    console.log(id);
+  			
+  			    // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+  			    modal.querySelector('.close_btn').addEventListener('click', function() {
+  			        modal.style.display = 'none';
+  			    });
+  			
+  			    modal.setStyle({
+  			        position: 'fixed',
+  			        display: 'block',
+  			        boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+  			
+  			        // 시꺼먼 레이어 보다 한칸 위에 보이기
+  			        zIndex: zIndex + 1,
+  					
+  			        // div center 정렬
+  			        top: '45%',
+  			        left: '70%',
+
+  			        transform: 'translate(-50%, -50%)',
+  			        msTransform: 'translate(-50%, -50%)',
+  			        webkitTransform: 'translate(-50%, -50%)'
+  			    });
+  			}
+  			
+  			// Element 에 style 한번에 오브젝트로 설정하는 함수 추가
+  			Element.prototype.setStyle = function(styles) {
+  			    for (var k in styles) this.style[k] = styles[k];
+  			    return this;
+  			};
   			
   			
     </script>
