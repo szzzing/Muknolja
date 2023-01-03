@@ -28,10 +28,11 @@ public class Party {
 	private String maxParticipate;
 	private Date partyStartDate;
 	private Date partyEndDate;
-	private String gender;
+	private String partyGender;
 	private String thumbnail;
+	private String memberGender;
 	private int fileId;
 	private String contentCourse;
-	private String nowParticipate;
+	private int nowParticipate;
 	private int replyCount;
 }

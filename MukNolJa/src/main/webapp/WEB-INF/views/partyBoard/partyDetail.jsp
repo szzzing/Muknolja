@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>먹놀자 - ${ p.partyTitle }</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <style>
@@ -92,7 +92,9 @@
 	.well{margin-top: 20px; padding-left: 60px;}
 	.well input[readonly]{background: white;}
 	.reReplyInput{color: white!important; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important; }
-	.reReplyInput:hover{color: #6BB6EC!important; border-color: lightgray;}
+	.reReplyInput:hover{color: #6BB6EC!important; border-color: lightgray; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important;}
+	#noParticipate{background: #FF6C6C; border-color: #FF6C6C;}
+	#noParticipate:hover{background: white; border-color: #FF6C6C; color: #FF6C6C;}
 </style>
 </head>
 <body>
@@ -106,6 +108,8 @@
 		<form id="detailForm" method="POST">
 		<input type="hidden" name="partyId" value="${ p.partyId }">
 		<input type="hidden" name="fileId" value="${ p.fileId }">
+		<input type="hidden" name="writer" value="${ p.nickName }">
+		<input type="hidden" name="nowParticipate" value="${ partyCount }">
 		<img src="${ contextPath }/resources/uploadFiles/${p.thumbnail}" id="thumbnail">
 		
 		<div class="title row">
@@ -122,18 +126,30 @@
 						</tr>
 						<tr>
 							<td style="text-align: center"><i class="fa-solid fa-users"></i></td>
-							<td>0/${ p.maxParticipate }</td>
+							<td><span id="particiNum">${ partyCount }</span>/${ p.maxParticipate }</td>
 						</tr>
 						<tr>
 							<td style="text-align: center"><i class="fa-solid fa-heart"></i></td>
-							<td>${ p.gender }</td>
+							<td>${ p.partyGender }</td>
 						</tr>
 						<tr>
 							<td style="text-align: center"><i class="fa-solid fa-calendar-days"></i></td>
 							<td>${ p.partyStartDate }~${ p.partyEndDate }</td>
 						</tr>
 					</table>
-					<button type="button" class="btn btn-primary btn-lg">동행참여하기</button>
+					<div id="particiButton">
+						<c:if test="${ loginUser.id != p.partyWriter}">
+							<c:if test="${ checkParty == 0 }">
+								<button type="button" class="btn btn-primary btn-lg" id="participate">동행참여하기</button>
+							</c:if>
+							<c:if test="${ checkParty == 1 }">
+								<button type="button" class="btn btn-primary btn-lg" id="noParticipate">참여취소하기</button>
+							</c:if>
+						</c:if>
+						<c:if test="${ loginUser.id == p.partyWriter }">
+							<button type="button" class="btn btn-primary btn-lg" id="participate" style="display: none;" disabled>동행참여하기</button>
+						</c:if>
+					</div>
 				</div>
 				
 				<!-- 내용 -->
@@ -158,8 +174,8 @@
 				</div>
 				<c:if test="${ loginUser.id != p.partyWriter }">
 					<div style="float: right; margin-top: 15px; display: none;">
-						<button type="submit" id="updateButton">수정</button>
-						<button type="submit" id="deleteButton">삭제</button>
+						<button type="button" id="updateButton">수정</button>
+						<button type="button" id="deleteButton">삭제</button>
 					</div>
 				</c:if>
 				<c:if test="${ loginUser.id == p.partyWriter }">
@@ -192,7 +208,7 @@
 				<div class="input-group mb-3">
 					<c:if test="${ loginUser == null }">
 						<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
-						<button class="btn btn-outline-secondary" type="button" disabled><i class="bi bi-send"></i></button>
+						<button class="btn btn-outline-secondary" type="button" id="button-addon2" disabled><i class="bi bi-send"></i></button>
 					</c:if>
 					<c:if test="${ loginUser != null }">
 						<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" id="replyContent">
@@ -216,13 +232,13 @@
 						</table>
 						<c:if test="${ r.replyWriter == loginUser.id }">
 							<div style="float:right;">
-								<button class="buttons deleteReply"><i class="fa-solid fa-trash-can"></i></button>
+								<button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button>
 								<input type="hidden" value="${ r.replyId }" name="replyId">
 							</div>
 						</c:if>
 						<c:if test="${ r.replyWriter != loginUser.id }">
 							<div style="float:right;">
-								<button class="buttons" type="button">신고하기</button>
+								<button class="buttons reportButton" type="button">신고</button>
 							</div>
 						</c:if>
 					</div>
@@ -239,7 +255,7 @@
 						  	<div class="input-group mb-3">
 								<c:if test="${ loginUser == null }">
 									<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
-									<button class="btn btn-outline-secondary" type="button" disabled><i class="bi bi-send"></i></button>
+									<button class="btn btn-outline-secondary" type="button" style="border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important;" disabled><i class="bi bi-send"></i></button>
 								</c:if>
 								<c:if test="${ loginUser != null }">
 									<input type="text" class="form-control reReplyContent" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -294,6 +310,8 @@
 				form.submit();
 			});
 			
+		
+			
 			document.getElementById('button-addon2').addEventListener('click', function(){
 				$.ajax({
 					url: '${contextPath}/insertReply.pa',
@@ -308,7 +326,7 @@
 							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">';
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + r.nickName + '</td></tr><tr><td style="color: gray;">' + r.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + r.replyId + '" name="replyId"></div>';
-							var reportR = '<div style="float:right;"><button class="buttons" type="button">신고하기</button></div>';
+							var reportR = '<div style="float:right;"><button class="buttons reportButton" type="button">신고</button></div>';
 							var reReply = '<div><button class="buttons" type="button">답글달기</button></div>';
 							var replyContent = '<div class="replyContent"><textarea readonly>' + r.replyContent +'</textarea></div>';
 							var hr = '<hr style="margin-top: 10px; border-color: gray;">';
@@ -323,7 +341,7 @@
 						}
 						
 						document.getElementById('replyContent').value = '';
-// 						document.getElementById('replyCount').innerText = Number(document.getElementById('replyCount').innerText) + 1;
+						document.getElementById('replyCount').innerText = Number(document.getElementById('replyCount').innerText) + 1;
 					},
 					error: (data) =>{
 						console.log(data);
@@ -331,59 +349,23 @@
 				});
 			});
 			
-		}
-		
-		$(document).on('click', '.reReplyButton', function () {
-			var collapses = $(this).parent().find('.collapse');
-			collapses.collapse('show');
-			var replyId = Number($(this).parent().find('.replyId').val());
-			
-			$.ajax({
-				url: '${contextPath}/selectReReply.pa',
-				data: {refReplyId:replyId},
-				success: (data) =>{
-					console.log(data);
-					$(this).parent().find('.reReply2').html("");
-					for(const rr of data){
-						var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
-						var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
-						var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
-						var reportR = '<div style="float:right;"><button class="buttons" type="button">신고하기</button></div>';
-						var replyContent = '<div class="replyContent"><textarea readonly>' + rr.replyContent +'</textarea></div>';
-						var hr = '<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">';
-						var replyProfile = '';
-						if(rr.replyWriter == '${loginUser.id}'){
-							replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + deleteR + '</div>';
-						}else{
-							replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + reportR + '</div>';
-						}
-						$(this).parent().find('.reReply2').append(replyProfile + replyContent + hr);
-					}
-					
-				},
-				error: (data) =>{
-					consol.log(data)
-				}
-			});
-			
-			
-			
-			
-			$(this).parent().find('.reReplyInput').on('click', function(){
-	 			$.ajax({
-	 				url: '${contextPath}/insertReReply.pa',
-	 				data: {replyContent:$(this).parent().find('.reReplyContent').val(),
-	 					   refReplyId:replyId, replyWriter:"${loginUser.id}", refBoardId:${p.partyId}},
+			$(document).on('click', '.reReplyButton', function () {
+				var collapses = $(this).parent().find('.collapse');
+				collapses.collapse('show');
+				var replyId = Number($(this).parent().find('.replyId').val());
+				$(this).parent().find('.reReply2').html("");
+				$.ajax({
+					url: '${contextPath}/selectReReply.pa',
+					data: {refReplyId:replyId},
 					success: (data) =>{
 						console.log(data);
-					
-						$(this).parent().parent().find('.reReply2').html("");
-					
+						console.log($(this).parent().find('.reReply2'));
+						$(this).parent().find('.reReply2').html("");
 						for(const rr of data){
 							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
-							var reportR = '<div style="float:right;"><button class="buttons" type="button">신고하기</button></div>';
+							var reportR = '<div style="float:right;"><button class="buttons reportButton" type="button">신고</button></div>';
 							var replyContent = '<div class="replyContent"><textarea readonly>' + rr.replyContent +'</textarea></div>';
 							var hr = '<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">';
 							var replyProfile = '';
@@ -392,8 +374,43 @@
 							}else{
 								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + reportR + '</div>';
 							}
-							$(this).parent().parent().append(replyProfile + replyContent + hr);
+							$(this).parent().find('.reReply2').append(replyProfile + replyContent + hr);
 						}
+						
+					},
+					error: (data) =>{
+						console.log(data)
+					}
+				});
+			});
+			$(document).on('click', '.reReplyInput', function(){
+				var replyId = Number($(this).parent().find('.replyId').val());
+			 	$.ajax({
+			 		url: '${contextPath}/insertReReply.pa',
+			 		data: {replyContent:$(this).parent().find('.reReplyContent').val(),
+			 			   refReplyId:replyId, replyWriter:"${loginUser.id}", refBoardId:${p.partyId}},
+					success: (data) =>{
+						console.log(data);
+						
+						$(this).parent().parent().find('.reReply2').html("");
+					
+						for(const rr of data){
+							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
+							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
+							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
+							var reportR = '<div style="float:right;"><button class="buttons reportButton" type="button">신고</button></div>';
+							var replyContent = '<div class="replyContent"><textarea readonly>' + rr.replyContent +'</textarea></div>';
+							var hr = '<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">';
+							var replyProfile = '';
+							if(rr.replyWriter == '${loginUser.id}'){
+								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + deleteR + '</div>';
+							}else{
+								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + reportR + '</div>';
+							}
+							$(this).parent().parent().find('.reReply2').append(replyProfile + replyContent + hr);
+						}
+							console.log("부모찾기");
+							console.log($(this).parent().parent());
 						
 						$(this).parent().find('.reReplyContent').val("");
 					},
@@ -402,12 +419,91 @@
 					}
 				});
 			});
-		});
+			
+			$(document).on('click', '.reReplyButton', function () {
+				var collapses = $(this).parent().find('.collapse');
+				collapses.collapse('hide');
+				$(this).parent().find('.reReply2').html("");
+			});
+			
+			
+			$(document).on('click', '.deleteReply', function(){
+				console.log($(this));
+				const ReplyId = $(this).parent().find('input').val();
+				console.log(ReplyId);
+				$('input[name=realDeleteRepId]').val(ReplyId);
+				form.action = '${contextPath}/deleteReply.pa';
+				form.submit();
+			});
+			
+			
+			if(document.getElementById('participate')){
+				document.getElementById('participate').addEventListener('click', function(){
+					if('${loginUser.id}' == ''){
+						this.setAttribute('disabled', true);
+						alert('로그인 후 참여해주세요.');
+						location.href='${contextPath}/loginView.me';
+					}
+				});
+			}
+			
+			
+			
+			$(document).on('click', '#participate', function(){
+				$.ajax({
+					url: '${contextPath}/participate.pa',
+					data: {boardId:${p.partyId}, memberId:"${loginUser.id}"},
+					success: (data) =>{
+						console.log(data);
+						document.getElementById('particiNum').innerText = "";
+						document.getElementById('particiNum').innerText = data;
+						document.getElementById('particiButton').innerHTML = "";
+						var noPartyButton = '<button type="button" class="btn btn-primary btn-lg" id="noParticipate">참여취소하기</button>';
+						document.getElementById('particiButton').innerHTML += noPartyButton;
+					},
+					error: (data) =>{
+						console.log(data);
+					}
+				});
+			});
+			
+			$(document).on('click', '#noParticipate', function(){
+				$.ajax({
+					url: '${contextPath}/deleteParticipate.pa',
+					data: {boardId:${p.partyId}, memberId:"${loginUser.id}"},
+					success: (data) =>{
+						console.log(data);
+						document.getElementById('particiNum').innerText = "";
+						document.getElementById('particiNum').innerText = data;
+						document.getElementById('particiButton').innerHTML = "";
+						var partyButton = '<button type="button" class="btn btn-primary btn-lg" id="participate">동행참여하기</button>';
+						document.getElementById('particiButton').innerHTML += partyButton;
+					},
+					error: (data) =>{
+						console.log(data);
+					}
+				});
+			});
+			
+			console.log('${contextPath}');
+			
+			if(${p.maxParticipate} == ${partyCount}){
+				document.getElementById('particiButton').innerHTML = "";
+				var endPartyButton = '<button type="button" class="btn btn-primary btn-lg" id="noParticipate" disabled>모집마감</button>';
+				document.getElementById('particiButton').innerHTML += endPartyButton;
+			}
+			
+			$(document).on('click', '.reportButton', function(){
+				if('${loginUser.id}' == ''){
+					$(this).attr('disabled', true);
+					alert('로그인 후 신고해주세요.');
+					location.href='${contextPath}/loginView.me';
+				}
+			});
+			
+			
 		
-		$(document).on('click', '.reReplyButton', function () {
-			var collapses = $(this).parent().find('.collapse');
-			collapses.collapse('hide')
-		});
+		}
 		
 	</script>
 	

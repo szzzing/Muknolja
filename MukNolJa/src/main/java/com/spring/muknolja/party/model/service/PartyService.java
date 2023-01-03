@@ -32,4 +32,14 @@ public interface PartyService {
 
 	int countReply(int pId);
 
+	int deleteReply(int replyId);
+
+	int participate(HashMap<String, Object> map);
+
+	int countParty(int pId);
+
+	int checkParty(HashMap<String, Object> map);
+
+	void deleteParticipate(HashMap<String, Object> map);
+
 }

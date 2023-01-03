@@ -128,7 +128,7 @@ public class TravelController {
 			String urlStr;
 			String keyword = URLEncoder.encode(searchValue, "UTF-8");
 			
-			urlStr = "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=" + serviceKey + "&MobileApp=AppTest&MobileOS=ETC&pageNo=" + pageNo + "&numOfRows=20&listYN=Y&&arrange=A&keyword=" + keyword + "&_type=json";
+			urlStr = "http://apis.data.go.kr/B551011/KorService/searchKeyword?serviceKey=" + serviceKey + "&MobileApp=AppTest&MobileOS=ETC&pageNo=" + pageNo + "&numOfRows=20&listYN=Y&&arrange=A&contentTypeId=12&keyword=" + keyword + "&_type=json";
 			
 			URL url = new URL(urlStr);
 			BufferedReader bf;

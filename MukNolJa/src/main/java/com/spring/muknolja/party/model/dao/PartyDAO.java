@@ -28,7 +28,13 @@ public class PartyDAO {
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("partyMapper.selectPartyList", rowBounds);
+		ArrayList<Party> partyList = (ArrayList)sqlSession.selectList("partyMapper.selectPartyList", rowBounds);
+		for(Party p : partyList) {
+			p.setNowParticipate(sqlSession.selectOne("partyMapper.countParty", p.getPartyId()));
+			p.setReplyCount(sqlSession.selectOne("replyMapper.countReply", p.getPartyId()));
+		}
+		
+		return partyList;
 	}
 
 	public Party selectParty(SqlSessionTemplate sqlSession, int pId) {
@@ -45,7 +51,8 @@ public class PartyDAO {
 	public int deleteParty(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		int board = sqlSession.update("partyMapper.deleteBoard", map);
 		int attm = sqlSession.update("partyMapper.deleteAttm", map);
-		return board + attm;
+		int participate = sqlSession.delete("partyMapper.deletePartyParticipate", map);
+		return board + attm + participate;
 	}
 
 	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
@@ -66,6 +73,28 @@ public class PartyDAO {
 
 	public int countReply(SqlSessionTemplate sqlSession, Integer pId) {
 		return sqlSession.selectOne("replyMapper.countReply", pId);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyId) {
+		int result1 = sqlSession.update("replyMapper.deleteReply", replyId);
+		int result2 = sqlSession.update("replyMapper.deleteReReply", replyId);
+		return result1 + result2;
+	}
+
+	public int paticipate(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("partyMapper.participate", map);
+	}
+
+	public int countParty(SqlSessionTemplate sqlSession, int pId) {
+		return sqlSession.selectOne("partyMapper.countParty", pId);
+	}
+
+	public int checkParty(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("partyMapper.checkParty", map);
+	}
+
+	public void deleteParticipate(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		sqlSession.delete("partyMapper.deleteParticipate", map);
 	}
 
 }

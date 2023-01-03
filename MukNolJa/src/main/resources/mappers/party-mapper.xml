@@ -18,7 +18,8 @@
 		<result column="MAX_PARTICIPATE" property="maxParticipate"/>
 		<result column="PARTY_STARTDATE" property="partyStartDate"/>
 		<result column="PARTY_ENDDATE" property="partyEndDate"/>
-		<result column="PARTY_GENDER" property="gender"/>
+		<result column="PARTY_GENDER" property="partyGender"/>
+		<result column="GENDER" property="memberGender"/>
 		<result column="FILE_MODIFY_NAME" property="thumbnail"/>
 		<result column="CONTENT_COURSE" property="contentCourse"/>
 		<result column="FILE_ID" property="fileId"/>
@@ -30,7 +31,7 @@
 		into board values(SEQ_BID.nextval, #{p.partyWriter}, 'P', #{p.partyCourse}, #{p.partyTitle}, #{p.partyContent}, sysdate, sysdate, #{p.partyArea}, default, #{p.contentCourse})
 		into attached_file values(SEQ_FID.nextval, 'P', sysdate, #{af.fileName}, #{af.fileModifyName}, #{af.fileLink}, default, 'Y')
 		into board_img values(SEQ_FID.currval, SEQ_BID.nextval)
-		into party values(SEQ_BID.currval, #{p.maxParticipate}, to_date(#{p.partyStartDate}), to_date(#{p.partyEndDate}), #{p.gender})
+		into party values(SEQ_BID.currval, #{p.maxParticipate}, to_date(#{p.partyStartDate}), to_date(#{p.partyEndDate}), #{p.partyGender})
 		select * from dual
 	</insert>
 	
@@ -81,7 +82,7 @@
 		set max_participate=#{p.maxParticipate},
 			party_startdate=#{p.partyStartDate},
 			party_enddate=#{p.partyEndDate},
-			party_gender=#{p.gender}
+			party_gender=#{p.partyGender}
 		where board_id=#{p.partyId}
 	</update>
 	<update id="updateAttm">
@@ -102,5 +103,34 @@
 		set file_status='N'
 		where file_id=#{fileId}
 	</update>
+	<delete id="deletePartyParticipate">
+		delete from party_participate
+		where board_id=#{partyId}
+	</delete>
 	
+	<!-- 동행 참여 -->
+	<insert id="participate">
+		insert into party_participate values(#{memberId}, #{boardId})
+	</insert>
+	
+	<!-- 동행 참여자 수 -->
+	<select id="countParty" resultType="_int">
+		select count(*)
+		from party_participate
+		where board_id=#{pId}
+	</select>
+	
+	<!-- 동행 참여 확인 -->
+	<select id="checkParty" resultType="_int">
+		select count(*)
+		from party_participate
+		where board_id=#{boardId}
+			  and member_id=#{memberId}
+	</select>
+	
+	<!-- 동행 참여 취소 -->
+	<delete id="deleteParticipate">
+		delete from party_participate
+		where board_id=#{boardId} and member_id=#{memberId}
+	</delete>
 </mapper>
