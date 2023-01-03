@@ -298,6 +298,35 @@ public class MemberDAO {
 	public String selectBoardId(SqlSessionTemplate sqlSession, String id) {
 		return sqlSession.selectOne("memberMapper.selectBoardId", id);
 	}
+
+	public ArrayList<Board> selectNList(SqlSessionTemplate sqlSession, String search) {
+		return (ArrayList)sqlSession.selectList("memberMapper.selectNList", search);
+	}
+
+	public int insertNotice(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		System.out.println(map.get("b"));
+		return sqlSession.insert("memberMapper.insertNotice", map);
+	}
+
+	public AttachedFile selectNAttm(SqlSessionTemplate sqlSession, int id) {
+		return sqlSession.selectOne("memberMapper.selectNAttm", id);
+	}
+
+	public int updateNAttm(SqlSessionTemplate sqlSession, AttachedFile attm) {
+		return sqlSession.update("memberMapper.updateNAttm", attm);
+	}
+
+	public int updateNotice(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.update("memberMapper.updateNotice", b);
+	}
+
+	public int insertNAttm(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("memberMapper.insertNAttm", map);
+	}
+
+	public int deleteNotice(SqlSessionTemplate sqlSession, int id) {
+		return sqlSession.update("memberMapper.deleteNotice", id);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int

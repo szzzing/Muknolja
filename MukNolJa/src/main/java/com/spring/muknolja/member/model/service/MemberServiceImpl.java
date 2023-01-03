@@ -363,6 +363,41 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.selectBoardId(sqlSession, id);
 	}
 
+	@Override
+	public ArrayList<Board> selectNList(String search) {
+		return mDAO.selectNList(sqlSession, search);
+	}
+
+	@Override
+	public int insertNotice(HashMap<String, Object> map) {
+		return mDAO.insertNotice(sqlSession, map);
+	}
+
+	@Override
+	public AttachedFile selectNAttm(int id) {
+		return mDAO.selectNAttm(sqlSession, id);
+	}
+
+	@Override
+	public int updateNAttm(AttachedFile attm) {
+		return mDAO.updateNAttm(sqlSession, attm);
+	}
+	
+	@Override
+	public int updateNotice(Board b) {
+		return mDAO.updateNotice(sqlSession, b);
+	}
+	
+	@Override
+	public int insertNAttm(HashMap<String, Object> map) {
+		return mDAO.insertNAttm(sqlSession, map);
+	}
+
+	@Override
+	public int deleteNotice(int id) {
+		return mDAO.deleteNotice(sqlSession, id);
+	}
+
 	
 
 	
