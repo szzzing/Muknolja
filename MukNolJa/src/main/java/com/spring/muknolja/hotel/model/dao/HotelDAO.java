@@ -182,4 +182,8 @@ public class HotelDAO {
 		return result;
 	}
 
+	public int getCurrReservationId(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("hotelmapper.getCurrReservationId");
+	}
+
 }

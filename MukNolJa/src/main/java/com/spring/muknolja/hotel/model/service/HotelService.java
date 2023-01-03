@@ -91,4 +91,6 @@ public interface HotelService {
 
 	int deleteReservation(int reservationId);
 
+	int getCurrReservationId();
+
 }

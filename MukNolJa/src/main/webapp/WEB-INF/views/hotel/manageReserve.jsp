@@ -80,14 +80,12 @@
 	.mukSimpleButton {color:#6bb6ec; cursor:pointer;}
 	.mukSimpleButton:hover {text-decoration:underline;}
 	
-	.modifyReplyButton {transition: all 0.3s; color:#6bb6ec;}
-	.modifyReplyButton:hover {transition: all 0.3s; opacity:0.8;}
-	.insertReplyButton {transition: all 0.3s; color:#6bb6ec;}
-	.insertReplyButton:hover {transition: all 0.3s; opacity:0.8;}
-	
 	.replyTable tr td {padding:0px;}
 	
-	.dropdown-item:hover {
+	.dropdown-menu {
+		cursor:pointer;
+	}
+	.dropdown-menu:hover {
 		background:#fafafa !important;
 	}
 </style>
@@ -210,10 +208,10 @@
 							<td class="p-2 checkout">22.12.15 16:00</td>
 							<td class="p-2 paymentMethod">카카오페이</td>
 							<td class="p-2">
-								<div class="nav-item dropdown">
-									<a class="reservationStatus nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"></a>
-									<ul class="dropdown-menu" style="background:white; border:1px solid #f1f1f1; font-size:14px;">
-										<li><a class="dropdown-item deleteReservationButton" data-bs-toggle="modal" data-bs-target="#mukModal">예약 취소/환불</a></li>
+								<div class="nav-item dropdown mukSubText status_Y">
+									<div class="reservationStatus nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false"></div>
+									<ul class="dropdown-menu text-center" style="background:white; border:1px solid #f1f1f1; font-size:14px;">
+										<li><span class="mukSubText p-2 deleteReservationButton" data-bs-toggle="modal" data-bs-target="#mukModal">예약 취소/환불</span></li>
 									</ul>
 								</div>
 							</td>
@@ -234,8 +232,8 @@
 		$(document).ready(function(){
 			var maxPage;
 			var page = 1;
-			var reservationDiv = $("#reservationDiv").clone();
-			reservationDiv.prop("style").removeProperty("display");
+			var reservationDiv2 = $("#reservationDiv").clone();
+			reservationDiv2.prop("style").removeProperty("display");
 			var reservationCategory = $("#reservationCategory").clone();
 			
 			$.reservationList = function(){
@@ -271,6 +269,7 @@
 						}
 						
 						for(i of data.list) {
+							var reservationDiv = reservationDiv2.clone();
 							reservationDiv.find(".reservationId").html(i.reservationId);
 							reservationDiv.find(".reservationName").html(i.reservationName);
 							reservationDiv.find(".reservationPhone").html(i.reservationPhone);
@@ -288,6 +287,8 @@
 								reservationDiv.find(".reservationStatus").html("예약완료");
 							} else {
 								reservationDiv.find(".reservationStatus").html("예약취소");
+								reservationDiv.find(".reservationStatus").siblings("ul").remove();
+								reservationDiv.find(".reservationStatus").removeClass("dropdown-toggle").removeClass("nav-link").removeAttr("data-bs-toggle").removeAttr("role");
 							}
 							if(i.isCheckin>0 && i.isCheckout>0 && i.reservationStatus=='Y') {
 								reservationDiv.find(".reservationStatus").html("이용완료");
@@ -330,8 +331,10 @@
 	
 	<script>
 		var reservationId;
+		var reservationTd;
 		
 		$(document).on("click", ".deleteReservationButton", function(){
+			reservationTd = $(this).closest(".reservation");
 			reservationId = $(this).closest(".reservation").find(".reservationId").text();
 			$("#mukModal").find(".modalContent").text(reservationId+"번 예약을 취소하시겠습니까?");
 		});
@@ -345,22 +348,13 @@
 				},
 				success: (data)=>{
 					console.log(data);
+					reservationTd.find(".reservationStatus").html("예약취소");
+					reservationTd.find(".reservationStatus").removeClass("dropdown-toggle").removeClass("nav-link").removeAttr("data-bs-toggle").removeAttr("role");
 				},
 				error: (data)=>{
 					console.log(data);
 				}
 			});
-// 			$.ajax({
-// 				url: "${contextPath}/cancelPay.ho",
-// 				type: "POST",
-// 				contentType: "application/json",
-// 				data: JSON.stringify({
-// 				  merchant_uid: reservationId,
-// 				  cancel_request_amount: 100, // 환불금액
-// 				  reason: "테스트 결제 환불" // 환불사유
-// 				}),
-// 				dataType: "json"
-// 			});
 		});
 	</script>
 </body>

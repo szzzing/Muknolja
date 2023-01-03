@@ -18,8 +18,8 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
-	.form-control {border:2px solid #e9e9e9 !important; border-radius:20px !important}
-	.form-select {border:2px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-control {border:1px solid #e9e9e9 !important; border-radius:20px !important}
+	.form-select {border:1px solid #e9e9e9 !important; border-radius:20px !important}
 	input:focus {outline: none !important;} /* outline 테두리 없애기 */
 	textarea:focus {outline: none !important;} /* outline 테두리 없애기 */
 	
@@ -286,8 +286,8 @@
 							reviewDiv2.find(".reviewContent").html(r.reviewContent.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 							reviewDiv2.find(".rating").html(r.rating.toFixed(1));
 							reviewDiv2.find(".createDate").html(r.createDate);
-							reviewDiv2.find(".checkinDate").html(r.createDate);
-							reviewDiv2.find(".checkoutDate").html(r.createDate);
+							reviewDiv2.find(".checkinDate").html(r.checkinDate);
+							reviewDiv2.find(".checkoutDate").html(r.checkoutDate);
 							if(r.businessReply!=null) {
 								reviewDiv2.find("textarea").val(r.businessReply);
 								reviewDiv2.find(".businessReply").html(r.businessReply.replace(/(?:\r\n|\r|\n)/g, '<br/>'));
@@ -390,6 +390,7 @@
 						$(this).closest("table").find(".businessReply").html($(this).closest("tr").find("textarea").val().replace(/(?:\r\n|\r|\n)/g, '<br/>'));
 						$(this).closest("table").find(".writeReplyTr").css("display", "none");
 						$(this).closest("table").find(".viewReplyTr").prop("style").removeProperty("display");
+						$(this).closest("table").parents("table").find(".hasReply").prop("style").removeProperty("display");
 					},
 					error: (data)=>{
 						console.log(data);

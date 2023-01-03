@@ -488,7 +488,10 @@
 		where reservation_id=#{reservationId}
 	</update>
 	
-	
+	<select id="getCurrReservationId" resultType="_int">
+		select SEQ_RESERVATIONID.currval
+		from dual
+	</select>
 	
 	
 	
