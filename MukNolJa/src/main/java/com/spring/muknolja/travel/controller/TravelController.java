@@ -311,7 +311,10 @@ public class TravelController {
 		}
 		
 		ArrayList<Reply> list = tService.selectReply(contentId);
+		int result = tService.countReply(contentId);
+		
 		model.addAttribute("rlist", list);
+		model.addAttribute("replyCount", result);
 		return "travelDetail";
 	}
 	

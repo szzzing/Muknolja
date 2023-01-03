@@ -49,6 +49,7 @@
 			
 			<div id="travelBtn">
 				<button id="print"><span><i class="fa-solid fa-print"></i></span></button>
+				<button id="travelCount"><span><i class="fa-solid fa-eye"></i> 30</span></button>
 			</div>
 			
 		<table class="table text-center mt-5 mb-5">
@@ -109,7 +110,7 @@
 				<table>
 					<tr>
 						<td width="150px;"> 문의 및 안내</td>
-						<td>${ infoList[0] }</td>
+						<td>${ infoList[3] }</td>
 					</tr>
 					<tr>
 						<td> 주소</td>
@@ -117,43 +118,47 @@
 					</tr>
 					<tr>
 						<td> 휴일</td>
-						<td>${ infoList[3] }</td>
-					</tr>
-					<tr>
-						<td> 유모차대여정보</td>
-						<td>${ infoList[5] }</td>
-					</tr>
-					<tr>
-						<td> 애완동물동반</td>
-						<td>${ infoList[6] }</td>
+						<td>${ infoList[8] }</td>
 					</tr>
 					<tr>
 						<td> 신용카드가능정보</td>
-						<td>${ infoList[7] }</td>
+						<td>${ infoList[0] }</td>
+					</tr>
+					<tr>
+						<td> 할인정보</td>
+						<td>${ infoList[1] }</td>
+					</tr>
+					<tr>
+						<td> 주차시설</td>
+						<td>${ infoList[6] }</td>
 					</tr>
 				</table>
 			</div>
 			<div class="travelInfo col">
 				<table>
 					<tr>
-						<td width="130px;"> 개장일</td>
-						<td>${ infoList[1] }</td>
-					</tr>
-					<tr>
-						<td> 이용시간</td>
-						<td>${ infoList[4] }</td>
-					</tr>
-					<tr>
-						<td> 주차</td>
+						<td width="130px;"> 대표메뉴</td>
 						<td>${ infoList[2] }</td>
 					</tr>
 					<tr>
-						<td> 체험안내</td>
+						<td> 영업시간</td>
+						<td>${ infoList[4] }</td>
+					</tr>
+					<tr>
+						<td> 포장가능</td>
+						<td>${ infoList[5] }</td>
+					</tr>
+					<tr>
+						<td> 예약안내</td>
+						<td>${ infoList[7] }</td>
+					</tr>
+					<tr>
+						<td> 취급메뉴</td>
 						<td>${ infoList[9] }</td>
 					</tr>
 					<tr>
-						<td> 체험가능연령</td>
-						<td>${ infoList[8] }</td>
+						<td> 인허가번호</td>
+						<td>${ infoList[10] }</td>
 					</tr>
 				</table>
 			</div>
@@ -163,7 +168,7 @@
 		<form method="POST" id="replyForm">
 			<input type="hidden" name="contentId" value="${ contentId }">
 			<div id="travelReply">
-				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>${ replyCount }</span></h5>
+				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>0</span></h5>
 				<div class="input-group mb-3">
 					<c:if test="${ loginUser == null }">
 						<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>

@@ -52,9 +52,9 @@ public class FoodController {
 			String urlStr;
 			
 			if(areaCode ==null) {
-				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12";
+				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=39";
 			}else {
-				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=12&areaCode=" + areaCode;
+				urlStr = "http://apis.data.go.kr/B551011/KorService/areaBasedList?serviceKey=" + serviceKey + "&numOfRows=20&pageNo=" + pageNo + "&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=Q&contentTypeId=39&areaCode=" + areaCode;
 			}
 			
 			URL url = new URL(urlStr);
@@ -62,24 +62,17 @@ public class FoodController {
 			String line = "";
 			String result = "";
 			
-			// 관광정보 받아오기
 			bf = new BufferedReader(new InputStreamReader(url.openStream()));
 			
-			//버퍼에 있는 정보를 하나의 문자열로 변환
 			while((line=bf.readLine())!=null){
                 result=result.concat(line);
-//                System.out.println(result);  // 받아온 데이터를 확인해봅니다.
             }
 			
-			// Json parser를 만들어 만들어진 문자열 데이터를 객체화
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject)parser.parse(result);
 			
-			// Top레벨 단계인 response 키를 가지고 데이터 파싱
 			JSONObject parseResponse = (JSONObject)obj.get("response");
-			// response로부터 body 찾기
 			JSONObject parseBody = (JSONObject)parseResponse.get("body");
-			// body로부터 items찾기
 			JSONObject parseItems = (JSONObject)parseBody.get("items");
 			
 			JSONArray parseItem = (JSONArray)parseItems.get("item");
@@ -113,7 +106,7 @@ public class FoodController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "travelList";
+		return "foodList";
 	}
 	
 	@RequestMapping("searchFood.tr")
@@ -179,7 +172,7 @@ public class FoodController {
 			e.printStackTrace();
 		}
 		
-		return "travelList";
+		return "foodList";
 	}
 	
 	@RequestMapping("foodDetail.tr")
@@ -207,15 +200,15 @@ public class FoodController {
 			JSONArray parseItem = (JSONArray)parseItems.get("item");
 			
 			for(int i = 0; i < parseItem.size(); i++) {
-				JSONObject tDetail = (JSONObject)parseItem.get(i);
+				JSONObject foodDetail = (JSONObject)parseItem.get(i);
 				
-				String title = tDetail.get("title").toString();
-				String tel = tDetail.get("tel").toString();
-				String homePage = tDetail.get("homepage").toString();
-				String addr = tDetail.get("addr1").toString();
-				String overview = tDetail.get("overview").toString();
-				String mapx = tDetail.get("mapx").toString();
-				String mapy = tDetail.get("mapy").toString();
+				String title = foodDetail.get("title").toString();
+				String tel = foodDetail.get("tel").toString();
+				String homePage = foodDetail.get("homepage").toString();
+				String addr = foodDetail.get("addr1").toString();
+				String overview = foodDetail.get("overview").toString();
+				String mapx = foodDetail.get("mapx").toString();
+				String mapy = foodDetail.get("mapy").toString();
 				
 				model.addAttribute("title", title);
 				model.addAttribute("tel", tel);
@@ -257,7 +250,7 @@ public class FoodController {
 			}
 			model.addAttribute("tList", tList);
 			
-			String urlStr3 = "http://apis.data.go.kr/B551011/KorService/detailIntro?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileApp=AppTest&MobileOS=ETC&contentId=" + contentId + "&contentTypeId=12&_type=json";
+			String urlStr3 = "http://apis.data.go.kr/B551011/KorService/detailIntro?serviceKey=" + serviceKey + "&numOfRows=10&pageNo=1&MobileApp=AppTest&MobileOS=ETC&contentId=" + contentId + "&contentTypeId=39&_type=json";
 			URL url3 = new URL(urlStr3);
 			BufferedReader bf3;
 			String line3 = "";
@@ -279,29 +272,31 @@ public class FoodController {
 			
 			List<String> infoList = new ArrayList<String>();
 			for(int i = 0; i < parseItem3.size(); i++) {
-				JSONObject tInfo = (JSONObject)parseItem3.get(i);
+				JSONObject foodInfo = (JSONObject)parseItem3.get(i);
 				
-				String infocenter = tInfo.get("infocenter").toString();
-				String opendate = tInfo.get("opendate").toString();
-				String parking = tInfo.get("parking").toString();
-				String restdate = tInfo.get("restdate").toString();
-				String usetime = tInfo.get("usetime").toString();
-				String chkbabycarriage = tInfo.get("chkbabycarriage").toString();
-				String chkpet = tInfo.get("chkpet").toString();
-				String chkcreditcard = tInfo.get("chkcreditcard").toString();
-				String expagerange = tInfo.get("expagerange").toString();
-				String expguide = tInfo.get("expguide").toString();
+				String chkcreditcardfood = foodInfo.get("chkcreditcardfood").toString();
+				String discountinfofood = foodInfo.get("discountinfofood").toString();
+				String firstmenu = foodInfo.get("firstmenu").toString();
+				String infocenterfood = foodInfo.get("infocenterfood").toString();
+				String opentimefood = foodInfo.get("opentimefood").toString();
+				String packing = foodInfo.get("packing").toString();
+				String parkingfood = foodInfo.get("parkingfood").toString();
+				String reservationfood = foodInfo.get("reservationfood").toString();
+				String restdatefood = foodInfo.get("restdatefood").toString();
+				String treatmenu = foodInfo.get("treatmenu").toString();
+				String lcnsno = foodInfo.get("lcnsno").toString();
 				
-				infoList.add(infocenter);
-				infoList.add(opendate);
-				infoList.add(parking);
-				infoList.add(restdate);
-				infoList.add(usetime);
-				infoList.add(chkbabycarriage);
-				infoList.add(chkpet);
-				infoList.add(chkcreditcard);
-				infoList.add(expagerange);
-				infoList.add(expguide);
+				infoList.add(chkcreditcardfood);
+				infoList.add(discountinfofood);
+				infoList.add(firstmenu);
+				infoList.add(infocenterfood);
+				infoList.add(opentimefood);
+				infoList.add(packing);
+				infoList.add(parkingfood);
+				infoList.add(reservationfood);
+				infoList.add(restdatefood);
+				infoList.add(treatmenu);
+				infoList.add(lcnsno);
 				
 				model.addAttribute("infoList", infoList);
 			}
@@ -312,37 +307,8 @@ public class FoodController {
 		
 		ArrayList<Reply> list = tService.selectReply(contentId);
 		model.addAttribute("rlist", list);
-		return "travelDetail";
+		return "foodDetail";
 	}
-	
-//	@RequestMapping("insertReply.tr")
-//	@ResponseBody
-//	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
-//		int result = tService.insertReply(r);
-//		ArrayList<Reply> rlist = tService.selectReply(r.getRefBoardId());
-//		System.out.println(r);
-//		response.setContentType("application/json; charset=UTF-8");
-//		GsonBuilder gb = new GsonBuilder();
-//		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
-//		Gson gson = gb2.create();
-//		try {
-//			gson.toJson(rlist, response.getWriter());
-//		} catch (JsonIOException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//	
-//	@RequestMapping("deleteReply.tr")
-//	public String deleteReply(@RequestParam("realDeleteRepId") int replyId, @RequestParam("contentId") int contentId) {
-//		int result = tService.deleteReply(replyId);
-//		if(result > 0) {
-//			return "redirect:travelDetail.tr?contentId=" + contentId;
-//		}else {
-//			throw new CommonException("댓글 삭제를 실패하였습니다.");
-//		}
-//	}
 	
 	
 	

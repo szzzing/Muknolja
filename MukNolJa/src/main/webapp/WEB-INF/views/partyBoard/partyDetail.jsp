@@ -86,13 +86,13 @@
 	.travelList{cursor: pointer;}
 	.replyContent{clear:both; margin-left: 33px; margin-top: 15px;}
 	.replyContent textarea{resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;}
-	.reReplyContent{clear:both; margin-left: 33px; margin-top: 15px;}
-	.reReplyContent textarea{resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;}
+	.reReplyContent2{clear:both; margin-left: 33px; margin-top: 15px;}
+	.reReplyContent2 textarea{resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;}
 	#partyReply input[readonly]{background: white;}
 	.well{margin-top: 20px; padding-left: 60px;}
 	.well input[readonly]{background: white;}
-	#reReplyInput{color: white;}
-	#reReplyInput:hover{color: #6BB6EC; border-color: lightgray;}
+	.reReplyInput{color: white!important; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important; }
+	.reReplyInput:hover{color: #6BB6EC!important; border-color: lightgray;}
 </style>
 </head>
 <body>
@@ -203,7 +203,7 @@
 			
 			<!-- 댓글내용 -->
 			<div id="reply" style="margin-top: 30px;">
-				<c:forEach items="${ rList }" var="r">
+				<c:forEach items="${ rList }" var="r" varStatus="status">
 					<div class="replyProfile">
 						<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
 						<table style="float:left; margin-left: 10px;">
@@ -235,9 +235,6 @@
 						<button class="buttons reReplyButton" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">답글달기</button>
 						<div class="collapse" id="collapseExample">
 						  <div class="well">
-						  
-						  
-						  
 						  	<!-- 대댓글 작성 -->
 						  	<div class="input-group mb-3">
 								<c:if test="${ loginUser == null }">
@@ -245,47 +242,14 @@
 									<button class="btn btn-outline-secondary" type="button" disabled><i class="bi bi-send"></i></button>
 								</c:if>
 								<c:if test="${ loginUser != null }">
-									<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" id="reReplyContent">
-									<button class="btn btn-outline-secondary" type="button" id="reReplyInput"><i class="bi bi-send"></i></button>
+									<input type="text" class="form-control reReplyContent" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+									<button class="btn btn-outline-secondary reReplyInput" type="button"><i class="bi bi-send"></i></button>
 								</c:if>
+								<input type="hidden" value="${ r.replyId }" class="replyId">
 							</div>
 							
-							<!-- 대댓글 프로필 -->
-							<div class="reReplyProfile">
-								<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">
-								<table style="float:left; margin-left: 10px;">
-									<tr>
-										<td>${ r.nickName }</td>
-									</tr>
-									<tr>
-										<td style="color: gray;">${ r.replyModifyDate }</td>
-									</tr>
-								</table>
-								<c:if test="${ r.replyWriter == loginUser.id }">
-									<div style="float:right;">
-										<button class="buttons deleteReReply"><i class="fa-solid fa-trash-can"></i></button>
-										<input type="hidden" value="${ r.replyId }" name="replyId">
-									</div>
-								</c:if>
-								<c:if test="${ r.replyWriter != loginUser.id }">
-									<div style="float:right;">
-										<button class="buttons" type="button">신고하기</button>
-									</div>
-								</c:if>
+							<div class="reReply2">
 							</div>
-							
-							<!-- 대댓글 내용 -->
-							<div class="reReplyContent">
-								<textarea readonly>${ r.replyContent }</textarea>
-							</div>
-							
-							<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">
-							
-							
-							
-							
-							
-							
 						  </div>
 						</div>
 					</div>
@@ -304,6 +268,7 @@
 	
 	
 	
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<script>
 		const travelLists = document.getElementsByClassName('travelList');
 		for(const travelList of travelLists){
@@ -369,14 +334,81 @@
 		
 		$(document).on('click', '.reReplyButton', function () {
 			var collapses = $(this).parent().find('.collapse');
-			collapses.each(function(){
-				$(this).collapse('show');
-				$(this).collapse('hide');
+			collapses.collapse('show');
+			var replyId = Number($(this).parent().find('.replyId').val());
+			
+			$.ajax({
+				url: '${contextPath}/selectReReply.pa',
+				data: {refReplyId:replyId},
+				success: (data) =>{
+					console.log(data);
+					$(this).parent().find('.reReply2').html("");
+					for(const rr of data){
+						var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
+						var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
+						var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
+						var reportR = '<div style="float:right;"><button class="buttons" type="button">신고하기</button></div>';
+						var replyContent = '<div class="replyContent"><textarea readonly>' + rr.replyContent +'</textarea></div>';
+						var hr = '<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">';
+						var replyProfile = '';
+						if(rr.replyWriter == '${loginUser.id}'){
+							replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + deleteR + '</div>';
+						}else{
+							replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + reportR + '</div>';
+						}
+						$(this).parent().find('.reReply2').append(replyProfile + replyContent + hr);
+					}
+					
+				},
+				error: (data) =>{
+					consol.log(data)
+				}
 			});
+			
+			
+			
+			
+			$(this).parent().find('.reReplyInput').on('click', function(){
+	 			$.ajax({
+	 				url: '${contextPath}/insertReReply.pa',
+	 				data: {replyContent:$(this).parent().find('.reReplyContent').val(),
+	 					   refReplyId:replyId, replyWriter:"${loginUser.id}", refBoardId:${p.partyId}},
+					success: (data) =>{
+						console.log(data);
+					
+						$(this).parent().parent().find('.reReply2').html("");
+					
+						for(const rr of data){
+							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
+							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
+							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
+							var reportR = '<div style="float:right;"><button class="buttons" type="button">신고하기</button></div>';
+							var replyContent = '<div class="replyContent"><textarea readonly>' + rr.replyContent +'</textarea></div>';
+							var hr = '<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">';
+							var replyProfile = '';
+							if(rr.replyWriter == '${loginUser.id}'){
+								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + deleteR + '</div>';
+							}else{
+								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + reportR + '</div>';
+							}
+							$(this).parent().parent().append(replyProfile + replyContent + hr);
+						}
+						
+						$(this).parent().find('.reReplyContent').val("");
+					},
+					error: (data) =>{
+						console.log(data);
+					}
+				});
+			});
+		});
+		
+		$(document).on('click', '.reReplyButton', function () {
+			var collapses = $(this).parent().find('.collapse');
+			collapses.collapse('hide')
 		});
 		
 	</script>
 	
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>

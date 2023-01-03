@@ -26,4 +26,8 @@ public interface PartyService {
 
 	ArrayList<Reply> selectReply(int refBoardId);
 
+	ArrayList<Reply> selectReReply(int refReplyId);
+
+	int insertReReply(Reply r);
+
 }

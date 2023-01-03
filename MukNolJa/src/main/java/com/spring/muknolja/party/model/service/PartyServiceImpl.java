@@ -63,4 +63,14 @@ public class PartyServiceImpl implements PartyService{
 		return pDAO.selectReply(sqlSession, refBoardId);
 	}
 
+	@Override
+	public ArrayList<Reply> selectReReply(int refReplyId) {
+		return pDAO.selectReReply(sqlSession, refReplyId);
+	}
+
+	@Override
+	public int insertReReply(Reply r) {
+		return pDAO.insertReReply(sqlSession, r);
+	}
+
 }

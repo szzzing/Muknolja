@@ -33,4 +33,9 @@ public class TravelServiceImpl implements TravelService{
 		return tDAO.deleteReply(sqlSession, replyId);
 	}
 
+	@Override
+	public int countReply(int contentId) {
+		return tDAO.countReply(sqlSession, contentId);
+	}
+
 }

@@ -203,7 +203,7 @@
  		
  		<!-- hidden값 -->
  		<input id="myFile" type="file" accept="image/*" style="display:none;" name="firstFile">
- 		<input type="hidden" name="partyTitle" id="hiddenTitle">
+ 		<input type="hidden" name="partyTitle" id="hiddenTitle" required>
  		<input type="hidden" name="partyArea" id="hiddenLocation">
  		<input type="hidden" name="partyStartDate" id="hiddenStartDate">
  		<input type="hidden" name="partyEndDate" id="hiddenEndDate">
@@ -372,7 +372,8 @@
 	</script>
 	
 	<script>
-//  	✔datepicker
+		<!-- datepicker -->
+		
 		$(function(){
 			$('#daterangepicker').daterangepicker();
 			$("#daterangepicker").daterangepicker({

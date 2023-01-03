@@ -170,6 +170,39 @@ public class PartyController {
 		}
 	}
 	
+	@RequestMapping("selectReReply.pa")
+	public void selectReReply(@RequestParam("refReplyId") int refReplyId, HttpServletResponse response) {
+		ArrayList<Reply> rrList = pService.selectReReply(refReplyId);
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(rrList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@RequestMapping("insertReReply.pa")
+	public void insertReReply(@ModelAttribute Reply r, HttpServletResponse response) {
+		int result = pService.insertReReply(r);
+		ArrayList<Reply> rrList = pService.selectReReply(r.getRefReplyId());
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(rrList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	

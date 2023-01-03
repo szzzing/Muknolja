@@ -223,7 +223,7 @@
 			for(const allCard of allCards){
 				allCard.addEventListener('click', function(){
 					const contentId = this.querySelector('.contentId').value;
-					location.href='${contextPath}/travelDetail.tr?contentId=' + contentId + '&page=' + ${pi.currentPage};
+					location.href='${contextPath}/foodDetail.tr?contentId=' + contentId + '&page=' + ${pi.currentPage};
 				});
 			}
 			
@@ -232,7 +232,7 @@
 			for(const category of categorys){
 				category.addEventListener('click', function(){
 					const areaCode = category.className.substr(2);
-					location.href='${contextPath}/travelList.tr?areaCode=' + areaCode;
+					location.href='${contextPath}/foodList.tr?areaCode=' + areaCode;
 				});
 			}
 			
@@ -241,12 +241,12 @@
 		   	const searchValue = document.getElementById('searchValue');
 		   	
 		   	searchButton.addEventListener('click', function(){
-		   		location.href='${contextPath}/searchTravel.tr?searchValue=' + searchValue.value;
+		   		location.href='${contextPath}/searchFood.tr?searchValue=' + searchValue.value;
 		   	});
 		   	
 		   	searchValue.addEventListener('keypress', function(e){
 		   		if (e.keyCode === 13) {
-		   			location.href='${contextPath}/searchTravel.tr?searchValue=' + searchValue.value;
+		   			location.href='${contextPath}/searchFood.tr?searchValue=' + searchValue.value;
 		   	    }
 		   	});
 		</script>
