@@ -87,8 +87,8 @@
 	</form>
 	<!-- 호텔 상세페이지용 폼 -->
 	
-	<div class="container-sm mt-5 mb-5" style="padding-top:80px">
-		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gx-5 gy-5 pb-5">
+	<div class="container-sm pt-5 pb-5">
+		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gx-5 gy-5">
 			<div class="col col-lg-3">
 				<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-1 p-3 pt-4 pb-4 mb-5" style="border:1px solid #f1f1f1">
 					

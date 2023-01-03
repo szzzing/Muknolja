@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
@@ -184,6 +185,10 @@ public class HotelDAO {
 
 	public int getCurrReservationId(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("hotelmapper.getCurrReservationId");
+	}
+
+	public int insertReport(SqlSessionTemplate sqlSession, Report report) {
+		return sqlSession.insert("hotelmapper.insertReport", report);
 	}
 
 }

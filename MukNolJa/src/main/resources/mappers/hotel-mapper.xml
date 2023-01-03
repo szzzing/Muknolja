@@ -230,7 +230,10 @@
 	</insert>
 	
 	<select id="selectReviewList" resultMap="reviewResultSet">
-		select *
+		select review_id, review.member_id, nickname, reservation_id, hotel_name, room_name, checkin_date, checkout_date, rating, review_content, create_date, business_reply, review_status
+		<if test="id!=null">
+			, is_reported(#{id}, review_id) as is_reported
+		</if>
 		from review
 			join reservation using(reservation_id)
 			join room using(room_id)
@@ -493,6 +496,11 @@
 		from dual
 	</select>
 	
+	<insert id="insertReport">
+		insert into report
+		values(SEQ_REPORTID.nextval, #{memberId}, #{targetId}, #{reportClassification}, #{reportContent}, sysdate, default, #{reportTitle}, null)
+	</insert>
+	
 	
 	
 	<resultMap type="Hotel" id="hotelResultSet">
@@ -589,5 +597,6 @@
 		<result column="CREATE_DATE" property="createDate"/>
 		<result column="BUSINESS_REPLY" property="businessReply"/>
 		<result column="REVIEW_STATUS" property="reviewStatus"/>
+		<result column="IS_REPORTED" property="isReported"/>
 	</resultMap>
 </mapper>
