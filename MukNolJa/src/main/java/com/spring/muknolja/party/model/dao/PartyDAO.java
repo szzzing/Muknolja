@@ -64,4 +64,8 @@ public class PartyDAO {
 		return sqlSession.insert("replyMapper.insertReReply", r);
 	}
 
+	public int countReply(SqlSessionTemplate sqlSession, Integer pId) {
+		return sqlSession.selectOne("replyMapper.countReply", pId);
+	}
+
 }

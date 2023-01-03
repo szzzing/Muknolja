@@ -30,4 +30,6 @@ public interface PartyService {
 
 	int insertReReply(Reply r);
 
+	int countReply(int pId);
+
 }

@@ -22,7 +22,7 @@ public class TravelDAO {
 		return sqlSession.update("replyMapper.deleteReply", replyId);
 	}
 
-	public int countReply(SqlSessionTemplate sqlSession, int contentId) {
+	public int countReply(SqlSessionTemplate sqlSession, Integer contentId) {
 		return sqlSession.selectOne("replyMapper.countReply", contentId);
 	}
 

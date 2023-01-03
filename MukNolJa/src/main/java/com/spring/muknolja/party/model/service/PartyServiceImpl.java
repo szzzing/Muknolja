@@ -73,4 +73,9 @@ public class PartyServiceImpl implements PartyService{
 		return pDAO.insertReReply(sqlSession, r);
 	}
 
+	@Override
+	public int countReply(int pId) {
+		return pDAO.countReply(sqlSession, pId);
+	}
+
 }
