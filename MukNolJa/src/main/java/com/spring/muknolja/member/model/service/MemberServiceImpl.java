@@ -165,11 +165,7 @@ public class MemberServiceImpl implements MemberService {
 
 	
 
-	@Override
-	public int insertsAttm(ArrayList<AttachedFile> list) {
-		// TODO Auto-generated method stub
-		return mDAO.insertAttm(sqlSession, list);
-	}
+	
 
 	@Override
 	public int getListCount(String id) {
@@ -399,6 +395,20 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public int insertsAttm(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mDAO.insertMemberH(sqlSession, map);
+	}
+	
+	@Override
+	public int insertMemberH(Member m) {
+		// TODO Auto-generated method stub
+		return mDAO.insertMemberHH(sqlSession, m);
+	}
+
+
+	
+
 	public int approval(String id) {
 		return mDAO.approval(sqlSession, id);
 	}

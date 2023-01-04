@@ -29,6 +29,10 @@
   	insert into member
   	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, default, default, default, null)
   </insert>
+  <insert id="insertMemberH">
+  	insert into member
+  	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, 'H', 'D', default, null)
+  </insert>
   
   	
   	<select id="checkId" resultType="_int">
@@ -335,12 +339,13 @@
 	
 	<insert id="insertAttm">
 		insert all
-		<foreach collection="list" item="a">
 			into ATTACHED_FILE
-			values(NEW_FID, 'S', sysdate, #{a.fileName}, #{a.fileModifyName}, #{a.fileLink}, default, 'Y')
-			
-		</foreach>
-		select * from dual
+			values(SEQ_FID.nextval, 'D', sysdate, #{attm.fileName}, #{attm.fileModifyName}, #{attm.fileLink}, default, 'Y')
+			into RE_IMG
+			values  ('user',SEQ_FID.currval)
+			select * from dual
+		
+		
 	</insert>
 	<select id="myInfoBCount" resultType="_int">
 	 select count(*)
@@ -464,7 +469,7 @@
 			 join board_img using(board_id)
              join attached_file using(file_id)
              join PARTY_PARTICIPATE using (board_id)
-             where MEMBER_ID = #{id}
+             where MEMBER_ID = #{id} and BOARD_STATUS ='Y'
 		order by board_id desc
 
 	</select>

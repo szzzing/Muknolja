@@ -3,6 +3,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -164,9 +165,46 @@ public class MemberController {
 			return result;
 			
 		}
+		@RequestMapping("enrollK.me")
+		public String enrollK(@RequestParam("id")String id,Model model) {
+			model.addAttribute("id", id);
+			return "enrollK";
+			
+		}
+		@RequestMapping("enrollkko.me")
+		public String enrollKko(@ModelAttribute Member m, @RequestParam("gender")String gender,@RequestParam("id")String id) {
+			
+			if(gender.trim().equals("성별")) {
+				m.setGender(null);	
+			}else if(gender.trim().equals("남자")) {
+				m.setGender("M");	
+			}else if(gender.trim().equals("여자")) {
+				m.setGender("F");	
+			}
+			m.setId(id);
+			m.setPwd("KAKAO");
+			
+			
+			int result = mService.insertMember(m);
+			
+			if (result > 0) {
+				return "login";
+			} else {
+				return "home";
+			}
+			
+			
+		}
+		@RequestMapping("loginK.me")
+		public String loginK(@RequestParam("id")String id,Model model, Member m,HttpSession session) {
+			Member loginUser = mService.login(m);
+			session.setAttribute("loginUser", loginUser);
+			System.out.println(loginUser);
+			return "redirect:home.do";
+		}
 		@RequestMapping("insertm.me")
 		public String insert(@ModelAttribute Member m, @RequestParam("gender")String gender) {
-			System.out.println(gender);
+			
 			if(gender.trim().equals("성별")) {
 				m.setGender(null);	
 			}else if(gender.trim().equals("남자")) {
@@ -175,12 +213,12 @@ public class MemberController {
 				m.setGender("F");	
 			}
 			
-			System.out.println("����" + m);
+			
 			String encPwd = bcrypt.encode(m.getPwd());
 
 			m.setPwd(encPwd);
 			int result = mService.insertMember(m);
-			System.out.println("����" + result);
+			
 			if (result > 0) {
 				return "login";
 			} else {
@@ -432,9 +470,22 @@ public class MemberController {
 			return "enrollH";
 		}
 		@RequestMapping("enrollH2.me")
-		public String enrollH2(Member member, @RequestParam("file")ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
-			System.out.println("나는"+files);
-			ArrayList<AttachedFile> list = new ArrayList();
+		public String enrollH2(Member m,@RequestParam("gender")String gender, @RequestParam("file")ArrayList<MultipartFile> files, HttpServletRequest request, HttpSession session) {
+			
+			if(gender.trim().equals("성별")) {
+				m.setGender(null);	
+			}else if(gender.trim().equals("남자")) {
+				m.setGender("M");	
+			}else if(gender.trim().equals("여자")) {
+				m.setGender("F");	
+			}
+			
+			ArrayList<AttachedFile> list = new ArrayList<AttachedFile>();
+			String encPwd = bcrypt.encode(m.getPwd());
+
+			m.setPwd(encPwd);
+			int result = mService.insertMemberH(m);
+			AttachedFile attm = new AttachedFile();
 			for(MultipartFile file : files) {
 				String fileName = file.getOriginalFilename();
 				if(!fileName.equals("")) {
@@ -444,27 +495,27 @@ public class MemberController {
 						String[] returnArr = AttachedFile.saveFile(file, request);
 						
 						if(returnArr[1] != null) {
-							AttachedFile attm = new AttachedFile();
+							
 							attm.setFileName(file.getOriginalFilename());
 							attm.setFileModifyName(returnArr[1]);
 							attm.setFileLink(returnArr[0]);
 							
-							list.add(attm);
+							
 						}
 					}
 				}
 			
 		}
-				int attmResult = 0;
-			if(!list.isEmpty()) {
-				 attmResult = mService.insertsAttm(list);
-			}
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("attm", attm);
+			map.put("m", m);
+			System.out.println(map);
+				int attmResult = mService.insertsAttm(map);
+				System.out.println(attmResult);
 			
-			if(attmResult > 0) {
+		
 			return "login";
-		}else {
-			return "myInfo";
-		}
+		
 			
 		}
 		@RequestMapping("myInfoA.me")

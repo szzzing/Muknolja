@@ -134,7 +134,7 @@
 						var pId = list[idNum].partyId;
 						var nickName = list[idNum].nickName;
 						
-							location.href="${ contextPath }/partyDetail.pa?pId="+ pId+'&writer='+ nickName;
+							location.href="${ contextPath }/selectParty.pa?pId="+ pId+'&writer='+ nickName;
 						
 						
 					});
