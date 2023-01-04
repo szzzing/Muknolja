@@ -87,4 +87,8 @@ public class ChatDAO {
 		return sqlSession.selectOne("chatmapper.selectChatId");
 	}
 
+	public ArrayList<String> selectParticipants(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return (ArrayList)sqlSession.selectList("chatmapper.selectParticipants", map);
+	}
+
 }

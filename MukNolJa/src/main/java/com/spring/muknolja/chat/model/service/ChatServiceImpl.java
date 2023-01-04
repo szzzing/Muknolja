@@ -112,4 +112,9 @@ public class ChatServiceImpl implements ChatService{
 	public int selectChatId() {
 		return cDAO.selectChatId(sqlSession);
 	}
+
+	@Override
+	public ArrayList<String> selectParticipants(HashMap<String, String> map) {
+		return cDAO.selectParticipants(sqlSession, map);
+	}
 }

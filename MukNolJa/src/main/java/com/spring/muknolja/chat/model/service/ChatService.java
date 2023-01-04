@@ -47,4 +47,6 @@ public interface ChatService {
 
 	int selectChatId();
 
+	ArrayList<String> selectParticipants(HashMap<String, String> map);
+
 }

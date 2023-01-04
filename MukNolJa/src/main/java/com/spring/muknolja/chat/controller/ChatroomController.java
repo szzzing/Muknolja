@@ -165,9 +165,34 @@ public class ChatroomController {
     
     // 닉네임 검색
     @RequestMapping("searchNick.ch")
-    public void searchNick(@RequestParam("nick") String nick, HttpServletResponse response) {
+    public void searchNick(@RequestParam("nick") String nick, @RequestParam("roomCode") String roomCode, HttpServletResponse response) {
     	ArrayList<Member> mList = cService.selectUser(nick);
     	
+    	HashMap<String, String> map = new HashMap<>();
+    	
+    	map.put("roomCode", roomCode);
+    	map.put("check", "Y");
+    	
+    	ArrayList<String> pList = cService.selectParticipants(map);
+    	
+    	int j = 0;
+    	int s = mList.size();
+    	String checkNick = "";
+    	
+    	for(int i=0; i < s; i++) {
+    		checkNick = mList.get(j).getNickName();
+    		
+    		for( String p : pList) {
+    			if(checkNick.equals(p)) {
+    				mList.remove(j);
+    				j -= 1;
+    				break;
+    			}
+    		}
+    		
+    		j += 1;
+    	}
+    	    	
     	Gson gson = new Gson();
     	
     	response.setContentType("application/json; charset=UTF-8");
@@ -255,6 +280,28 @@ public class ChatroomController {
     	int result = cService.chatRoomOut(map);
     	
     	return result;
+    }
+    
+    // 채팅방 참여자 목록
+    @RequestMapping("selectParticipants.ch")
+    public void selectParticipants(@RequestParam("roomCode") String roomCode, HttpServletResponse response) {
+    	HashMap<String, String> map = new HashMap<>();
+    	
+    	map.put("roomCode", roomCode);
+    	map.put("check", "N");
+    	
+    	ArrayList<String> list = cService.selectParticipants(map);
+    	
+    	Gson gson = new Gson();
+    	
+    	response.setContentType("application/json; charset=UTF-8");
+    	
+    	try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 }

@@ -97,8 +97,12 @@
             	max-height: 400px;
             	overflow: auto;
             }
-            #chatBoxs::-webkit-scrollbar{
+            #chatBoxs::-webkit-scrollbar, #friends::-webkit-scrollbar{
             	width: 8px;
+            }
+            #friends{
+            	height: 100px;
+            	overflow: auto;
             }
             .chatBox{
            		display: inline-block;
@@ -309,6 +313,12 @@
 	    	</div>
 	    </div>
 	    <div id="friends"></div>
+	    <div class="row">
+	    	<div class="col text-center">
+	    		<h4>대화상대</h4>
+	    	</div>
+	    </div>
+	    <div id="participants"></div>
     </div>
     
     <div id="success_modal">
@@ -324,6 +334,7 @@
         	 let stomp = '';
         	 let roomCode ='';
         	 let sockJs = '';
+        	 let chatrooms = '';
         	 
             function Modal(id) {
                 var zIndex = 9999;
@@ -332,7 +343,7 @@
                 // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
                 modal.querySelector('.modal_close_btn').addEventListener('click', function() {
                     modal.style.display = 'none';
-                    if(sockJs != '' && id != 'invite_modal'){
+                    if(sockJs != '' && id == 'chat_modal'){
                     	sockJs.close();
                     }
                     if(id == 'chat_modal'){
@@ -527,154 +538,170 @@
       						str += '</div></div>';
 
       						document.getElementById('rooms').innerHTML += str;
+      						
+      						chatrooms = document.getElementsByClassName('chatRoom');
       					}
-						const chatrooms = document.getElementsByClassName('chatRoom');
-						
-						for(const room of chatrooms){
-							// 채팅방 선택시
-					        room.addEventListener('click', function() {
-					            Modal('chat_modal');
-					            roomCode = this.querySelector('input[type="hidden"]').value;
-								
-					            // 과거 채팅 불러오기
-								$.ajax({
-									url: 'chatRoom.ch',
-									data: {roomCode:roomCode},
-									success: (data) => {
-										document.getElementById('chat').innerHTML = '';
-										document.getElementById('chatTitle').innerText = data.room.roomName;
-										
-										for(const c of data.list){							
-											if(c.senderId != '${ loginUser.id }'){
-												let str = '<div style="clear: both;">';
-												str += '<div class="chatBox">';
-												str += '<p class="message">' + c.chatContent + '</p><br>';
-												str += '<small class="chatNcik" style="clear: both;">' + c.nickName + '</samll>';
-												str += '</div></div>';
-												
-												document.getElementById('chat').innerHTML += str;
-											} else{
-												let str = '<div style="clear: both;">';
-												str += '<div class="chatBox myChat">';
-												str += '<p class="message myChat">' + c.chatContent + '</p>';
-												str += '<small class="chatNcik myChat" style="clear: both;">' + c.nickName + '</samll>';
-												str += '</div></div>';
-												
-												document.getElementById('chat').innerHTML += str;
-											}
-										}
-										
-										// 채팅 스크롤 아래로 고정
-										$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
-										
-										 // webSocket connect
-							    		sockJs = new SockJS("${contextPath}/stomp/chat");
-							    		stomp = Stomp.over(sockJs);
-							         	
-							    		if(stomp != ''){
-								         	// connect 시
-									        stomp.connect({}, function (){
-									            // subscribe 시
-									    		stomp.subscribe("/sub/chat/room/" + roomCode, function (chat) {
-									    			const content = JSON.parse(chat.body);
-									    			const chatDiv = document.getElementById('chat');
-									    			console.log(content);
-									    			$.ajax({
-									    				url: 'availablilty.ch',
-									    				data: {chatId:content.chatId, id:'${loginUser.id}'},
-									    				success: (data) => {
-									    					console.log(data);
-									    				}
-									    			});
-									    			
-									    			if(content.senderId != '${ loginUser.id }'){
-									    				let str = '<div style="clear: both;">';
-														str += '<div class="chatBox">';
-														str += '<p class="message">' + content.chatContent + '</p><br>';
-														str += '<small class="chatNcik" style="clear: both;">' + content.nickName + '</samll>';
-														str += '</div></div>';
-														
-														chatDiv.innerHTML += str;
-									    			} else{
-									    				let str = '<div style="clear: both;">';
-														str += '<div class="chatBox myChat">';
-														str += '<p class="message myChat">' + content.chatContent + '</p>';
-														str += '<small class="chatNcik myChat" style="clear: both;">' + content.nickName + '</samll>';
-														str += '</div></div>';
-														
-														chatDiv.innerHTML += str;
-									    			}
-									    			
-									    			$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
-									    			
-									    		});
-									        });
-							    		}
-							    		
-							    		document.getElementById('inviteBtn').addEventListener('click', function(){
-							    			Modal('invite_modal');
-							    		});
-							    		
-							    		document.getElementById('searchNickBtn').addEventListener('click', function() {
-							            	const nick = document.getElementById('searchNick').value;
-							            	
-							            	if(nick != '${loginUser.nickName}'){
-							            	$.ajax({
-							            		url: 'searchNick.ch',
-							            		data: {nick:nick},
-							            		success: (data) => {
-							            			document.getElementById('friends').innerHTML = '';
-							            			if(data != ''){
-														for(const d of data){
-															
-								            				let str = '<div class="row nicks" style="border-bottom: 1px solid RGB(160, 160, 160, 0.5);">';
-								            				str += '<div class="col">';
-								            				str += '<b class="nick">' + d.nickName + '</b> <small class="inviteUser">초대하기</small>';
-								            				str += '</div></div>';
-								            				
-								            				document.getElementById('friends').innerHTML += str;
-							            				
-														}
-							            				
-							            				const invites = document.getElementsByClassName('inviteUser');
-							            				
-							            				for(const i in invites){
-							            					console.log(invites[i]);
-							            					invites[i].addEventListener('click', function() {
-																console.log(data[i].id);
-								                        		const roomName = document.getElementById('chatRoomName').value;
-								                        		$.ajax({
-								                            		url: 'inviteChat.ch',
-								                            		data: {roomCode: roomCode, recipentId: data[i].id},
-								                            		success: (data) => {
-								                            			Modal('success_modal');
-								                            			document.getElementById('text').innerText = '초대 성공';
-								                            			
-								                            			document.getElementById('friends').innerHTML = '';
-								                            			document.getElementById('searchNick').value = '';
-								                            		},
-								                            		error: (data) => {
-								                            			alert('초대 불가한 회원입니다.');
-								                            		}
-								                            	});
-	
-								                        	});
-							            				}
-							            			}
-							            		}
-							            	});
-							            	}
-							            });
-									},
-									error: (data) => {
-										
-									}
-								});
-					        });	
-					    }
       				}
       			});
 	        }
+	        
+		
+				// 채팅방 선택시
+		         $(document).on('click', '.chatRoom', function() {
+		            Modal('chat_modal');
+		            roomCode = this.querySelector('input[type="hidden"]').value;
+					
+		            // 과거 채팅 불러오기
+					$.ajax({
+						url: 'chatRoom.ch',
+						data: {roomCode:roomCode},
+						success: (data) => {
+							document.getElementById('chat').innerHTML = '';
+							document.getElementById('chatTitle').innerText = data.room.roomName;
+							
+							for(const c of data.list){							
+								if(c.senderId != '${ loginUser.id }'){
+									let str = '<div style="clear: both;">';
+									str += '<div class="chatBox">';
+									str += '<p class="message">' + c.chatContent + '</p><br>';
+									str += '<small class="chatNcik" style="clear: both;">' + c.nickName + '</samll>';
+									str += '</div></div>';
+									
+									document.getElementById('chat').innerHTML += str;
+								} else{
+									let str = '<div style="clear: both;">';
+									str += '<div class="chatBox myChat">';
+									str += '<p class="message myChat">' + c.chatContent + '</p>';
+									str += '<small class="chatNcik myChat" style="clear: both;">' + c.nickName + '</samll>';
+									str += '</div></div>';
+									
+									document.getElementById('chat').innerHTML += str;
+								}
+							}
+							
+							// 채팅 스크롤 아래로 고정
+							$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
+							
+							 // webSocket connect
+				    		sockJs = new SockJS("${contextPath}/stomp/chat");
+				    		stomp = Stomp.over(sockJs);
+				         	
+				    		if(stomp != ''){
+					         	// connect 시
+						        stomp.connect({}, function (){
+						            // subscribe 시
+						    		stomp.subscribe("/sub/chat/room/" + roomCode, function (chat) {
+						    			const content = JSON.parse(chat.body);
+						    			const chatDiv = document.getElementById('chat');
+						    			
+						    			$.ajax({
+						    				url: 'availablilty.ch',
+						    				data: {chatId:content.chatId, id:'${loginUser.id}'},
+						    				success: (data) => {
+						    				}
+						    			});
+						    			
+						    			if(content.senderId != '${ loginUser.id }'){
+						    				let str = '<div style="clear: both;">';
+											str += '<div class="chatBox">';
+											str += '<p class="message">' + content.chatContent + '</p><br>';
+											str += '<small class="chatNcik" style="clear: both;">' + content.nickName + '</samll>';
+											str += '</div></div>';
+											
+											chatDiv.innerHTML += str;
+						    			} else{
+						    				let str = '<div style="clear: both;">';
+											str += '<div class="chatBox myChat">';
+											str += '<p class="message myChat">' + content.chatContent + '</p>';
+											str += '<small class="chatNcik myChat" style="clear: both;">' + content.nickName + '</samll>';
+											str += '</div></div>';
+											
+											chatDiv.innerHTML += str;
+						    			}
+						    			
+						    			$('#chatBoxs').scrollTop($('#chatBoxs')[0].scrollHeight);
+						    			
+						    		});
+						        });
+				    		}
+				    		
+				    		// 초대 버튼 클릭
+				    		document.getElementById('inviteBtn').addEventListener('click', function(){
+				    			$.ajax({
+				    				url: 'selectParticipants.ch',
+				    				data: {roomCode:roomCode},
+				    				success: (data) => {
+				    					document.getElementById('participants').innerHTML = '';
+				    					
+				    					if(data != ''){
+											for(const d of data){
+												
+					            				let str = '<div class="row" style="border-bottom: 1px solid RGB(160, 160, 160, 0.5);">';
+					            				str += '<div class="col text-center">';
+					            				str += '<b>' + d + '</b>';
+					            				str += '</div></div>';
+					            				
+					            				document.getElementById('participants').innerHTML += str;
+											}
+				    					}
+				    				}
+				    			});
+				    			
+				    			Modal('invite_modal');
+				    		});
+				    		
+				    		// 닉네임 검색
+				    		document.getElementById('searchNickBtn').addEventListener('click', function() {
+				            	const nick = document.getElementById('searchNick').value;
+				            	
+				            	$.ajax({
+				            		url: 'searchNick.ch',
+				            		data: {nick:nick, roomCode:roomCode},
+				            		success: (data) => {
+				            			document.getElementById('friends').innerHTML = '';
+				            			if(data != ''){
+											for(const d of data){
+												
+					            				let str = '<div class="row nicks" style="border-bottom: 1px solid RGB(160, 160, 160, 0.5);">';
+					            				str += '<div class="col">';
+					            				str += '<b class="nick">' + d.nickName + '</b> <small class="inviteUser">초대하기</small>';
+					            				str += '<input type="hidden" value="' + d.id + '">'
+					            				str += '</div></div>';
+					            				
+					            				document.getElementById('friends').innerHTML += str;
+				            				
+											}
+				            			}
+				            		}
+				            	});
+				            });
+						},
+						error: (data) => {
+							
+						}
+					});
+		        });
+				
+ 					$(document).on('click', '.inviteUser', function() {
+						const id = this.parentNode.querySelector('input[type="hidden"]').value;
+                 		const roomName = document.getElementById('chatRoomName').value;
+
+                 		$.ajax({
+                     		url: 'inviteChat.ch',
+                     		data: {roomCode: roomCode, recipentId: id},
+                     		success: (data) => {
+                     			Modal('success_modal');
+                     			document.getElementById('text').innerText = '초대 성공';
+                     			
+                     			document.getElementById('friends').innerHTML = '';
+                     			document.getElementById('searchNick').value = '';
+                     		},
+                     		error: (data) => {
+                     			alert('초대 불가한 회원입니다.');
+                     		}
+                     	});
+
+                 	});
 
 
    </script>
