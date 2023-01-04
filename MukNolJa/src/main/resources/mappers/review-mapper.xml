@@ -76,4 +76,21 @@
 		from Reply 
 		where REPLY_STATUS = 'Y' and REF_BOARD_ID = #{boardId} and REF_REPLY_ID='0'
 	</select>
+	
+	<insert id="insertBoard">
+		
+		insert into board values(SEQ_BID.nextval, #{boardWriter}, 'R', #{boardCourse}, #{boardTitle}, #{boardContent}, sysdate, sysdate, #{boardArea}, default, #{contentCourse})
+  		
+	</insert>
+	
+	<insert id="insertImg">
+	insert all
+		<foreach collection="list" item="a">
+			into ATTACHED_FILE
+			values(SEQ_FID.nextval, 'R', sysdate, #{a.fileName}, #{a.fileModifyName}, #{a.fileLink}, default, 'Y')
+			into board_img values(SEQ_FID.currval, SEQ_BID.currval)
+		</foreach>
+		select * from dual
+	
+	</insert>
 </mapper>

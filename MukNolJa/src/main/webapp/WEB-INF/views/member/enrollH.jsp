@@ -72,20 +72,29 @@
 		            				
 		            			</div>
 		            			<div style="margin-top:40px;">
-		            				<label for="phone" style="float:left;font-weight:600; font-size:15px;">호텔 전화번호</label>
+		            				<label for="phone" style="float:left;font-weight:600; font-size:15px;">사업자 전화번호</label>
 		            				<br>
 		            				<input type="text" name="phone" id="phone" class="phone" style="width:500px; font-size:20px; padding:10px 10px; padding-top:15px; border: 1px solid lightgrey" required>
 		            			</div>
 		            			<div style="margin-top:40px;">
-		            				<label for="email" style="float:left; font-weight:600; font-size:15px;">호텔 이메일</label>
+		            				<label for="email" style="float:left; font-weight:600; font-size:15px;">사업자 이메일</label>
 		            			<br>
 		            				<input type="text" name="email" id="email" class="email" style="width:500px; font-size:20px; padding:10px 10px; padding-top:15px; border: 1px solid lightgrey" required>
 		            			</div>
 		            			<div style="margin-top:40px;">
-		            				<label for="address" style="float:left; font-weight:600; font-size:15px;">호텔 주소</label>
+		            				<label for="address" style="float:left; font-weight:600; font-size:15px;">사업자 주소</label>
 		            				<br>
 		            				<input type="text" name="address" id="address" class="address" style="width:500px; font-size:20px; padding:10px 10px; padding-top:15px; border: 1px solid lightgrey" required>
 		            			</div>
+		            			<div style="margin-top:40px;">
+		            				<label for="gender" style="float:left; font-weight:600; font-size:15px; ">성별</label>
+		            				<br>
+				 					<select id="gender" name="gender" style="width:500px; font-size:20px; height:57px; padding:5px; font-weight:500; border: 1px solid lightgrey; font-family:Georgia;"  required>
+									<option style=height:30px;>성별</option>
+									<option style=height:30px;>남자</option>
+									<option style=height:30px;>여자</option>
+									</select>
+					            	</div>
 		            			<div style="margin-top:40px;">
 		            				<label for="file" style="float:left; font-weight:600; font-size:15px;">사업자등록증</label>
 		            				<br>

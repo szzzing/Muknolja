@@ -3,6 +3,7 @@ package com.spring.muknolja.review.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -82,10 +83,39 @@ public class ReviewController {
 	}
 	@RequestMapping("reviewWrite2.re")
 	public String reviewWriter2(HttpServletRequest request,Board board, HttpSession session,@RequestParam("file")ArrayList<MultipartFile> files) {
-		System.out.println("나는"+files);
-		Member m = (Member)session.getAttribute("loginUser");
-		System.out.println(board);
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		String id = m.getId();
+		ArrayList<AttachedFile> list = new ArrayList();
+		for(MultipartFile file : files) {
+			String fileName = file.getOriginalFilename();
+			if(!fileName.equals("")) {
+				String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+				
+				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+					String[] returnArr = AttachedFile.saveFile(file, request);
+					
+					if(returnArr[1] != null) {
+						AttachedFile attm = new AttachedFile();
+						attm.setFileName(file.getOriginalFilename());
+						attm.setFileModifyName(returnArr[1]);
+						attm.setFileLink(returnArr[0]);
+						
+						list.add(attm);
+					}
+				}
+			}
+		
+		}
+		
+		
+	    board.setBoardWriter(id);
+	    System.out.println(board);
+	    System.out.println(list);
+	    
+		int result = rService.insertBoard(board);
+		int result2 = rService.insertImg(list);
 		return "redirect:reviewList.re";
 		
 	}

@@ -76,7 +76,7 @@ public interface MemberService {
 
 	
 
-	int insertsAttm(ArrayList<AttachedFile> list);
+	int insertsAttm(HashMap<String, Object> map);
 
 	int getListCount(String id);
 
@@ -162,6 +162,8 @@ public interface MemberService {
 	int insertNAttm(HashMap<String, Object> map);
 
 	int deleteNotice(int id);
+
+	int insertMemberH(Member m);
 
 
 

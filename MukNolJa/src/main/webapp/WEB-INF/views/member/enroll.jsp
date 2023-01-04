@@ -213,13 +213,16 @@
   	});
 
 	$('button').click(function(){
-		if(okId && okNickName && okpassword && okpassword1){
-			$('form').submit();
-		}else{
-			alert("옮바르지 않은 회원가입입니다.")
-			
+		if( gender.value.trim() == "성별" ){
+			console.log("1");
+			alert("성별을 선택해주세요");
+			if(okId && okNickName && okpassword && okpassword1){
+				$('form').submit();
+			}else{
+				alert("옮바르지 않은 회원가입입니다.")
+					
+			}
 		}
-		
 		
 	});
 		

@@ -327,6 +327,16 @@ public class MemberDAO {
 	public int deleteNotice(SqlSessionTemplate sqlSession, int id) {
 		return sqlSession.update("memberMapper.deleteNotice", id);
 	}
+
+	public int insertMemberH(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertAttm", map);
+	}
+
+	public int insertMemberHH(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertMemberH", m);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int

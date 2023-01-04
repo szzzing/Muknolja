@@ -81,14 +81,7 @@
             </div>
         </div>
        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-  	
-	<ul>
-	<li onclick="kakaoLogout();">
-      <a href="javascript:void(0)">
-          <span>카카오 로그아웃</span>
-      </a>
-	</li>
-</ul>
+
 <!-- 카카오 스크립트 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
@@ -105,6 +98,37 @@ function kakaoLogin() {
           url: '/v2/user/me',
           success: function (response) {
         	  console.log(response)
+        	  var id = response.id;
+        	  $.ajax({
+      			url: '${ contextPath}/checkId.me',
+      			data: {"id" :  id},
+      			success: (data)=>{
+      				
+      				if(data.trim() == 'yes'){
+      					function kakaoLogout() {
+      					    if (Kakao.Auth.getAccessToken()) {
+      					      Kakao.API.request({
+      					        url: '/v1/user/unlink',
+      					        success: function (response) {
+      					        	console.log(response)
+      					        },
+      					        fail: function (error) {
+      					          console.log(error)
+      					        },
+      					      })
+      					      Kakao.Auth.setAccessToken(undefined)
+      					    }
+      					  } 
+      					location.href="${ contextPath }/enrollK.me?id="+id;
+      				}else if (data.trim() == 'no'){
+      					location.href="${contextPath}/loginK.me?id="+id;
+      				}
+      			},
+      			error: (data)=>{
+      				console.log(data);
+      			}
+      			
+      		});
           },
           fail: function (error) {
             console.log(error)
@@ -116,21 +140,7 @@ function kakaoLogin() {
       },
     })
   }
-//카카오로그아웃  
-function kakaoLogout() {
-    if (Kakao.Auth.getAccessToken()) {
-      Kakao.API.request({
-        url: '/v1/user/unlink',
-        success: function (response) {
-        	console.log(response)
-        },
-        fail: function (error) {
-          console.log(error)
-        },
-      })
-      Kakao.Auth.setAccessToken(undefined)
-    }
-  }  
+ 
 </script>
   	
     

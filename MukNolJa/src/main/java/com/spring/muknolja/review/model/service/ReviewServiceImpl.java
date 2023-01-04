@@ -1,6 +1,7 @@
 package com.spring.muknolja.review.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +63,18 @@ public class ReviewServiceImpl implements ReviewService{
 		// TODO Auto-generated method stub
 		return rDAO.insertReply(sqlSession,reply);
 	}
+	@Override
+	public int insertBoard(Board board) {
+		// TODO Auto-generated method stub
+		return rDAO.insertBoard(sqlSession,board);
+	}
+	@Override
+	public int insertImg(ArrayList<AttachedFile> list) {
+		// TODO Auto-generated method stub
+		return rDAO.insertImg(sqlSession, list);
+	}
+	
+	
+
 
 }

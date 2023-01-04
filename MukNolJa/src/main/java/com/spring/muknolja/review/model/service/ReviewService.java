@@ -1,6 +1,7 @@
 package com.spring.muknolja.review.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
@@ -24,5 +25,9 @@ public interface ReviewService {
 	ArrayList<Reply> selectRe(int refReplyId);
 
 	int insertReply(Reply reply);
+
+	int insertBoard(Board board);
+
+	int insertImg(ArrayList<AttachedFile> list);
 
 }

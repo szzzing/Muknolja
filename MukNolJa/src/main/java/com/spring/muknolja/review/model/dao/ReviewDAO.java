@@ -1,6 +1,7 @@
 package com.spring.muknolja.review.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -61,6 +62,16 @@ public class ReviewDAO {
 	public int insertReply(SqlSessionTemplate sqlSession, Reply reply) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("replyMapper.insertReply",reply);
+	}
+
+	public int insertBoard(SqlSessionTemplate sqlSession, Board board) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("reviewMapper.insertBoard",board);
+	}
+
+	public int insertImg(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("reviewMapper.insertImg",list);
 	}
 	
 }
