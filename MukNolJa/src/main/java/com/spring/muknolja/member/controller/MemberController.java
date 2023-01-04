@@ -1143,9 +1143,15 @@ public class MemberController {
 			return mService.approval(id);
 		}
 		
-		@RequestMapping("soptClrear.me")
+		@RequestMapping("soptClear.me")
 		@ResponseBody
 		public int soptClrear(@RequestParam("id") String id) {
 			return mService.soptClrear(id);
+		}
+		
+		@RequestMapping("selectBusinessLicense.me")
+		@ResponseBody
+		public String selectBusinessLicense(@RequestParam("id") String id) {
+			return mService.selectBusinessLicense(id);
 		}
 }

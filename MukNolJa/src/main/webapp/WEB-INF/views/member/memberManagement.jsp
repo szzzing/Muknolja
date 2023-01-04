@@ -86,6 +86,29 @@
       	bottom: 30px;
       	font-size: 12px;
       }
+      #businessLicense_modal{
+			display: none;
+			width: 600px;
+			height: 550px;
+			padding: 20px 20px;
+			background-color: #fefefe;
+			border: 1px solid #888;
+			border-radius: 3px;
+			overflow: auto;
+        }
+        
+      #businessLicense_modal>.modal_close_btn{
+        	position: absolute;
+			top: 10px;
+			right: 10px;
+			text-decoration: none;
+			color: black;
+        }
+        
+        #businessLicenseImg{
+        	width: 100%;
+        	height: 100%;
+        }
       .mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:30px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	  .mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
     </style>
@@ -224,6 +247,10 @@
     </main>
   </div>
 </div>
+<div id="businessLicense_modal">
+	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
+	<img alt="..." src="${ contextPath }/resources/img/noImage.png" id="businessLicenseImg">
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
 <script type="text/javascript">
@@ -289,6 +316,37 @@
                 }
             });
             
+            function Modal(id) {
+                var zIndex = 9999;
+                var modal = document.getElementById(id);
+
+                // 닫기 버튼 처리, 시꺼먼 레이어와 모달 div 지우기
+                modal.querySelector('.modal_close_btn').addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+
+                modal.setStyle({
+                    position: 'fixed',
+                    display: 'block',
+                    boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+
+                    // 시꺼먼 레이어 보다 한칸 위에 보이기
+                    zIndex: zIndex + 1,
+
+                    // div center 정렬
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    msTransform: 'translate(-50%, -50%)',
+                    webkitTransform: 'translate(-50%, -50%)'
+                });
+            }
+           	
+           	Element.prototype.setStyle = function(styles) {
+                for (var k in styles) this.style[k] = styles[k];
+                return this;
+            };
+            
             const members = document.getElementsByClassName('members');
            	for(const m of members){
            		const id = m.querySelector('td').innerText;
@@ -330,7 +388,7 @@
 	           			buttons[0].addEventListener('click', function(){
 		           			if(confirm('정말 정지해제 하시겠습니까?')){
 			           			$.ajax({
-			           				url: 'soptClrear.me',
+			           				url: 'soptClear.me',
 			           				data: {id:id},
 			           				success: (data) => {
 			           					alert('정지해제 하였습니다.');
@@ -341,7 +399,14 @@
 		           		});
 	           		} else if(${ category == 4}){
 	           			buttons[0].addEventListener('click', function(){
-	           				console.log(this);
+	           				$.ajax({
+	           					url: 'selectBusinessLicense.me',
+	           					data: {id:id},
+	           					success: (data) => {
+	           						document.getElementById('businessLicenseImg').src = 'resources/uploadFiles/' + data;
+	           						Modal('businessLicense_modal');
+	           					}
+	           				});
 	           			});
 	           			
 	           			buttons[1].addEventListener('click', function(){

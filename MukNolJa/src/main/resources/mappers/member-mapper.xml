@@ -683,4 +683,11 @@
 		set STATUS = 'Y', REPORT = 0, STOP_DATE = null
 		where id = #{id}
 	</update>
+	
+	<select id="selectBusinessLicense" resultType="String">
+		select FILE_MODIFY_NAME
+		from ATTACHED_FILE
+		join RE_IMG r using(FILE_ID)
+		where r.id = #{id}
+	</select>
   </mapper>

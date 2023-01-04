@@ -344,6 +344,10 @@ public class MemberDAO {
 	public int soptClrear(SqlSessionTemplate sqlSession, String id) {
 		return sqlSession.update("memberMapper.soptClrear", id);
 	}
+
+	public String selectBusinessLicense(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("memberMapper.selectBusinessLicense", id);
+	}
 	
 	/*
 	 * public ArrayList<AttachedFile> selectImg(SqlSessionTemplate sqlSession, int

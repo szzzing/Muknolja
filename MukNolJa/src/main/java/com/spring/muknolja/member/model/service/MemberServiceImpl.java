@@ -418,6 +418,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.soptClrear(sqlSession, id);
 	}
 
+	@Override
+	public String selectBusinessLicense(String id) {
+		return mDAO.selectBusinessLicense(sqlSession, id);
+	}
+
 	
 
 	

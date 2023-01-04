@@ -168,6 +168,8 @@ public interface MemberService {
 
 	int soptClrear(String id);
 
+	String selectBusinessLicense(String id);
+
 
 
 
