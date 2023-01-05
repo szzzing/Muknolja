@@ -60,6 +60,7 @@
 <body>
 	<jsp:include page="../member/menubar.jsp"/>
 	
+	
 	<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 		<div class="carousel-inner">
 			<div class="carousel-item active" data-bs-interval="10000">
@@ -89,6 +90,7 @@
 		<input type="hidden" name="checkoutDate">
 	</form>
 	<!-- 호텔 상세페이지용 폼 -->
+	
 	
 	<div class="container-sm pt-5 pb-5">
 		<div class="row row-cols-1 row-cols-sm-1 row-cols-md-1 row-cols-lg-2 justify-content-start gx-5 gy-5">

@@ -543,9 +543,15 @@
 						console.log(data);
 						document.getElementById('particiNum').innerText = "";
 						document.getElementById('particiNum').innerText = data;
-						document.getElementById('particiButton').innerHTML = "";
-						var noPartyButton = '<button type="button" class="btn btn-primary btn-lg" id="noParticipate">참여취소하기</button>';
-						document.getElementById('particiButton').innerHTML += noPartyButton;
+						if(data==${p.maxParticipate}) {
+							document.getElementById('particiButton').innerHTML = "";
+							var endPartyButton = '<button type="button" class="btn btn-primary btn-lg" id="noParticipate" disabled>모집마감</button>';
+							document.getElementById('particiButton').innerHTML += endPartyButton;
+						} else {
+							document.getElementById('particiButton').innerHTML = "";
+							var noPartyButton = '<button type="button" class="btn btn-primary btn-lg" id="noParticipate">참여취소하기</button>';
+							document.getElementById('particiButton').innerHTML += noPartyButton;
+						}
 					},
 					error: (data) =>{
 						console.log(data);
