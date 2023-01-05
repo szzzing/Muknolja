@@ -40,7 +40,7 @@ public interface MemberService {
 
 	Visit selectVisitCounter(String id);
 
-	ArrayList<Member> selectVisitToday();
+	ArrayList<Member> selectVisitToday(PageInfo pi);
 
 	ArrayList<Map<String, Integer>> selectVisitList();
 
@@ -48,7 +48,7 @@ public interface MemberService {
 
 	int updateMember(Member m);
 
-	int memberListCount();
+	int memberListCount(HashMap<String, Object> map);
 
 	ArrayList<Member> selectMemberList(PageInfo pi, HashMap<String, Object> map);
 
@@ -64,7 +64,7 @@ public interface MemberService {
 
 	ArrayList<Map<String, Integer>> bCount();
 
-	int boardListCount();
+	int boardListCount(HashMap<String, Object> map);
 
 	ArrayList<Object> selectBoardList(HashMap<String, Object> map, PageInfo pi);
 
@@ -122,7 +122,7 @@ public interface MemberService {
 
 	int updateAd(HashMap<String, Object> aMap);
 
-	int reportListCount();
+	int reportListCount(String search);
 
 	ArrayList<Object> selectReportList(String search, PageInfo pi);
 
@@ -132,7 +132,7 @@ public interface MemberService {
 
 	ArrayList<Map<String, Integer>> QACount();
 
-	ArrayList<QA> selectQAList();
+	ArrayList<QA> selectQAList(PageInfo pi);
 
 	int insertQA(QA q);
 
@@ -174,6 +174,10 @@ public interface MemberService {
 
 	int insertMimg(HashMap<String, Object> map);
 	String selectBusinessLicense(String id);
+
+	int qaListCount();
+
+	int todayCount();
 
 
 

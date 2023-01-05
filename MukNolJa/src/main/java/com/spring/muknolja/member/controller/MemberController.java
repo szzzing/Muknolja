@@ -71,11 +71,6 @@ public class MemberController {
 		
 				
 				if(loginUser.getMemberType().equals("A")) {
-					ArrayList<Member> today = mService.selectVisitToday();
-					ArrayList<Map<String, Integer>> visitList = mService.selectVisitList();
-					
-					model.addAttribute("today", today);
-					model.addAttribute("visitList", visitList);
 					
 					return "redirect:adminPage.me";
 					
@@ -316,14 +311,24 @@ public class MemberController {
 			
 		}
 		@RequestMapping("adminPage.me")
-		public String adminPage(Model model) {
-			ArrayList<Member> today = mService.selectVisitToday();
+		public String adminPage(@RequestParam(value="page", required=false) Integer page, Model model) {
+			int currentPage = 1;
+			if(page != null && page > 1) {
+				currentPage = page;
+			}
+			
+			int listCount = mService.todayCount();
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
+			
+			ArrayList<Member> today = mService.selectVisitToday(pi);
 			ArrayList<Map<String, Integer>> visitList = mService.selectVisitList();
 			ArrayList<Map<String, Integer>> vsitAllList = mService.selectVisitAllList();
 			
 			model.addAttribute("today", today);
 			model.addAttribute("visitList", visitList);
 			model.addAttribute("vsitAllList", vsitAllList);
+			model.addAttribute("pi", pi);
 			
 			return "adminPage";
 		}
@@ -348,15 +353,17 @@ public class MemberController {
 			map.put("category", category);
 			map.put("search", search);
 			
-			int listCount = mService.memberListCount();
+			int listCount = mService.memberListCount(map);
 			
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 30);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
 			
 			ArrayList<Member> list = mService.selectMemberList(pi, map);
 			
 			model.addAttribute("eList", eList);
 			model.addAttribute("list", list);
 			model.addAttribute("category", category);
+			model.addAttribute("pi", pi);
+			model.addAttribute("search", search);
 			
 			return "memberManagement";
 		}
@@ -376,22 +383,23 @@ public class MemberController {
 			}
 			
 			ArrayList<Object> bList = null;
+			PageInfo pi = null;
 			
 			if(category != 2) {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("category", category);
 			map.put("search", search);
 			
-			int listCount = mService.boardListCount();
+			int listCount = mService.boardListCount(map);
 			
-			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 30);
+			pi = Pagination.getPageInfo(currentPage, listCount, 10);
 			
 			bList = mService.selectBoardList(map, pi);
 			
 			} else {
-				int listCount = mService.reportListCount();
+				int listCount = mService.reportListCount(search);
 				
-				PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 30);
+				pi = Pagination.getPageInfo(currentPage, listCount, 10);
 				
 				bList = mService.selectReportList(search, pi);
 				
@@ -412,6 +420,8 @@ public class MemberController {
 			model.addAttribute("bCount", bCount);
 			model.addAttribute("bList", bList);
 			model.addAttribute("category", category);
+			model.addAttribute("pi", pi);
+			model.addAttribute("search", search);
 			
 			return "boardManagement";
 		}
@@ -963,13 +973,23 @@ public class MemberController {
 		}
 		
 		@RequestMapping("QA.me")
-		public String QA(Model model) {
+		public String QA(@RequestParam(value="page", required=false) Integer page, Model model) {
+			
+			int currentPage = 1;
+			if(page != null && page > 1) {
+				currentPage = page;
+			}
+			
+			int listCount = mService.qaListCount();
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
 			
 			ArrayList<Map<String, Integer>> qCountList = mService.QACount();
-			ArrayList<QA> qList = mService.selectQAList();
+			ArrayList<QA> qList = mService.selectQAList(pi);
 			
 			model.addAttribute("qList", qList);
 			model.addAttribute("qCountList", qCountList);
+			model.addAttribute("pi", pi);
 			
 			return "QA";
 		}
