@@ -28,5 +28,5 @@ public class Member {
 	    private int report;
 	    private String lastVisit;
 	    private Date stopDate;
-
+	    private String fileModifyName;
 }

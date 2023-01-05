@@ -11,6 +11,7 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.review.model.dao.ReviewDAO;
 
 
@@ -29,9 +30,9 @@ public class ReviewServiceImpl implements ReviewService{
 		return rDAO.getselectBoard(sqlSession);
 	}
 	@Override
-	public ArrayList<Board> selectBoard(PageInfo pi) {
+	public ArrayList<Board> selectBoard(PageInfo pi, int Sarea) {
 		// TODO Auto-generated method stub
-		return rDAO.getselectBoard(sqlSession,pi);
+		return rDAO.getselectBoard(sqlSession,pi,Sarea);
 	}
 	@Override
 	public Board boardDetail(int boardId) {
@@ -49,9 +50,9 @@ public class ReviewServiceImpl implements ReviewService{
 		return rDAO.countReply(sqlSession, boardId);
 	}
 	@Override
-	public ArrayList<Reply> selectReply(PageInfo pi, int boardId) {
+	public ArrayList<Reply> selectReply(int boardId) {
 		// TODO Auto-generated method stub
-		return rDAO.selectReply(sqlSession,pi,boardId);
+		return rDAO.selectReply(sqlSession,boardId);
 	}
 	@Override
 	public ArrayList<Reply> selectRe(int refReplyId) {
@@ -64,15 +65,33 @@ public class ReviewServiceImpl implements ReviewService{
 		return rDAO.insertReply(sqlSession,reply);
 	}
 	@Override
-	public int insertBoard(Board board) {
+	public int insertBoard(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return rDAO.insertBoard(sqlSession,board);
+		return rDAO.insertBoard(sqlSession,map);
 	}
 	@Override
-	public int insertImg(ArrayList<AttachedFile> list) {
+	public int insertReport(Report report) {
 		// TODO Auto-generated method stub
-		return rDAO.insertImg(sqlSession, list);
+		return rDAO.insertReport(sqlSession,report);
 	}
+	@Override
+	public int insertReRe(Reply reply) {
+		// TODO Auto-generated method stub
+		return rDAO.insertReRe(sqlSession,reply);
+	}
+	@Override
+	public ArrayList<Reply> selectReply(ArrayList<Reply> reply1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Reply selectReply1(Reply num) {
+		// TODO Auto-generated method stub
+		return rDAO.selectReply1(sqlSession,num);
+	}
+
+
+
 	
 	
 

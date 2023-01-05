@@ -345,6 +345,19 @@ public class MemberDAO {
 		return sqlSession.update("memberMapper.soptClrear", id);
 	}
 
+	public Member selectMimg(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.selectMimg",id);
+	}
+
+	public int countMimg(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.countMimg",id);
+	}
+
+	public int insertMimg(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertMimg",map);}
 	public String selectBusinessLicense(SqlSessionTemplate sqlSession, String id) {
 		return sqlSession.selectOne("memberMapper.selectBusinessLicense", id);
 	}
