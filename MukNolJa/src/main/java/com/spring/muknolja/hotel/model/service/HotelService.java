@@ -96,4 +96,6 @@ public interface HotelService {
 
 	int insertReport(Report report);
 
+	ArrayList<HashMap> selectReservationWeekStastics(int hotelId);
+
 }

@@ -297,9 +297,9 @@
 								reservationDiv.find(".reservationStatus").siblings("ul").remove();
 								reservationDiv.find(".reservationStatus").removeClass("dropdown-toggle").removeClass("nav-link").removeAttr("data-bs-toggle").removeAttr("role");
 							}
-							if(i.isCheckin>0 && i.isCheckout>0 && i.reservationStatus=='Y') {
+							if(i.isCheckin>=1 && i.isCheckout>=1 && i.reservationStatus=='Y') {
 								reservationDiv.find(".reservationStatus").html("이용완료");
-							} else if(i.isCheckin>0 && i.isCheckout<0 && i.reservationStatus=='Y') {
+							} else if(i.isCheckin>=0 && i.isCheckout<=0 && i.reservationStatus=='Y') {
 								reservationDiv.find(".reservationStatus").html("이용중");
 							}
 							

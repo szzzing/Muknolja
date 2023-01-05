@@ -143,12 +143,101 @@
 				<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-4 pb-3 mb-5" style="border-bottom:1px solid #e9e9e9">
 					<h1 class="h2 fw-bold">통계</h1>
 				</div>
+				<h4>최근 매출</h4>
+				<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 			</main>
-
 		</div>
 	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+	<script type="text/javascript">
 	
-	
-	
+		var context = document.getElementById('myChart').getContext('2d');
+		var myChart = new Chart(context, {
+			type : 'line', // 차트의 형태
+			data : { // 차트에 들어갈 데이터
+				labels : [
+					'${stasticsList[0].PAYMENT_DATE}',
+					'${stasticsList[1].PAYMENT_DATE}',
+					'${stasticsList[2].PAYMENT_DATE}',
+					'${stasticsList[3].PAYMENT_DATE}',
+					'${stasticsList[4].PAYMENT_DATE}',
+					'${stasticsList[5].PAYMENT_DATE}'
+				],
+				datasets : [
+						{ //데이터
+							label : '매출액', //차트 제목
+							yAxisID: "sum",
+							fill : true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+							data : [
+								'${stasticsList[0].SUM}',
+								'${stasticsList[1].SUM}',
+								'${stasticsList[2].SUM}',
+								'${stasticsList[3].SUM}',
+								'${stasticsList[4].SUM}',
+								'${stasticsList[5].SUM}'
+							],
+							// 색상
+							backgroundColor : 'rgba(255, 214, 0, 0.2)',
+							// 경계선 색상
+							borderColor : 'rgba(255, 214, 0, 1)',
+							borderWidth : 1
+						//경계선 굵기
+						},
+						{
+							label : '예약건수',
+							yAxisID: "count",
+							fill : true,
+							data : [
+								'${stasticsList[0].COUNT}',
+								'${stasticsList[1].COUNT}',
+								'${stasticsList[2].COUNT}',
+								'${stasticsList[3].COUNT}',
+								'${stasticsList[4].COUNT}',
+								'${stasticsList[5].COUNT}'
+							],
+							backgroundColor : 'rgba(107, 182, 236, 0.2)',
+							borderColor : 'rgba(107, 182, 236, 1)',
+							borderWidth : 1
+						} ]
+			},
+			options : {
+				scales : {
+					yAxes : [
+// 						{
+// 							ticks : {
+// 								beginAtZero : true
+// 							}
+// 						},
+						{
+							id: "sum",
+							type: 'linear',
+							position: "left",
+							ticks : {
+								beginAtZero : true,
+							},
+							grid: {
+						    	display: false
+							}
+						},
+						{
+							id: "count",
+							type: 'linear',
+							position: "right",
+							ticks : {
+								beginAtZero : true,
+								stepSize: 10,
+							},
+							grid: {
+						    	display: false
+							}
+						}
+					]
+				}
+			}
+		});
+	</script>
+
 </body>
 </html>
