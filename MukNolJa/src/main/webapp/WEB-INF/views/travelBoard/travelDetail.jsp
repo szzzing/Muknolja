@@ -256,11 +256,10 @@
 			</div>
 		</form>
 		
-		<br><br><br><br><br><br><br><br><br>
 		
 		
 	</div>
-
+	<jsp:include page="../common/footer.jsp"/>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ca321a5811ec7bd78b88fbdc6d97e558"></script>
 	<script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 

@@ -216,7 +216,7 @@
 			</nav>
 		
 		</div>
-		
+		<jsp:include page="../common/footer.jsp"/>
 		<script>
 			<!-- 상세보기 -->
 			const allCards = document.getElementsByClassName('allCard');
