@@ -110,6 +110,7 @@
 		     			</div>
 					<c:set var="contents" value="${fn:split(board.boardContent,'!@#$')}" />
 					<c:forEach items="${ contents }" var="content" varStatus="status" >
+					
 					 
 					
 					<div class="d1" style="background-image: url('${contextPath}/resources/uploadFiles/${ img[status.index].fileModifyName }');"><div style="font-size:30px; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); color:none; padding-top:20px; font-weight:700"></div></div>
