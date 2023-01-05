@@ -267,13 +267,15 @@ public class MemberController {
 			String id = m.getId();
 			String password = mService.selectpwd(id);
 			
-			System.out.println(files);
+			String fileCheck = "No";
+			System.out.println("1번"+files);
 			if(files != null) {
+				
 				String fileName = files.getOriginalFilename();
 				if(!fileName.equals("")) {
 					String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
 					
-					if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+					if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")|| fileType.equals("jfif")) {
 						String[] returnArr = AttachedFile.saveFile(files, request);
 						
 						if(returnArr[1] != null) {
@@ -282,10 +284,13 @@ public class MemberController {
 							attm.setFileModifyName(returnArr[1]);
 							attm.setFileLink(returnArr[0]);
 							
+							System.out.println("2번"+attm);
 							HashMap<String, Object> map = new HashMap<>();
 							map.put("id", id);
 							map.put("attm", attm);
+							map.put("fileCheck", fileCheck);
 							int insertMimg = mService.insertMimg(map);
+							System.out.println(insertMimg);
 						}
 					}
 				}
@@ -595,6 +600,7 @@ public class MemberController {
 			Member m = (Member)session.getAttribute("loginUser");
 			String id = m.getId();
 			int listCount = mService.getListCount2(id);
+			System.out.println(listCount);
 			int currentPage = 1;
 			if(page!=null) {
 				currentPage = page;

@@ -4,10 +4,10 @@
 
 	<!--  로그인  -->
   <select id="login" resultMap="memberResultSet">
-  	select *
-  	from member
+  	select * 
+  	from member join re_img using(id) join ATTACHED_FILE using (file_id)
   	where id=#{id}
-  		  and STATUS = 'Y'
+  		  and STATUS = 'Y' 
   	</select>
   	<resultMap type="Member" id="memberResultSet">
   		<id column="ID" property="id"/>
@@ -32,7 +32,7 @@
   </insert>
   <insert id="insertMemberH">
   	insert into member
-  	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, 'H', 'D', default, null)
+  	values(#{id}, #{pwd}, #{name}, #{nickName}, #{phone}, #{email}, #{address},#{gender}, default, 'D', default, default, null)
   </insert>
   
   	
@@ -347,7 +347,7 @@
 		<select id="selectMimg" resultMap="memberResultSet">
 		select *
 		from Member join re_img using(id) join ATTACHED_FILE using(file_id)
-		where id = #{id} and FILE_TYPE = 'M'
+		where id = #{id} and FILE_TYPE = 'N'
 		</select>
 	<insert id="insertAttm">
 		insert all
@@ -410,7 +410,8 @@
 		<result column="HOTEL_GEO_Y" property="hotelGeoY"/>
 		<result column="EMPTY_HOTEL" property="emptyHotel"/>
 		<result column="MAX_DISTANCE" property="maxDistance"/>
-		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
+		<result column="FILE_MODIFY_NAME" property="thumbnail"/>
+		
 	</resultMap>
 	<select id="selectHotel" resultMap="hotelResultSet">
 		select *

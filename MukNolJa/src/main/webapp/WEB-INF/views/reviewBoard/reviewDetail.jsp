@@ -159,7 +159,8 @@
 				 	<div>${r.replyModifyDate }<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button>
 				 	</div>
 				 	</div>
-				 	<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal">신고</button></div>
+				 	<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal">신고</button><br>
+				 	<br><c:if test="${ loginUser.id eq r.replyWriter  }"><button type="button"  style="border:none; float:right;background:none" class="delete">삭제</button></c:if></div>
 				 	
 				 	</div>
 				 	<div class= "ref"></div>
@@ -213,11 +214,12 @@
 	<script src="${contextPath }/resources/turn.js"></script>
 	
 	<script>
+	$(document).ready(function(){
 	$('.rereply').hide();
 	$('#album').turn({gradients: true, acceleration: true});
 	
 const replyEnter = document.getElementById('replyContent');
-	
+var user = ${ loginUser.id};
 	//댓글
 	$('.plBu').click(function(){
 		
@@ -225,9 +227,7 @@ const replyEnter = document.getElementById('replyContent');
 	 	const replytext = $(this);
 	 	console.log(replyContent);
 	 	var nickName = "${ loginUser.id }";
-	 	console.log(nickName);
-	 	console.log(replyContent);
-	 	console.log(${ board.boardId});
+	    
 	 	
 	 	
 	 $.ajax({
@@ -254,23 +254,29 @@ const replyEnter = document.getElementById('replyContent');
 							 var list = new Array();
 							 list = data.reply
 							 $('.here').empty();
+							 console.log(user);
 							 for(const reply of list){
-							
+								 
 								 var name = reply.replyWriter;
 								 var id = reply.replyId;
 								 var writer = reply.replyWriter;
 								 var date = reply.replyModifyDate;
 								 var content = reply.replyContent;
 								 var img = reply.fileModifyName;
-								 console.log(date);
+								 
+								 
+								 var del = '';
+								 if( user == writer){
+									 del = '<button type="button"  style="border:none; float:right;background:none" class="delete">삭제</button>'
+								 }
 								 var all = '<div><div class="selectRe">'+
 									'<div style="margin-top:10px; display:flex; border-bottom: 1px solid #F2F2F2" id="per">'+
-									'<div class="col-2 col-lg-1 sel" style="height:60px; " ><img alt="1" wid=100%; height=100% src="${contextPath }/resources/uploadFiles/'+img+'" ></div>'+
+									'<div class="col-2 col-lg-1 sel" style="height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+img+'" ></div>'+
 									 	'<div class="replyId" style="display:none">'+id+'</div>'+
 									 	'<div class="replyContent col-8 col-lg-7" style="height:90px; padding-left:10px;"><div class="sele">'+
 									 	'<div style="width:100%; height:60px;display:flex;" class="writer">'+writer+'님<div style="margin-left:2%">'+content+'</div></div></div>'+
 									 	'<div>'+date+'<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button></div></div>'+
-									 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal">신고</button></div>'+
+									 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal">신고</button><br><br>'+del+'</div>'+
 									 	'</div><div class= "ref"></div></div>'+
 									 '<div class="rereply" style="display: flex">'+
 									 '<div class="col-2 col-lg-1"></div>'+
@@ -282,6 +288,126 @@ const replyEnter = document.getElementById('replyContent');
 										$('.rereply').hide();
 										$('#replyContent').val("");
 							 }
+							 $('.refReply').click(function(){
+									
+									console.log($(this).parent().parent().find(".rereply"));
+									var showReply = $(this).parent().parent().parent().parent().parent().find(".rereply");
+									
+									$(showReply).show();
+									
+								});
+								//대댓글작성 문제2
+								$('.replyBu').click(function(){
+									var reText = $(this).parent().parent().find(".reText");
+									var rereplyText = reText.val();
+									ref = $(this).parent().parent().parent().find('.ref');
+									console.log(ref);
+									 replyId = $(this).parent().parent().parent().find('.replyId').text();
+									
+										
+										var ee = $(this).parent().parent().find('.sel')
+									 $.ajax({
+										 url: "${ contextPath}/insertRere.re",
+										 data: { replyId : replyId,
+											 	 boardId : ${ board.boardId },
+											 	 content : rereplyText
+										 },
+											success: (data)=>{
+												console.log("22");
+												 reText.val('');
+											 $.ajax({
+												 url: "${ contextPath}/selectRe.re",
+												 data: { replyId : replyId },
+													success: (data)=>{
+														
+														console.log("11");
+														var list = data;
+														
+														$(ref).empty();
+															for(var i =0; i<list.length; i++){
+																 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style="text-align:center; width:100%;"class="bi bi-arrow-return-right"></i></div>'+
+																    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
+																	   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
+																	   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+																	   '<div>'+list[i].replyModifyDate+'</div></div>'+
+																	 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
+																	 	'</div></div>';
+																		
+																 		$(ref).append(Html);
+																 		
+																 		
+																 	
+																 	}
+												
+													},
+													error: (data)=>{
+														
+													}
+												});
+											
+											 },
+									 error: (data)=>{
+											
+										}
+									});
+									
+									});
+									
+									
+								//대댓글
+								var replyId = "";
+								var ref = "";
+									
+										$('.sel').click(function(){
+											replyId = $(this).parent().parent().find('.replyId').text();
+											ref = $(this).parent().parent().find('.ref');
+											
+											console.log(replyId);
+											if( ref.text() == ""){
+												
+												
+												$.ajax({
+												 url: "${ contextPath}/selectRe.re",
+												 data: { replyId : replyId },
+													success: (data)=>{
+														console.log(data);
+														console.log("확인");
+														var list = data;
+														console.log(list);
+														$(ref).empty();
+															for(var i =0; i<list.length; i++){
+																 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" width:100%;"class="bi bi-arrow-return-right"></i></div>'+
+																		    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
+																		   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
+																		   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+																		   '<div>'+list[i].replyModifyDate+'</div></div>'+
+																		 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
+																		 	'</div></div>';
+																		
+																 		$(ref).append(Html);
+																 	}
+																 	
+																	
+													},
+													error: (data)=>{
+														
+													}
+												});
+										
+											}else{
+												console.log("안돼");
+												$(ref).empty();
+											}
+										});
+										
+								$('.sele').click(function(){
+									replyId = $(this).parent().parent().find('.replyId').text();
+									ref = $(this).parent().parent().parent().find('.ref');
+									
+									$(this).parent().parent().find('.sel').click();
+								});
+
+								
 						 
 						 },
 						 error: (data)=>{
@@ -322,14 +448,7 @@ const replyEnter = document.getElementById('replyContent');
 		var writer = $(this).parent().parent().parent().parent().find(".writer").text().split("님")[0];
 		cour1.value = writer;
 	})
-	$('.refReply').click(function(){
-		
-		console.log($(this).parent().parent().find(".rereply"));
-		var showReply = $(this).parent().parent().parent().parent().parent().find(".rereply");
-		
-		$(showReply).show();
-		
-	});
+	
 	$('#see').click(function(){
 		var content = $('.mbody').val().trim();
 		var sinreplyId = document.getElementById("sinContentId").value;
@@ -360,13 +479,20 @@ const replyEnter = document.getElementById('replyContent');
 	
 		
 	});
-	
+	$('.refReply').click(function(){
+		
+		console.log($(this).parent().parent().find(".rereply"));
+		var showReply = $(this).parent().parent().parent().parent().parent().find(".rereply");
+		
+		$(showReply).show();
+		
+	});
 	//대댓글작성 문제2
 	$('.replyBu').click(function(){
 		var reText = $(this).parent().parent().find(".reText");
 		var rereplyText = reText.val();
-		
-		console.log(rereplyText);
+		ref = $(this).parent().parent().parent().find('.ref');
+		console.log(ref);
 		 replyId = $(this).parent().parent().parent().find('.replyId').text();
 		
 			
@@ -390,8 +516,8 @@ const replyEnter = document.getElementById('replyContent');
 							
 							$(ref).empty();
 								for(var i =0; i<list.length; i++){
-									 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" width:100%;"class="bi bi-arrow-return-right"></i></div>'+
-									    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" wid=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
+									 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style="text-align:center; width:100%;"class="bi bi-arrow-return-right"></i></div>'+
+									    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
 										   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
 										   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 										   '<div>'+list[i].replyModifyDate+'</div></div>'+
@@ -442,7 +568,7 @@ const replyEnter = document.getElementById('replyContent');
 							$(ref).empty();
 								for(var i =0; i<list.length; i++){
 									 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" width:100%;"class="bi bi-arrow-return-right"></i></div>'+
-											    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" wid=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
+											    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
 											   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
 											   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 											   '<div>'+list[i].replyModifyDate+'</div></div>'+
@@ -483,7 +609,7 @@ const replyEnter = document.getElementById('replyContent');
 		location.href="${contextPath}/travelDetail.tr?contentId=" +contentId
 	});
 	const searchButton = document.getElementById('button-addon2');  
-	
+	});
 	</script>
   </body>
 </html>

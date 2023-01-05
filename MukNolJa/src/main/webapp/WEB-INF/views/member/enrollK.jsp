@@ -94,7 +94,7 @@
         </div>
   	<script>
   	
-});$( "#nickName").on("blur",function () {
+$( "#nickName").on("blur",function () {
 
 		const idResult = document.getElementById('nickNamesol');
 		
