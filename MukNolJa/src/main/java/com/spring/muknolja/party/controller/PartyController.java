@@ -46,9 +46,7 @@ public class PartyController {
 		int listCount = pService.getListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 8);
-		
 		ArrayList<Party> pList = pService.selectPartyList(pi);
-		
 		if(pList != null) {
 			model.addAttribute("pi", pi);
 			model.addAttribute("pList", pList);

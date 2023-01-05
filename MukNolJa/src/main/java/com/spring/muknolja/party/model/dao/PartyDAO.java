@@ -26,10 +26,8 @@ public class PartyDAO {
 
 	public ArrayList<Party> selectPartyList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
-		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		
-		ArrayList<Party> partyList = (ArrayList)sqlSession.selectList("partyMapper.selectPartyList", rowBounds);
+		ArrayList<Party> partyList = (ArrayList)sqlSession.selectList("partyMapper.selectPartyList", null, rowBounds);
 		for(Party p : partyList) {
 			p.setNowParticipate(sqlSession.selectOne("partyMapper.countParty", p.getPartyId()));
 			p.setReplyCount(sqlSession.selectOne("replyMapper.countReply", p.getPartyId()));
