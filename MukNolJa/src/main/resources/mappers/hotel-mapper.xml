@@ -418,7 +418,7 @@
 	<select id="selectReservationList" resultMap="reservationResultSet">
 		select
 			reservation_id, member_id, hotel_id, room_id, hotel_name, room_name, checkin_date, checkout_date, checkin_time, checkout_time, reservation_status, payment_method, payment_amount, payment_date, reservation_name, reservation_phone,
-			round((sysdate-checkin_date), 0) as is_checkin, round((sysdate-checkout_date),0) as is_checkout
+			floor(sysdate-checkin_date) as is_checkin, floor(sysdate-checkout_date) as is_checkout
 		from reservation
 			join room using(room_id)
 			join hotel using(hotel_id)
@@ -500,6 +500,18 @@
 		insert into report
 		values(SEQ_REPORTID.nextval, #{memberId}, #{targetId}, #{reportClassification}, #{reportContent}, sysdate, default, #{reportTitle}, null)
 	</insert>
+	
+	<select id="selectReservationWeekStastics" resultType="map">
+		select *
+		from
+		    (select to_char(payment_date) as payment_date, count(*) as count, sum(payment_amount) as sum
+		    from reservation
+		        join room using(room_id)
+		    where hotel_id=#{hotelId}
+		    group by to_char(payment_date)
+		    order by to_char(payment_date))
+		where rownum<![CDATA[<=]]>7
+	</select>
 	
 	
 	

@@ -136,7 +136,7 @@
 					</c:if>
 					<c:if test="${ loginUser != null }">
 						<input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" id="replyContent">
-						<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
+						<button class="btn btn-outline-secondary plBu" type="button" id="button-addon2"><i class="bi bi-send"></i></button>
 					</c:if>
 				</div>
 			</div>
@@ -144,16 +144,18 @@
 			<div class="row justify-content-center">
 			<div class="col-9"  style=" box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); ">
 			<div id="rep" style="disply:flex; ">
-			
+		
 			<div class="row">
+			<div class="here" id="here">
 			<c:forEach items="${ reply }" var="r">
+			<div>
 			<div class="selectRe">
-			<div style="margin-top:10px; display:flex;  border-bottom: 1px solid #F2F2F2" >
-				<div class="col-2 col-lg-1 sele" style="background:black; height:60px;" >11</div>
+			<div style="margin-top:10px; display:flex; border-bottom: 1px solid #F2F2F2" id="per">
+				<div class="col-2 col-lg-1 sel" style="height:60px; " ><img alt="1" width=100%; height=100%; src="${contextPath }/resources/uploadFiles/${ r.fileModifyName }" ></div>
 					
 				 	<div class="replyId" style="display:none">${r.replyId}</div>
 				 	<div class="replyContent col-8 col-lg-7" style="height:90px; padding-left:10px;"><div class="sele">
-				 	<div style="width:100%; height:60px;display:flex;">${ r.replyWriter }님<div style="margin-left:2%">${r.replyContent}</div></div></div>
+				 	<div style="width:100%; height:60px;display:flex;" class="writer">${ r.replyWriter }님<div style="margin-left:2%">${r.replyContent}</div></div></div>
 				 	<div>${r.replyModifyDate }<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button>
 				 	</div>
 				 	</div>
@@ -161,23 +163,36 @@
 				 	
 				 	</div>
 				 	<div class= "ref"></div>
+				 	
 				 </div>
-				 </c:forEach>
-				 	  
+				 <div class="rereply" style="display: flex">
+				 <div class="col-2 col-lg-1"></div>
+				 <div class="col-8 col-lg-9"><textarea class="reText" style="width:100%; height:100%; border:none"></textarea></div>
+				 <div class="col" style=" padding-left:2%"><button class="replyBu" type="button" style="width:100%; height:100%; border:none; background: white;">댓글달기</button></div>
+				 </div>
+				 </div>
+				 	  </c:forEach>
+				 	  </div>
 								<!-- Modal -->
 								<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 								  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 								    <div class="modal-content">
 								      <div class="modal-header">
-								        <h1 class="modal-title fs-5 title" id="exampleModalLabel" >신고하기</h1>
-								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								        <h1 class="modal-title fs-5 title realsin" id="exampleModalLabel" >신고하기</h1>
+								      
 								      </div>
-								      <textarea class="modal-body mbody" style="text-align:left; float:left; border:none;height:200px;border-bottom:1px solid #DEE2E6">
+								   		  <input type="text" placeholder="tetle" id="mtop" class="modal-body mtop" style="text-align:left; float:left; border:none;height:50px;border-bottom:1px solid #DEE2E6">
+								       
+							
+								      <textarea placeholder="텍스트" id="mbody" class="modal-body mbody" style="text-align:left; float:left; border:none;height:200px;border-bottom:1px solid #DEE2E6">
 								       
 								      </textarea>
 								       
 								      <div class="modal-footer foot">
-								        <button type="button" class="btn btn-secondary" id="see">신고</button>
+								      <input type="text" style="display:none" id="sinContentId" class="sinContentId">
+								       <input type="text" style="display:none" id="sinContentWriter" class="#sinContentId">
+								   
+								        <button type="button" class="btn btn-secondary" id="see" data-bs-dismiss="modal">신고</button>
 								        <button type="button" class="btn btn-primary" id="dro" data-bs-dismiss="modal">닫기</button>
 								      </div>
 								    </div>
@@ -186,34 +201,7 @@
 				 	
 				 </div>
 				 </div>
-		<nav aria-label="Page navigation example">
-		  <ul class="pagination d-flex justify-content-center">
-		    <li class="page-item">
-		    	<c:url var="goBack" value="${ loc }">
-	            	<c:param name="page" value="${ pi.currentPage-1 }"/>
-	        	</c:url>
-	        	<a class="page-link" href="${ goBack }" aria-label="Previous">
-	        		<span aria-hidden="true">&laquo;</span>
-	        	</a>
-		    </li>
-		    
-		    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-		    	<c:url var="goNum" value="${ loc }">
-		    		<c:param name="page" value="${ p }"/>
-		    	</c:url>
-		    	 <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
-		    </c:forEach>
-		    
-		    <li class="page-item">
-		    	<c:url var="goNext" value="${ loc }">
-			    	<c:param name="page" value="${ pi.currentPage+1 }"/>
-		    	</c:url>
-			    <a class="page-link" href="${ goNext }" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			    </a>
-		    </li>
-		  </ul>
-		</nav>		</div>
+				</div>
 	            </div>
 	        </div>
 	    </div>
@@ -225,102 +213,277 @@
 	<script src="${contextPath }/resources/turn.js"></script>
 	
 	<script>
+	$('.rereply').hide();
 	$('#album').turn({gradients: true, acceleration: true});
 	
-	
-	$('.refReply').click(function(){
-		
-	})
-	
-	//신고
-	$('.sin').click(function(){
-		
-		console.log("지금");
-		
-	});
-	$('#see').click(function(){
-		var tet = $('.mbody').val();
-		var id = $(this).parent().parent().parent().find(".replyId").text();
-		console.log(id);
-		
-	});
-	//대댓글
-	
-	$('.sele').click(function(){
-		var replyId = $(this).parent().parent().find('.replyId').text();
-		var ref = $(this).parent().parent().parent().find('.ref');
-		console.log(ref);
-		console.log(ref.text());
-		console.log(replyId);
-		if( ref.text() == ""){
-			console.log(ref.text());
-		$.ajax({
-		 url: "${ contextPath}/selectRe.re",
-		 data: { replyId : replyId },
-			success: (data)=>{
-				console.log(data);
-				var list = data;
-					for(var i =0; i<list.length; i++){
-						 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" font-size: 40px;"class="bi bi-arrow-return-right"></i></div>'+
-								    '<div class="col-2 col-lg-1" style=" height:60px; background:black;" >11</div>'+
-								   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
-								   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
-								   '<div>'+list[i].replyModifyDate+'</div></div>'+
-								 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
-								 	'</div></div>';
-								$(ref).empty();
-						 		$(ref).append(Html);
-						 	}
-						 	
-							
-			},
-			error: (data)=>{
-				
-			}
-		});
-		}else{
-			console.log("안돼");
-			$(ref).empty();
-		}
-	});
-	
-
-	//관광지 이동
-	$(".firstE").click(function(){
-		var contentId = $(this).find('.firstC').text();
-		
-		console.log(contentId);
-		location.href="${contextPath}/travelDetail.tr?contentId=" +contentId
-	});
-	const searchButton = document.getElementById('button-addon2');  
-	const replyEnter = document.getElementById('replyContent');
+const replyEnter = document.getElementById('replyContent');
 	
 	//댓글
-	replyEnter.addEventListener('keypress', function(e){
-		if(e.keyCode == 13){
-	 	replyContent = $(this).val();
+	$('.plBu').click(function(){
+		
+	 	replyContent = $(this).parent().find('#replyContent').val().trim();
+	 	const replytext = $(this);
 	 	console.log(replyContent);
 	 	var nickName = "${ loginUser.id }";
+	 	console.log(nickName);
+	 	console.log(replyContent);
+	 	console.log(${ board.boardId});
+	 	
+	 	
 	 $.ajax({
 		 
 		 url: "${ contextPath}/insertReply.re",
-		 contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		
 			data: { replyContent: replyContent,
 					writer : nickName,
 					boardId: ${ board.boardId},
 					
 					},
 			success: (data)=>{
-				$(replyContent).empty();
+				replytext.val('');
+				 
+				 	$.ajax({
+						 url: "${ contextPath}/selectBoardd.re",
+						 data: { 
+							 boardId: ${ board.boardId}
+
+						 },
+						 success: (data)=>{
+							 var list = data[1];
+							 console.log(data);
+							 var list = new Array();
+							 list = data.reply
+							 $('.here').empty();
+							 for(const reply of list){
+							
+								 var name = reply.replyWriter;
+								 var id = reply.replyId;
+								 var writer = reply.replyWriter;
+								 var date = reply.replyModifyDate;
+								 var content = reply.replyContent;
+								 var img = reply.fileModifyName;
+								 console.log(date);
+								 var all = '<div><div class="selectRe">'+
+									'<div style="margin-top:10px; display:flex; border-bottom: 1px solid #F2F2F2" id="per">'+
+									'<div class="col-2 col-lg-1 sel" style="height:60px; " ><img alt="1" wid=100%; height=100% src="${contextPath }/resources/uploadFiles/'+img+'" ></div>'+
+									 	'<div class="replyId" style="display:none">'+id+'</div>'+
+									 	'<div class="replyContent col-8 col-lg-7" style="height:90px; padding-left:10px;"><div class="sele">'+
+									 	'<div style="width:100%; height:60px;display:flex;" class="writer">'+writer+'님<div style="margin-left:2%">'+content+'</div></div></div>'+
+									 	'<div>'+date+'<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button></div></div>'+
+									 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal">신고</button></div>'+
+									 	'</div><div class= "ref"></div></div>'+
+									 '<div class="rereply" style="display: flex">'+
+									 '<div class="col-2 col-lg-1"></div>'+
+									 '<div class="col-8 col-lg-9"><textarea class="reText" style="width:100%; height:100%; border:none"></textarea></div>'+
+									 '<div class="col" style=" padding-left:2%"><button class="replyBu" type="button" style="width:100%; height:100%; border:none; background: white;">댓글달기</button></div></div></div>'
+									 
+									document.getElementById('here').innerHTML += all;
+							 
+										$('.rereply').hide();
+										$('#replyContent').val("");
+							 }
+						 
+						 },
+						 error: (data)=>{
+							 
+						 }
+					});
+				},
+				error: (data)=>{
+					
+				}
+			});
+			
+		 
+		});
+	const mtop = document.getElementById('mtop');
+	 mtop.value = "";
+	
+	//문제 1
+	$("#dro").click(function(){
+		
+		const mbody = document.getElementById('mbody');
+		 mbody.value = "";
+		const mtop = document.getElementById('mtop');
+		 mtop.value = "";
+		   				
+		
+		
+	});
+	
+ 
+	//신고
+	$(".sin").click(function(){
+		var replyId = $(this).parent().parent().parent().find(".replyId").text();
+		
+		const cour = document.getElementById('sinContentId');
+		const cour1 = document.getElementById('sinContentWriter');
+		cour.value = replyId;
+		var writer = $(this).parent().parent().parent().parent().find(".writer").text().split("님")[0];
+		cour1.value = writer;
+	})
+	$('.refReply').click(function(){
+		
+		console.log($(this).parent().parent().find(".rereply"));
+		var showReply = $(this).parent().parent().parent().parent().parent().find(".rereply");
+		
+		$(showReply).show();
+		
+	});
+	$('#see').click(function(){
+		var content = $('.mbody').val().trim();
+		var sinreplyId = document.getElementById("sinContentId").value;
+		var sinreplyWriter = document.getElementById("sinContentWriter").value;
+		var title = $('.mtop').val();
+		console.log( content);
+		console.log( title);
+		console.log( sinreplyId);
+		$.ajax({
+			 url: "${ contextPath}/report.re",
+			 data: { 
+					 "content" : content,
+					 "title"   :  title,
+					 "replyId" : sinreplyId
+			 			
+			 },
+			 success: (data)=>{
+				 alert("신고되었습니다")
+			 
+			 },
+			 error: (data)=>{
+				 
+			 }
+		})
+		
+		
+		
+	
+		
+	});
+	
+	//대댓글작성 문제2
+	$('.replyBu').click(function(){
+		var reText = $(this).parent().parent().find(".reText");
+		var rereplyText = reText.val();
+		
+		console.log(rereplyText);
+		 replyId = $(this).parent().parent().parent().find('.replyId').text();
+		
+			
+			var ee = $(this).parent().parent().find('.sel')
+		 $.ajax({
+			 url: "${ contextPath}/insertRere.re",
+			 data: { replyId : replyId,
+				 	 boardId : ${ board.boardId },
+				 	 content : rereplyText
+			 },
+				success: (data)=>{
+					console.log("22");
+					 reText.val('');
+				 $.ajax({
+					 url: "${ contextPath}/selectRe.re",
+					 data: { replyId : replyId },
+						success: (data)=>{
+							
+							console.log("11");
+							var list = data;
+							
+							$(ref).empty();
+								for(var i =0; i<list.length; i++){
+									 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" width:100%;"class="bi bi-arrow-return-right"></i></div>'+
+									    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" wid=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
+										   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
+										   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+										   '<div>'+list[i].replyModifyDate+'</div></div>'+
+										 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
+										 	'</div></div>';
+											
+									 		$(ref).append(Html);
+									 		
+									 		
+									 	
+									 	}
+					
+						},
+						error: (data)=>{
+							
+						}
+					});
 				
-			},
-			error: (data)=>{
+				 },
+		 error: (data)=>{
 				
 			}
 		});
-		}
-	 
+		
+		});
+		
+		
+	//대댓글
+	var replyId = "";
+	var ref = "";
+		
+			$('.sel').click(function(){
+				replyId = $(this).parent().parent().find('.replyId').text();
+				ref = $(this).parent().parent().find('.ref');
+				
+				console.log(replyId);
+				if( ref.text() == ""){
+					
+					
+					$.ajax({
+					 url: "${ contextPath}/selectRe.re",
+					 data: { replyId : replyId },
+						success: (data)=>{
+							console.log(data);
+							console.log("확인");
+							var list = data;
+							console.log(list);
+							$(ref).empty();
+								for(var i =0; i<list.length; i++){
+									 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" width:100%;"class="bi bi-arrow-return-right"></i></div>'+
+											    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" wid=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
+											   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
+											   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+											   '<div>'+list[i].replyModifyDate+'</div></div>'+
+											 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
+											 	'</div></div>';
+											
+									 		$(ref).append(Html);
+									 	}
+									 	
+										
+						},
+						error: (data)=>{
+							
+						}
+					});
+			
+				}else{
+					console.log("안돼");
+					$(ref).empty();
+				}
+			});
+			
+	$('.sele').click(function(){
+		replyId = $(this).parent().parent().find('.replyId').text();
+		ref = $(this).parent().parent().parent().find('.ref');
+		
+		$(this).parent().parent().find('.sel').click();
 	});
+
+	
+			
+    
+	//관광지 이동
+	$(".firstE").click(function(){
+		var contentId = $(this).find('.firstC').text();
+		
+		
+		location.href="${contextPath}/travelDetail.tr?contentId=" +contentId
+	});
+	const searchButton = document.getElementById('button-addon2');  
+	
 	</script>
   </body>
 </html>

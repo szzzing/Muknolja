@@ -230,4 +230,9 @@ public class HotelServiceImpl implements HotelService{
 	public int insertReport(Report report) {
 		return hDAO.insertReport(sqlSession, report);
 	}
+	
+	@Override
+	public ArrayList<HashMap> selectReservationWeekStastics(int hotelId) {
+		return hDAO.selectReservationWeekStastics(sqlSession, hotelId);
+	}
 }

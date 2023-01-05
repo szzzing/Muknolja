@@ -342,7 +342,7 @@
 		   		var are = '<textarea class="t'+contentId+' vl"   style="height: 400px;  border-radius:0px;" name="partyContent"></textarea>';
 		   		var are2 = '<img src="${ contextPath }/resources/img/noImage.png"   alt="..." id="thumbnail'+contentId+'" height = 100%; width = 100% >'+
 		   				   '<input id="myFile'+contentId+'" name="file" type="file" accept="image/*" style=display:none; >'
-		   		
+		   			
 		   		$('.are').append(are);
 		   		$('.are2').append(are2);
 		   		if( numLi.childElementCount < 2){

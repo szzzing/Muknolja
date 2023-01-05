@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.party.model.vo.Party;
 
 public interface PartyService {
@@ -41,5 +42,13 @@ public interface PartyService {
 	int checkParty(HashMap<String, Object> map);
 
 	void deleteParticipate(HashMap<String, Object> map);
+
+	int checkReport(HashMap<String, Object> map);
+
+	int insertReport(Report rp);
+
+	ArrayList<Party> searchParty(HashMap<String, Object> map, PageInfo pi);
+
+	int getSearchListCount(HashMap<String, Object> map);
 
 }

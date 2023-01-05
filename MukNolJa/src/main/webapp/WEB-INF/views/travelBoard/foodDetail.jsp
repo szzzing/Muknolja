@@ -32,6 +32,8 @@
 	#travelReply input[readonly]{background: white;}
 	.replyContent{clear:both; margin-left: 33px; margin-top: 15px;}
 	.replyContent textarea{resize:none; border: none; border-radius: 10px; padding: 10px; width: 100%; font-size: 15px; outline: none;}
+	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 </style>
 </head>
 <body>
@@ -164,6 +166,49 @@
 			</div>
 		</div>
 		
+		<!-- 이미 신고 -->
+		<div class="modal fade" id="alreadyReReport" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-body" style="border: none!important; margin-top: 30px; text-align: center; font-size: 20px;">
+		        이미 신고한 댓글입니다.
+		      </div>
+		      <div class="modal-footer" style="border: none!important; margin: auto;">
+		        <button type="button" class="buttons" data-bs-dismiss="modal" style="font-size: 14px; margin-bottom: 30px;">닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 진짜 신고 -->
+		<div class="modal fade" id="realReportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-body" style="border: none!important; margin-top: 10px; margin-left: 10px; margin-right: 10px; text-align: center; font-size: 20px;">
+		      	<h4>신고 내용 작성</h4>
+		        <input type="text" class="form-control" id="reportTitle" style="margin-bottom:20px; margin-top: 20px;" placeholder="제목">
+		        <textarea class="form-control" id="reportContent" style="resize: none; height: 200px;" placeholder="내용"></textarea>
+		        <input type="hidden" id="refReply">
+		      </div>
+		      <div class="modal-footer" style="border: none!important; margin: auto;">
+		        <button type="button" class="mukButton" style="font-size: 14px; margin-bottom: 20px;" id="realReport">보내기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- 신고 완료 -->
+		<div class="modal fade" id="endReport" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered">
+		    <div class="modal-content">
+		      <div class="modal-body" style="border: none!important; margin-top: 30px; text-align: center; font-size: 20px;">
+		        신고 접수가 완료되었습니다.
+		      </div>
+		      <div class="modal-footer" style="border: none!important; margin: auto;">
+		        <button type="button" class="buttons" data-bs-dismiss="modal" style="font-size: 14px; margin-bottom: 30px;">닫기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
 		<!-- 댓글입력 -->
 		<form method="POST" id="replyForm">
 			<input type="hidden" name="contentId" value="${ contentId }">
@@ -201,7 +246,8 @@
 						</c:if>
 						<c:if test="${ r.replyWriter != loginUser.id }">
 							<div style="float:right;">
-								<button class="buttons">신고하기</button>
+								<button class="buttons reportReply" type="button">신고</button>
+								<input type="hidden" value="${ r.replyId }" name="replyId">
 							</div>
 						</c:if>
 					</div>
@@ -264,7 +310,7 @@
 						var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">';
 						var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + r.nickName + '</td></tr><tr><td style="color: gray;">' + r.replyModifyDate + '</td></tr></table>';
 						var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + r.replyId + '" name="replyId"></div>';
-						var reportR = '<div style="float:right;"><button class="buttons" type="button">신고하기</button></div>';
+						var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고</button><input type="hidden" value="${ r.replyId }" name="replyId"></div>';
 						var replyContent = '<div class="replyContent"><textarea readonly>' + r.replyContent +'</textarea></div>';
 						var hr = '<hr style="margin-top: 10px; border-color: gray;">';
 						var realDeleteRepId = '<input type="hidden" name="realDeleteRepId">';
@@ -295,6 +341,58 @@
 			$('input[name=realDeleteRepId]').val(ReplyId);
 			form.action = '${contextPath}/deleteReply.tr';
 			form.submit();
+		});
+		
+		<!-- 댓글신고 모달 -->
+		$(document).on('click', '.reportReply', function(){
+			if('${loginUser.id}' == ''){
+				$(this).attr('disabled', true);
+				alert('로그인 후 신고해주세요.');
+				location.href='${contextPath}/loginView.me';
+			}
+			
+			$('#reportTitle').val("");
+			$('#reportContent').val("");
+			
+			console.log($(this).parent().find('input').val());
+			$.ajax({
+				url: '${contextPath}/checkReport.pa',
+				data: {memberId: '${loginUser.id}', targetId:$(this).parent().find('input').val(), reportClassification: 'R'},
+				success: (data) =>{
+					console.log(data);
+					if(data == 0){
+						$('#refReply').val($(this).parent().find('input').val());
+						$('#realReportModal').modal('show');
+					}else if(data == 1){
+						$('#alreadyReReport').modal('show');
+					}
+				},
+				error: (data) =>{
+					console.log(data);
+				}
+			});
+		});
+		
+		
+		<!-- 진짜 신고 -->
+		$(document).on('click', '#realReport', function(){
+			$.ajax({
+				url: '${contextPath}/insertReport.pa',
+				data: {memberId: '${loginUser.id}', targetId:$(this).parent().parent().find('#refReply').val(), reportClassification: 'R',
+					   reportContent:$('#reportContent').val(), reportTitle:$('#reportTitle').val()},
+				success: (data) =>{
+					console.log("성공");
+					console.log(data);
+					if(data == 1){
+						$('#realReportModal').modal('hide');
+						$('#endReport').modal('show');
+					}
+				},
+				error: (data) =>{
+					console.log("실패");
+					console.log(data);
+				}
+			});
 		});
 		
 	</script>

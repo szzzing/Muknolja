@@ -419,6 +419,21 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Member selectMimg(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.selectMimg(sqlSession,id);
+	}
+
+	@Override
+	public int countMimg(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.countMimg(sqlSession,id);
+	}
+
+	@Override
+	public int insertMimg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mDAO.insertMimg(sqlSession,map);}
 	public String selectBusinessLicense(String id) {
 		return mDAO.selectBusinessLicense(sqlSession, id);
 	}

@@ -25,6 +25,7 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.party.model.service.PartyService;
 import com.spring.muknolja.party.model.vo.Party;
@@ -88,6 +89,46 @@ public class PartyController {
 	@RequestMapping("partyWrite.pa")
 	public String partyWrtie() {
 		return "partyWrite";
+	}
+	
+	@RequestMapping("searchParty.pa")
+	public void searchParty(HttpServletResponse response, @RequestParam(value="page", required=false) Integer page, @RequestParam("searchValue") String searchValue, @RequestParam("partyArea") String partyArea, @RequestParam("partyGender") String partyGender, @RequestParam("partyStartDate") String partyStartDate, @RequestParam("partyEndDate") String partyEndDate) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		System.out.println(partyStartDate);
+		System.out.println(partyEndDate);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("searchValue", searchValue);
+		map.put("partyArea", partyArea);
+		map.put("partyStartDate", partyStartDate);
+		map.put("partyEndDate", partyEndDate);
+		map.put("partyGender", partyGender);
+		System.out.println("-----------");
+		System.out.println(map);
+		System.out.println("-----------");
+		int listCount = pService.getSearchListCount(map);
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 8);
+		
+		ArrayList<Party> searchList = pService.searchParty(map, pi);
+		
+		HashMap<String, Object> map2 = new HashMap<String, Object>();
+		map2.put("searchList", searchList);
+		map2.put("pi", pi);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(map2, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping("insertParty.pa")
@@ -251,7 +292,7 @@ public class PartyController {
 	
 	@RequestMapping(value="deleteParticipate.pa", produces="application/text;charset=UTF-8")
 	@ResponseBody
-	public String deleteParticipate(@RequestParam("boardId") int boardId, @RequestParam("memberId") String memberId, Model model) {
+	public String deleteParticipate(@RequestParam("boardId") int boardId, @RequestParam("memberId") String memberId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("boardId", boardId);
 		map.put("memberId", memberId);
@@ -264,11 +305,27 @@ public class PartyController {
 		
 		int partyCount = pService.countParty(boardId);
 		
-		model.addAttribute(checkParty);
-		
 		return partyCount + "";
 	}
 	
+	@RequestMapping(value="checkReport.pa", produces="application/text;charset=UTF-8")
+	@ResponseBody
+	public String checkReport(@RequestParam("memberId") String memberId, @RequestParam("targetId") int targetId, @RequestParam("reportClassification") String reportClassification) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("memberId", memberId);
+		map.put("targetId", targetId);
+		map.put("reportClassification", reportClassification);
+		
+		int checkReport = pService.checkReport(map);
+		
+		return checkReport + "";
+	}
 	
+	@RequestMapping(value="insertReport.pa", produces="application/text;charset=UTF-8")
+	@ResponseBody
+	public String insertReport(@ModelAttribute Report rp) {
+		int result = pService.insertReport(rp);
+		return result + "";
+	}
 	
 }

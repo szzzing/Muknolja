@@ -191,4 +191,8 @@ public class HotelDAO {
 		return sqlSession.insert("hotelmapper.insertReport", report);
 	}
 
+	public ArrayList<HashMap> selectReservationWeekStastics(SqlSessionTemplate sqlSession, int hotelId) {
+		return (ArrayList)sqlSession.selectList("hotelmapper.selectReservationWeekStastics", hotelId);
+	}
+
 }

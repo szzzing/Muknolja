@@ -3,13 +3,22 @@
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import com.spring.muknolja.common.model.vo.AD;
+import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
+import com.spring.muknolja.common.model.vo.QA;
+import com.spring.muknolja.hotel.model.vo.Hotel;
+import com.spring.muknolja.hotel.model.vo.LikeHotel;
+import com.spring.muknolja.hotel.model.vo.Reservation;
+import com.spring.muknolja.hotel.model.vo.Reserve;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.member.model.vo.Visit;
+import com.spring.muknolja.party.model.vo.Party;
 
 public interface MemberService {
 
@@ -27,7 +36,7 @@ public interface MemberService {
 
 	String findId(String email);
 
-	void visitCount(String id);
+	void visitCount(HashMap<String, String> map);
 
 	Visit selectVisitCounter(String id);
 
@@ -49,20 +58,129 @@ public interface MemberService {
 
 	int stop(String id);
 
-<<<<<<< HEAD
+	int changePassword(Member m);
+
+	String selectEid(String email);
+
 	ArrayList<Map<String, Integer>> bCount();
 
 	int boardListCount();
 
-	ArrayList<Board> selectBoardList(HashMap<String, Object> map, PageInfo pi);
+	ArrayList<Object> selectBoardList(HashMap<String, Object> map, PageInfo pi);
 
 	ArrayList<Map<String, Integer>> incomeCount();
 
-	ArrayList<AD> selectADList(HashMap<String, Object> map);
-=======
-	int changePassword(Member m);
+	ArrayList<AD> selectADList(int category);
 
-	String selectEid(String email);
->>>>>>> 후기게시판
+	ArrayList<Reservation> selectReserve(String id);
+
+	
+
+	int insertsAttm(HashMap<String, Object> map);
+
+	int getListCount(String id);
+
+	
+
+	ArrayList<QA> selectQA(String id, PageInfo pi);
+
+	ArrayList<Hotel> selectHotel(String id, PageInfo pi);
+
+	ArrayList<AttachedFile> selectImg();
+
+	ArrayList<Reservation> selectReserve(PageInfo pi, String id);
+
+	int deleteDD(int id);
+
+	int getListCount1(String id);
+
+	int deleteBB(int id);
+
+	int getListCount2(String id);
+
+	int deleteAA(LikeHotel list);
+
+	int getListCount3(String id);
+
+	ArrayList<Party> selectParty(PageInfo pi, String id);
+
+	int getListCount4(String id);
+
+	int getListCount5(String id);
+
+	ArrayList<Board> selectB(PageInfo pi, String id);
+
+	ArrayList<Map<String, Integer>> selectVisitAllList();
+
+	int waringCheck(String id);
+
+	int insertAd(HashMap<String, Object> map);
+
+	AttachedFile selectAttm(int id);
+
+	int updateAttm(HashMap<String, Object> map);
+
+	int updateAd(HashMap<String, Object> aMap);
+
+	int reportListCount();
+
+	ArrayList<Object> selectReportList(String search, PageInfo pi);
+
+	String selectBoardType(String id);
+
+	int updateProcessing(String id);
+
+	ArrayList<Map<String, Integer>> QACount();
+
+	ArrayList<QA> selectQAList();
+
+	int insertQA(QA q);
+
+	QA selectQAOne(String id);
+	/* ArrayList<AttachedFile> selectImg(int hotelId); */
+
+	int updateQAReply(QA q);
+
+	ArrayList<String> selectAd(String type);
+
+	int selectPBoardFileId(int id);
+
+	int reportReply(HashMap<String, Object> map);
+
+	String selectBoardId(String id);
+
+	ArrayList<Board> selectNList(String search);
+
+	int insertNotice(HashMap<String, Object> map);
+
+	AttachedFile selectNAttm(int id);
+
+	int updateNAttm(AttachedFile attm);
+
+	int updateNotice(Board b);
+
+	int insertNAttm(HashMap<String, Object> map);
+
+	int deleteNotice(int id);
+
+	int insertMemberH(Member m);
+	int approval(String id);
+
+	int soptClrear(String id);
+
+<<<<<<< HEAD
+	String selectBusinessLicense(String id);
+=======
+	Member selectMimg(String id);
+
+	int countMimg(String id);
+
+	int insertMimg(HashMap<String, Object> map);
+>>>>>>> 마지막
+
+
+
+
+
 
 }

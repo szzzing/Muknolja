@@ -32,11 +32,14 @@
             	
          
           			<div style="width:800px; height:100%; display:inLine-block; background: white"><div >
-          				<div style=" margin-top:5vh; font-size: 50px; color:#6BB6EC; width: 800; display:flex; margin-left:280px;  text-align:center">${ loginUser.name }님 &nbsp;<div style="margin-top:20px;font-size:30px;">${ loginUser.id }</div></div></div>
+          				<div style=" margin-top:5vh; font-size: 50px; color:#6BB6EC; width: 800; display:flex; margin-left:280px;  text-align:center"><c:if test="${ memImg == null }"><img id="img"style=" margin-right:20px; margin-left:-50px;margin-top:15px;"height=50px; width= 50px; alt="1" src="${contextPath }/resources/img/no.png" ></c:if>
+          				<c:if test="${ memImg != null }"><img id="img"style=" margin-right:20px; margin-left:-50px;margin-top:15px;border-radius:30px;"height=50px;  width= 50px; alt="1" src="${contextPath }/resources/uploadFiles/${ memImg.fileModifyName}" ></c:if>
+          				${ loginUser.name }님 &nbsp;<div style="margin-top:20px;font-size:30px;">${ loginUser.id }</div></div></div>
             				<div style="float:left; margin-left: 150px; margin-top: 4vh;">
-		            			<form action="${ contextPath }/change.me?id=${ loginUser.id }" method="POST">
+            				
+		            			<form action="${ contextPath }/change.me?id=${ loginUser.id }" method="POST" enctype="multipart/form-data" >
 		            			
-		            			
+		            			<input type="file" id="file"  name="file" style="display:none;">
 		            			<div style="margin-top:20px;">
 		            				<div style="display:flex;"><label for="password" style="float:left; font-weight:600; font-size:15px;">패스워드</label><div id="passwordsol"style="margin-left:10px; float:left; font-size:15px; color:red; font-weight:100"></div></div>
 		            				<br>
@@ -179,6 +182,21 @@
 		
 	});
 		
+		const myFile = document.querySelector('#file');
+	    const thumbnail = document.querySelector('#img');
+	    
+		    myFile.addEventListener('change', ()=>{
+		    	const reader = new FileReader();
+		    	reader.onload = function(e){
+					console.log(e);		    		
+		    		thumbnail.src = e.target.result;
+		    	};
+		    	reader.readAsDataURL(myFile.files[0]);
+		    });
+	$('#img').click(function(){
+		$("#file").click();
+		
+	})
   	</script> 
     
   </body>

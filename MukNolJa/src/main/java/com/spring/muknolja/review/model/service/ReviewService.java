@@ -7,12 +7,13 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.common.model.vo.Report;
 
 public interface ReviewService {
 
 	int getselectBoard();
 
-	ArrayList<Board> selectBoard(PageInfo pi);
+	ArrayList<Board> selectBoard(PageInfo pi, int Sarea);
 
 	Board boardDetail(int boardId);
 
@@ -20,14 +21,26 @@ public interface ReviewService {
 
 	int CountReply(int boardId);
 
-	ArrayList<Reply> selectReply(PageInfo pi, int boardId);
+	ArrayList<Reply> selectReply(int boardId);
 
 	ArrayList<Reply> selectRe(int refReplyId);
 
 	int insertReply(Reply reply);
 
-	int insertBoard(Board board);
+	int insertBoard(HashMap<String, Object> map);
 
-	int insertImg(ArrayList<AttachedFile> list);
+	int insertReport(Report report);
+
+	int insertReRe(Reply reply);
+
+	ArrayList<Reply> selectReply(ArrayList<Reply> reply1);
+
+	Reply selectReply1(Reply num);
+
+
+
+	
+
+	
 
 }

@@ -12,6 +12,7 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.common.model.vo.Report;
 
 
 @Repository("rDAO")
@@ -22,11 +23,11 @@ public class ReviewDAO {
 		return sqlSession.selectOne("reviewMapper.getSelectBoard");
 	}
 
-	public ArrayList<Board> getselectBoard(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Board> getselectBoard(SqlSessionTemplate sqlSession, PageInfo pi, int Sarea) {
 		// TODO Auto-generated method stub
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("reviewMapper.selectBoard", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectBoard", Sarea, rowBounds);
 	
 	}
 
@@ -46,12 +47,10 @@ public class ReviewDAO {
 		return sqlSession.selectOne("reviewMapper.countReply",boardId);
 	}
 
-	public ArrayList<Reply> selectReply(SqlSessionTemplate sqlSession, PageInfo pi, int boardId) {
-		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		System.out.println("/////////");
+	public ArrayList<Reply> selectReply(SqlSessionTemplate sqlSession, int boardId) {
+		
 	
-		return (ArrayList)sqlSession.selectList("reviewMapper.selectReply", boardId, rowBounds);
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectReply", boardId);
 	}
 
 	public ArrayList<Reply> selectRe(SqlSessionTemplate sqlSession, int refReplyId) {
@@ -64,14 +63,30 @@ public class ReviewDAO {
 		return sqlSession.insert("replyMapper.insertReply",reply);
 	}
 
-	public int insertBoard(SqlSessionTemplate sqlSession, Board board) {
+	public int insertBoard(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("reviewMapper.insertBoard",board);
+		return sqlSession.insert("reviewMapper.insertBoard",map);
 	}
 
-	public int insertImg(SqlSessionTemplate sqlSession, ArrayList<AttachedFile> list) {
+	public int insertReport(SqlSessionTemplate sqlSession, Report report) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("reviewMapper.insertImg",list);
+		return sqlSession.insert("reviewMapper.insertReport",report);
 	}
+
+	public int insertReRe(SqlSessionTemplate sqlSession, Reply reply) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("replyMapper.insertReReply",reply);
+	}
+
+	public ArrayList<Reply> selectReply(SqlSessionTemplate sqlSession, ArrayList<Reply> reply1) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("replyMapper.selectReplyImg", reply1);
+	}
+
+	public Reply selectReply1(SqlSessionTemplate sqlSession, Reply num) {
+		// TODO Auto-generated method stub
+	return sqlSession.selectOne("replyMapper.selectReply1",num);
+	}
+	
 	
 }
