@@ -238,7 +238,7 @@
     
     
 <!--     채팅 모달 -->
-	 <div id="room_modal">
+	 <div id="room_modal" class="modal">
 		<div id="chatList">
 			<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
 			<div class="row text-center">
@@ -255,7 +255,7 @@
 		</div>
      </div>
      
-     <div id="chat_modal">
+     <div id="chat_modal" class="modal">
      	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
      	<a id="out_btn"><i class="bi bi-box-arrow-right"></i></a>
      	<div class="row" style="--bs-gutter-x: 0rem;">
@@ -276,7 +276,7 @@
      	</div>
      </div>
      
-     <div id="createroom_modal">
+     <div id="createroom_modal" class="modal">
      	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
      	<div class="row">
      		<div class="col text-center">
@@ -290,7 +290,7 @@
      	</div>
      </div>
      
-    <div id="loginCheck_modal">
+    <div id="loginCheck_modal" class="modal">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
     		<div class="col text-center">
@@ -299,7 +299,7 @@
     	</div>
     </div>
     
-    <div id="invite_modal">
+    <div id="invite_modal" class="modal">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
     		<div class="col text-center" style="margin-top: 20px;">
@@ -321,7 +321,7 @@
 	    <div id="participants"></div>
     </div>
     
-    <div id="success_modal">
+    <div id="success_modal" class="modal">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
     		<div class="col text-center" id="text">
@@ -360,8 +360,8 @@
                     zIndex: zIndex + 1,
 
                     // div center 정렬
-                    top: '62%',
-                    left: '85%',
+                    top: '50%',
+                    left: '50%',
                     transform: 'translate(-50%, -50%)',
                     msTransform: 'translate(-50%, -50%)',
                     webkitTransform: 'translate(-50%, -50%)'
