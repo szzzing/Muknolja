@@ -94,24 +94,30 @@ public class ReviewController {
 	@RequestMapping("reviewDetail.re")
 	public String reviewDetail(@RequestParam ("boardId") int boardId, Model model,HttpSession session,@RequestParam(value="page", required=false) Integer page) {
 		Board board = rService.boardDetail(boardId);
+		System.out.println(board);
 		ArrayList<AttachedFile> img = rService.boardImg(boardId);
+		System.out.println(img);
 		
 		model.addAttribute("board", board);
+		
 		model.addAttribute("img", img);
 		session.setAttribute("image", img);
 		int replyCount = rService.CountReply(boardId);
+		System.out.println(replyCount);
 		HashMap<String, Object> map = new HashMap<>();
 		model.addAttribute("replyCount", replyCount);
 				
 		
 		ArrayList<Reply> reply1 = rService.selectReply(boardId);
+		System.out.println( reply1);
 		ArrayList<Reply> reply = new ArrayList<Reply>();
 		for(int i = 0; i < reply1.size(); i++) {
 			Reply num = reply1.get(i);
 			Reply reply11Reply = rService.selectReply1(num);
 			reply.add(reply11Reply);
+			System.out.println(1);
 		}
-		
+		System.out.println("너냐" + reply);
 		
 		model.addAttribute("reply",reply);
 		
@@ -133,7 +139,7 @@ public class ReviewController {
 	public String reviewWriter2(HttpServletRequest request,Board board, HttpSession session,@RequestParam("file")ArrayList<MultipartFile> files) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
-		
+		System.out.println("파일"+files);
 		String id = m.getId();
 		ArrayList<AttachedFile> list = new ArrayList();
 		for(MultipartFile file : files) {
@@ -141,7 +147,7 @@ public class ReviewController {
 			if(!fileName.equals("")) {
 				String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
 				
-				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+				if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")|| fileType.equals("jfif")) {
 					String[] returnArr = AttachedFile.saveFile(file, request);
 					
 					if(returnArr[1] != null) {
@@ -166,7 +172,7 @@ public class ReviewController {
 		}
 	    board.setBoardWriter(id);
 	    System.out.println(board);
-	    System.out.println(list);
+	    System.out.println("사진"+list);
 	    HashMap<String, Object> map = new HashMap<>();
 	    map.put("b", board);
 	    map.put("list", list);

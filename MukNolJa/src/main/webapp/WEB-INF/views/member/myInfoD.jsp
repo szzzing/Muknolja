@@ -82,6 +82,7 @@
 								      </div>
 								       
 								      <div class="modal-footer foot">
+								      	<div style="display:none" id="hidId"></div>
 								        <button type="button" class="btn btn-secondary" id="de">예약취소</button>
 								        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">닫기</button>
 								      </div>
@@ -141,11 +142,20 @@
 							'<div id="l'+i+'" class="col-xl-4 col-12 cll" style="height:260px;"><img alt="왜"src="${ contextPath}/resources/uploadFiles/'+list[i].fileModifyName+'" style="width:100%; height:240px"></div>'+
 							'<div class="col-xl-6 col-8" style="float:left; text-align:left; font-size:30px; font-weight:600" >'+list[i].hotelName+'('+list[i].roomName+')<div style=" font-size:25px; margin-top:20px;font-weight:300">예약자 :&nbsp;'+
 							list[i].reservationName+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    예약자 번호 :&nbsp; '+list[i].reservationPhone+'<br>체크인 :&nbsp;'+list[i].checkinDate+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;체크아웃 : '+list[i].checkoutDate+
-							'<br>결제금액 : '+list[i].paymentAmount+'원 &nbsp;&nbsp;&nbsp;&nbsp; 결제수단: '+list[i].paymentMethod+'</div></div>' +
-							'<div class="col-xl-2 col-4"><button  id="'+i+'" style="width:100%; height:90%;border:1px solid #6BB6EC; border-radius:10px; background:none; " data-bs-toggle="modal" data-bs-target="#exampleModal">예약취소</button></div></div>';
+							'<br>결제금액 : '+list[i].paymentAmount+'원 &nbsp;&nbsp;&nbsp;&nbsp; 결제수단: '+list[i].paymentMethod+'</div></div><div class="hiddenId" style="display:none">'+list[i].reservationId+'</div>' +
+							'<div class="col-xl-2 col-4"><button class="hiddenBu" id="'+i+'" style="width:100%; height:90%;border:1px solid #6BB6EC; border-radius:10px; background:none; " data-bs-toggle="modal" data-bs-target="#exampleModal">예약취소</button></div></div>';
 					$('#dd').append(dHtml);
 					
 				}
+				$('.hiddenBu').click(function(){
+					var idNum = $(this).parent().parent().find('.hiddenId');
+					var numId = idNum.text();
+					console.log(numId);
+					$('#hidId').val("");
+					$('#hidId').val(numId);
+					console.log($('#hidId').val());
+				});
+				
 				$(".cll").click(function(){
 					var idNum = $(this).attr('id').substr(1);
 					var st = list[idNum].hotelId
@@ -153,12 +163,14 @@
 					location.href="${ contextPath }/hotelDetail.ho?hotelId="+ st;
 				});
 					$("#de").click(function(){
-						var idNum = $(this).attr('id');
-						var st = list[idNum].reservationId
+						
+						
+						var st = $('#hidId').val();
+						console.log(st);
 						$.ajax({
-							url: "${contextPath}/deleteDD.me",
+							url: "${contextPath}/deleteReservation.ho",
 							data: {
-								id : st
+								reservationId : st
 							},
 							success: (data)=>{
 								location.href = "${ contextPath }/myInfoD.me"

@@ -339,7 +339,7 @@
 		   		
 		   		
 		   		var bor = '';
-		   		var are = '<textarea class="t'+contentId+' vl"   style="height: 400px;  border-radius:0px;" name="partyContent"></textarea>';
+		   		var are = '<textarea class="t'+contentId+' vl"   style="height: 400px; width:100%;  border-radius:0px;" name="partyContent"></textarea>';
 		   		var are2 = '<img src="${ contextPath }/resources/img/noImage.png"   alt="..." id="thumbnail'+contentId+'" height = 100%; width = 100% >'+
 		   				   '<input id="myFile'+contentId+'" name="file" type="file" accept="image/*" style=display:none; >'
 		   			
@@ -494,15 +494,24 @@
 			$('#daterangepicker').daterangepicker();
 			$("#daterangepicker").daterangepicker({
 			    locale: {
-			    "separator": " ~ ",                     // 시작일시와 종료일시 구분자
+			    	"prevText": "이전 달",
+			        "nextText": "다음 달",
+			        
+			        "showOtherMonths": "true", //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+	                "showMonthAfterYear":"true", //년도 먼저 나오고, 뒤에 월 표시
+	                "changeYear": "true", //콤보박스에서 년 선택 가능
+	                "changeMonth": "true" ,//콤보박스에서 월 선택 가능      
+			   	"showOtherMonths" : "true",
+			    "separator": " ~ ",                   // 시작일시와 종료일시 구분자
 			    "format": 'YYYY-MM-DD',     // 일시 노출 포맷
 			    "applyLabel": "확인",                    // 확인 버튼 텍스트
-			    "cancelLabel": "취소",                   // 취소 버튼 텍스트
+			    "cancelLabel": "취소",     
+			    "showMonthAfterYear" : "true",// 취소 버튼 텍스트
 			    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
 			    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 			    },
-			    minDate: new Date(),
-			    autoApply: true,                         // 확인/취소 버튼 사용여부
+			    
+			                         // 확인/취소 버튼 사용여부
 			});
 			
 			<!-- 날짜넣기 -->

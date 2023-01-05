@@ -150,7 +150,7 @@
 						bread = '<img alt="1" src="${contextPath }/resources/img/bread.png" style="width:50px; height:50px; ">'
 					}
 					var dHtml=	'<div class="row Small shadow " style="padding-top:20px;  ">'+
-							'<div id="l'+i+'" class="col-xl-4 col-12 cll" style="height:260px;"><img alt="왜"src="${ contextPath}/resources/uploadFiles/'+list[i].fileModifyName+'" style="width:100%; height:240px"></div>'+
+							'<div id="l'+i+'" class="col-xl-4 col-12 cll" style="height:260px;"><img alt="왜"src="${ contextPath}/resources/uploadFiles/'+list[i].thumbnail+'" style="width:100%; height:240px"></div>'+
 							'<div class="col-xl-8 col-8" style="float:left; text-align:left; font-size:30px; font-weight:600" >'+list[i].hotelName +'&nbsp;'+sta+'<i  id="c'+i+'"style="float:right; color:#6BB6EC" class="bi bi-heart-fill imo"></i><div style=" font-size:25px; margin-top:20px;font-weight:300">위치 :&nbsp;'+
 							list[i].hotelAddress+'</div><div style="margin-top:20px; margin-bottom:20px;">'+bread+to+swim+fi+park+wifi+'</div></div>'
 					$('#dd').append(dHtml);

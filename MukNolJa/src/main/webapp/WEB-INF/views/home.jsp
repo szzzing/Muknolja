@@ -498,7 +498,7 @@ li{list-style:none;}
  				var mapy = result.response.body.items.item[i].mapy;
  				var contentId = result.response.body.items.item[i].contentid;
 				
-				var imgHtml = '<a href="${contextPath}/travelDetail.tr?mapx=' +mapx+'&mapy=' +mapy+'&contentId='+contentId+'"><img  class="im" src="' + img + '" ><a>';
+				var imgHtml = '<a href="${contextPath}/foodDetail.tr?mapx=' +mapx+'&mapy=' +mapy+'&contentId='+contentId+'"><img  class="im" src="' + img + '" ><a>';
 				
 				$('#li2').append(imgHtml);
 				}
@@ -515,7 +515,7 @@ li{list-style:none;}
  				var mapx = result.response.body.items.item[i].mapx;
  				var mapy = result.response.body.items.item[i].mapy;
  				var contentId = result.response.body.items.item[i].contentid;
-				var imgHtml = '<a href="${contextPath}/travelDetail.tr?mapx=' +mapx+'&mapy=' +mapy+'&contentId='+contentId+'"><img  class="im" src="' + img + '" ><a>';
+				var imgHtml = '<a href="${contextPath}/festivalDetail.tr?mapx=' +mapx+'&mapy=' +mapy+'&contentId='+contentId+'"><img  class="im" src="' + img + '" ><a>';
 				
 				$('#li3').append(imgHtml);
 				}
