@@ -163,13 +163,20 @@ public interface MemberService {
 
 	int deleteNotice(int id);
 
-<<<<<<< HEAD
+	int insertMemberH(Member m);
 	int approval(String id);
 
 	int soptClrear(String id);
+
+<<<<<<< HEAD
+	String selectBusinessLicense(String id);
 =======
-	int insertMemberH(Member m);
->>>>>>> 작성
+	Member selectMimg(String id);
+
+	int countMimg(String id);
+
+	int insertMimg(HashMap<String, Object> map);
+>>>>>>> 마지막
 
 
 

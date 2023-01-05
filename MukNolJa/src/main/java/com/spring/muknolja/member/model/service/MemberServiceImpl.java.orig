@@ -395,17 +395,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-<<<<<<< HEAD
-	public int approval(String id) {
-		return mDAO.approval(sqlSession, id);
-	}
-	
-	@Override
-	public int soptClrear(String id) {
-		return mDAO.soptClrear(sqlSession, id);
-	}
-
-=======
 	public int insertsAttm(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
 		return mDAO.insertMemberH(sqlSession, map);
@@ -420,7 +409,38 @@ public class MemberServiceImpl implements MemberService {
 
 	
 
->>>>>>> 작성
+	public int approval(String id) {
+		return mDAO.approval(sqlSession, id);
+	}
+	
+	@Override
+	public int soptClrear(String id) {
+		return mDAO.soptClrear(sqlSession, id);
+	}
+
+	@Override
+<<<<<<< HEAD
+	public String selectBusinessLicense(String id) {
+		return mDAO.selectBusinessLicense(sqlSession, id);
+=======
+	public Member selectMimg(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.selectMimg(sqlSession,id);
+	}
+
+	@Override
+	public int countMimg(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.countMimg(sqlSession,id);
+	}
+
+	@Override
+	public int insertMimg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mDAO.insertMimg(sqlSession,map);
+>>>>>>> 마지막
+	}
+
 	
 
 	
