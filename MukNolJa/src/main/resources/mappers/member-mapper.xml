@@ -5,7 +5,7 @@
 	<!--  로그인  -->
   <select id="login" resultMap="memberResultSet">
   	select * 
-  	from member join re_img using(id) join ATTACHED_FILE using (file_id)
+  	from member left join re_img using(id) left join ATTACHED_FILE using (file_id)
   	where id=#{id}
   		  and STATUS = 'Y' 
   	</select>
