@@ -11,7 +11,7 @@ import com.spring.muknolja.common.model.vo.Report;
 
 public interface ReviewService {
 
-	int getselectBoard();
+	int getselectBoard(int sarea);
 
 	ArrayList<Board> selectBoard(PageInfo pi, int Sarea);
 

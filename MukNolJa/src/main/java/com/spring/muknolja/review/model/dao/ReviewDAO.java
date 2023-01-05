@@ -18,9 +18,9 @@ import com.spring.muknolja.common.model.vo.Report;
 @Repository("rDAO")
 public class ReviewDAO {
 
-	public int getselectBoard(SqlSessionTemplate sqlSession) {
+	public int getselectBoard(SqlSessionTemplate sqlSession, int sarea) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("reviewMapper.getSelectBoard");
+		return sqlSession.selectOne("reviewMapper.getSelectBoard",sarea);
 	}
 
 	public ArrayList<Board> getselectBoard(SqlSessionTemplate sqlSession, PageInfo pi, int Sarea) {

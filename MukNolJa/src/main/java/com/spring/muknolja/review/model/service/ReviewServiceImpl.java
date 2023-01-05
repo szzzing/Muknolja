@@ -25,9 +25,9 @@ public class ReviewServiceImpl implements ReviewService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	@Override
-	public int getselectBoard() {
+	public int getselectBoard(int sarea) {
 		
-		return rDAO.getselectBoard(sqlSession);
+		return rDAO.getselectBoard(sqlSession,sarea);
 	}
 	@Override
 	public ArrayList<Board> selectBoard(PageInfo pi, int Sarea) {

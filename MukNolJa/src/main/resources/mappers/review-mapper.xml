@@ -23,6 +23,7 @@
 	from board
 	where board_id = #{boardId}
 	
+	
 	</select>
 	<resultMap type="AttachedFile" id="attachedFileResultSet">
 		<id column="FILE_ID" property="fileId"/>
@@ -46,6 +47,57 @@
 	select count(*)
 	from board join BOARD_IMG using(BOARD_ID) join ATTACHED_FILE using(FILE_ID)
 	where BOARD_STATUS ='Y' AND FILE_THUMBNAIL = 'Y' AND FILE_TYPE = 'R'
+	<if test="Sarea == 2">
+	 AND BOARD_AREA = '서울'
+	 </if>
+	  <if test="Sarea == 3">
+	 AND BOARD_AREA = '인천'
+	 </if>
+	 <if test="Sarea == 4">
+	 AND BOARD_AREA = '대전'
+	 </if>
+	 	 <if test="Sarea == 5">
+	 AND BOARD_AREA = '대구'
+	 </if>
+	 	 <if test="Sarea == 6">
+	 AND BOARD_AREA = '광주'
+	 </if>
+	 	 <if test="Sarea == 7">
+	 AND BOARD_AREA = '부산'
+	 </if>
+	 	 <if test="Sarea == 8">
+	 AND BOARD_AREA = '울산'
+	 </if>
+	 	 <if test="Sarea == 9">
+	 AND BOARD_AREA = '세종'
+	 </if>
+	 	 <if test="Sarea == 10">
+	 AND BOARD_AREA = '경기'
+	 </if>
+	 	 <if test="Sarea == 11">
+	 AND BOARD_AREA = '강원'
+	 </if>
+	 	 <if test="Sarea == 12">
+	 AND BOARD_AREA = '충북'
+	 </if>
+	 	 <if test="Sarea == 13">
+	 AND BOARD_AREA = '충남'
+	 </if>
+	 	 <if test="Sarea == 14">
+	 AND BOARD_AREA = '경북'
+	 </if>
+	 	 <if test="Sarea == 15">
+	 AND BOARD_AREA = '경남'
+	 </if>
+	 	 <if test="Sarea == 16">
+	 AND BOARD_AREA = '전북'
+	 </if>
+	 	 <if test="Sarea == 17">
+	 AND BOARD_AREA = '전남'
+	 </if>
+	 	 <if test="Sarea == 18">
+	 AND BOARD_AREA = '제주'
+	 </if>
 	</select>
 	
 	<select id="selectBoard" resultMap="boardResultSet">
@@ -105,7 +157,7 @@
 	 	 <if test="Sarea == 18">
 	 AND BOARD_AREA = '제주'
 	 </if>
-
+	order by board_id desc
 	 
 	 
 	</select>

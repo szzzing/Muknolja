@@ -59,6 +59,7 @@
 		    #39{background: #6BB6EC; color:white;}  
     
 		ol.numbered {
+		  
 	padding-left:10px;
 	  list-style: none;
 	  border-left: 3px solid RGB(107, 182, 236,0.7);
@@ -151,6 +152,7 @@
 	        	
 		  						<c:url var="in3" value="${ loc }">
 	            				<c:param name="area" value="3"/>
+	            				
 	        					</c:url>
 	        					<c:url var="in4" value="${ loc }">
 	            				<c:param name="area" value="4"/>
@@ -254,7 +256,7 @@
 		              
 		            	<c:set var="courseList" value="${fn:split(b.boardCourse,'/')}" />
 		                <div class="corseall" style="padding-left:10px; padding-top:20px; height: 270px;">
-							  <ol class="numbered">
+							  <ol class="numbered" >
 								  <c:forEach items="${ courseList }" var="course" end="4">
 								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
 								  </c:forEach>
@@ -350,6 +352,5 @@
 <script>
 	
 </script>
-<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

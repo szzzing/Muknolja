@@ -44,6 +44,7 @@ public class ReviewController {
 		int currentPage = 1;
 		if(page!=null) {
 			currentPage = page;
+			
 		}
 		System.out.println(area);
 		int Sarea = 1;
@@ -54,12 +55,12 @@ public class ReviewController {
 		if(page!=null) {
 			currentPage = page;
 		}
-		int listCount = rService.getselectBoard();
+		int listCount = rService.getselectBoard(Sarea);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 12);
 		Member m = (Member)session.getAttribute("loginUser");
 		ArrayList<Board> board = rService.selectBoard(pi,Sarea);
 		model.addAttribute("board",board);
-		 
+		model.addAttribute("pi",pi);
 		return "reviewList";
 	}
 	@RequestMapping("selectBoardd.re")
@@ -123,7 +124,7 @@ public class ReviewController {
 		
 		
 		
-		int listCount = rService.getselectBoard();
+		
 		System.out.println(boardId);
 		
 		
