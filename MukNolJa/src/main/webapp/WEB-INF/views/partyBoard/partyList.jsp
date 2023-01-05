@@ -120,7 +120,7 @@
 			<div class="col">
 				<div id="location" class="form-floating">
 					<select id="selectLocation"class="form-select searchCondition" aria-label="Default select example" name="partyArea">
-						<option selected disabled>지역</option>
+						<option selected value="전체">전체</option>
 						<option value="서울">서울</option>
 						<option value="인천">인천</option>
 						<option value="대전">대전</option>
@@ -271,30 +271,32 @@
 				var page = 1;
 				var maxPage = 1;
 				
-// 				$('.searchCondition').on('change keyup', function(){
-// 					var partyArea = $('#selectLocation').val();
-// 					var partyDate = $('#daterangepicker').val();
-// 					var partyGender = $('#partyGender').val();
-// 					var searchValue = $('#input').find('input').val();
-// 					var partyStartDate = partyDate.split(" ~ ")[0] + "";
-// 					var partyEndDate = partyDate.split(" ~ ")[1] + "";
-// 					$.ajax({
-// 						url: '${contextPath}/searchParty.pa',
-// 						data: {page: page, searchValue: searchValue, partyArea: partyArea,
-// 							   partyGender: partyGender, partyStartDate: partyStartDate, partyEndDate: partyEndDate},
-// 						success: (data) =>{
-// 							console.log("성공");
-// 							console.log(data);
-// 							for(const search of data.searchList){
-// 								console.log(search);
-// 							}
-// 						},
-// 						error: (data) =>{
-// 							console.log("실패");
-// 							console.log(data);
-// 						}
-// 					});
-// 				});
+				$('.searchCondition').on('change keyup', function(){
+					var partyArea = $('#selectLocation').val();
+					var partyDate = $('#daterangepicker').val();
+					var partyGender = $('#partyGender').val();
+					var searchValue = $('#input').find('input').val();
+					var partyStartDate = partyDate.split(" ~ ")[0] + "";
+					var partyEndDate = partyDate.split(" ~ ")[1] + "";
+					console.log(partyStartDate);
+					console.log(partyEndDate);
+					$.ajax({
+						url: '${contextPath}/searchParty.pa',
+						data: {page: page, searchValue: searchValue, partyArea: partyArea,
+							   partyGender: partyGender, partyStartDate: partyStartDate, partyEndDate: partyEndDate},
+						success: (data) =>{
+							console.log("성공");
+							console.log(data);
+							for(const search of data.searchList){
+								console.log(search);
+							}
+						},
+						error: (data) =>{
+							console.log("실패");
+							console.log(data);
+						}
+					});
+				});
 				
 			}
 
