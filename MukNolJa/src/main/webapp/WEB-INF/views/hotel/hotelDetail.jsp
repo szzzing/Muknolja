@@ -110,7 +110,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 <body>
-	<jsp:include page="../member/menubar.jsp"/>
 	
 	<!-- 예약 전송용 form 시작 -->
 	<form action="writeReservation.ho" method="post">
@@ -131,6 +130,7 @@
 		</div>
 	</div>
 	
+	<jsp:include page="../member/menubar.jsp"/>
 	
 <!-- 	<div id="reportModal" class="modal fade" tabindex="-1" aria-hidden="true"> -->
 <!-- 		<div class="modal-dialog modal-dialog-centered text-center"> -->
@@ -558,11 +558,12 @@
 							reviewDiv.find(".rating").html(r.rating.toFixed(1));
 							reviewDiv.find(".createDate").html(r.createDate);
 							if(${!empty loginUser} && "${loginUser.id}"!=r.memberId) {
-								if(r.isReported==0) {
-									reviewDiv.find(".reportButton").prop("style").removeProperty("display");
-								} else {
-									reviewDiv.find(".reportButton").css("display", "none");
-								}
+								reviewDiv.find(".reportButton").prop("style").removeProperty("display");
+							} else {
+								reviewDiv.find(".reportButton").css("display", "none");
+							}
+							if(r.isReported==0) {
+								reviewDiv.find(".reportButton").prop("style").removeProperty("display");
 							} else {
 								reviewDiv.find(".reportButton").css("display", "none");
 							}

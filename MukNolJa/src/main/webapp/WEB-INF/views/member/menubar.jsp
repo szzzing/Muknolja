@@ -53,7 +53,7 @@
                 padding: 0px;
             }
             
-            .modal{
+            .modalC{
             	 position: fixed;
                  display: block;
                  boxShadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -66,7 +66,7 @@
             }
             
             @media (max-width: 840px) {
-            	.modal{
+            	.modalC{
             	 position: fixed;
                  display: block;
                  boxShadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -264,7 +264,7 @@
     
     
 <!--     채팅 모달 -->
-	 <div id="room_modal" class="modal">
+	 <div id="room_modal" class="modalC">
 		<div id="chatList">
 			<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
 			<div class="row text-center">
@@ -281,7 +281,7 @@
 		</div>
      </div>
      
-     <div id="chat_modal" class="modal">
+     <div id="chat_modal" class="modalC">
      	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
      	<a id="out_btn"><i class="bi bi-box-arrow-right"></i></a>
      	<div class="row" style="--bs-gutter-x: 0rem;">
@@ -302,7 +302,7 @@
      	</div>
      </div>
      
-     <div id="createroom_modal" class="modal">
+     <div id="createroom_modal" class="modalC">
      	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
      	<div class="row">
      		<div class="col text-center">
@@ -316,7 +316,7 @@
      	</div>
      </div>
      
-    <div id="loginCheck_modal" class="modal">
+    <div id="loginCheck_modal" class="modalC">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
     		<div class="col text-center">
@@ -325,7 +325,7 @@
     	</div>
     </div>
     
-    <div id="invite_modal" class="modal">
+    <div id="invite_modal" class="modalC">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
     		<div class="col text-center" style="margin-top: 20px;">
@@ -347,7 +347,7 @@
 	    <div id="participants"></div>
     </div>
     
-    <div id="success_modal" class="modal">
+    <div id="success_modal" class="modalC">
     	<a class="modal_close_btn"><i class="bi bi-x-circle"></i></a>
     	<div class="row">
     		<div class="col text-center" id="text">
