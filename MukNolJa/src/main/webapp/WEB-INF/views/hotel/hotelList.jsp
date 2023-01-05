@@ -276,8 +276,9 @@
 				</div>
 			</div>
 		</div>
-					<div id="hotelScrollerFooter" class="mb-5"></div>	<!-- 무한스크롤 감지 -->
+		<div id="hotelScrollerFooter" class="mb-5"></div>	<!-- 무한스크롤 감지 -->
 	</div>
+	<jsp:include page="../common/footer.jsp"/>
 	
 
 	
