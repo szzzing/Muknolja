@@ -309,7 +309,7 @@
 	   		console.log(val);
 	   		console.log(this.querySelector('span').innerText);
 	   		var Yn = true;
-	   		var li = '<li class="numberLi '+contentId+'" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
+	   		var li = '<li class="numberLi '+contentId+'" id="id'+contentId+'" style="cursor: pointer">' + this.querySelector('span').innerText + '</li>'
 	   		var di = '<li class="con" style="display:none;">'+contentId+'</li>';
 	   		var numLi = document.querySelector('.numbered');
 	   		var dll = document.querySelector('.di');
@@ -341,7 +341,7 @@
 		   		var bor = '';
 		   		var are = '<textarea class="t'+contentId+' vl"   style="height: 400px; width:100%;  border-radius:0px;" name="partyContent"></textarea>';
 		   		var are2 = '<img src="${ contextPath }/resources/img/noImage.png"   alt="..." id="thumbnail'+contentId+'" height = 100%; width = 100% >'+
-		   				   '<input id="myFile'+contentId+'" name="file" type="file" accept="image/*" style=display:none; >'
+		   				   '<input class="fileIn" id="myFile'+contentId+'" name="file" type="file" accept="image/*" style=display:none; >'
 		   			
 		   		$('.are').append(are);
 		   		$('.are2').append(are2);
@@ -388,7 +388,12 @@
 			$('.numberLi').click(function(){
 		   		
 		   		var cla =  $(this).attr('class').substr(9);
-		   		
+		   		var conId = $(this).attr('id').split("id")[1];
+		   		console.log($('.t'+conId).val());
+		   		console.log($('#myFile'+conId).val());
+		   		$('.t'+conId).remove();
+		   		$('#myFile'+conId).remove();
+		   		$('#thumbnail'+conId).remove();
 		   		$('.'+cla ).remove();
 
 		   	});
