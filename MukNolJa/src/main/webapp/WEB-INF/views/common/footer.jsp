@@ -9,7 +9,6 @@
 	#footerDiv{
 		position: absolute;
 		width:100%;
-		z-index: 9999;
 		background: #f1f1f1;
 		color: #b9b9b9;
 		padding: 50px 0px;

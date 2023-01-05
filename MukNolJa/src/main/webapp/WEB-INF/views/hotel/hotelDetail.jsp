@@ -410,7 +410,7 @@
 		</div>
 		<!-- 호텔 정보 끝 -->
 	</div>
-	
+	<jsp:include page="../common/footer.jsp"/>
 	
 	
 	
@@ -969,7 +969,7 @@
 				"monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 				},
 			minDate: today,
-			startDate: today,
+			startDate: startDate,
 			endDate: endDate,
 			autoApply: true
 		});
