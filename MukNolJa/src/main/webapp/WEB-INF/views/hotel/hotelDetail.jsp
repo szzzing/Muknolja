@@ -558,12 +558,11 @@
 							reviewDiv.find(".rating").html(r.rating.toFixed(1));
 							reviewDiv.find(".createDate").html(r.createDate);
 							if(${!empty loginUser} && "${loginUser.id}"!=r.memberId) {
-								reviewDiv.find(".reportButton").prop("style").removeProperty("display");
-							} else {
-								reviewDiv.find(".reportButton").css("display", "none");
-							}
-							if(r.isReported==0) {
-								reviewDiv.find(".reportButton").prop("style").removeProperty("display");
+								if(r.isReported==0) {
+									reviewDiv.find(".reportButton").prop("style").removeProperty("display");
+								} else {
+									reviewDiv.find(".reportButton").css("display", "none");
+								}
 							} else {
 								reviewDiv.find(".reportButton").css("display", "none");
 							}

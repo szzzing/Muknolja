@@ -51,11 +51,12 @@ public class HotelController {
 			if(hotel==null) {
 				return "redirect:writeHotel.ho";
 			}
-			
 			ArrayList<AttachedFile> hotelImg = hService.selectHotelImg(hotel.getHotelId());
-			
 			model.addAttribute("hotel", hotel);
 			model.addAttribute("hotelImgList", hotelImg);
+			
+			ArrayList<HashMap> stasticsList = hService.selectReservationWeekStastics(hotel.getHotelId());
+			model.addAttribute("stasticsList", stasticsList);
 			
 			return "admin";
 		} else {
@@ -72,7 +73,6 @@ public class HotelController {
 			
 			model.addAttribute("hotel", hotel);
 			model.addAttribute("hotelImgList", hotelImg);
-			System.out.println(hotel);
 
 			return "manageHotel";
 		} else {
@@ -321,9 +321,6 @@ public class HotelController {
 			
 			// 모든 파일을 삭제한 경우
 			boolean deleteAllExisting = originalImgCount-deleteImgList.size()==0 ? true : false;
-			System.out.println("originalImgCount"+originalImgCount);
-			System.out.println("deleteImgList.size()"+deleteImgList.size());
-			System.out.println("deleteAllExisting"+deleteAllExisting);
 			
 			// 새로운 이미지가 있는 경우
 			ArrayList<AttachedFile> newImgList = new ArrayList();
@@ -342,7 +339,6 @@ public class HotelController {
 								img.setFileModifyName(returnArr[1]);
 								img.setFileLink(returnArr[0]);
 								
-								System.out.println(img);
 								newImgList.add(img);
 							}
 						}
@@ -415,11 +411,6 @@ public class HotelController {
 			
 			// 모든 파일을 삭제한 경우
 			boolean deleteAllExisting = originalImgCount-deleteImgList.size()==0 ? true : false;
-			System.out.println("originalImgCount"+originalImgCount);
-			System.out.println("deleteImgList.size()"+deleteImgList.size());
-			System.out.println("deleteAllExisting"+deleteAllExisting);
-			System.out.println("newThumbnail"+newThumbnail);
-			System.out.println("newImg"+newImg);
 			
 			// 새로운 이미지가 있는 경우
 			ArrayList<AttachedFile> newImgList = new ArrayList();
@@ -438,7 +429,6 @@ public class HotelController {
 								img.setFileModifyName(returnArr[1]);
 								img.setFileLink(returnArr[0]);
 								
-								System.out.println(img);
 								newImgList.add(img);
 							}
 						}
@@ -466,7 +456,6 @@ public class HotelController {
 				
 			// 새로운 이미지가 없는 경우 + 썸네일을 삭제한 경우
 			} else if(newThumbnail && !deleteAllExisting) {
-				System.out.println("썸네일");
 				int updateRoomThumbnailResult = hService.updateRoomThumbnail(r.getRoomId());
 			}
 			
@@ -531,8 +520,6 @@ public class HotelController {
 		map.put("statusCategory", statusCategory);
 		map.put("roomCategory", roomCategory);
 		map.put("searchValue", searchValue);
-		
-		System.out.println(map);
 		
 		int currentPage = 1;
 		if(page!=null) {
@@ -624,8 +611,6 @@ public class HotelController {
 		searchMap.put("park", park);
 		searchMap.put("swim", swim);
 		searchMap.put("fitness", fitness);
-		
-		System.out.println(searchMap);
 		
 		int listCount = hService.getSearchListCount(searchMap);
 		int currentPage = 1;
@@ -874,7 +859,6 @@ public class HotelController {
 	@ResponseBody
 	public void insertReport(HttpServletResponse response, @ModelAttribute Report report) {
 		report.setReportClassification("H");
-		System.out.println(report);
 		int result = hService.insertReport(report);
 		
 		response.setContentType("application/json; charset=UTF-8");
