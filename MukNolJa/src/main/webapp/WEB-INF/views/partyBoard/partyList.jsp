@@ -9,6 +9,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
   	*{font-family: 'Noto Sans KR', sans-serif;}
@@ -98,7 +99,8 @@
 	</div>
 	
 	<div class="container">
-
+		<input type="hidden" name="partyStartDate" id="partyStartDate">
+		<input type="hidden" name="partyEndDate" id="partyEndDate">
 		<br>
 		<h1 class="fw-bold" style="color: #6BB6EC; font-size: 55px; margin-bottom: 50px; margin-top: 20px;">여행친구찾기</h1>
 		
@@ -116,7 +118,7 @@
 			<div class="row" style="clear: both;">
 			<div class="col">
 				<div id="location" class="form-floating">
-					<select id="selectLocation"class="form-select" aria-label="Default select example">
+					<select id="selectLocation"class="form-select searchCondition" aria-label="Default select example" name="partyArea">
 						<option selected disabled>지역</option>
 						<option value="서울">서울</option>
 						<option value="인천">인천</option>
@@ -142,14 +144,14 @@
 			
 			<div class="col">
 				<div class="compDate form-floating mb-3">
-					<input type="text" class="travelDate form-control" id="daterangepicker" name="daterangepicker">
+					<input type="text" class="travelDate form-control searchCondition" id="daterangepicker" name="daterangepicker">
 					<label for="floatingInput">날짜선택</label>
 				</div>
 			</div>
 			
 			<div class="col">
 				<div id="gender" class="form-floating">
-				  <select class="gender form-select" id="floatingSelect" aria-label="Floating label select example">
+				  <select class="gender form-select searchCondition" id="partyGender" aria-label="Floating label select example" name="partyGender">
 				    <option selected disabled>성별</option>
 				    <option value="여자만">여자만</option>
 				    <option value="남자만">남자만</option>
@@ -161,7 +163,7 @@
 			
 			<div class="col">
 				<div class="input-group" id="input">
-					<input type="text" class="searchInput1 form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+					<input type="text" class="searchInput1 form-control searchCondition" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchValue">
 					<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 				</div>
 			</div>
@@ -228,6 +230,7 @@
 		</div>
 		
 		<script>
+			<!-- 동행 상세보기 -->
 			const partyCards = document.getElementsByClassName('card');
 			for(const partyCard of partyCards){
 				partyCard.addEventListener('click', function(){
@@ -237,6 +240,7 @@
 				});
 			}
 			
+			<!-- 동행 글 쓰기 -->
 			const writeButton = document.getElementById('writeButton');
 			writeButton.addEventListener('click', function(){
 				location.href = '${contextPath}/partyWrite.pa';
@@ -254,13 +258,67 @@
 		    			}
 		    		}
 		    	});
+			
+				var page = 1;
+				var maxPage = 1;
+				
+				$('.searchCondition').on('change keyup', function(){
+					var partyArea = $('#selectLocation').val();
+					var partyDate = $('#daterangepicker').val();
+					var partyGender = $('#partyGender').val();
+					var searchValue = $('#input').find('input').val();
+					var partyStartDate = partyDate.split(" ~ ")[0] + "";
+					var partyEndDate = partyDate.split(" ~ ")[1] + "";
+					$.ajax({
+						url: '${contextPath}/searchParty.pa',
+						data: {page: page, searchValue: searchValue, partyArea: partyArea,
+							   partyGender: partyGender, partyStartDate: partyStartDate, partyEndDate: partyEndDate},
+						success: (data) =>{
+							console.log("성공");
+							console.log(data);
+							for(const search of data.searchList){
+								console.log(search);
+								
+								
+// 								<div class="partyCard col" style="margin-bottom: 30px;">
+// 								<div class="card card-cover h-100 overflow-hidden\">
+// 								  <img src="${ contextPath }/resources/uploadFiles/${p.thumbnail}" class="card-img-top">
+// 								  <div class="card-body">
+// 								  	<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">${ p.partyTitle }</h5>
+// 								  	  <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
+// 									  <ol class="numbered">
+// 										  <c:forEach items="${ courseList }" var="course" end="3">
+// 										  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
+// 										  </c:forEach>
+// 									  </ol>
+// 									 <table>
+// 									 	<tr>
+// 									 		<td><i class="fa-solid fa-location-dot"></i> ${ p.partyArea }</td>
+// 									 		<td><i class="fa-solid fa-users"></i> ${ p.nowParticipate }/${ p.maxParticipate }</td>
+// 									 		<td><i class="fa-solid fa-heart"></i> ${ p.partyGender }</td>
+// 									 		<td><i class="fa-regular fa-comment-dots"></i> ${ p.replyCount }개</td>
+// 									 	</tr>
+// 									 </table>
+// 									 <input type="hidden" value="${ p.partyId }" class="partyId">
+// 									 <input type="hidden" value="${ p.nickName }" class="nickName">
+// 								  </div>
+// 								</div>
+// 							</div>
+							
+							var partyId = '<input type="hidden" value="' + ${ p.partyId } + '" class="partyId">';
+							var nickName = '<input type="hidden" value="' + ${ p.nickName } + '" class="nickName">';
+							var tableInfo = '<table><tr><td><i class="fa-solid fa-location-dot"></i> ' + ${ p.partyArea } + '</td><td><i class="fa-solid fa-users"></i> ' + ${ p.nowParticipate } + '/' + ${ p.maxParticipate } + '</td><td><i class="fa-solid fa-heart"></i> ' + ${ p.partyGender } + '</td><td><i class="fa-regular fa-comment-dots"></i> ' + ${ p.replyCount } +'개</td></tr></table>'
+							}
+						},
+						error: (data) =>{
+							console.log("실패");
+							console.log(data);
+						}
+					});
+				});
 				
 			}
-			
-			
-			
-			
-			
+
 		</script>
 		<script>
 			<!-- datepicker -->
@@ -282,7 +340,6 @@
 			});
 		</script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-		<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

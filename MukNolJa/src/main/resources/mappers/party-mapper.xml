@@ -66,6 +66,62 @@
         where board_id=#{pId}
 	</select>
 	
+	<!-- 동행 검색 -->
+	<select id="searchParty" resultMap="partyResultSet">
+		select *
+		from board
+			 join member on(board_writer = id)
+			 join party using(board_id)
+			 join board_img using(board_id)
+             join attached_file using(file_id)
+       	where board_status='Y'
+       	<if test='partyArea != null and !partyArea.equals("")'>
+       		and board_area=#{partyArea}
+       	</if>
+       	<if test='partyGender != null and !partyGender.equals("")'>
+       		and party_gender=#{partyGender}
+       	</if>
+       	<if test='partyStartDate != null and !partyStartDate.equals("")'>
+       		and party_startdate <![CDATA[<]]> to_date(#{partyStartDate})
+       	</if>
+       	<if test='partyEndDate != null and !partyEndDate.equals("")'>
+       		and party_enddate <![CDATA[>]]> to_date(#{partyEndDate})
+       	</if>
+       	<if test='searchValue != null and !searchValue.equals("")'>
+       		and board_title like '%' || #{searchValue} || '%'
+       		or board_content like '%' || #{searchValue} || '%'
+       	</if>
+		order by board_id desc
+	</select>
+	
+	<!-- 동행 검색 개수 -->
+	<select id="getSearchListCount" resultType="_int">
+		select count(*)
+		from board
+			 join member on(board_writer = id)
+			 join party using(board_id)
+			 join board_img using(board_id)
+             join attached_file using(file_id)
+       	where board_status='Y'
+       	<if test='partyArea != null and !partyArea.equals("")'>
+       		and board_area=#{partyArea}
+       	</if>
+       	<if test='partyGender != null and !partyGender.equals("")'>
+       		and party_gender=#{partyGender}
+       	</if>
+       	<if test='partyStartDate != null and !partyStartDate.equals("")'>
+       		and party_startdate <![CDATA[<]]> to_date(#{partyStartDate})
+       	</if>
+       	<if test='partyEndDate != null and !partyEndDate.equals("")'>
+       		and party_enddate <![CDATA[>]]> to_date(#{partyEndDate})
+       	</if>
+       	<if test='searchValue != null and !searchValue.equals("")'>
+       		and board_title like '%' || #{searchValue} || '%'
+       		or board_content like '%' || #{searchValue} || '%'
+       	</if>
+		order by board_id desc
+	</select>
+	
 	<!-- 동행 글 수정 -->
 	<update id="updateBoard">
 		update board
@@ -133,4 +189,18 @@
 		delete from party_participate
 		where board_id=#{boardId} and member_id=#{memberId}
 	</delete>
+	
+	<!-- 신고 중복 체크 -->
+	<select id="checkReport" resultType="_int">
+		select count(*)
+		from report
+		where member_id=#{memberId}
+			  and target_id=#{targetId}
+			  and report_classification=#{reportClassification}
+	</select>
+	
+	<!-- 신고입력 -->
+	<insert id="insertReport">
+		insert into report values(seq_reportid.nextval, #{memberId}, #{targetId}, #{reportClassification}, #{reportContent}, sysdate, default, #{reportTitle}, default)
+	</insert>
 </mapper>

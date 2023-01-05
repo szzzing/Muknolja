@@ -11,6 +11,7 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.party.model.dao.PartyDAO;
 import com.spring.muknolja.party.model.vo.Party;
 
@@ -101,6 +102,26 @@ public class PartyServiceImpl implements PartyService{
 	@Override
 	public void deleteParticipate(HashMap<String, Object> map) {
 		pDAO.deleteParticipate(sqlSession, map);
+	}
+
+	@Override
+	public int checkReport(HashMap<String, Object> map) {
+		return pDAO.checkReport(sqlSession, map);
+	}
+
+	@Override
+	public int insertReport(Report rp) {
+		return pDAO.insertReport(sqlSession, rp);
+	}
+
+	@Override
+	public ArrayList<Party> searchParty(HashMap<String, Object> map, PageInfo pi) {
+		return pDAO.searchParty(sqlSession, map, pi);
+	}
+
+	@Override
+	public int getSearchListCount(HashMap<String, Object> map) {
+		return pDAO.getSearchListCount(sqlSession, map);
 	}
 
 }

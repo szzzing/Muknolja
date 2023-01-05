@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.party.model.vo.Party;
 
 @Repository("pDAO")
@@ -95,6 +96,26 @@ public class PartyDAO {
 
 	public void deleteParticipate(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		sqlSession.delete("partyMapper.deleteParticipate", map);
+	}
+
+	public int checkReport(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("partyMapper.checkReport", map);
+	}
+
+	public int insertReport(SqlSessionTemplate sqlSession, Report rp) {
+		return sqlSession.insert("partyMapper.insertReport", rp);
+	}
+
+	public ArrayList<Party> searchParty(SqlSessionTemplate sqlSession, HashMap<String, Object> map, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("partyMapper.searchParty", map, rowBounds);
+	}
+
+	public int getSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("partyMapper.getSearchListCount", map);
 	}
 
 }
