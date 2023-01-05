@@ -51,7 +51,6 @@
 			
 			<div id="travelBtn">
 				<button id="print"><span><i class="fa-solid fa-print"></i></span></button>
-				<button id="travelCount"><span><i class="fa-solid fa-eye"></i> 30</span></button>
 			</div>
 			
 		<table class="table text-center mt-5 mb-5">
@@ -104,7 +103,6 @@
 		<div id="detailContent">
 			${overview}
 		</div>
-		${infoList }
 		<div id="map" style="width:100%;height:350px;"></div>
 		
 		<div class="row" style="margin-top: 30px;">

@@ -82,10 +82,10 @@
        		and party_gender=#{partyGender}
        	</if>
        	<if test='partyStartDate != null and !partyStartDate.equals("")'>
-       		and party_startdate <![CDATA[<]]> to_date(#{partyStartDate})
+       		and party_startdate <![CDATA[<]]> #{partyStartDate}
        	</if>
        	<if test='partyEndDate != null and !partyEndDate.equals("")'>
-       		and party_enddate <![CDATA[>]]> to_date(#{partyEndDate})
+       		and party_enddate <![CDATA[>]]> #{partyEndDate}
        	</if>
        	<if test='searchValue != null and !searchValue.equals("")'>
        		and board_title like '%' || #{searchValue} || '%'
@@ -110,10 +110,10 @@
        		and party_gender=#{partyGender}
        	</if>
        	<if test='partyStartDate != null and !partyStartDate.equals("")'>
-       		and party_startdate <![CDATA[<]]> to_date(#{partyStartDate})
+       		and party_startdate <![CDATA[<]]> #{partyStartDate}
        	</if>
        	<if test='partyEndDate != null and !partyEndDate.equals("")'>
-       		and party_enddate <![CDATA[>]]> to_date(#{partyEndDate})
+       		and party_enddate <![CDATA[>]]> #{partyEndDate}
        	</if>
        	<if test='searchValue != null and !searchValue.equals("")'>
        		and board_title like '%' || #{searchValue} || '%'

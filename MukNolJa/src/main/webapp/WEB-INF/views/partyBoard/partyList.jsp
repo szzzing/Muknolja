@@ -59,7 +59,7 @@
 	}
  	.card img{height: 250px;}
 	.card{margin-bottom: 30px; cursor: pointer;}
-	.card td{width: 85px; font-size: 14px; color: gray; margin-right: auto;}
+	.card td{width: 95px; font-size: 14px; color: gray; margin-right: auto;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
 	.pagination a{color: #6BB6EC;}
@@ -69,6 +69,7 @@
 	.compDate label{color: #6BB6EC; font-size: 13px;}
 	#gender label{color: #6BB6EC; font-size: 13px;}
 	#location label{color: #6BB6EC; font-size: 13px;}
+	.participate{color: tomato;}
 </style>
 </head>
 <body style="background-color:white;">
@@ -178,15 +179,22 @@
 						  <div class="card-body">
 						  	<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">${ p.partyTitle }</h5>
 						  	  <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
-							  <ol class="numbered">
-								  <c:forEach items="${ courseList }" var="course" end="3">
-								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
-								  </c:forEach>
-							  </ol>
-							 <table>
+						  	  <div>
+								  <ol class="numbered">
+									  <c:forEach items="${ courseList }" var="course" end="3">
+									  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
+									  </c:forEach>
+								  </ol>
+							  </div>
+							 <table class="mb-auto">
 							 	<tr>
 							 		<td><i class="fa-solid fa-location-dot"></i> ${ p.partyArea }</td>
-							 		<td><i class="fa-solid fa-users"></i> ${ p.nowParticipate }/${ p.maxParticipate }</td>
+							 		<c:if test="${ p.nowParticipate != p.maxParticipate }">
+							 			<td><i class="fa-solid fa-users"></i> <span>${ p.nowParticipate }/${ p.maxParticipate }</span></td>
+							 		</c:if>
+							 		<c:if test="${ p.nowParticipate == p.maxParticipate }">
+							 			<td width="100px;"><i class="fa-solid fa-users participate"></i> <span class="participate">마감</span></td>
+							 		</c:if>
 							 		<td><i class="fa-solid fa-heart"></i> ${ p.partyGender }</td>
 							 		<td><i class="fa-regular fa-comment-dots"></i> ${ p.replyCount }개</td>
 							 	</tr>
@@ -258,64 +266,34 @@
 		    			}
 		    		}
 		    	});
-			
+				
 				var page = 1;
 				var maxPage = 1;
 				
-				$('.searchCondition').on('change keyup', function(){
-					var partyArea = $('#selectLocation').val();
-					var partyDate = $('#daterangepicker').val();
-					var partyGender = $('#partyGender').val();
-					var searchValue = $('#input').find('input').val();
-					var partyStartDate = partyDate.split(" ~ ")[0] + "";
-					var partyEndDate = partyDate.split(" ~ ")[1] + "";
-					$.ajax({
-						url: '${contextPath}/searchParty.pa',
-						data: {page: page, searchValue: searchValue, partyArea: partyArea,
-							   partyGender: partyGender, partyStartDate: partyStartDate, partyEndDate: partyEndDate},
-						success: (data) =>{
-							console.log("성공");
-							console.log(data);
-							for(const search of data.searchList){
-								console.log(search);
-								
-								
-// 								<div class="partyCard col" style="margin-bottom: 30px;">
-// 								<div class="card card-cover h-100 overflow-hidden\">
-// 								  <img src="${ contextPath }/resources/uploadFiles/${p.thumbnail}" class="card-img-top">
-// 								  <div class="card-body">
-// 								  	<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">${ p.partyTitle }</h5>
-// 								  	  <c:set var="courseList" value="${fn:split(p.partyCourse,'/')}" />
-// 									  <ol class="numbered">
-// 										  <c:forEach items="${ courseList }" var="course" end="3">
-// 										  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
-// 										  </c:forEach>
-// 									  </ol>
-// 									 <table>
-// 									 	<tr>
-// 									 		<td><i class="fa-solid fa-location-dot"></i> ${ p.partyArea }</td>
-// 									 		<td><i class="fa-solid fa-users"></i> ${ p.nowParticipate }/${ p.maxParticipate }</td>
-// 									 		<td><i class="fa-solid fa-heart"></i> ${ p.partyGender }</td>
-// 									 		<td><i class="fa-regular fa-comment-dots"></i> ${ p.replyCount }개</td>
-// 									 	</tr>
-// 									 </table>
-// 									 <input type="hidden" value="${ p.partyId }" class="partyId">
-// 									 <input type="hidden" value="${ p.nickName }" class="nickName">
-// 								  </div>
-// 								</div>
-// 							</div>
-							
-							var partyId = '<input type="hidden" value="' + ${ p.partyId } + '" class="partyId">';
-							var nickName = '<input type="hidden" value="' + ${ p.nickName } + '" class="nickName">';
-							var tableInfo = '<table><tr><td><i class="fa-solid fa-location-dot"></i> ' + ${ p.partyArea } + '</td><td><i class="fa-solid fa-users"></i> ' + ${ p.nowParticipate } + '/' + ${ p.maxParticipate } + '</td><td><i class="fa-solid fa-heart"></i> ' + ${ p.partyGender } + '</td><td><i class="fa-regular fa-comment-dots"></i> ' + ${ p.replyCount } +'개</td></tr></table>'
-							}
-						},
-						error: (data) =>{
-							console.log("실패");
-							console.log(data);
-						}
-					});
-				});
+// 				$('.searchCondition').on('change keyup', function(){
+// 					var partyArea = $('#selectLocation').val();
+// 					var partyDate = $('#daterangepicker').val();
+// 					var partyGender = $('#partyGender').val();
+// 					var searchValue = $('#input').find('input').val();
+// 					var partyStartDate = partyDate.split(" ~ ")[0] + "";
+// 					var partyEndDate = partyDate.split(" ~ ")[1] + "";
+// 					$.ajax({
+// 						url: '${contextPath}/searchParty.pa',
+// 						data: {page: page, searchValue: searchValue, partyArea: partyArea,
+// 							   partyGender: partyGender, partyStartDate: partyStartDate, partyEndDate: partyEndDate},
+// 						success: (data) =>{
+// 							console.log("성공");
+// 							console.log(data);
+// 							for(const search of data.searchList){
+// 								console.log(search);
+// 							}
+// 						},
+// 						error: (data) =>{
+// 							console.log("실패");
+// 							console.log(data);
+// 						}
+// 					});
+// 				});
 				
 			}
 
@@ -333,7 +311,7 @@
 				    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
 				    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
 				    },
-				    minDate: new Date(),
+// 				    minDate: new Date(),
 				    autoApply: true,                         // 확인/취소 버튼 사용여부
 				});
 				
