@@ -115,6 +115,7 @@ public class PartyController {
 		HashMap<String, Object> map2 = new HashMap<String, Object>();
 		map2.put("searchList", searchList);
 		map2.put("pi", pi);
+		System.out.println(map2);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		GsonBuilder gb = new GsonBuilder();

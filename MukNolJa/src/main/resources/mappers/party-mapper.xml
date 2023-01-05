@@ -75,21 +75,21 @@
 			 join board_img using(board_id)
              join attached_file using(file_id)
        	where board_status='Y'
-       	<if test='partyArea != null and !partyArea.equals("")'>
+       	<if test='partyArea!="" and !partyArea.equals("") and !partyArea.equals("전체")'>
        		and board_area=#{partyArea}
        	</if>
-       	<if test='partyGender != null and !partyGender.equals("")'>
+       	<if test='partyGender!="" and !partyGender.equals("")'>
        		and party_gender=#{partyGender}
        	</if>
        	<if test='partyStartDate != null and !partyStartDate.equals("")'>
-       		and party_startdate <![CDATA[<]]> #{partyStartDate}
+       		and party_startdate <![CDATA[>=]]> #{partyStartDate}
        	</if>
        	<if test='partyEndDate != null and !partyEndDate.equals("")'>
-       		and party_enddate <![CDATA[>]]> #{partyEndDate}
+       		and party_enddate <![CDATA[<=]]> #{partyEndDate}
        	</if>
        	<if test='searchValue != null and !searchValue.equals("")'>
-       		and board_title like '%' || #{searchValue} || '%'
-       		or board_content like '%' || #{searchValue} || '%'
+       		and (board_title like '%' || #{searchValue} || '%'
+       		or board_content like '%' || #{searchValue} || '%')
        	</if>
 		order by board_id desc
 	</select>
@@ -103,10 +103,10 @@
 			 join board_img using(board_id)
              join attached_file using(file_id)
        	where board_status='Y'
-       	<if test='partyArea != null and !partyArea.equals("")'>
+       	<if test='partyArea != null'>
        		and board_area=#{partyArea}
        	</if>
-       	<if test='partyGender != null and !partyGender.equals("")'>
+       	<if test='partyGender != null'>
        		and party_gender=#{partyGender}
        	</if>
        	<if test='partyStartDate != null and !partyStartDate.equals("")'>
@@ -116,8 +116,8 @@
        		and party_enddate <![CDATA[>]]> #{partyEndDate}
        	</if>
        	<if test='searchValue != null and !searchValue.equals("")'>
-       		and board_title like '%' || #{searchValue} || '%'
-       		or board_content like '%' || #{searchValue} || '%'
+       		and (board_title like '%' || #{searchValue} || '%'
+       		or board_content like '%' || #{searchValue} || '%')
        	</if>
 		order by board_id desc
 	</select>
