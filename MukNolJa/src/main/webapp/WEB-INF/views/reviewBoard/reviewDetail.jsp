@@ -112,8 +112,8 @@
 					<c:forEach items="${ contents }" var="content" varStatus="status" >
 					 
 					
-					<div class="d1" style="background-image: url('${contextPath}/resources/uploadFiles/${ img[status.index].fileModifyName }');"><div style="font-size:30px; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); color:none; padding-top:20px; font-weight:700">${ courseList[status.index] }</div></div>
-		 			<div style="background: white;"><div style="width: 100%; height:100%;   float:left;  font-size: 40px; font-weight:1000; background: white; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); "><div  style="color: white; margin:15px; background: radial-gradient(ellipse at bottom, #C0DEFF 0%, #89C4E1 100%); ">${board.boardTitle }</div>
+					<div class="d1" style="background-image: url('${contextPath}/resources/uploadFiles/${ img[status.index].fileModifyName }');"><div style="font-size:30px; text-shadow: 1px 5px 5px rgba(0,0,0,0.3); color:none; padding-top:20px; font-weight:700"></div></div>
+		 			<div style="background: white;"><div style="width: 100%; height:100%;   float:left;  font-size: 40px; font-weight:1000; background: white; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); "><div  style="color: white; margin:15px; background: radial-gradient(ellipse at bottom, #C0DEFF 0%, #89C4E1 100%); ">${ courseList[status.index] }</div>
 		 			
 		 			<div style="padding:15px; ">
 		 			<div style="text-align: left; padding: 10px; font-size: 20px; border: 1px solid #9CCDEB; width:100%; height: 590px;">${content}</div></div></div></div>
@@ -206,7 +206,7 @@
 	            </div>
 	        </div>
 	    </div>
-		<div id="id" style="display: none">${ loginUser.id }</div>
+		<div id="iddd" style="display: none">${ loginUser.id }</div>
 
 	<br><br><br><br><br><br><br>
 	
@@ -219,7 +219,7 @@
 	$('#album').turn({gradients: true, acceleration: true});
 	
 const replyEnter = document.getElementById('replyContent');
-var user = ${ loginUser.id};
+var user = $('#iddd').text();
 	//댓글
 	$('.plBu').click(function(){
 		
@@ -472,7 +472,7 @@ var user = ${ loginUser.id};
 			 error: (data)=>{
 				 
 			 }
-		})
+		});
 		
 		
 		
@@ -611,6 +611,7 @@ var user = ${ loginUser.id};
 	const searchButton = document.getElementById('button-addon2');  
 	});
 	</script>
+	<jsp:include page="../common/footer.jsp"/>
   </body>
 </html>
 

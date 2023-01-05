@@ -190,7 +190,7 @@
 					</div>
 				</c:if>
 				
-			</div>
+			
 			
 			<!-- 글 삭제 모달 -->
 			<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -207,7 +207,7 @@
 			  </div>
 			</div>
 			
-			
+			</div>
 			
 			<!-- info -->
 			<div id="boardInfo" style="margin-top:40px">
@@ -277,9 +277,12 @@
 			    </div>
 			  </div>
 			</div>
+			</div>
+			
+		
 			
 			<!-- 댓글작성 -->
-			<div id="partyReply" style="margin-top: 10px;">
+			<div id="partyReply" style="margin-top: 310px;">
 				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span id="replyCount">&nbsp;${replyCount}</span></h5>
 				<div class="input-group mb-3">
 					<c:if test="${ loginUser == null }">
@@ -352,7 +355,7 @@
 				<input type="hidden" name="realDeleteRepId">
 			</div>
 			
-		</div>
+		
 		
 		</form>
 		
@@ -687,4 +690,5 @@
 	</script>
 	
 </body>
+<jsp:include page="../common/footer.jsp"/>
 </html>
