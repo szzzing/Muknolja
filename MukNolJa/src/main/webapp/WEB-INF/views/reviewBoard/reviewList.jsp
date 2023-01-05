@@ -137,27 +137,85 @@
             <div class="col" style="padding-left:0px; padding-right:0px;"  >
             			<ul class="ur" >
 					    	<div style="display:flex;" lass="ur1">
-					    		<li class="ll" id="0">전체</li>
-						    	<li class="ll" id="1">서울</li>
-						    	<li class="ll" id="2">인천</li>
-						    	<li class="ll" id="3">대전</li>
-						    	<li class="ll" id="4">대구</li>
-						    	<li class="ll" id="5">광주</li>
-						    	<li class="ll" id="6">부산</li>
-						    	<li class="ll" id="7">울산</li>
-						    	<li class="ll" id="8">세종</li>
+					    		<c:url var="all" value="${ loc }">
+	            				<c:param name="area" value="1"/>
+	        					</c:url>
+					    		<li class="ll" id="0" onclick="location.href='${ all }'">전체</li>
+					    		
+					    		<c:url var="se" value="${ loc }">
+	            				<c:param name="area" value="2"/>
+	        					</c:url>
+						    	<li class="ll" id="1" onclick="location.href='${ se }'">서울</li>
+						    	
+	        	
+	        	
+		  						<c:url var="in3" value="${ loc }">
+	            				<c:param name="area" value="3"/>
+	        					</c:url>
+	        					<c:url var="in4" value="${ loc }">
+	            				<c:param name="area" value="4"/>
+	        					</c:url>
+	        					<c:url var="in5" value="${ loc }">
+	            				<c:param name="area" value="5"/>
+	        					</c:url>
+	        					<c:url var="in6" value="${ loc }">
+	            				<c:param name="area" value="6"/>
+	        					</c:url>
+	        					<c:url var="in7" value="${ loc }">
+	            				<c:param name="area" value="7"/>
+	        					</c:url>
+	        					<c:url var="in8" value="${ loc }">
+	            				<c:param name="area" value="8"/>
+	        					</c:url>
+	        					<c:url var="in9" value="${ loc }">
+	            				<c:param name="area" value="9"/>
+	        					</c:url>
+	        					<c:url var="in10" value="${ loc }">
+	            				<c:param name="area" value="10"/>
+	        					</c:url>
+	        					<c:url var="in11" value="${ loc }">
+	            				<c:param name="area" value="11"/>
+	        					</c:url>
+	        					<c:url var="in12" value="${ loc }">
+	            				<c:param name="area" value="12"/>
+	        					</c:url>
+	        					<c:url var="in13" value="${ loc }">
+	            				<c:param name="area" value="13"/>
+	        					</c:url>
+	        					<c:url var="in14" value="${ loc }">
+	            				<c:param name="area" value="14"/>
+	        					</c:url>
+	        					<c:url var="in15" value="${ loc }">
+	            				<c:param name="area" value="15"/>
+	        					</c:url>
+	        					<c:url var="in16" value="${ loc }">
+	            				<c:param name="area" value="16"/>
+	        					</c:url>
+	        					<c:url var="in17" value="${ loc }">
+	            				<c:param name="area" value="17"/>
+	        					</c:url>
+	        					
+	        					
+	        			
+						    	<li class="ll" id="2" onclick="location.href='${ in3 }'">인천</li>
+						    	<li class="ll" id="3" onclick="location.href='${ in4 }'">대전</li>
+						    	<li class="ll" id="4" onclick="location.href='${ in5 }'">대구</li>
+						    	<li class="ll" id="5" onclick="location.href='${ in6 }'">광주</li>
+						    	<li class="ll" id="6" onclick="location.href='${ in7 }'">부산</li>
+						    	<li class="ll" id="7" onclick="location.href='${ in8 }'">울산</li>
+						    	<li class="ll" id="8" onclick="location.href='${ in9 }'">세종</li>
 						    
 						    	</div>
 						    	<div style="display:flex;">
-						    	<li class="ll" id="31">경기</li>
-						    	<li class="ll" id="32">강원</li>
-						    	<li class="ll" id="33">충북</li>
-						    	<li class="ll" id="34">충남</li>
-						    	<li class="ll" id="35">경북</li>
-						    	<li class="ll" id="36">경남</li>
-						    	<li class="ll" id="37">전북</li>
-						    	<li class="ll" id="38">전남</li>
-						    	<li class="ll" id="39">제주</li>
+						    	<li class="ll" id="31" onclick="location.href='${ in10 }'">경기</li>
+						    	<li class="ll" id="32" onclick="location.href='${ in11 }'">강원</li>
+						    	<li class="ll" id="33" onclick="location.href='${ in12 }'">충북</li>
+						    	<li class="ll" id="34" onclick="location.href='${ in13 }'">충남</li>
+						    	<li class="ll" id="35" onclick="location.href='${ in14 }'">경북</li>
+						    	<li class="ll" id="36" onclick="location.href='${ in15 }'">경남</li>
+						    	<li class="ll" id="37" onclick="location.href='${ in16 }'">전북</li>
+						    	<li class="ll" id="38" onclick="location.href='${ in17 }'">전남</li>
+						    	<li class="ll" id="39" onclick="location.href='${ in18 }'">제주</li>
 						    	
 						    </div>
 					    </ul>
@@ -172,21 +230,20 @@
 		<div class="input-group" id="input" style="">
 			<input type="text" style="" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
 			<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
-			
+			<c:if test="${ loginUser != null }">
 			<button class="btn btn-outline-secondary" type="button" id="button-addon2" style="width:200px; font-weight:600" onclick="location.href='${contextPath}/reviewWrite.re'">글쓰기</button>
+			</c:if>
+			<c:if test="${ loginUser == null }">
+			<button class="btn btn-outline-secondary" type="button" id="button-addon2" style="width:200px; font-weight:600" onclick="location.href='${contextPath}/loginView.me'">글쓰기</button>
+			</c:if>
 		</div>
 	
 		<hr id="hr1">
 		
-		<div id="num">
-			<span>총 <span id="number">${ pi.listCount }</span>건</span>
-		</div>
-		<div id="btn">
-			<button>최신순</button>
-			<button>인기순</button>
-		</div>
 		
-		<hr id="hr2" >
+		
+		
+		
 		<br>
 		<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4 justify-content-start">
 			<c:forEach items="${ board }" var="b">
@@ -208,62 +265,7 @@
 					</div>
 	         </c:forEach>
 	         
-	         			<c:forEach items="${ board }" var="b">
-				<div  style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:315px;">
-				<div  class="detail" style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
-		            <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=300px; >
-		            <br>
-		              
-		            	<c:set var="courseList" value="${fn:split(b.boardCourse,'/')}" />
-		                <div class="corseall" style="padding-left:10px; padding-top:20px; height: 270px;">
-							  <ol class="numbered">
-								  <c:forEach items="${ courseList }" var="course" end="4">
-								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
-								  </c:forEach>
-		              			</ol>
-		              		</div>
-		              		<div class="id" style="display:none;">${ b.boardId }</div>
-						</div>
-					</div>
-	         </c:forEach>
-	         
-	         			<c:forEach items="${ board }" var="b">
-				<div  style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:315px;">
-				<div  class="detail" style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
-		            <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=300px; >
-		            <br>
-		              
-		            	<c:set var="courseList" value="${fn:split(b.boardCourse,'/')}" />
-		                <div class="corseall" style="padding-left:10px; padding-top:20px; height: 270px;">
-							  <ol class="numbered">
-								  <c:forEach items="${ courseList }" var="course" end="4">
-								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
-								  </c:forEach>
-		              		  </ol>
-		              	</div>
-		              	<div class="id" style="display:none;">${ b.boardId }</div>
-						</div>
-					</div>
-	         </c:forEach>
-	         
-	         			<c:forEach items="${ board }" var="b">
-				<div  style="box-shadow:0px -30px 0px 0px #90C8F1 inset; margin-bottom:20px; height:315px;">
-				<div  class="detail" style="box-shadow: 5px 0px 5px 5px rgba(0,0,0,0.2);background: white;  width:90%; margin-bottom:10px">
-		            <img src="${ contextPath }/resources/uploadFiles/${b.fileModifyName}" width=100%; height=300px; >
-		            <br>
-		              
-		            	<c:set var="courseList" value="${fn:split(b.boardCourse,'/')}" />
-		                <div class="corseall" style="padding-left:10px; padding-top:20px; height: 270px;">
-							  <ol class="numbered">
-								  <c:forEach items="${ courseList }" var="course" end="4">
-								  	<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">${ course }</li>
-								  </c:forEach>
-		              			</ol>
-		              		</div>
-		              		<div class="id" style="">${ b.boardId }</div>
-						</div>
-					</div>
-	         </c:forEach>
+	         		
 	         
 			
 			<div>

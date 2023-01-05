@@ -168,6 +168,12 @@ public interface MemberService {
 
 	int soptClrear(String id);
 
+	Member selectMimg(String id);
+
+	int countMimg(String id);
+
+	int insertMimg(HashMap<String, Object> map);
+
 
 
 

@@ -246,14 +246,51 @@ public class MemberController {
 			return"findId2";
 		}
 		@RequestMapping("myInfo1.me")
-		public String myInfo1() {
+		public String myInfo1(HttpSession session, Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int countM = mService.countMimg(id);
+			System.out.println(countM);
+			if(countM > 0 ) {
+			Member memImg = mService.selectMimg(id);
+			System.out.println(memImg);
+			model.addAttribute("memImg",memImg);
+			}else {
+				Member memImg = null;
+				model.addAttribute("memImg",memImg);
+			}
 			return "myInfo1";
 		}
 		@RequestMapping("change.me")
-		public String change(@ModelAttribute Member m, Model model, @RequestParam("pwd") String pwd,@RequestParam("id") String idd) {
+		public String change(HttpServletRequest request,@ModelAttribute Member m, Model model,@RequestParam("file")MultipartFile files, @RequestParam("pwd") String pwd,@RequestParam("id") String idd) {
 			m.setId(idd.trim());
 			String id = m.getId();
 			String password = mService.selectpwd(id);
+			
+			System.out.println(files);
+			if(files != null) {
+				String fileName = files.getOriginalFilename();
+				if(!fileName.equals("")) {
+					String fileType = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+					
+					if(fileType.equals("png") || fileType.equals("jpg") || fileType.equals("gif") || fileType.equals("jpeg")) {
+						String[] returnArr = AttachedFile.saveFile(files, request);
+						
+						if(returnArr[1] != null) {
+							AttachedFile attm = new AttachedFile();
+							attm.setFileName(files.getOriginalFilename());
+							attm.setFileModifyName(returnArr[1]);
+							attm.setFileLink(returnArr[0]);
+							
+							HashMap<String, Object> map = new HashMap<>();
+							map.put("id", id);
+							map.put("attm", attm);
+							int insertMimg = mService.insertMimg(map);
+						}
+					}
+				}
+			}
+			
 			if (pwd.trim().equals("")) {
 				
 				m.setPwd(password);
@@ -648,7 +685,7 @@ public class MemberController {
 			
 			
 			ArrayList<Party> list = mService.selectParty(pi,id);
-			
+			System.out.println(list);
 			HashMap map = new HashMap();
 			map.put("list", list);
 			

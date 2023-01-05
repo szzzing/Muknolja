@@ -26,6 +26,7 @@ import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.Pagination;
 import com.spring.muknolja.common.model.vo.Reply;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.member.model.vo.Member;
 import com.spring.muknolja.review.model.service.ReviewService;
 
@@ -39,41 +40,88 @@ public class ReviewController {
 	private String serviceKey = "53PIgLInS%2B6lI57LYYEbd%2B4daak52bqwGs1s160gtU3hu09KJjsPN%2FWFFlkkOXi%2BwIrqVdEMUeICmQ0fTXFfZA%3D%3D";
 	
 	@RequestMapping("reviewList.re")
-	public String reviewList(HttpSession session,@RequestParam(value="page", required=false) Integer page,Model model) {
+	public String reviewList(HttpSession session,@RequestParam(value="area", required=false) Integer area,@RequestParam(value="page", required=false) Integer page,Model model) {
 		int currentPage = 1;
+		if(page!=null) {
+			currentPage = page;
+		}
+		System.out.println(area);
+		int Sarea = 1;
+		if(area!=null) {
+			 Sarea = area;
+		}
+		System.out.println(Sarea);
 		if(page!=null) {
 			currentPage = page;
 		}
 		int listCount = rService.getselectBoard();
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 12);
 		Member m = (Member)session.getAttribute("loginUser");
-		ArrayList<Board> board = rService.selectBoard(pi);
+		ArrayList<Board> board = rService.selectBoard(pi,Sarea);
 		model.addAttribute("board",board);
 		 
 		return "reviewList";
 	}
+	@RequestMapping("selectBoardd.re")
+	public void selectBoardd(@RequestParam("boardId")int boardId, HttpServletResponse response) {
+		int replyCount = rService.CountReply(boardId);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("replyCount", replyCount);
+				
+		ArrayList<Reply> reply1 = rService.selectReply(boardId);
+		ArrayList<Reply> reply = new ArrayList<Reply>();
+		for(int i = 0; i < reply1.size(); i++) {
+			Reply num = reply1.get(i);
+			Reply reply11Reply = rService.selectReply1(num);
+			reply.add(reply11Reply);
+		}
+		
+		map.put("reply",reply);
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(map, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	@RequestMapping("reviewDetail.re")
 	public String reviewDetail(@RequestParam ("boardId") int boardId, Model model,HttpSession session,@RequestParam(value="page", required=false) Integer page) {
 		Board board = rService.boardDetail(boardId);
 		ArrayList<AttachedFile> img = rService.boardImg(boardId);
-		int replyCount = rService.CountReply(boardId);
+		
 		model.addAttribute("board", board);
 		model.addAttribute("img", img);
 		session.setAttribute("image", img);
+		int replyCount = rService.CountReply(boardId);
+		HashMap<String, Object> map = new HashMap<>();
 		model.addAttribute("replyCount", replyCount);
-		int currentPage = 1;
-		if(page!=null) {
-			currentPage = page;
-		}
-		int listCount = rService.getselectBoard();
-		System.out.println(boardId);
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
-		ArrayList<Reply> reply = rService.selectReply(pi,boardId);
+				
 		
-		Reply re = reply.get(0);	
-		ArrayList<Reply> refReply = rService.selectRe(boardId);
+		ArrayList<Reply> reply1 = rService.selectReply(boardId);
+		ArrayList<Reply> reply = new ArrayList<Reply>();
+		for(int i = 0; i < reply1.size(); i++) {
+			Reply num = reply1.get(i);
+			Reply reply11Reply = rService.selectReply1(num);
+			reply.add(reply11Reply);
+		}
+		
 		
 		model.addAttribute("reply",reply);
+		
+		
+		
+		int listCount = rService.getselectBoard();
+		System.out.println(boardId);
+		
+		
+		
 		return "reviewDetail";
 	}
 	@RequestMapping("reviewWrite.re")
@@ -108,14 +156,22 @@ public class ReviewController {
 			}
 		
 		}
-		
-		
+		for(int i = 0; i < list.size(); i++) {
+			AttachedFile a = list.get(i);
+			if(i == 0) {
+				a.setFileThumbnail("Y");
+			} else {
+				a.setFileThumbnail("N");
+			}
+		}
 	    board.setBoardWriter(id);
 	    System.out.println(board);
 	    System.out.println(list);
-	    
-		int result = rService.insertBoard(board);
-		int result2 = rService.insertImg(list);
+	    HashMap<String, Object> map = new HashMap<>();
+	    map.put("b", board);
+	    map.put("list", list);
+		int result = rService.insertBoard(map);
+		
 		return "redirect:reviewList.re";
 		
 	}
@@ -126,8 +182,23 @@ public class ReviewController {
 		System.out.println("boardId");
 		return "1";
 	}
+	@RequestMapping("insertRere.re")
+	@ResponseBody
+	public String insertRere(@RequestParam("boardId")int boardId, @RequestParam("replyId")int rereplyId,
+							@RequestParam("content")String content, HttpSession session, Reply reply) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String id = m.getId();
+		reply.setReplyWriter(id);
+		reply.setRefBoardId(boardId);
+		reply.setReplyContent(content);
+		reply.setRefReplyId(rereplyId);
+		
+		int result = rService.insertReRe(reply);
+		System.out.println(reply);
+		return "1";
+	}
 	
-	@RequestMapping(value="insertReply.re", produces = "application/text; charset=UTF-8")
+	@RequestMapping("insertReply.re")
 	@ResponseBody
 	public int insertReply(HttpServletRequest request, HttpServletResponse response,@RequestParam("boardId")int refBoardId,@RequestParam("replyContent")String replyContent,Reply reply, @RequestParam("writer")String replyWriter) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
@@ -147,7 +218,9 @@ public class ReviewController {
 	@RequestMapping("selectRe.re")
 	@ResponseBody
 	public void selectReReply(@RequestParam("replyId") int refReplyId, HttpServletResponse response) {
+		System.out.println(refReplyId);
 		ArrayList<Reply> rrList = rService.selectRe(refReplyId);
+		System.out.println(rrList);
 		response.setContentType("application/json; charset=UTF-8");
 		GsonBuilder gb = new GsonBuilder();
 		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
@@ -159,5 +232,21 @@ public class ReviewController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	@RequestMapping("report.re")
+	@ResponseBody
+	public int insertReport( @RequestParam("replyId")int replyId,
+							@RequestParam("content")String content, @RequestParam("title")String title,
+							HttpSession session,Report report) {
+		report.setReportContent(content);
+		report.setTargetId(replyId);
+		report.setReportTitle(title);
+		Member m = (Member)session.getAttribute("loginUser");
+		String id = m.getId();
+		report.setMemberId(id);
+		System.out.println(report);
+		int result = rService.insertReport(report);
+		return result;
+		
 	}
 }

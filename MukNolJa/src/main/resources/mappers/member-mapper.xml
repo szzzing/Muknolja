@@ -23,6 +23,7 @@
   		<result column="REPORT" property="report"/>
   		<result column="LAST_VISIT" property="lastVisit"/>
   		<result column="STOP_DATE" property="stopDate"/>
+  		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
   	</resultMap>
   	
   	<insert id="insertM">
@@ -335,8 +336,19 @@
 		<result column="FILE_LINK" property="fileLink"/>
 		<result column="FILE_STATUS" property="fileStatus"/>
 		<result column="FILE_THUMBNAIL" property="fileThumbnail"/>
-	</resultMap>
+		</resultMap>
+		
+		<select id="countMimg" resultType="_int">
+		select COUNT(*)
+		from Member join re_img using(id) join ATTACHED_FILE using(file_id)
+		where id = #{id} and FILE_TYPE = 'M'
+		</select>
 	
+		<select id="selectMimg" resultMap="memberResultSet">
+		select *
+		from Member join re_img using(id) join ATTACHED_FILE using(file_id)
+		where id = #{id} and FILE_TYPE = 'M'
+		</select>
 	<insert id="insertAttm">
 		insert all
 			into ATTACHED_FILE
@@ -446,7 +458,7 @@
 		<result column="MAX_PARTICIPATE" property="maxParticipate"/>
 		<result column="PARTY_STARTDATE" property="partyStartDate"/>
 		<result column="PARTY_ENDDATE" property="partyEndDate"/>
-		<result column="PARTY_GENDER" property="gender"/>
+		<result column="PARTY_GENDER" property="partyGender"/>
 		<result column="FILE_MODIFY_NAME" property="thumbnail"/>
 	</resultMap>
 	<select id="myInfoBCount4" resultType="_int">
@@ -664,6 +676,15 @@
 		into BOARD_IMG
 		values(CUR_FID, #{bId})
 		select * from dual
+	</insert>
+	
+	<insert id = "insertMimg">
+	insert all
+	into ATTACHED_FILE
+	values(SEQ_FID.nextval, 'M', sysdate, #{attm.fileName}, #{attm.fileModifyName}, #{attm.fileLink}, default, 'Y')
+	into re_img
+	values(#{id},SEQ_FID.currval)
+	select * from dual
 	</insert>
 	
 	<update id="deleteNotice">

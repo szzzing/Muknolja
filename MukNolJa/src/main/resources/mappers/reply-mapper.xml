@@ -11,8 +11,19 @@
 		<result column="REPLY_STATUS" property="replyStatus"/>
 		<result column="REF_REPLY_ID" property="refReplyId"/>
 		<result column="NICKNAME" property="nickName"/>
+		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
+		
 	</resultMap>
-	
+	<select id="selectReply1" resultMap="replyResultMap">
+		select *
+		from reply
+		join member on(reply_writer = id) join re_img using (id) join ATTACHED_FILE using (FILE_ID)
+		where ref_board_id=#{refBoardId} AND REPLY_ID = #{replyId}
+			  and reply_status='Y'
+		order by reply_id desc
+		
+		
+	</select>
 	<!-- 댓글 입력 -->
 	<insert id="insertReply">
 		insert into reply
@@ -30,6 +41,7 @@
 		order by reply_id desc
 	</select>
 	
+	
 	<!-- 댓글 삭제 -->
 	<update id="deleteReply">
 		update reply
@@ -41,7 +53,7 @@
 	<select id="selectReReply" resultMap="replyResultMap">
 		select *
 		from reply
-			 join member on(reply_writer = id)
+			 join member on(reply_writer = id) join re_img using (id) join ATTACHED_FILE using (FILE_ID)
 		where ref_reply_id=#{refReplyId}
 			  and reply_status='Y'
 		order by reply_id desc

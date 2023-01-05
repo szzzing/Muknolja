@@ -418,6 +418,24 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.soptClrear(sqlSession, id);
 	}
 
+	@Override
+	public Member selectMimg(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.selectMimg(sqlSession,id);
+	}
+
+	@Override
+	public int countMimg(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.countMimg(sqlSession,id);
+	}
+
+	@Override
+	public int insertMimg(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mDAO.insertMimg(sqlSession,map);
+	}
+
 	
 
 	

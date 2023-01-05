@@ -23,4 +23,5 @@ public class Reply {
 	private Date replyModifyDate;
 	private String replyStatus;
 	private int refReplyId;
+	private String fileModifyName;
 }
