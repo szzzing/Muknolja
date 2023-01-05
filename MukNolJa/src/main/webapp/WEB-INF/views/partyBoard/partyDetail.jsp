@@ -95,6 +95,11 @@
 	.reReplyInput:hover{color: #6BB6EC!important; border-color: lightgray; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important;}
 	#noParticipate{background: #FF6C6C; border-color: #FF6C6C;}
 	#noParticipate:hover{background: white; border-color: #FF6C6C; color: #FF6C6C;}
+	#boardInfo td{font-size: 12px; color: gray; text-align: center;}
+	#boardInfo button{background: white !important; border: none; opacity: 0.7;}
+	#boardInfo button:hover{background: white !important; border: none; color: tomato!important; font-weight: 700;}
+	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 </style>
 </head>
 <body>
@@ -202,8 +207,79 @@
 			  </div>
 			</div>
 			
+			
+			
+			<!-- info -->
+			<div id="boardInfo" style="margin-top:40px">
+				<table>
+					<tr>
+						<td width=" 75px;" style="text-align: left">${ p.createDate }</td>
+						<td>·</td>
+						<td width=" 60px;">조회수 <span>0</span></td>
+						<td>·</td>
+						<td width=" 65px;"><button id="reportParty" type="button">신고하기</button></td>
+					</tr>
+				</table>
+			</div>
+			
+			<!-- 신고 모달 -->
+			<!-- 이미 신고 -->
+			<div class="modal fade" id="alreadyPaReport" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <div class="modal-body" style="border: none!important; margin-top: 30px; text-align: center; font-size: 20px;">
+			        이미 신고한 게시글입니다.
+			      </div>
+			      <div class="modal-footer" style="border: none!important; margin: auto;">
+			        <button type="button" class="buttons" data-bs-dismiss="modal" style="font-size: 14px; margin-bottom: 30px;">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<div class="modal fade" id="alreadyReReport" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <div class="modal-body" style="border: none!important; margin-top: 30px; text-align: center; font-size: 20px;">
+			        이미 신고한 댓글입니다.
+			      </div>
+			      <div class="modal-footer" style="border: none!important; margin: auto;">
+			        <button type="button" class="buttons" data-bs-dismiss="modal" style="font-size: 14px; margin-bottom: 30px;">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- 진짜 글신고 -->
+			<div class="modal fade" id="realReportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <div class="modal-body" style="border: none!important; margin-top: 10px; margin-left: 10px; margin-right: 10px; text-align: center; font-size: 20px;">
+			      	<h4>신고 내용 작성</h4>
+			        <input type="text" class="form-control" id="reportTitle" style="margin-bottom:20px; margin-top: 20px;" placeholder="제목">
+			        <textarea class="form-control" id="reportContent" style="resize: none; height: 200px;" placeholder="내용"></textarea>
+			        <input type="hidden" id="refReply">
+			      </div>
+			      <div class="modal-footer" style="border: none!important; margin: auto;">
+			        <button type="button" class="mukButton" style="font-size: 14px; margin-bottom: 20px;" id="realReport">보내기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<!-- 신고 완료 -->
+			<div class="modal fade" id="endReport" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <div class="modal-body" style="border: none!important; margin-top: 30px; text-align: center; font-size: 20px;">
+			        신고 접수가 완료되었습니다.
+			      </div>
+			      <div class="modal-footer" style="border: none!important; margin: auto;">
+			        <button type="button" class="buttons" data-bs-dismiss="modal" style="font-size: 14px; margin-bottom: 30px;">닫기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
 			<!-- 댓글작성 -->
-			<div id="partyReply" style="margin-top:40px">
+			<div id="partyReply" style="margin-top: 10px;">
 				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span id="replyCount">&nbsp;${replyCount}</span></h5>
 				<div class="input-group mb-3">
 					<c:if test="${ loginUser == null }">
@@ -238,7 +314,8 @@
 						</c:if>
 						<c:if test="${ r.replyWriter != loginUser.id }">
 							<div style="float:right;">
-								<button class="buttons reportButton" type="button">신고</button>
+								<button class="buttons reportReply" type="button">신고</button>
+								<input type="hidden" value="${ r.replyId }" name="replyId">
 							</div>
 						</c:if>
 					</div>
@@ -275,7 +352,6 @@
 				<input type="hidden" name="realDeleteRepId">
 			</div>
 			
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 		
 		</form>
@@ -286,15 +362,19 @@
 	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<script>
-		const travelLists = document.getElementsByClassName('travelList');
-		for(const travelList of travelLists){
-			travelList.addEventListener('click', function(){
-				const contentId = travelList.querySelector('input').value;
-				location.href='${contextPath}/travelDetail.tr?contentId=' + contentId;
-			});
-		}
 		
 		window.onload = () =>{
+			
+			<!-- 코스 상세보기 -->
+			const travelLists = document.getElementsByClassName('travelList');
+			for(const travelList of travelLists){
+				travelList.addEventListener('click', function(){
+					const contentId = travelList.querySelector('input').value;
+					location.href='${contextPath}/travelDetail.tr?contentId=' + contentId;
+				});
+			}
+			
+			<!-- 글 수정 -->
 			const updateButton = document.getElementById('updateButton');
 			const form = document.getElementById('detailForm');
 			if(updateButton != null){
@@ -304,6 +384,7 @@
 				});
 			}
 			
+			<!-- 글 삭제 -->
 			const realDelete = document.getElementById('realDelete');
 			realDelete.addEventListener('click', function(){
 				form.action = '${contextPath}/deleteParty.pa';
@@ -311,7 +392,7 @@
 			});
 			
 		
-			
+			<!-- 댓글 입력 -->
 			document.getElementById('button-addon2').addEventListener('click', function(){
 				$.ajax({
 					url: '${contextPath}/insertReply.pa',
@@ -326,7 +407,7 @@
 							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">';
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + r.nickName + '</td></tr><tr><td style="color: gray;">' + r.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + r.replyId + '" name="replyId"></div>';
-							var reportR = '<div style="float:right;"><button class="buttons reportButton" type="button">신고</button></div>';
+							var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고<input type="hidden" value="' + r.replyId + '" name="replyId"></button></div>';
 							var reReply = '<div><button class="buttons" type="button">답글달기</button></div>';
 							var replyContent = '<div class="replyContent"><textarea readonly>' + r.replyContent +'</textarea></div>';
 							var hr = '<hr style="margin-top: 10px; border-color: gray;">';
@@ -349,6 +430,7 @@
 				});
 			});
 			
+			<!-- 대댓 list -->
 			$(document).on('click', '.reReplyButton', function () {
 				var collapses = $(this).parent().find('.collapse');
 				collapses.collapse('show');
@@ -365,7 +447,7 @@
 							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
-							var reportR = '<div style="float:right;"><button class="buttons reportButton" type="button">신고</button></div>';
+							var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고</button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
 							var replyContent = '<div class="replyContent"><textarea readonly>' + rr.replyContent +'</textarea></div>';
 							var hr = '<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">';
 							var replyProfile = '';
@@ -383,6 +465,8 @@
 					}
 				});
 			});
+			
+			<!-- 대댓 입력 -->
 			$(document).on('click', '.reReplyInput', function(){
 				var replyId = Number($(this).parent().find('.replyId').val());
 			 	$.ajax({
@@ -398,7 +482,7 @@
 							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
-							var reportR = '<div style="float:right;"><button class="buttons reportButton" type="button">신고</button></div>';
+							var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고</button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
 							var replyContent = '<div class="replyContent"><textarea readonly>' + rr.replyContent +'</textarea></div>';
 							var hr = '<hr style="margin-top: 10px; border-color: #4682B4; margin-bottom: 30px;">';
 							var replyProfile = '';
@@ -420,6 +504,7 @@
 				});
 			});
 			
+			<!-- 답글달기 close -->
 			$(document).on('click', '.reReplyButton', function () {
 				var collapses = $(this).parent().find('.collapse');
 				collapses.collapse('hide');
@@ -427,6 +512,7 @@
 			});
 			
 			
+			<!-- 댓글 삭제 -->
 			$(document).on('click', '.deleteReply', function(){
 				console.log($(this));
 				const ReplyId = $(this).parent().find('input').val();
@@ -448,7 +534,7 @@
 			}
 			
 			
-			
+			<!-- 동행 참가 -->
 			$(document).on('click', '#participate', function(){
 				$.ajax({
 					url: '${contextPath}/participate.pa',
@@ -467,6 +553,8 @@
 				});
 			});
 			
+			
+			<!-- 동행 참가 취소 -->
 			$(document).on('click', '#noParticipate', function(){
 				$.ajax({
 					url: '${contextPath}/deleteParticipate.pa',
@@ -485,24 +573,109 @@
 				});
 			});
 			
-			console.log('${contextPath}');
 			
+			<!-- 모집마감 -->
 			if(${p.maxParticipate} == ${partyCount}){
 				document.getElementById('particiButton').innerHTML = "";
 				var endPartyButton = '<button type="button" class="btn btn-primary btn-lg" id="noParticipate" disabled>모집마감</button>';
 				document.getElementById('particiButton').innerHTML += endPartyButton;
 			}
 			
-			$(document).on('click', '.reportButton', function(){
+			<!-- 글신고 모달 -->
+			$(document).on('click', '#reportParty', function(){
 				if('${loginUser.id}' == ''){
 					$(this).attr('disabled', true);
 					alert('로그인 후 신고해주세요.');
 					location.href='${contextPath}/loginView.me';
 				}
+				
+				$.ajax({
+					url: '${contextPath}/checkReport.pa',
+					data: {memberId: '${loginUser.id}', targetId: ${p.partyId}, reportClassification: 'B'},
+					success: (data) =>{
+						console.log(data);
+						if(data == 0){
+							$('#realReportModal').modal('show');
+							
+						}else if(data == 1){
+							$('#alreadyPaReport').modal('show');
+						}
+					},
+					error: (data) =>{
+						console.log(data);
+					}
+				});
 			});
 			
+			<!-- 댓글신고 모달 -->
+			$(document).on('click', '.reportReply', function(){
+				if('${loginUser.id}' == ''){
+					$(this).attr('disabled', true);
+					alert('로그인 후 신고해주세요.');
+					location.href='${contextPath}/loginView.me';
+				}
+				
+				$('#reportTitle').val("")
+				$('#reportContent').val("");
+				
+				$.ajax({
+					url: '${contextPath}/checkReport.pa',
+					data: {memberId: '${loginUser.id}', targetId:$(this).parent().find('input').val(), reportClassification: 'R'},
+					success: (data) =>{
+						console.log(data);
+						if(data == 0){
+							$('#refReply').val($(this).parent().find('input').val());
+							$('#realReportModal').modal('show');
+						}else if(data == 1){
+							$('#alreadyReReport').modal('show');
+						}
+					},
+					error: (data) =>{
+						console.log(data);
+					}
+				});
+			});
 			
-		
+			<!-- 진짜 신고 -->
+			$(document).on('click', '#realReport', function(){
+				if($(this).parent().parent().find('#refReply').val() == ''){
+					$.ajax({
+						url: '${contextPath}/insertReport.pa',
+						data: {memberId: '${loginUser.id}', targetId: ${p.partyId}, reportClassification: 'B',
+							   reportContent:$('#reportContent').val(), reportTitle:$('#reportTitle').val()},
+						success: (data) =>{
+							console.log("성공");
+							console.log(data);
+							if(data == 1){
+								$('#realReportModal').modal('hide');
+								$('#endReport').modal('show');
+							}
+						},
+						error: (data) =>{
+							console.log("실패");
+							console.log(data);
+						}
+					});
+				}else{
+					$.ajax({
+						url: '${contextPath}/insertReport.pa',
+						data: {memberId: '${loginUser.id}', targetId:$(this).parent().parent().find('#refReply').val(), reportClassification: 'R',
+							   reportContent:$('#reportContent').val(), reportTitle:$('#reportTitle').val()},
+						success: (data) =>{
+							console.log("성공");
+							console.log(data);
+							if(data == 1){
+								$('#realReportModal').modal('hide');
+								$('#endReport').modal('show');
+							}
+						},
+						error: (data) =>{
+							console.log("실패");
+							console.log(data);
+						}
+					});
+				}
+			});
 		}
 		
 	</script>
