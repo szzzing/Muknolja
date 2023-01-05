@@ -34,10 +34,10 @@
 </head>
 <body>
 	<div class="container text-center mt-5 mb-5">
-		<h2 class="fw-bold">예약이 완료되었습니다.</h2>
+		<h2 class="fw-bold pb-5">예약이 완료되었습니다.</h2>
 		
 		<div id="reservationInfo" class="row justify-content-center">
-			<div class="col-lg-10 p-5" style="background:#fafafa; border-radius:20px;">
+			<div class="col-lg-10 pb-5 pt-5" style="background:#fafafa; border-radius:20px;">
 				<div class="row row-cols-1 row-cols-lg-2 gy-5">
 					<div class="col">
 						<img class="hotelImg img-fluid mukRound" src="${contextPath }/resources/uploadFiles/08a25a9e-80fa-43eb-9cbb-3fafca66c0ac.jpg" style="background-color:#F9F9F9;">
