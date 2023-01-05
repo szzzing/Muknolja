@@ -7,14 +7,17 @@
 <title>Insert title here</title>
 <style>
 	#footerDiv{
-		height: 200px;
-		background: #616161;
-		color: white;
-		padding: 50px 150px;
+		position: absolute;
+		width:100%;
+		z-index: 9999;
+		background: #f1f1f1;
+		color: #b9b9b9;
+		padding: 50px 0px;
 		font-size: 10px;
 	}
 	.footerCate{
-		color: white;
+		color: #b9b9b9;
+		font-size: 12px;
 		text-decoration: none;
 		margin: 10px 0px;
 	}
@@ -62,28 +65,30 @@
 </style>
 </head>
 <body>
-	<div id="footerDiv">
-		<div class="row">
-			<div class="col-6">
-				상호 :(주)먹놀자 | 대표자명 : 김민주<br>
-				사업자등록번호 : 000-00-0000 | 통신판매업신고번호 : 제0000-서울중구-0000호<br>
-				연락처 : 000-0000-0000 | 팩스 : 000-0000-0000| 이메일 : muknolja@naver.com<br>
-				주소 : 서울특별시 중구 남대문로 120 대일빌딩 2층, 3층
-				<hr>
-				Copyright@C1K3
-			</div>
-			<div class="col-1" style="line-height: 25px">
-				<a class="footerCate" href="#">Travel</a><br>
-				<a class="footerCate" href="#">Hotel</a><br>
-				<a class="footerCate" href="#">Party</a><br>
-				<a class="footerCate" href="#">Review</a>
-			</div>
-			<div class="col" style="line-height: 25px">
-				이용약관<br>
-				개인정보처리방침
-			</div>
-			<div class="col">
-				<b id="qa">문의하기</b>
+	<div id="footerDiv" class="mt-5">
+		<div class="container-sm">
+			<div class="row">
+				<div class="col-6">
+					<div class="pb-2 fw-bold" style="font-size:12px;">(주)먹놀자 | 대표자 김민주</div>
+					사업자등록번호 : 000-00-0000 | 통신판매업신고번호 : 제0000-서울중구-0000호<br>
+					연락처 : 000-0000-0000 | 팩스 : 000-0000-0000| 이메일 : muknolja@naver.com<br>
+					주소 : 서울특별시 중구 남대문로 120 대일빌딩 2층, 3층
+					<hr>
+					Copyright@C1K3
+				</div>
+				<div class="col-2">
+					<div class="pb-2"><a class="footerCate" href="#">Travel</a></div>
+					<div class="pb-2"><a class="footerCate" href="#">Hotel</a></div>
+					<div class="pb-2"><a class="footerCate" href="#">Party</a></div>
+					<div class="pb-2"><a class="footerCate" href="#">Review</a></div>
+				</div>
+				<div class="col-2">
+					<div class="pb-2">이용약관</div>
+					<div class="pb-2">개인정보처리방침</div>
+				</div>
+				<div class="col-2 text-end">
+					<b id="qa">문의하기</b>
+				</div>
 			</div>
 		</div>
 	</div>
