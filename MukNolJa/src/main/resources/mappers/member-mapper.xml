@@ -105,6 +105,13 @@
   		where to_char(VISIT_TIME, 'yyyymmdd') = to_char(SYSDATE, 'yyyymmdd')
   	</select>
   	
+  	<select id="todayCount" resultType="_int">
+  		select count(*)
+  		from member
+  			join visit using(id)
+  		where to_char(VISIT_TIME, 'yyyymmdd') = to_char(SYSDATE, 'yyyymmdd')
+  	</select>
+  	
   	<select id="selectVisitList" resultType="map">
   		select visit_date, visit_count
 		from (select to_char(visit_time, 'yy.mm.dd') visit_date, count(*) visit_count
@@ -127,7 +134,28 @@
   	<select id="memberListCount" resultType="_int">
   		select count(*)
   		from member
-  		where status = 'Y'
+	    
+	    <if test="category != 3">
+		    where status = 'Y' and
+		    <if test="category == 0">
+		    	MEMBER_TYPE = 'N'
+		    </if>
+		    <if test="category == 1">
+		    	MEMBER_TYPE = 'H'
+		    </if>
+		    <if test="category == 2">
+		    	MEMBER_TYPE = 'A'
+		    </if>
+		    <if test="category == 4">
+		    	MEMBER_TYPE = 'D'
+		    </if>
+	    </if>
+	    <if test="category == 3">
+	    	where status = 'S'
+	    </if>
+	    <if test="search != null">
+	    	and id LIKE '%'||#{search}||'%'
+	    </if>
   	</select>
   	
   	<select id="selectMemberList" resultMap="memberResultSet">
@@ -212,7 +240,16 @@
   	<select id="boardListCount" resultType="_int">
   		select count(*)
   		from board
-  		where board_status = 'Y'
+  		where board_status = 'Y' and
+  		<if test="category == 0">
+  			BOARD_TYPE = 'P'
+  		</if>
+  		<if test="category == 1">
+  			BOARD_TYPE = 'R'
+  		</if>
+  		<if test="search != null">
+	    	and BOARD_TITLE LIKE '%'||#{search}||'%'
+	    </if>
   	</select>
   	
   	<select id="selectBoardList" resultMap="BoardResultSet">
@@ -527,6 +564,9 @@
 	<select id="reportListCount" resultType="_int">
 		select count(*)
 		from REPORT
+		<if test="search != null">
+			where REPORT_TITLE LIKE '%'||#{search}||'%'
+		</if>
 	</select>
 	
 	<select id="selectReportList" resultMap="ReportResultSet">
@@ -575,6 +615,12 @@
 	
 	<select id="selectQAList" resultMap="qaResultSet">
 		select *
+		from qa
+		order by to_char(QA_CREATE_DATE, 'yymmdd')
+	</select>
+	
+	<select id="qaListCount" resultType="_int">
+		select count(*)
 		from qa
 		order by to_char(QA_CREATE_DATE, 'yymmdd')
 	</select>

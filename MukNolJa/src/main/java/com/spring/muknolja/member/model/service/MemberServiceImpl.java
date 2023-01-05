@@ -71,8 +71,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public ArrayList<Member> selectVisitToday() {
-		return mDAO.selectVisitToday(sqlSession);
+	public ArrayList<Member> selectVisitToday(PageInfo pi) {
+		return mDAO.selectVisitToday(sqlSession, pi);
 	}
 
 	@Override
@@ -101,8 +101,8 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.updateMember(sqlSession, m);
 	}
 
-	public int memberListCount() {
-		return mDAO.memberListCount(sqlSession);
+	public int memberListCount(HashMap<String, Object> map) {
+		return mDAO.memberListCount(sqlSession, map);
 	}
 
 	@Override
@@ -142,8 +142,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int boardListCount() {
-		return mDAO.boardListCount(sqlSession);
+	public int boardListCount(HashMap<String, Object> map) {
+		return mDAO.boardListCount(sqlSession, map);
 	}
 
 	@Override
@@ -291,8 +291,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int reportListCount() {
-		return mDAO.reportListCount(sqlSession);
+	public int reportListCount(String search) {
+		return mDAO.reportListCount(sqlSession, search);
 	}
 
 	@Override
@@ -316,8 +316,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public ArrayList<QA> selectQAList() {
-		return mDAO.selectQAList(sqlSession);
+	public ArrayList<QA> selectQAList(PageInfo pi) {
+		return mDAO.selectQAList(sqlSession, pi);
 	}
 	/*
 	 * @Override public ArrayList<AttachedFile> selectImg(int hotelId) { // TODO
@@ -438,6 +438,15 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.selectBusinessLicense(sqlSession, id);
 	}
 
+	@Override
+	public int qaListCount() {
+		return mDAO.qaListCount(sqlSession);
+	}
+
+	@Override
+	public int todayCount() {
+		return mDAO.todayCount(sqlSession);
+	}
 	
 
 	

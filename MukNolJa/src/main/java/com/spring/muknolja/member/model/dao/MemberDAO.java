@@ -58,8 +58,11 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.selectVisitCounter", id);
 	}
 
-	public ArrayList<Member> selectVisitToday(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitToday");
+	public ArrayList<Member> selectVisitToday(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectVisitToday", null, rowBounds);
 	}
 
 	public ArrayList<Map<String, Integer>> selectVisitList(SqlSessionTemplate sqlSession) {
@@ -79,8 +82,8 @@ public class MemberDAO {
 		return sqlSession.update("memberMapper.updateMember", m);
 	}
 
-	public int memberListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.memberListCount", sqlSession);
+	public int memberListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("memberMapper.memberListCount", map);
 	}
 
 	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, Object> map) {
@@ -116,8 +119,8 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.bCount");
 	}
 
-	public int boardListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.boardListCount");
+	public int boardListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("memberMapper.boardListCount", map);
 	}
 
 	public ArrayList<Object> selectBoardList(SqlSessionTemplate sqlSession, HashMap<String, Object> map, PageInfo pi) {
@@ -245,8 +248,8 @@ public class MemberDAO {
 		return sqlSession.update("memberMapper.updateAd", aMap);
 	}
 
-	public int reportListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.reportListCount");
+	public int reportListCount(SqlSessionTemplate sqlSession, String search) {
+		return sqlSession.selectOne("memberMapper.reportListCount", search);
 	}
 
 	public ArrayList<Object> selectReportList(SqlSessionTemplate sqlSession, String search, PageInfo pi) {
@@ -267,8 +270,10 @@ public class MemberDAO {
 		return (ArrayList)sqlSession.selectList("memberMapper.QACount");
 	}
 
-	public ArrayList<QA> selectQAList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("memberMapper.selectQAList");
+	public ArrayList<QA> selectQAList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectQAList", null, rowBounds);
 	}
 
 	public int insertQA(SqlSessionTemplate sqlSession, QA q) {
@@ -360,6 +365,14 @@ public class MemberDAO {
 		return sqlSession.insert("memberMapper.insertMimg",map);}
 	public String selectBusinessLicense(SqlSessionTemplate sqlSession, String id) {
 		return sqlSession.selectOne("memberMapper.selectBusinessLicense", id);
+	}
+
+	public int qaListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.qaListCount");
+	}
+
+	public int todayCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.todayCount");
 	}
 	
 	/*
