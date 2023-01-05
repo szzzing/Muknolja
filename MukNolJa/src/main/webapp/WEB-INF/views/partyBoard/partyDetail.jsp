@@ -121,7 +121,7 @@
 			<div class="col-lg-8">
 				<!-- 제목 -->
 				<h3>${ p.partyTitle }</h3>
-				
+			
 				<!-- 선택목록 -->
 				<div id="location1">
 					<table>
@@ -206,9 +206,6 @@
 			    </div>
 			  </div>
 			</div>
-			
-			
-			
 			<!-- info -->
 			<div id="boardInfo" style="margin-top:40px">
 				<table>
@@ -277,9 +274,10 @@
 			    </div>
 			  </div>
 			</div>
-			
+				</div>
+				
 			<!-- 댓글작성 -->
-			<div id="partyReply" style="margin-top: 10px;">
+			<div id="partyReply" style="margin-top: 320px;">
 				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span id="replyCount">&nbsp;${replyCount}</span></h5>
 				<div class="input-group mb-3">
 					<c:if test="${ loginUser == null }">
@@ -352,7 +350,7 @@
 				<input type="hidden" name="realDeleteRepId">
 			</div>
 			
-		</div>
+	
 		
 		</form>
 		
@@ -685,6 +683,7 @@
 		}
 		
 	</script>
-	
+	<jsp:include page="../common/footer.jsp"/>
 </body>
+
 </html>
