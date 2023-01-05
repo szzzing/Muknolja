@@ -237,6 +237,7 @@
 		
 		</div>
 		
+		<jsp:include page="../common/footer.jsp"/>
 		<script>
 			<!-- 동행 상세보기 -->
 			const partyCards = document.getElementsByClassName('card');
