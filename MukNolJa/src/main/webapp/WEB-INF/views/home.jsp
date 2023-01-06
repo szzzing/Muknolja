@@ -428,7 +428,6 @@ li{list-style:none;}
     $('#0').css({'color':'white','background':' #6BB6EC'});
 
     showResult(site,site4,site5);
-
     
     $('.ll').click(function(){
     	const areaNum = $(this).attr('id');
