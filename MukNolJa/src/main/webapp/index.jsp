@@ -127,40 +127,124 @@
     	 	
     	 $('.we').hide();
     	 var wiconUr11 = null;
-    		    $('#a2').hover(function(){
+    		    $('.ac').hover(function(){
     		    	$('#ttt').empty();
     		    	$('tbody').empty();
-    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=37.5683&lon=126.9778&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
+    		    	var num = $(this).attr('id').substr(1).trim();
+    		    	var areaNum = "";
+    		    	var vTop = "";
+    		    	var vLeft = "";
+    		    	var areaName = "";
+    		    	var areaImg = "";
+    		    	  switch (num)
+    		    	  {
+    		    	  case "2" :  //서울
+    		    		 
+    		    		  areaNum = "lat=37.5683&lon=126.9778";  
+    		    		  vTop = "21.5vh"
+    		    		  vLeft = "67.4vw"
+    		    		  areaName = "서울";
+    		    		  areaImg = "seoul.png";
+    		    	      break;
+    		    		
+    		    	  case "1" :  //경기
+    		    		
+    		    		  areaNum = "lat=37.2911&lon=127.0089";  
+    		    		  vTop = "16.5vh";
+    		    		  vLeft = "67.5vw";
+    		    		  areaName = "경기";
+    		    		  areaImg = "gyeongggi.png";
+    		    	      break;
+    		    	  case "9" :  //충남
+      		    		
+    		    		  areaNum = "lat=36.8065&lon=127.1522";  
+    		    		  vTop = "39vh";
+    		    		  vLeft = "65.8vw";
+    		    	      areaName = "충남";
+    		    	      areaImg = "chungnam.png";
+    		    	      break;
+    		    	  case "3" :  //강원
+      		    		
+    		    		  areaNum = "lat=37.7556&lon=128.8961";  
+    		    		  vTop = "18vh";
+    		    		  vLeft = "74vw";
+    		    		  areaName = "강원";
+    		    		  areaImg = "kangwon.png";
+    		    	      break;
+    		    	  case "4" :  //
+      		    		
+    		    		  areaNum = "lat=36.6372&lon=127.4897";  
+    		    		  vTop = "35vh";
+    		    		  vLeft = "70.5vw";
+    		    		  areaName = "충북";
+    		    		  areaImg = "chungbuk.png";
+    		    	      break;
+    		    	  case "5" :  //
+      		    		
+    		    		  areaNum = "lat=35.8428&lon=129.2117";  
+    		    		  vTop = "43vh"
+    		    		  vLeft = "76vw"
+    		    		  areaName = "경북";
+    		    		  areaImg = "gyeongbuk.png";
+    		    	      break;
+    		    	  case "6" :  //
+      		    		
+    		    		  areaNum = "lat=35.5372&lon=129.3167";  
+    		    		  vTop = "59vh";
+    		    		  vLeft = "73.5vw";
+    		    		  areaName = "경남";
+    		    		  areaImg = "chungnam.png";
+    		    	      break;
+    		    	  case "7" :  //
+      		    		
+    		    		  areaNum = "lat=33.5097&lon=126.5219";  
+    		    		  vTop = "85.5vh"
+    		    		  vLeft = "63.7vw";
+    		    		  areaName = "제주";
+    		    		  areaImg = "jeju.png";
+    		    	      break;
+    		    	  case "8" :  //
+      		    		
+    		    		  areaNum = "lat=34.7546&lon=127.6599";  
+    		    		  vTop = "66vh";
+    		    		  vLeft = "66.5vw";
+    		    		  areaName = "전남";
+    		    		  areaImg = "gyeongnam.png";
+    		    	      break;
+    		    	  case "10" :  //
+      		    		
+    		    		  areaNum = "lat=35.8219&lon=127.1489";  
+    		    		  vTop = "52vh"
+    		    		  vLeft = "68vw"
+    		    		  areaName = "전북";
+    		    		  areaImg = "gyeongbuk.png";
+    		    	      break;
+    		    		
+    		    	  }
+    		    	console.log(num);
+    		    	
+    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?'+areaNum+
+    		    			  '&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(result){
     		    		var ctime1 = result.list[0].dt;
     		    		var ctemp1 = result.list[0].main.temp;
     		    		var hum1 = result.list[0].main.humidity;
     		    		var wind1 = result.list[0].wind.speed;
     		    		var cloud1 = result.list[0].clouds.all;
-    		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
+    		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+
+    		    		 			 '.png" alt="'+result.list[0].weather[0].description + '">'
     		    		 weather = result.list[0].weather[0].icon
-    		    		function convertTime1(t){
-    		    			var ot = new Date(t * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			
-    		    			return dt + '일' + hr + '시'
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 서울 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-    		    						
-    		    						
-    		    						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-    		    						'<div><img alt="1" src="${contextPath}/resources/img/seoul.png"   style="margin-top: 3vh; margin-left: -3vw; position:absolute; width:40vw; height:40vh;">';
-    		    						
-    		    						$('#ttt').append(taHtml);
+    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> '+ areaName + wiconUr11 +
+    		    		             '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
+    		    					 '<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
+    		    					 '<div><img alt="1" src="${contextPath}/resources/img/'+areaImg+
+    		    					 '"style="margin-top: 3vh; margin-left: -3vw; position:absolute; width:40vw; height:40vh;">';    		    						
+    		    					 $('#ttt').append(taHtml);
     		    		
     		    	});
-    		    	 $('#epl').hide();
+    		       $('#epl').hide();
     		       $('.we').show();
-    		       $('#poin').css('margin-top','21.5vh');
-    		       $('#poin').css('margin-left','65.4vw');
+    		       $('#poin').css('margin-top',vTop);
+    		       $('#poin').css('margin-left',vLeft);
     		    }, function() {
     		    	$('#epl').show();
     		    	$('.we').hide();
@@ -170,405 +254,21 @@
     		});
   
 	
-	//경기
 	
-			
-    		    $('#a1').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=37.2911&lon=127.0089&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		weather = result.list[0].weather[0].icon
-    		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 경기 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-									'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-									'<div><img alt="1" src="${contextPath}/resources/img/gyeongggi.png"   style="margin-top: 3vh; margin-left: -4vw; position:absolute; width:40vw; height:40vh;">';
-    		    						
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','15.5vh');
-    		       $('#poin').css('margin-left','66.5vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
-    		    });
-    		
-// 충남
-	$(document).ready(function () 
-    		{	
-    	 $('.we').hide();
-			
-    		    $('#a9').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?lat=36.8065&lon=127.1522&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		weather = result.list[0].weather[0].icon
-    		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 충남 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-						'<div><img alt="1" src="${contextPath}/resources/img/chungnam.png"   style="margin-top: 3vh; margin-left: -1vw; position:absolute; width:40vw; height:40vh;">'
-    		    						
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','39vh');
-    		       $('#poin').css('margin-left','64.5vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
-    		    });
-    		});
-  			
-	// 강원
-	$(document).ready(function () 
-    		{	
-    	 $('.we').hide();
-			
-    		    $('#a3').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?lat=37.7556&lon=128.8961&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		weather = result.list[0].weather[0].icon
-    		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 강원 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-						'<div><img alt="1" src="${contextPath}/resources/img/kangwon.png"   style="margin-top: 3vh; margin-left: -1vw; position:absolute; width:40vw; height:40vh;">'
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','17vh');
-    		       $('#poin').css('margin-left','72vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
-    		    });
-    		});
+
 	
-	// 충북
-	$(document).ready(function () 
-    		{	
-    	 $('.we').hide();
-			
-    		    $('#a4').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=36.6372&lon=127.4897&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		weather = result.list[0].weather[0].icon
-    		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 충북 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-						'<div><img alt="1" src="${contextPath}/resources/img/chungbuk.png"   style="margin-top: 3vh; margin-left: -3vw; position:absolute; width:40vw; height:40vh;">'
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','35vh');
-    		       $('#poin').css('margin-left','69vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
-    		    });
-    		});
-  
-	// 경북
-	$(document).ready(function () 
-    		{	
-    	 $('.we').hide();
-			
-    		    $('#a5').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=35.8428&lon=129.2117&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all
-    		    		weather = result.list[0].weather[0].icon;
-    		    		 wiconUr11 = '<img style="margin-top:-2vh; width:5vw; height:12vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 경북 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-						'<div><img alt="1" src="${contextPath}/resources/img/gyeongbuk.png"   style="margin-top: 3vh; margin-left: -1vw; position:absolute; width:40vw; height:40vh;">'
-    		    						
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','43vh');
-    		       $('#poin').css('margin-left','75vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
-    		    });
-    		});
 	
-	// 경남
-	$(document).ready(function () 
-    		{	
-    	 $('.we').hide();
-			
-    		    $('#a6').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?lat=35.5372&lon=129.3167&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		weather = result.list[0].weather[0].icon
-    		    		 wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 경남 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-						'<div><img alt="1" src="${contextPath}/resources/img/gyeongnam.png"   style="margin-top: 3vh; margin-left: -1vw; position:absolute; width:40vw; height:40vh;">'
-    		    						
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','59vh');
-    		       $('#poin').css('margin-left','72.5vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','12vw');
-    		    });
-    		});
   
 	
-	// 제주
-	$(document).ready(function () 
-    		{	
-    	 $('.we').hide();
-			
-    		    $('#a7').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	$.getJSON('http://api.openweathermap.org/data/2.5/forecast?lat=33.5097&lon=126.5219&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		weather = result.list[0].weather[0].icon
-    		    		wiconUr11 = '<img style="margin-top:-2vh ;idth:5vw; height:11vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 제주 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-						'<div><img alt="1" src="${contextPath}/resources/img/jeju.png"   style="margin-top: 3vh; margin-left: -3vw; position:absolute; width:40vw; height:40vh;">'
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','84.5vh');
-    		       $('#poin').css('margin-left','62vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
-    		    });
-    		});
-  			
-	// 전남
-	$(document).ready(function () 
-    		{	
-    	 $('.we').hide();
-			
-    		    $('#a8').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=34.7546&lon=127.6599&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		weather = result.list[0].weather[0].icon
-    		    		wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 전남 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-						'<div><img alt="1" src="${contextPath}/resources/img/jeonnam.png"   style="margin-top: 3vh; margin-left: -1vw; position:absolute; width:40vw; height:40vh;">'
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','65vh');
-    		       $('#poin').css('margin-left','64.5vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
-    		    });
-    		});
+    	
 	
-	// 전북
-	$(document).ready(function () 
-    		{	
-    	 $('.we').hide();
-				
-    		    $('#a10').hover(function(){
-    		    	$('#ttt').empty();
-    		    	$('tbody').empty();
-    		    	var i = 0;
-    		    	$.getJSON('https://api.openweathermap.org/data/2.5/forecast?lat=35.8219&lon=127.1489&appid=e126fab475a4d6908067f0cbb95cc8e9&units=metric[i]',function(
-    		    			result){
-    		    		var ctime1 = result.list[0].dt;
-    		    		var ctemp1 = result.list[0].main.temp;
-    		    		var hum1 = result.list[0].main.humidity;
-    		    		var wind1 = result.list[0].wind.speed;
-    		    		var cloud1 = result.list[0].clouds.all;
-    		    		weather = result.list[0].weather[0].icon
-    		    		wiconUr11 = '<img style="width:5vw; height:9vh"src="http://openweathermap.org/img/wn/'+result.list[0].weather[0].icon+'.png" alt="'+result.list[0].weather[0].description + '">'
-    		    		function convertTime1(ctime){
-    		    			var ot = new Date(ctime * 1000);
-    		    			
-    		    			var dt = ot.getDate();
-    		    			var hr = ot.getHours();
-    		    			var m = ot.getMinutes();
-    		    			return dt + '일:' + hr + '시' + m + '분' ;
-    		    		}
-    		    		var currentTime1 = convertTime1(ctime1);
-    		    		var taHtml = '<div style="display:flex; color:white; font-size:4vw; margin-top:4vh; margin-left:7vw;"> 전북 '+ wiconUr11 + '<div style="font-size:2vw; margin-top:2vh">' + ctemp1 + '℃</div></div>' + 
-						'<div style="font-size:1vw; margin-left:7vw; color:white"> 바람: ' + wind1 + 'm/s 습도: ' + hum1 + '% 구름: ' + cloud1 + '%</div>'+
-						'<div><img alt="1" src="${contextPath}/resources/img/jeonbuk.png"   style="margin-top: 3vh; margin-left: -1vw; position:absolute; width:40vw; height:40vh;">'
-    		    						$('#ttt').append(taHtml);
-    		    		
-    		    	});
-    		    	$('#epl').hide();
-    		       $('.we').show();
-    		       $('#poin').css('margin-top','50vh');
-    		       $('#poin').css('margin-left','66vw');
-    		    }, function() {
-    		    	$('#epl').show();
-    		    	$('.we').hide();
-    		    	$('#poin').css('margin-top','7vh');
-    		    	  $('#poin').css('margin-left','13vw');
-    		    });
-    		});
+	
+    	
   
+	
+	
+	
+	
 	
 		 $('#a2').click(function(){
 			 location.href = "${ contextPath }/loding.me?load=seoul &weather=" + weather;
