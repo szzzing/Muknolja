@@ -304,7 +304,6 @@
 		<script>
 			<!-- datepicker -->
 			$(function(){
-				$('#daterangepicker').daterangepicker();
 				$("#daterangepicker").daterangepicker({
 				    locale: {
 				    "separator": " ~ ",                     // 시작일시와 종료일시 구분자
