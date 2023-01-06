@@ -82,7 +82,7 @@
 	   <a id="a8" class="ac ad8"><div class="st" style=" position:absolute; margin-top:65vh; margin-left: 53vw; color:white">전 Jeon<br>남 Nam</div></a>
 	   <a id="a9" class="ac ad9"><div class="st" style=" position:absolute; margin-top:39vh; margin-left: 52vw; color:white">충 Chung<br>남 Nam</div></a>
 	   <a id="a10" class="ac ad10"><div class="st" style=" position:absolute; margin-top:51vh; margin-left: 54vw; color:white">전 Jeon<br>북 Buk</div></a>
-	   <div style="opacity:0.5; font-size:4vw; position:absolute; margin-top:30vh; margin-left: 46vw; font-weight:700; color:#F2F2F2">K<br>o<br>R<br>E<br>A</div>
+	   <div style="opacity:0.5; font-size:4vw; position:absolute; margin-top:30vh; margin-left: 46vw; font-weight:700; color:#F2F2F2">K<br>0<br>R<br>E<br>A</div>
 	   <!-- <div style="font-size:4vw; font-weight:700; position:absolute; margin-top:2vh; margin-left: 2vw; text-shadow: 1px 5px 5px rgba(0,0,0,0.3);" >
 	   먹놀자
 	   
