@@ -266,8 +266,6 @@
 					var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 					$(".hotelGeoX").val(result[0].x);
 					$(".hotelGeoY").val(result[0].y);
-					console.log($(".hotelGeoX").val());
-					console.log($(".hotelGeoY").val());
 					var marker = new kakao.maps.Marker({
 					    map: map,
 					    position: coords
@@ -275,6 +273,7 @@
 					map.setCenter(coords);
 			    }
 			});
+			
 		}
  	</script>
  	<!-- 지도 끝 -->

@@ -87,6 +87,8 @@
 	
 	#modifyButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	#deleteButton {transition: all 0.3s; background: white; height:40px; border-radius: 8px; padding:0px 10px; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.logout {color:#b9b9b9 !important; text-decoration:none;}
+	.logout:hover {text-decoration:underline;}
 </style>
 <script src="https://kit.fontawesome.com/203ce9d742.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -104,6 +106,9 @@
 					<div class="text-center pb-4 m-3 mt-5 mb-5" style="border-bottom:1px solid #e9e9e9">
 						<img id="hotelImg" class="img-fluid mb-3" style="width:100px; height:100px; border-radius:50%" src="${contextPath }/resources/uploadFiles/${hotelImgList[0].fileModifyName}">
 						<h5 class="fw-bold mukSubText">${hotel.hotelName }</h5>
+						<a class="logout" aria-current="page" href="${contextPath }/logout.me" style="font-size:14px;">
+							로그아웃
+						</a>
 					</div>
 					<ul class="nav flex-column">
 						<li class="nav-item">
