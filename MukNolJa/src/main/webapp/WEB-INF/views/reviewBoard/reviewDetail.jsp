@@ -129,7 +129,7 @@
 	  		<div class="row justify-content-center" style="   border-radius:30px;  ">
 	            <div class="col-12 col-lg-9" style="" >
 	            	<div id="partyReply" style="margin-top:40px">
-				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span>${ replyCount }개</span></h5>
+				<h5 class="mb-3"><i class="fa-solid fa-pen-to-square"></i> 댓글<span></span></h5>
 				<div class="input-group mb-3">
 					<c:if test="${ loginUser == null }">
 						<input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>

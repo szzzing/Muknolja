@@ -136,11 +136,11 @@
 
   		const idResult = document.getElementById('nickNamesol');
   		
-  		var reg =  /^[a-z][a-z0-9]{6,12}$/;
+  		var reg =  /^[a-z][a-z0-9]{1,10}$/;
  		var value = $('#nickName').val().trim();
  		if("${loginUser.nickName}" != value){
 	 		if (!reg.test(value)) {
-	 			idResult.innerText = "6~12자리 사이의 글자를 입력해주세요"
+	 			idResult.innerText = "2~10자리 사이의 글자를 입력해주세요"
 	 				idResult.style.color= "red"
 	 					okNickName = false;
 	 		}else{
