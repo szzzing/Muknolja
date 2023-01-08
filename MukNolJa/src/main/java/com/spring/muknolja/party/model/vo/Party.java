@@ -35,4 +35,5 @@ public class Party {
 	private String contentCourse;
 	private int nowParticipate;
 	private int replyCount;
+	private String profileImg;
 }

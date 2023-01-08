@@ -51,4 +51,10 @@ public interface PartyService {
 
 	int getSearchListCount(HashMap<String, Object> map);
 
+	int checkLike(HashMap<String, Object> map);
+
+	int insertLike(HashMap<String, Object> map);
+
+	int deleteLike(HashMap<String, Object> map);
+
 }

@@ -37,14 +37,18 @@ public class PartyDAO {
 	}
 
 	public Party selectParty(SqlSessionTemplate sqlSession, int pId) {
-		return sqlSession.selectOne("partyMapper.selectParty", pId);
+		Party p =  sqlSession.selectOne("partyMapper.selectParty", pId);
+		p.setProfileImg(sqlSession.selectOne("partyMapper.selectProfileImg", pId));
+		return p;
 	}
 
 	public int updateParty(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
-			int board = sqlSession.update("partyMapper.updateBoard", map);
-			int party = sqlSession.update("partyMapper.updateParty", map);
-			int attm = sqlSession.update("partyMapper.updateAttm", map);
-			return board + party + attm;
+		System.out.println(map);
+//			int board = sqlSession.update("partyMapper.updateBoard", map);
+//			int party = sqlSession.update("partyMapper.updateParty", map);
+//			int attm = sqlSession.update("partyMapper.updateAttm", map);
+//			return board + party + attm;
+		return 0;
 	}
 
 	public int deleteParty(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
@@ -119,6 +123,18 @@ public class PartyDAO {
 
 	public int getSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
 		return sqlSession.selectOne("partyMapper.getSearchListCount", map);
+	}
+
+	public int checkLike(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("partyMapper.checkLike", map);
+	}
+
+	public int insertLike(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("partyMapper.insertLike", map);
+	}
+
+	public int deleteLike(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.delete("partyMapper.deleteLike", map);
 	}
 
 }

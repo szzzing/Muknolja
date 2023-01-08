@@ -70,6 +70,8 @@
 	#gender label{color: #6BB6EC; font-size: 13px;}
 	#location label{color: #6BB6EC; font-size: 13px;}
 	.participate{color: tomato;}
+	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 </style>
 </head>
 <body style="background-color:white;">
@@ -103,8 +105,6 @@
 		<input type="hidden" name="partyStartDate" id="partyStartDate">
 		<input type="hidden" name="partyEndDate" id="partyEndDate">
 		<br>
-		<h1 class="fw-bold" style="color: #6BB6EC; font-size: 55px; margin-bottom: 50px; margin-top: 20px;">여행친구찾기</h1>
-		
 		<!-- 글쓰기버튼 -->
 			<c:if test="${ loginUser == null }">
 				<button type="button" class="writeButton mukButton" style="width: 150px; display: none;" id="writeButton">글쓰기</button>
@@ -116,6 +116,7 @@
 			</c:if>
 		
 		<!-- 검색하기 -->
+			<p style="font-size: 20px; color: #6BB6EC">상세검색 <i class="fa-solid fa-magnifying-glass"></i></p>
 			<div class="row" style="clear: both;">
 			<div class="col">
 				<div class="compDate form-floating mb-3">
@@ -149,7 +150,6 @@
 					<label for="floatingSelect">지역</label>
 				</div>
 			</div>
-			
 			<div class="col">
 				<div id="gender" class="form-floating">
 				  <select class="gender form-select searchCondition" id="partyGender" aria-label="Floating label select example" name="partyGender">
@@ -167,9 +167,9 @@
 				</div>
 			</div>
 			</div>
-			
+			<div style="float: right; margin-bottom: 20px;"><button type="button" class="mukButton" id="searchButton">검색</button></div>
 		<!-- list카드 -->
-			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;" id="partyRow">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px; clear: both;" id="partyRow">
 				<c:forEach items="${ pList }" var="p">
 					<div class="partyCard col" style="margin-bottom: 30px;">
 						<div class="card card-cover h-100 overflow-hidden\">
@@ -204,12 +204,26 @@
 					</div>
 				</c:forEach>
 			</div>
-			
 		<!-- 페이징 -->
 			<nav aria-label="Page navigation example" id="pagination">
 			  <ul class="pagination d-flex justify-content-center">
 			    <li class="page-item">
 			    	<c:url var="goBack" value="${ loc }">
+			    		<c:if test="${ partyArea != null }">
+		            		<c:param name="partyArea" value="${ partyArea }"/>
+		            	</c:if>
+			    		<c:if test="${ partyGender != null }">
+		            		<c:param name="partyGender" value="${ partyGender }"/>
+		            	</c:if>
+			    		<c:if test="${ partyStartDate != null }">
+		            		<c:param name="partyStartDate" value="${ partyStartDate }"/>
+		            	</c:if>
+			    		<c:if test="${ partyEndDate != null }">
+		            		<c:param name="partyEndDate" value="${ partyEndDate }"/>
+		            	</c:if>
+			    		<c:if test="${ searchValue != null }">
+		            		<c:param name="searchValue" value="${ searchValue }"/>
+		            	</c:if>
 			    		<c:param name="page" value="${ pi.currentPage-1 }"/>
 			    	</c:url>
 			      	<a class="page-link" href="${ goBack }" aria-label="Previous">
@@ -218,12 +232,42 @@
 			    </li>
 			    <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
 			    	<c:url var="goNum" value="${ loc }">
+			    		<c:if test="${ partyArea != null }">
+		            		<c:param name="partyArea" value="${ partyArea }"/>
+		            	</c:if>
+			    		<c:if test="${ partyGender != null }">
+		            		<c:param name="partyGender" value="${ partyGender }"/>
+		            	</c:if>
+			    		<c:if test="${ partyStartDate != null }">
+		            		<c:param name="partyStartDate" value="${ partyStartDate }"/>
+		            	</c:if>
+			    		<c:if test="${ partyEndDate != null }">
+		            		<c:param name="partyEndDate" value="${ partyEndDate }"/>
+		            	</c:if>
+			    		<c:if test="${ searchValue != null }">
+		            		<c:param name="searchValue" value="${ searchValue }"/>
+		            	</c:if>
 			    		<c:param name="page" value="${ p }"/>
 			    	</c:url>
 				    <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
 			    </c:forEach>
 			    <li class="page-item">
 			    	<c:url var="goNext" value="${ loc }">
+			    		<c:if test="${ partyArea != null }">
+		            		<c:param name="partyArea" value="${ partyArea }"/>
+		            	</c:if>
+			    		<c:if test="${ partyGender != null }">
+		            		<c:param name="partyGender" value="${ partyGender }"/>
+		            	</c:if>
+			    		<c:if test="${ partyStartDate != null }">
+		            		<c:param name="partyStartDate" value="${ partyStartDate }"/>
+		            	</c:if>
+			    		<c:if test="${ partyEndDate != null }">
+		            		<c:param name="partyEndDate" value="${ partyEndDate }"/>
+		            	</c:if>
+			    		<c:if test="${ searchValue != null }">
+		            		<c:param name="searchValue" value="${ searchValue }"/>
+		            	</c:if>
 			    		<c:param name="page" value="${ pi.currentPage+1 }"/>
 			    	</c:url>
 				    <a class="page-link" href="${ goNext }" aria-label="Next">
@@ -251,6 +295,16 @@
 				location.href = '${contextPath}/partyWrite.pa';
 			});
 			
+			$('#searchButton').click(function(){
+				var partyArea = $('#selectLocation').val();
+				var partyDate = $('#daterangepicker').val();
+				var partyGender = $('#partyGender').val();
+				var searchValue = $('#input').find('input').val();
+				var partyStartDate = partyDate.split(" ~ ")[0] + "";
+				var partyEndDate = partyDate.split(" ~ ")[1] + "";
+				location.href='${contextPath}/searchParty.pa?partyArea=' + partyArea + '&partyGender=' + partyGender + '&partyStartDate=' + partyStartDate + '&partyEndDate=' + partyEndDate + '&searchValue=' + searchValue + '&page=' + ${pi.currentPage};
+			});
+			
 			window.onload = () => {
 				$.ajax({
 		    		url: 'selectAd.me',
@@ -263,55 +317,6 @@
 		    			}
 		    		}
 		    	});
-				
-				var page = 1;
-				var maxPage = 1;
-				
-				$('.searchCondition').on('change keyup', function(){
-					var partyArea = $('#selectLocation').val();
-					var partyDate = $('#daterangepicker').val();
-					var partyGender = $('#partyGender').val();
-					var searchValue = $('#input').find('input').val();
-					var partyStartDate = partyDate.split(" ~ ")[0] + "";
-					var partyEndDate = partyDate.split(" ~ ")[1] + "";
-					console.log(partyStartDate);
-					console.log(partyEndDate);
-					$.ajax({
-						url: '${contextPath}/searchParty.pa',
-						data: {page: page, searchValue: searchValue, partyArea: partyArea,
-							   partyGender: partyGender, partyStartDate: partyStartDate, partyEndDate: partyEndDate},
-						success: (data) =>{
-							console.log("성공");
-							console.log(data);
-								$('#partyRow').html("");
-								for(const search of data.searchList){
-									console.log(search);
-									var h5 = '<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">' + search.partyTitle + '</h5>';
-									var lis = '';
-									for(var i = 0; i < search.partyCourse.split('/', 4).length; i++){
-										lis += '<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">' + search.partyCourse.split('/', 4)[i] + '</li>';
-									}
-									var ol = '<div><ol class="numbered">'+lis+'</ol></div>';
-									var table = '';
-									if(search.nowParticipate != search.maxParticipate){
-										table = '<table class="mb-auto"><tr><td><i class="fa-solid fa-location-dot"></i> ' + search.partyArea + '</td><td><i class="fa-solid fa-users"></i> <span>' + search.nowParticipate + '/' + search.maxParticipate + '</span></td><td><i class="fa-solid fa-heart"></i> ' + search.partyGender + '</td><td><i class="fa-regular fa-comment-dots"></i> ' + search.replyCount + '개</td></tr></table>';
-									}else if(search.nowParticipate == search.maxParticipate){
-										table = '<table class="mb-auto"><tr><td><i class="fa-solid fa-location-dot"></i> ' + search.partyArea + '<td width="100px;"><i class="fa-solid fa-users participate"></i> <span class="participate">마감</span></td><td><i class="fa-solid fa-heart"></i> ' + search.partyGender + '</td><td><i class="fa-regular fa-comment-dots"></i> ' + search.replyCount + '개</td></tr></table>';
-									}
-									var partyId = '<input type="hidden" value="' + search.partyId + '" class="partyId">';
-									var nickName = '<input type="hidden" value="' + search.nickName + '" class="nickName">';
-									
-									var searchParty = '<div class="partyCard col" style="margin-bottom: 30px;"><div class="card card-cover h-100 overflow-hidden\"><img src="${ contextPath }/resources/uploadFiles/' + search.thumbnail + '" class="card-img-top"><div class="card-body">' + h5 + ol + table + partyId + nickName + '</div></div></div>';
-									
-									$('#partyRow').append(searchParty);
-								}
-						},
-						error: (data) =>{
-							console.log("실패");
-							console.log(data);
-						}
-					});
-				});
 				
 			}
 
