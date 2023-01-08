@@ -420,7 +420,7 @@
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + r.nickName + '</td></tr><tr><td style="color: gray;">' + r.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + r.replyId + '" name="replyId"></div>';
 							var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고<input type="hidden" value="' + r.replyId + '" name="replyId"></button></div>';
-							var reReply = '<div><button class="buttons" type="button">답글달기</button></div>';
+// 							var reReply = '<div><button class="buttons" type="button">답글달기</button></div>';
 							var replyContent = '<div class="replyContent"><textarea readonly>' + r.replyContent +'</textarea></div>';
 							var hr = '<hr style="margin-top: 10px; border-color: gray;">';
 							var realDeleteRepId = '<input type="hidden" name="realDeleteRepId">';
@@ -430,6 +430,14 @@
 							}else{
 								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + reportR + '</div>';
 							}
+							var reInput = '';
+							if('${loginUser}' == null){
+								reInput = '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-describedby="button-addon2" readonly><button class="btn btn-outline-secondary" type="button" style="border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important;" disabled><i class="bi bi-send"></i></button><input type="hidden" value="${ r.replyId }" class="replyId"></div>';
+							}else{
+								reInput = '<div class="input-group mb-3"><input type="text" class="form-control reReplyContent" placeholder="댓글을 입력해주세요" aria-describedby="button-addon2"><button class="btn btn-outline-secondary reReplyInput" type="button"><i class="bi bi-send"></i></button><input type="hidden" value="' + r.replyId + '" class="replyId"></div>';
+							}
+							var reply2 = '<div class="reReply2"></div>';
+							var reReply = '<div class="reReply"><button class="buttons reReplyButton" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">답글달기</button><div class="collapse" id="collapseExample"><div class="well">' + reInput + reply2 + '</div></div></div>';
 							document.getElementById('reply').innerHTML += (replyProfile + replyContent + reReply + hr) + realDeleteRepId;
 						}
 						
