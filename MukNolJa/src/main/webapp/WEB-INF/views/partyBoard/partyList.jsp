@@ -118,6 +118,13 @@
 		<!-- 검색하기 -->
 			<div class="row" style="clear: both;">
 			<div class="col">
+				<div class="compDate form-floating mb-3">
+					<input type="text" class="travelDate form-control searchCondition" id="daterangepicker" name="daterangepicker">
+					<label for="floatingInput">날짜선택</label>
+				</div>
+			</div>
+			
+			<div class="col">
 				<div id="location" class="form-floating">
 					<select id="selectLocation"class="form-select searchCondition" aria-label="Default select example" name="partyArea">
 						<option selected value="전체">전체</option>
@@ -144,19 +151,11 @@
 			</div>
 			
 			<div class="col">
-				<div class="compDate form-floating mb-3">
-					<input type="text" class="travelDate form-control searchCondition" id="daterangepicker" name="daterangepicker">
-					<label for="floatingInput">날짜선택</label>
-				</div>
-			</div>
-			
-			<div class="col">
 				<div id="gender" class="form-floating">
 				  <select class="gender form-select searchCondition" id="partyGender" aria-label="Floating label select example" name="partyGender">
-				    <option selected disabled>성별</option>
 				    <option value="여자만">여자만</option>
 				    <option value="남자만">남자만</option>
-				    <option value="무관">무관</option>
+				    <option selected value="무관">무관</option>
 				  </select>
 				  <label for="floatingSelect">성별</label>
 				</div>
@@ -164,14 +163,13 @@
 			
 			<div class="col">
 				<div class="input-group" id="input">
-					<input type="text" class="searchInput1 form-control searchCondition" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchValue">
-					<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
+					<input type="text" class="searchInput1 form-control searchCondition" placeholder="제목, 내용을 검색하세요" aria-label="Recipient's username" aria-describedby="button-addon2" name="searchValue">
 				</div>
 			</div>
 			</div>
 			
 		<!-- list카드 -->
-			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 justify-content-start" style="margin-top: 20px;" id="partyRow">
 				<c:forEach items="${ pList }" var="p">
 					<div class="partyCard col" style="margin-bottom: 30px;">
 						<div class="card card-cover h-100 overflow-hidden\">
@@ -208,7 +206,7 @@
 			</div>
 			
 		<!-- 페이징 -->
-			<nav aria-label="Page navigation example">
+			<nav aria-label="Page navigation example" id="pagination">
 			  <ul class="pagination d-flex justify-content-center">
 			    <li class="page-item">
 			    	<c:url var="goBack" value="${ loc }">
@@ -239,15 +237,13 @@
 		
 		<jsp:include page="../common/footer.jsp"/>
 		<script>
+			
 			<!-- 동행 상세보기 -->
-			const partyCards = document.getElementsByClassName('card');
-			for(const partyCard of partyCards){
-				partyCard.addEventListener('click', function(){
-				var partyId = partyCard.querySelectorAll('input')[0].value;
-				var nickName = partyCard.querySelectorAll('input')[1].value;
-					location.href = '${contextPath}/selectParty.pa?pId=' + partyId + '&writer=' + nickName;
-				});
-			}
+			$(document).on('click', '.partyCard', function(){
+				var partyId = $(this).children().find('.partyId').val();
+				var nickName = $(this).children().find('.nickName').val();
+				location.href = '${contextPath}/selectParty.pa?pId=' + partyId + '&writer=' + nickName;
+			});
 			
 			<!-- 동행 글 쓰기 -->
 			const writeButton = document.getElementById('writeButton');
@@ -287,9 +283,28 @@
 						success: (data) =>{
 							console.log("성공");
 							console.log(data);
-							for(const search of data.searchList){
-								console.log(search);
-							}
+								$('#partyRow').html("");
+								for(const search of data.searchList){
+									console.log(search);
+									var h5 = '<h5 style="margin-bottom: 20px;white-space:nomal;line-height:1.2;height:2.5em;overflow:hidden">' + search.partyTitle + '</h5>';
+									var lis = '';
+									for(var i = 0; i < search.partyCourse.split('/', 4).length; i++){
+										lis += '<li style="white-space:no-wrap;height:1.2em;overflow:hidden;">' + search.partyCourse.split('/', 4)[i] + '</li>';
+									}
+									var ol = '<div><ol class="numbered">'+lis+'</ol></div>';
+									var table = '';
+									if(search.nowParticipate != search.maxParticipate){
+										table = '<table class="mb-auto"><tr><td><i class="fa-solid fa-location-dot"></i> ' + search.partyArea + '</td><td><i class="fa-solid fa-users"></i> <span>' + search.nowParticipate + '/' + search.maxParticipate + '</span></td><td><i class="fa-solid fa-heart"></i> ' + search.partyGender + '</td><td><i class="fa-regular fa-comment-dots"></i> ' + search.replyCount + '개</td></tr></table>';
+									}else if(search.nowParticipate == search.maxParticipate){
+										table = '<table class="mb-auto"><tr><td><i class="fa-solid fa-location-dot"></i> ' + search.partyArea + '<td width="100px;"><i class="fa-solid fa-users participate"></i> <span class="participate">마감</span></td><td><i class="fa-solid fa-heart"></i> ' + search.partyGender + '</td><td><i class="fa-regular fa-comment-dots"></i> ' + search.replyCount + '개</td></tr></table>';
+									}
+									var partyId = '<input type="hidden" value="' + search.partyId + '" class="partyId">';
+									var nickName = '<input type="hidden" value="' + search.nickName + '" class="nickName">';
+									
+									var searchParty = '<div class="partyCard col" style="margin-bottom: 30px;"><div class="card card-cover h-100 overflow-hidden\"><img src="${ contextPath }/resources/uploadFiles/' + search.thumbnail + '" class="card-img-top"><div class="card-body">' + h5 + ol + table + partyId + nickName + '</div></div></div>';
+									
+									$('#partyRow').append(searchParty);
+								}
 						},
 						error: (data) =>{
 							console.log("실패");

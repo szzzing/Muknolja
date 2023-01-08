@@ -41,10 +41,10 @@ public class PartyDAO {
 	}
 
 	public int updateParty(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
-		int board = sqlSession.update("partyMapper.updateBoard", map);
-		int party = sqlSession.update("partyMapper.updateParty", map);
-		int attm = sqlSession.update("partyMapper.updateAttm", map);
-		return board + party + attm;
+			int board = sqlSession.update("partyMapper.updateBoard", map);
+			int party = sqlSession.update("partyMapper.updateParty", map);
+			int attm = sqlSession.update("partyMapper.updateAttm", map);
+			return board + party + attm;
 	}
 
 	public int deleteParty(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
@@ -109,7 +109,12 @@ public class PartyDAO {
 		
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("partyMapper.searchParty", map, rowBounds);
+		ArrayList<Party> partyList = (ArrayList)sqlSession.selectList("partyMapper.searchParty", map, rowBounds);
+		for(Party p : partyList) {
+			p.setNowParticipate(sqlSession.selectOne("partyMapper.countParty", p.getPartyId()));
+			p.setReplyCount(sqlSession.selectOne("replyMapper.countReply", p.getPartyId()));
+		}
+		return partyList;
 	}
 
 	public int getSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {

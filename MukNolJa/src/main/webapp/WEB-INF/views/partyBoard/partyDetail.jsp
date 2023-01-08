@@ -91,8 +91,8 @@
 	#partyReply input[readonly]{background: white;}
 	.well{margin-top: 20px; padding-left: 60px;}
 	.well input[readonly]{background: white;}
-	.reReplyInput{color: white!important; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important; }
-	.reReplyInput:hover{color: #6BB6EC!important; border-color: lightgray; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important;}
+	.reReplyInput{color: white!important; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important; background: #6BB6EC!important;}
+	.reReplyInput:hover{color: #6BB6EC!important; border-color: lightgray; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important; background: white!important;}
 	#noParticipate{background: #FF6C6C; border-color: #FF6C6C;}
 	#noParticipate:hover{background: white; border-color: #FF6C6C; color: #FF6C6C;}
 	#boardInfo td{font-size: 12px; color: gray; text-align: center;}
@@ -420,7 +420,7 @@
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + r.nickName + '</td></tr><tr><td style="color: gray;">' + r.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + r.replyId + '" name="replyId"></div>';
 							var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고<input type="hidden" value="' + r.replyId + '" name="replyId"></button></div>';
-							var reReply = '<div><button class="buttons" type="button">답글달기</button></div>';
+// 							var reReply = '<div><button class="buttons" type="button">답글달기</button></div>';
 							var replyContent = '<div class="replyContent"><textarea readonly>' + r.replyContent +'</textarea></div>';
 							var hr = '<hr style="margin-top: 10px; border-color: gray;">';
 							var realDeleteRepId = '<input type="hidden" name="realDeleteRepId">';
@@ -430,6 +430,14 @@
 							}else{
 								replyProfile = '<div class="replyProfile">' + profileImg + profileInfo + reportR + '</div>';
 							}
+							var reInput = '';
+							if('${loginUser}' == null){
+								reInput = '<div class="input-group mb-3"><input type="text" class="form-control" placeholder="로그인 후 이용해주세요" aria-describedby="button-addon2" readonly><button class="btn btn-outline-secondary" type="button" style="border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important;" disabled><i class="bi bi-send"></i></button><input type="hidden" value="${ r.replyId }" class="replyId"></div>';
+							}else{
+								reInput = '<div class="input-group mb-3"><input type="text" class="form-control reReplyContent" placeholder="댓글을 입력해주세요" aria-describedby="button-addon2"><button class="btn btn-outline-secondary reReplyInput" type="button"><i class="bi bi-send"></i></button><input type="hidden" value="' + r.replyId + '" class="replyId"></div>';
+							}
+							var reply2 = '<div class="reReply2"></div>';
+							var reReply = '<div class="reReply"><button class="buttons reReplyButton" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">답글달기</button><div class="collapse" id="collapseExample"><div class="well">' + reInput + reply2 + '</div></div></div>';
 							document.getElementById('reply').innerHTML += (replyProfile + replyContent + reReply + hr) + realDeleteRepId;
 						}
 						
@@ -456,6 +464,7 @@
 						console.log($(this).parent().find('.reReply2'));
 						$(this).parent().find('.reReply2').html("");
 						for(const rr of data){
+							console.log(rr);
 							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
