@@ -34,7 +34,7 @@
 	<select id="selectReply" resultMap="replyResultMap">
 		select *
 		from reply
-			 join member on(reply_writer = id)
+			 join member on(reply_writer = id) join re_img using (id) join ATTACHED_FILE using (FILE_ID)
 		where ref_board_id=#{refBoardId}
 			  and reply_status='Y'
 			  and ref_reply_id=0

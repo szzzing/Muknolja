@@ -64,12 +64,14 @@ public class PartyController {
 		int result = pService.countReply(pId);
 		int partyCount = pService.countParty(pId);
 		int checkParty = 0;
+		int checkLike = 0;
 		
 		if(m != null) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("boardId", pId);
 			map.put("memberId", ((Member)session.getAttribute("loginUser")).getId());
 			checkParty = pService.checkParty(map);
+			checkLike = pService.checkLike(map);
 		}
 		
 		if(p != null) {
@@ -78,6 +80,7 @@ public class PartyController {
 			model.addAttribute("replyCount", result);
 			model.addAttribute("partyCount", partyCount);
 			model.addAttribute("checkParty", checkParty);
+			model.addAttribute("checkLike", checkLike);
 			return "partyDetail";
 		}else {
 			throw new CommonException("동행 상세보기 조회에 실패하였습니다.");
@@ -90,44 +93,35 @@ public class PartyController {
 	}
 	
 	@RequestMapping("searchParty.pa")
-	public void searchParty(HttpServletResponse response, @RequestParam(value="page", required=false) Integer page, @RequestParam("searchValue") String searchValue, @RequestParam("partyArea") String partyArea, @RequestParam("partyGender") String partyGender, @RequestParam("partyStartDate") String partyStartDate, @RequestParam("partyEndDate") String partyEndDate) {
+	public String searchParty(HttpServletResponse response, @RequestParam(value="page", required=false) Integer page, @RequestParam("searchValue") String searchValue, @RequestParam("partyArea") String partyArea, @RequestParam("partyGender") String partyGender, @RequestParam("partyStartDate") String partyStartDate, @RequestParam("partyEndDate") String partyEndDate, Model model) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		System.out.println(partyStartDate);
-		System.out.println(partyEndDate);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("searchValue", searchValue);
 		map.put("partyArea", partyArea);
 		map.put("partyStartDate", partyStartDate);
 		map.put("partyEndDate", partyEndDate);
 		map.put("partyGender", partyGender);
-		System.out.println("-----------");
-		System.out.println(map);
-		System.out.println("-----------");
 		int listCount = pService.getSearchListCount(map);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 8);
 		
 		ArrayList<Party> searchList = pService.searchParty(map, pi);
-		
-		HashMap<String, Object> map2 = new HashMap<String, Object>();
-		map2.put("searchList", searchList);
-		map2.put("pi", pi);
-		System.out.println(map2);
-		
-		response.setContentType("application/json; charset=UTF-8");
-		GsonBuilder gb = new GsonBuilder();
-		GsonBuilder gb2 = gb.setDateFormat("yyyy.MM.dd");
-		Gson gson = gb2.create();
-		try {
-			gson.toJson(map2, response.getWriter());
-		} catch (JsonIOException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(searchList != null) {
+			model.addAttribute("pList", searchList);
+			model.addAttribute("pi", pi);
+			model.addAttribute("searchValue", searchValue);
+			model.addAttribute("partyArea", partyArea);
+			model.addAttribute("partyStartDate", partyStartDate);
+			model.addAttribute("partyEndDate", partyEndDate);
+			model.addAttribute("partyGender", partyGender);
+			return "partyList";
+		}else {
+			throw new CommonException("동행 검색에 실패하였습니다.");
 		}
+		
 	}
 	
 	@RequestMapping("insertParty.pa")
@@ -169,6 +163,7 @@ public class PartyController {
 	@RequestMapping("updateParty.pa")
 	public String updateParty(@ModelAttribute Party p, @ModelAttribute AttachedFile af, @RequestParam(value="firstFile", required=false) MultipartFile firstFile, HttpSession session, HttpServletRequest request, Model model) {
 		
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		if(!firstFile.getOriginalFilename().equals("")) {
 			String[] returnArr = AttachedFile.saveFile(firstFile, request);
 			
@@ -177,14 +172,14 @@ public class PartyController {
 				af.setFileModifyName(returnArr[1]);
 				af.setFileLink(returnArr[0]);
 			}
+			map.put("p", p);
+			map.put("af", af);
+		}else {
+			map.put("p", p);
 		}
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("p", p);
-		map.put("af", af);
-		
+	
 		int result = pService.updateParty(map);
-		
+	
 		if(result > 1) {
 			model.addAttribute("pId", p.getPartyId());
 			model.addAttribute("writer", ((Member)session.getAttribute("loginUser")).getNickName());
@@ -324,6 +319,37 @@ public class PartyController {
 	@ResponseBody
 	public String insertReport(@ModelAttribute Report rp) {
 		int result = pService.insertReport(rp);
+		return result + "";
+	}
+	
+	@RequestMapping(value="checkLike.pa", produces="application/text;charset=UTF-8")
+	@ResponseBody
+	public String checkLike(@RequestParam("id") String id, @RequestParam("boardId") int boardId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("memberId", id);
+		map.put("boardId", boardId);
+		
+		int checkLike = pService.checkLike(map);
+		return checkLike + "";
+	}
+	
+	@RequestMapping(value="insertLike.pa", produces="application/text;charset=UTF-8")
+	@ResponseBody
+	public String insertLike(@RequestParam("id") String id, @RequestParam("boardId") int boardId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("boardId", boardId);
+		int result = pService.insertLike(map);
+		return result + "";
+	}
+	
+	@RequestMapping(value="deleteLike.pa", produces="application/text;charset=UTF-8")
+	@ResponseBody
+	public String deleteLike(@RequestParam("id") String id, @RequestParam("boardId") int boardId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("boardId", boardId);
+		int result = pService.deleteLike(map);
 		return result + "";
 	}
 	

@@ -100,6 +100,12 @@
 	#boardInfo button:hover{background: white !important; border: none; color: tomato!important; font-weight: 700;}
 	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius: 8px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
+	.likeButton{background: white!important; font-size: 30px!important; border-color: white!important; color: red!important; outline: none;}
+	.likeButton:focus{outline: none!important; border: none;}
+	.likeButton:hover{background: white!important; font-size: 30px; border-color: white!important; color: red!important;}
+	.unLikeButton{background: white!important; font-size: 30px!important; border-color: white!important; color: red!important; outline: none;}
+	.unLikeButton:focus{outline: none!important; border: none;}
+	.unLikeButton:hover{background: white!important; font-size: 30px; border-color: white!important; color: red!important;}
 </style>
 </head>
 <body>
@@ -152,7 +158,7 @@
 							</c:if>
 						</c:if>
 						<c:if test="${ loginUser.id == p.partyWriter }">
-							<button type="button" class="btn btn-primary btn-lg" id="participate" style="display: none;" disabled>동행참여하기</button>
+							<button type="button" class="buttons btn-primary btn-lg" id="participate" style="display: none;" disabled>동행참여하기</button>
 						</c:if>
 					</div>
 				</div>
@@ -165,8 +171,24 @@
 			
 			<div class="col">
 				<div id="profile">
-					<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
+					<c:if test="${ p.profileImg != null }">
+						<img src="${contextPath}/resources/uploadFiles/${ p.profileImg }">
+					</c:if>
+					<c:if test="${ p.profileImg == null }">
+						<img src="${contextPath}/resources/img/no.png">
+					</c:if>
  					<label style="font-weight: bold;">${ p.nickName }</label>
+ 					<c:if test="${ loginUser.id != p.partyWriter}">
+ 						<c:if test="${ checkLike == 0 }">
+ 							<div id="like" style="float: right;"><button class="buttons likeButton" type="button"><i class="fa-regular fa-heart"></i></button></div>
+ 						</c:if>
+ 						<c:if test="${ checkLike == 1 }">
+ 							<div id="like" style="float: right;"><button class="buttons unLikeButton" type="button"><i class="fa-solid fa-heart"></i></button></div>
+ 						</c:if>
+ 					</c:if>
+ 					<c:if test="${ loginUser.id == p.partyWriter }">
+ 						<div id="like" style="float: right;"><button class="buttons likeButton" type="button" style="display: none;" disabled><i class="fa-regular fa-heart"></i></button></div>
+ 					</c:if>
 				</div>
 				<div id="location2">
 					 <ol class="numbered">
@@ -216,8 +238,6 @@
 				<table>
 					<tr>
 						<td width=" 75px;" style="text-align: left">${ p.createDate }</td>
-						<td>·</td>
-						<td width=" 60px;">조회수 <span>0</span></td>
 						<td>·</td>
 						<td width=" 65px;"><button id="reportParty" type="button">신고하기</button></td>
 					</tr>
@@ -309,7 +329,12 @@
 			<div id="reply" style="margin-top: 30px;">
 				<c:forEach items="${ rList }" var="r" varStatus="status">
 					<div class="replyProfile">
-						<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
+						<c:if test="${ r.fileModifyName != null }">
+							<img src="${contextPath}/resources/uploadFiles/${r.fileModifyName}">
+						</c:if>
+						<c:if test="${ r.fileModifyName == null }">
+							<img src="${contextPath}/resources/img/no.png">
+						</c:if>
 						<table style="float:left; margin-left: 10px;">
 							<tr>
 								<td>${ r.nickName }</td>
@@ -416,7 +441,12 @@
 						document.getElementById('reply').innerHTML = '';
 						
 						for(const r of data){
-							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">';
+							var profileImg = '';
+							if(r.fileModifyName != null){
+								profileImg = '<img src="${contextPath}/resources/uploadFiles/' + r.fileModifyName + '">';
+							}else{
+								profileImg = '<img src="${contextPath}/resources/img/no.png">';
+							}
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + r.nickName + '</td></tr><tr><td style="color: gray;">' + r.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + r.replyId + '" name="replyId"></div>';
 							var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고<input type="hidden" value="' + r.replyId + '" name="replyId"></button></div>';
@@ -465,7 +495,12 @@
 						$(this).parent().find('.reReply2').html("");
 						for(const rr of data){
 							console.log(rr);
-							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
+							var profileImg ='';
+							if(rr.fileModifyName != null){
+								profileImg = '<img src="${contextPath}/resources/uploadFiles/' + rr.fileModifyName + '">';
+							}else{
+								profileImg = '<img src="${contextPath}/resources/img/no.png">';
+							}
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
 							var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고</button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
@@ -500,7 +535,12 @@
 						$(this).parent().parent().find('.reReply2').html("");
 					
 						for(const rr of data){
-							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
+							var profileImg ='';
+							if(rr.fileModifyName != null){
+								profileImg = '<img src="${contextPath}/resources/uploadFiles/' + rr.fileModifyName + '">';
+							}else{
+								profileImg = '<img src="${contextPath}/resources/img/no.png">';
+							}
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
 							var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고</button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';
@@ -550,6 +590,17 @@
 						this.setAttribute('disabled', true);
 						alert('로그인 후 참여해주세요.');
 						location.href='${contextPath}/loginView.me';
+					}
+					if('${p.partyGender}' == '여자만'){
+						if('${loginUser.gender}' == 'M'){
+							this.setAttribute('disabled', true);
+							alert('여성만 참여할 수 있습니다.');
+						}
+					}else if('${p.partyGender}' == '남자만'){
+						if('${loginUser.gender}' == 'F'){
+							this.setAttribute('disabled', true);
+							alert('남성만 참여할 수 있습니다.');
+						}
 					}
 				});
 			}
@@ -702,6 +753,57 @@
 						}
 					});
 				}
+			});
+			
+			$(document).on('click', '.likeButton', function(){
+				if('${loginUser.id}' == ''){
+					$(this).attr('disabled', true);
+					alert('로그인 후 찜해주세요.');
+					location.href='${contextPath}/loginView.me';
+				}
+				
+				$.ajax({
+					url: '${contextPath}/checkLike.pa',
+					data: {id: '${loginUser.id}', boardId: ${ p.partyId }},
+					success: (data)=>{
+						console.log(data);
+						$('#like').html("");
+						if(data == 0){
+							var likes = '<button class="buttons unLikeButton" type="button"><i class="fa-solid fa-heart"></i></button>';
+							console.log($(this).parent());
+							$('#like').append(likes);
+							$.ajax({
+								url: '${contextPath}/insertLike.pa',
+								data: {id: '${loginUser.id}', boardId: ${ p.partyId }},
+								success: (data)=>{
+									console.log(data);
+								},
+								error: (data)=>{
+									console.log(data);
+								}
+							});
+						}
+					},
+					error: (data)=>{
+						console.log(data);
+					}
+				});
+			});
+			
+			$(document).on('click', '.unLikeButton', function(){
+				$.ajax({
+					url: '${contextPath}/deleteLike.pa',
+					data: {id: '${loginUser.id}', boardId: ${ p.partyId }},
+					success: (data)=>{
+						console.log(data);
+						$('#like').html("");
+						var unLike = '<button class="buttons likeButton" type="button"><i class="fa-regular fa-heart"></i></button>';
+						$('#like').append(unLike);
+					},
+					error: (data)=>{
+						console.log(data);
+					}
+				});
 			});
 		}
 		

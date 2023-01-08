@@ -124,4 +124,19 @@ public class PartyServiceImpl implements PartyService{
 		return pDAO.getSearchListCount(sqlSession, map);
 	}
 
+	@Override
+	public int checkLike(HashMap<String, Object> map) {
+		return pDAO.checkLike(sqlSession, map);
+	}
+
+	@Override
+	public int insertLike(HashMap<String, Object> map) {
+		return pDAO.insertLike(sqlSession, map);
+	}
+
+	@Override
+	public int deleteLike(HashMap<String, Object> map) {
+		return pDAO.deleteLike(sqlSession, map);
+	}
+
 }

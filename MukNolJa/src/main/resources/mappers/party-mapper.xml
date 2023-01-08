@@ -66,6 +66,15 @@
         where board_id=#{pId}
 	</select>
 	
+	<select id="selectProfileImg" resultType="string">
+		select file_modify_name
+		from board
+			join member on(board_writer = id)
+		    join re_img using(id)
+		    join attached_file using(file_id)
+		        where board_id=#{pId}
+	</select>
+	
 	<!-- 동행 검색 -->
 	<select id="searchParty" resultMap="partyResultSet">
 		select *
@@ -103,17 +112,17 @@
 			 join board_img using(board_id)
              join attached_file using(file_id)
        	where board_status='Y'
-       	<if test='partyArea != null'>
+       	<if test='partyArea!="" and !partyArea.equals("") and !partyArea.equals("전체")'>
        		and board_area=#{partyArea}
        	</if>
-       	<if test='partyGender != null'>
+       	<if test='partyGender!="" and !partyGender.equals("") and !partyGender.equals("무관")'>
        		and party_gender=#{partyGender}
        	</if>
        	<if test='partyStartDate != null and !partyStartDate.equals("")'>
-       		and party_startdate <![CDATA[<]]> #{partyStartDate}
+       		and party_startdate <![CDATA[>=]]> #{partyStartDate}
        	</if>
        	<if test='partyEndDate != null and !partyEndDate.equals("")'>
-       		and party_enddate <![CDATA[>]]> #{partyEndDate}
+       		and party_enddate <![CDATA[<=]]> #{partyEndDate}
        	</if>
        	<if test='searchValue != null and !searchValue.equals("")'>
        		and (board_title like '%' || #{searchValue} || '%'
@@ -203,4 +212,21 @@
 	<insert id="insertReport">
 		insert into report values(seq_reportid.nextval, #{memberId}, #{targetId}, #{reportClassification}, #{reportContent}, sysdate, default, #{reportTitle}, default)
 	</insert>
+	
+	<!-- 찜하기확인 -->
+	<select id="checkLike" resultType="_int">
+		select count(*)
+		from likes
+		where id=#{memberId}
+			  and board_id=#{boardId}
+	</select>
+	
+	<insert id="insertLike">
+		insert into likes values(#{id}, #{boardId})
+	</insert>
+	
+	<delete id="deleteLike">
+		delete from likes
+		where id=#{id} and board_id=#{boardId}
+	</delete>
 </mapper>
