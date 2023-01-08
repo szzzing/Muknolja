@@ -91,8 +91,8 @@
 	#partyReply input[readonly]{background: white;}
 	.well{margin-top: 20px; padding-left: 60px;}
 	.well input[readonly]{background: white;}
-	.reReplyInput{color: white!important; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important; }
-	.reReplyInput:hover{color: #6BB6EC!important; border-color: lightgray; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important;}
+	.reReplyInput{color: white!important; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important; background: #6BB6EC!important;}
+	.reReplyInput:hover{color: #6BB6EC!important; border-color: lightgray; border-top-right-radius: 5px!important; border-bottom-right-radius: 5px!important; background: white!important;}
 	#noParticipate{background: #FF6C6C; border-color: #FF6C6C;}
 	#noParticipate:hover{background: white; border-color: #FF6C6C; color: #FF6C6C;}
 	#boardInfo td{font-size: 12px; color: gray; text-align: center;}
@@ -456,6 +456,7 @@
 						console.log($(this).parent().find('.reReply2'));
 						$(this).parent().find('.reReply2').html("");
 						for(const rr of data){
+							console.log(rr);
 							var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjA4MjlfMjA1%2FMDAxNjYxNzY3NjYzMTAx.E20lmjuZ7eByN7-uB98mkxBtD6GiIZOcZG5lio7PiM4g.znLD9iljAq9HiqM0yOiwmNilcIvQUGFvzPr81S5Shegg.JPEG.lrlsco2%2FIMG_6631.JPG&type=sc960_832">';
 							var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + rr.nickName + '</td></tr><tr><td style="color: gray;">' + rr.replyModifyDate + '</td></tr></table>';
 							var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + rr.replyId + '" name="replyId"></div>';

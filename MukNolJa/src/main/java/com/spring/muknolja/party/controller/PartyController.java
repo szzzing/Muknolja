@@ -185,7 +185,7 @@ public class PartyController {
 		
 		int result = pService.updateParty(map);
 		
-		if(result > 2) {
+		if(result > 1) {
 			model.addAttribute("pId", p.getPartyId());
 			model.addAttribute("writer", ((Member)session.getAttribute("loginUser")).getNickName());
 			return "redirect:selectParty.pa";

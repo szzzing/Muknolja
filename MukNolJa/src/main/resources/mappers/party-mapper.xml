@@ -78,7 +78,7 @@
        	<if test='partyArea!="" and !partyArea.equals("") and !partyArea.equals("전체")'>
        		and board_area=#{partyArea}
        	</if>
-       	<if test='partyGender!="" and !partyGender.equals("")'>
+       	<if test='partyGender!="" and !partyGender.equals("") and !partyGender.equals("무관")'>
        		and party_gender=#{partyGender}
        	</if>
        	<if test='partyStartDate != null and !partyStartDate.equals("")'>

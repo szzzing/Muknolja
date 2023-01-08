@@ -300,6 +300,7 @@
 		    		thumbnail.src = e.target.result;
 		    	};
 		    	reader.readAsDataURL(myFile.files[0]);
+		    	console.log(myFile.value);
 		    });
 		    
  		<!-- 코스검색API -->
