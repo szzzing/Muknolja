@@ -167,7 +167,7 @@ public class MemberController {
 			
 		}
 		@RequestMapping("enrollkko.me")
-		public String enrollKko(@ModelAttribute Member m, @RequestParam("gender")String gender,@RequestParam("id")String id) {
+		public String enrollKko(@ModelAttribute Member m,Model model, @RequestParam("gender")String gender,@RequestParam("id")String id) {
 			
 			if(gender.trim().equals("성별")) {
 				m.setGender(null);	
@@ -183,6 +183,8 @@ public class MemberController {
 			int result = mService.insertMember(m);
 			
 			if (result > 0) {
+				int loginYn = 1;
+				model.addAttribute("loginYn", loginYn);
 				return "login";
 			} else {
 				return "home";
