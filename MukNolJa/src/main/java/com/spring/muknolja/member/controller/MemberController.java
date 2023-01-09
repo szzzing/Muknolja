@@ -411,8 +411,10 @@ public class MemberController {
 					
 					if(type.equals("B")) {
 						report.setReportClassification("게시글");
-					} else {
+					} else if(type.equals("R")) {
 						report.setReportClassification("댓글");
+					} else {
+						report.setReportClassification("호텔리뷰");
 					}
 				}
 			}

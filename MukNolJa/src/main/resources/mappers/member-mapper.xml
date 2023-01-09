@@ -574,6 +574,7 @@
 		select *
 		from report
 		left join REPLY on(TARGET_ID = REPLY_ID)
+		left join REVIEW on(TARGET_ID = REVIEW_ID)
 		<if test="search != null">
 			where REPORT_TITLE LIKE '%'||#{search}||'%'
 		</if>
@@ -591,6 +592,7 @@
 		<result column="REPORT_TITLE" property="reportTitle"/>
 		<result column="REPORT_REPLY" property="reportReply"/>
 		<result column="REPLY_CONTENT" property="replyContent"/>
+		<result column="REVIEW_CONTENT" property="reviewContent"/>
 	</resultMap>
 	
 	<select id="selectBoardType" resultType="String">

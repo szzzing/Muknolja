@@ -243,6 +243,7 @@
 		              <input type="hidden" value="${ b.reportContent }">
 		              <input type="hidden" value="${ b.reportReply }">
 		              <input type="hidden" value="${ b.replyContent }">
+		              <input type="hidden" value="${ b.reviewContent }">
 			          <td width="100"><button class="mukButton reportDetailBtn">상세</button></td>
 		            </tr>
 	            </c:forEach>
@@ -471,6 +472,7 @@
            			const content = tr.querySelectorAll('input[type="hidden"]')[1].value;
            			const reply = tr.querySelectorAll('input[type="hidden"]')[2].value;
            			const replyContent = tr.querySelectorAll('input[type="hidden"]')[3].value;
+           			const reviewContent = tr.querySelectorAll('input[type="hidden"]')[4].value;
            			const title = tr.querySelectorAll('td')[1].innerText;
            			const writer = tr.querySelectorAll('td')[2].innerText;
            			const rId = tr.querySelectorAll('td')[0].innerText;
@@ -480,9 +482,13 @@
            			r[0].value = title;
            			r[1].value = writer;
            			r[2].value = content;
-           			r[3].value = replyContent;
-           			
            			if(type == '댓글'){
+           				r[3].value = replyContent;
+           			} else if(type == '호텔리뷰'){
+           				r[3].value = reviewContent;
+           			}
+           			
+           			if(type == '댓글' || type == '호텔리뷰'){
            				document.getElementById('replyReportContent').style.display = 'block';
            			} else {
            				document.getElementById('replyReportContent').style.display = 'none';
@@ -491,7 +497,11 @@
            			Modal('report_modal');
            			
            			document.getElementById('reportBoardDetail_btn').addEventListener('click', function(){
-    	           		location.href = 'reportDetail.me?id=' + rId + '&type=' + type;
+           				if(type == '호텔리뷰'){
+           					location.href = 'hotelDetail.ho?hotelId=' + rId;
+           				} else{
+           					location.href = 'reportDetail.me?id=' + rId + '&type=' + type;
+           				}
            			});
            			
            			document.getElementById('reply_btn').addEventListener('click', function(){
