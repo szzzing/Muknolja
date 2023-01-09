@@ -154,6 +154,7 @@
 			div.prop("style").removeProperty("display");
 			div.addClass("newImg");
 			$("#roomImgList").append(div);
+			$(this).val("");
 			$.viewInsertImgButton();
 		});
 	    

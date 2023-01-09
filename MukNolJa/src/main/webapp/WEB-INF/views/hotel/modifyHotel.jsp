@@ -218,6 +218,8 @@
 			div.prop("style").removeProperty("display");
 			div.addClass("newImg");
 			$("#hotelImgList").append(div);
+			$(this).val("");
+			
 			$.viewInsertImgButton();
 		});
 	    
