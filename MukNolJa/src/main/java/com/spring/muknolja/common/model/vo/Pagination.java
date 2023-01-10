@@ -12,7 +12,6 @@ public class Pagination {
 		maxPage = (int) Math.ceil((double) listCount / boardLimit);
 		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
 		endPage = startPage + pageLimit - 1;
-		System.out.println("확인"+maxPage);
 		if (maxPage < endPage) {
 			endPage = maxPage;
 		}
