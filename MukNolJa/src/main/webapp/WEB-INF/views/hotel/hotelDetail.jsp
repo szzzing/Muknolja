@@ -73,7 +73,7 @@
 	.mukCategory {color:#6BB6EC !important; border-bottom:3px solid #6BB6EC; font-weight:bold;}
 	.mukDisplayNone {display:none !important;}
 	.mukRound {border-radius:10px;}
-	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px; border-radius:20px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
+	.mukButton {transition: all 0.3s; background: #6BB6EC; color:white; height:40px !important; border-radius:20px; padding:0px 10px; border: 1px solid #6BB6EC; cursor:pointer;}
 	.mukButton:hover {background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.disabledMukButton {height:40px; border-radius: 20px; padding:0px 10px; cursor:pointer; background: white; color: #6BB6EC; border: 1px solid #6BB6EC;}
 	.myHover:hover {cursor: pointer; background-color: rgba(205, 92, 92, 0.1);}
