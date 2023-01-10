@@ -37,17 +37,17 @@ public class RegisterMail implements MailServiceInter {
 		msgg += "<h1> </h1>";
 		msgg += "<h1> MUKNOLJA</h1>";
 		msgg += "<br>";
-		msgg += "<p>�Ʒ� �ڵ带 ȸ������ â���� ���ư� �Է����ּ���<p>";
+		msgg += "<p>먹놀자에 오신걸 환영합니다<p>";
 		msgg += "<br>";
 		msgg += "<div align='center' style='border:1px solid black; font-family:verdana';>";
-		msgg += "<h3 style='color:blue;'>ȸ������ ���� �ڵ��Դϴ�.</h3>";
+		msgg += "<h3 style='color:blue;'>먹놀자 인증번호</h3>";
 		msgg += "<div style='font-size:130%'>";
 		msgg += "CODE : <strong>";
 		msgg += ePw + "</strong><div><br/> "; // ���Ͽ� ������ȣ �ֱ�
 		msgg += "</div>";
 		message.setText(msgg, "utf-8", "html");// ����, charset Ÿ��, subtype
 		// ������ ����� �̸��� �ּ�, ������ ��� �̸�
-		message.setFrom(new InternetAddress("rlwo5454@naver.com", "SOLODENT_Admin"));// ������ ���
+		message.setFrom(new InternetAddress("rlwo5454@naver.com", "MUKNOLJA_Admin"));// ������ ���
 
 		return message;
 	}
@@ -59,7 +59,7 @@ public class RegisterMail implements MailServiceInter {
 		Random rnd = new Random();
 
 		for (int i = 0; i < 8; i++) { // �����ڵ� 8�ڸ�
-			int index = rnd.nextInt(3); // 0~2 ���� ����, rnd ���� ���� �Ʒ� switch ���� �����
+			int index = rnd.nextInt(5); // 
 
 			switch (index) {
 			case 0:
@@ -72,6 +72,14 @@ public class RegisterMail implements MailServiceInter {
 				break;
 			case 2:
 				key.append("c");
+				// 0~9
+				break;
+			case 3:
+				key.append("d");
+				// 0~9
+				break;
+			case 4:
+				key.append("e");
 				// 0~9
 				break;
 			}

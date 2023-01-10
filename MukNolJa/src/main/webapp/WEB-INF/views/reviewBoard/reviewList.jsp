@@ -227,10 +227,10 @@
 		 <div class="row justify-content-center " style="  ">
             <div class="col" style="padding-left:0px; padding-right:0px; display:inLine-block"  >
 	
-		
+		<input type="hidden" name="search" id="searchBar" >
 		
 		<div class="input-group" id="input" style="">
-			<input type="text" style="" class="form-control" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
+			<input type="text" style="" class="form-control search" placeholder="검색하기" aria-label="Recipient's username" aria-describedby="button-addon2">
 			<button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
 			<c:if test="${ loginUser != null }">
 			<button class="btn btn-outline-secondary" type="button" id="button-addon2" style="width:200px; font-weight:600" onclick="location.href='${contextPath}/reviewWrite.re'">글쓰기</button>
@@ -312,6 +312,18 @@
 		</div>
 		</div>
 		<script>
+		
+		$(document).ready(function(){
+			$('.search').keyup(function(){
+				var search = $('.search').val();
+				console.log(search);
+				
+				const searchBar =  $('#searchBar');
+				searchBar.val(search);
+				console.log(searchBar.val());
+				
+			});
+		});
 		window.onload = () => {
 			$.ajax({
 	    		url: 'selectAd.me',

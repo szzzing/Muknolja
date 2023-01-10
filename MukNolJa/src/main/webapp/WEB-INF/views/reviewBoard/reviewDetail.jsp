@@ -89,7 +89,7 @@
 	     			
 	     			<div id ="album">
      				<div style="width: 100%; height:100%;   float:left;  font-size: 40px; font-weight:1000; background: white; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); "><div  style="color: white; margin:15px; background: radial-gradient(ellipse at bottom, #C0DEFF 0%, #89C4E1 100%);  ">${board.boardTitle }</div><br>
-     				<div style="text-align:right;font-size: 20px; margin-right:7%">닉네임: ${ board.boardWriter }</div>
+     				<div style="text-align:right;font-size: 20px; margin-right:7%">닉네임: ${ board.boardWriter } <c:if test="${ board.boardWriter eq loginUser.id}"> <i class="bi bi-trash3 trash"  data-bs-toggle="modal" data-bs-target="#exampleModal1"></i></c:if></div>
      					<div style="padding-left: 10%; align-items:center; text-align: left; float:left; margin-top: 50px;">
      						
      						<div style="margin-left:3% ;text-align:left">순서</div>
@@ -200,6 +200,32 @@
 								    </div>
 								  </div>
 								</div>
+								
+								
+								<!-- Modal -->
+								<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h1 class="modal-title fs-5 title realsin" id="exampleModalLabel" >삭제</h1>
+								      
+								      </div>
+								   		  <input type="text" value="정말로 삭제하시겠습니가?" id="mtop" class="modal-body mtop" style="text-align:left; float:left; border:none;height:50px;font-size:30px;border-bottom:1px solid #DEE2E6">
+								       
+							
+								    
+								       
+								      <div class="modal-footer foot">
+								      <input type="text" style="display:none" id="sinContentId" class="sinContentId">
+								       <input type="text" style="display:none" id="sinContentWriter" class="#sinContentId">
+								   
+								        <button type="button" class="btn btn-secondary" id="delBoard" data-bs-dismiss="modal">삭제</button>
+								        <button type="button" class="btn btn-primary" id="dro" data-bs-dismiss="modal">닫기</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								
 				 	
 				 </div>
 				 </div>
@@ -215,6 +241,25 @@
 	<script src="${contextPath }/resources/turn.js"></script>
 	
 	<script>
+	
+	$('#delBoard').click(function(){
+		var boardId = ${ board.boardId }
+		console.log( boardId );
+		$.ajax({
+			 url: "${ contextPath}/deleteBoard.re",
+				
+				data: { boardId : boardId },
+				success: (data)=>{
+					location.href="${contextPath}/reviewList.re"
+				},
+				error: (data)=>{
+					
+				}
+				
+			
+		});
+		
+	});
 	$(document).ready(function(){
 	$('.rereply').hide();
 	$('#album').turn({gradients: true, acceleration: true});
@@ -270,25 +315,99 @@ var user = $('#iddd').text();
 								 if( user == writer){
 									 del = '<button type="button"  style="border:none; float:right;background:none" class="delete">삭제</button>'
 								 }
-								 var all = '<div><div class="selectRe">'+
-									'<div style="margin-top:10px; display:flex; border-bottom: 1px solid #F2F2F2" id="per">'+
-									'<div class="col-2 col-lg-1 sel" style="height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+img+'" ></div>'+
-									 	'<div class="replyId" style="display:none">'+id+'</div>'+
-									 	'<div class="replyContent col-8 col-lg-7" style="height:90px; padding-left:10px;"><div class="sele">'+
-									 	'<div style="width:100%; height:60px;display:flex;" class="writer">'+writer+'님<div style="margin-left:2%">'+content+'</div></div></div>'+
-									 	'<div>'+date+'<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button></div></div>'+
-									 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal">신고</button><br><br>'+del+'</div>'+
-									 	'</div><div class= "ref"></div></div>'+
-									 '<div class="rereply" style="display: flex">'+
-									 '<div class="col-2 col-lg-1"></div>'+
-									 '<div class="col-8 col-lg-9"><textarea class="reText" style="width:100%; height:100%; border:none"></textarea></div>'+
-									 '<div class="col" style=" padding-left:2%"><button class="replyBu" type="button" style="width:100%; height:100%; border:none; background: white;">댓글달기</button></div></div></div>'
+								 var all = 			
+										'<div><div class="selectRe">'+
+										'<div style="margin-top:10px; display:flex; border-bottom: 1px solid #F2F2F2" id="per">'+
+											'<div class="col-2 col-lg-1 sel" style="height:60px; " ><img alt="1" width=100%; height=100%; src="${contextPath }/resources/uploadFiles/'+img+'" ></div>'+
+											 	'<div class="replyId" style="display:none">'+id+'</div>'+
+											 	'<div class="replyContent col-8 col-lg-7" style="height:90px; padding-left:10px;"><div class="sele">'+
+											 	'<div style="width:100%; height:60px;display:flex;" class="writer">'+writer+'님<div style="margin-left:2%">'+content+'</div></div></div>'+
+											 	'<div>'+date+'<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button></div></div>'+
+											 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal1">신고</button><br><br>'+del+
+											 	'<br></div>'+
+											 	'</div><div class= "ref"></div></div>'+
+											 '<div class="rereply" style="display: flex">'+
+											 
+											 '<div class="col"><textarea class="reText" style="width:100%; height:100%; border:none"></textarea></div>'+
+											'<div class="col" style=" padding-left:2%"><button class="replyBu" type="button" style="width:100%; height:100%; border:none; background: white;">댓글달기</button></div>'+
+											 '</div></div>'
+									 
 									 
 									document.getElementById('here').innerHTML += all;
 							 
 										$('.rereply').hide();
 										$('#replyContent').val("");
 							 }
+							 $(".delete").click(function(){
+									var replyId1 = $(this).parent().parent().parent().find(".replyId").text();
+									$.ajax({
+										 url: "${ contextPath}/delete.re",
+										 data: { replyId : replyId1 },
+											success: (data)=>{
+												console.log("성공");
+												$.ajax({
+													 url: "${ contextPath}/selectBoardd.re",
+													 data: { 
+														 boardId: ${ board.boardId}
+
+													 },
+													 success: (data)=>{
+														 var list = data[1];
+														 console.log(data);
+														 var list = new Array();
+														 list = data.reply
+														 $('.here').empty();
+														 console.log(user);
+														 for(const reply of list){
+															 
+															 var name = reply.replyWriter;
+															 var id = reply.replyId;
+															 var writer = reply.replyWriter;
+															 var date = reply.replyModifyDate;
+															 var content = reply.replyContent;
+															 var img = reply.fileModifyName;
+															 
+															 
+															 var del = '';
+															 if( user == writer){
+																 del = '<button type="button"  style="border:none; float:right;background:none" class="delete">삭제</button>'
+															 }
+															 var all = 			
+																	'<div><div class="selectRe">'+
+																	'<div style="margin-top:10px; display:flex; border-bottom: 1px solid #F2F2F2" id="per">'+
+																		'<div class="col-2 col-lg-1 sel" style="height:60px; " ><img alt="1" width=100%; height=100%; src="${contextPath }/resources/uploadFiles/'+img+'" ></div>'+
+																		 	'<div class="replyId" style="display:none">'+id+'</div>'+
+																		 	'<div class="replyContent col-8 col-lg-7" style="height:90px; padding-left:10px;"><div class="sele">'+
+																		 	'<div style="width:100%; height:60px;display:flex;" class="writer">'+writer+'님<div style="margin-left:2%">'+content+'</div></div></div>'+
+																		 	'<div>'+date+'<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button></div></div>'+
+																		 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none"  data-bs-toggle="modal" data-bs-target="#exampleModal">신고</button><br><br>'+del+
+																		 	'<br></div>'+
+																		 	'</div><div class= "ref"></div></div>'+
+																		 '<div class="rereply" style="display: flex">'+
+																		 
+																		 '<div class="col"><textarea class="reText" style="width:100%; height:100%; border:none"></textarea></div>'+
+																		'<div class="col" style=" padding-left:2%"><button class="replyBu" type="button" style="width:100%; height:100%; border:none; background: white;">댓글달기</button></div>'+
+																		 '</div></div>'
+																 
+																 
+																document.getElementById('here').innerHTML += all;
+														 
+																	$('.rereply').hide();
+																	$('#replyContent').val("");
+														 }
+													 },
+														error: (data)=>{
+															
+														}
+													});
+											},
+											error: (data)=>{
+												
+											}
+										});
+								
+									console.log(replyId1);
+								});
 							 $('.refReply').click(function(){
 									
 									console.log($(this).parent().parent().find(".rereply"));
@@ -331,7 +450,7 @@ var user = $('#iddd').text();
 																	   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
 																	   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 																	   '<div>'+list[i].replyModifyDate+'</div></div>'+
-																	 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
+																	 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button><br><br><div class="delete">'+del+'</div></div>'+
 																	 	'</div></div>';
 																		
 																 		$(ref).append(Html);
@@ -382,7 +501,7 @@ var user = $('#iddd').text();
 																		   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
 																		   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 																		   '<div>'+list[i].replyModifyDate+'</div></div>'+
-																		 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
+																		 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button><br><br><div class="delete">'+del+'</div></div>'+
 																		 	'</div></div>';
 																		
 																 		$(ref).append(Html);
@@ -414,6 +533,11 @@ var user = $('#iddd').text();
 						 error: (data)=>{
 							 
 						 }
+					});
+				 	$(".delete").click(function(){
+						var replyId1 = $(this).parent().parent().parent().find(".replyId").text();
+						
+						console.log(replyId1);
 					});
 				},
 				error: (data)=>{
@@ -522,7 +646,7 @@ var user = $('#iddd').text();
 										   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
 										   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 										   '<div>'+list[i].replyModifyDate+'</div></div>'+
-										 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
+										 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button><br><br><div class="delete">'+del+'</div></div>'+
 										 	'</div></div>';
 											
 									 		$(ref).append(Html);
@@ -598,7 +722,22 @@ var user = $('#iddd').text();
 		
 		$(this).parent().parent().find('.sel').click();
 	});
-
+	
+	$(".delete").click(function(){
+		var replyId1 = $(this).parent().parent().parent().find(".replyId").text();
+		$.ajax({
+			 url: "${ contextPath}/delete.re",
+			 data: { replyId : replyId1 },
+				success: (data)=>{
+					console.log("성공")
+				},
+				error: (data)=>{
+					
+				}
+			});
+	
+		
+	});
 	
 			
     

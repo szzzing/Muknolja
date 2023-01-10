@@ -40,7 +40,7 @@ public class ReviewController {
 	private String serviceKey = "53PIgLInS%2B6lI57LYYEbd%2B4daak52bqwGs1s160gtU3hu09KJjsPN%2FWFFlkkOXi%2BwIrqVdEMUeICmQ0fTXFfZA%3D%3D";
 	
 	@RequestMapping("reviewList.re")
-	public String reviewList(HttpSession session,@RequestParam(value="area", required=false) Integer area,@RequestParam(value="page", required=false) Integer page,Model model) {
+	public String reviewList(HttpSession session,@RequestParam(value="search", required=false) String search,@RequestParam(value="area", required=false) Integer area,@RequestParam(value="page", required=false) Integer page,Model model) {
 		int currentPage = 1;
 		if(page!=null) {
 			currentPage = page;
@@ -56,6 +56,9 @@ public class ReviewController {
 			currentPage = page;
 		}
 		int listCount = rService.getselectBoard(Sarea);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("search", search);
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 12);
 		Member m = (Member)session.getAttribute("loginUser");
 		ArrayList<Board> board = rService.selectBoard(pi,Sarea);
@@ -187,6 +190,19 @@ public class ReviewController {
 	public String checkHeart(@RequestParam("boardId")int boardId, @RequestParam("id")String id) {
 		System.out.println("돼?"+id);
 		System.out.println("boardId");
+		return "1";
+	}
+	@RequestMapping("delete.re")
+	@ResponseBody
+	public String delete(@RequestParam("replyId")int replyId) {
+		int result = rService.deleteReply(replyId);
+		return "1";
+	}
+	
+	@RequestMapping("deleteBoard.re")
+	@ResponseBody
+	public String deleteBoard(@RequestParam("boardId")int boardId) {
+		int result = rService.deleteBoard(boardId);
 		return "1";
 	}
 	@RequestMapping("insertRere.re")

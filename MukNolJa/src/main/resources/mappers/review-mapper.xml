@@ -201,5 +201,11 @@
 		values (SEQ_REPORTID.nextval, #{memberId},  #{targetId}, 'R', #{reportContent}, sysdate, default, #{reportTitle}, null  )
 	</insert>
 	
+	<update id="deleteBoard">
+		update board
+		set board_status='N'
+		where board_id=#{boardId}
+	</update>
+	
 	
 </mapper>
