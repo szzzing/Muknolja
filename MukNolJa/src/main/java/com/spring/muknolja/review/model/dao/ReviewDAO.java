@@ -87,6 +87,16 @@ public class ReviewDAO {
 		// TODO Auto-generated method stub
 	return sqlSession.selectOne("replyMapper.selectReply1",num);
 	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("replyMapper.deleteReply", replyId);
+	}
+
+	public int deleteBoard(SqlSessionTemplate sqlSession, int boardId) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("reviewMapper.deleteBoard", boardId);
+	}
 	
 	
 }

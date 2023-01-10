@@ -47,7 +47,7 @@
           font-weight:600;
           padding-left:0px;
            }
-         #bu3{
+         #bu6{
          border-bottom: 10px solid RGB(107, 182, 236);}
          
          
@@ -109,7 +109,7 @@
 								  <thead>
 								    <tr data-bs-toggle="modal" data-bs-target="#exampleModal">
 								      <th scope="col">번호</th>
-								      <th scope="col">접수자</th>
+								      <th scope="col">상대방</th>
 								      <th scope="col">제목</th>
 								      <th scope="col">날짜</th>
 								      <th scope="col">답변</th>
@@ -191,23 +191,23 @@
 		$(document).ready(function(){
 			var page = ${ pi.currentPage };
 			$.ajax({
-				url: "${contextPath}/myInfoBB.me",
+				url: "${contextPath}/myInfoEE.me",
 				traditional : true,
 				data: {
 					page: page
 				},
 				success: (data)=>{
-					const qa = data.qa;
+					const report = data.report;
 					
 					
-					for(var i=0;i<qa.length;i++) {
-						var id = qa[i].qaId;
-						var title = qa[i].qaTitle;
-						var re = qa[i].qaWriter;
-						var date = qa[i].qaCreateDate;
-						var content = qa[i].qaContent;
-						var Yn = qa[i].qaYn;
-						var reContent = qa[i].qaReplyContent;
+					for(var i=0;i<report.length;i++) {
+						var id = report[i].reportId;
+						var title = report[i].reportTitle;
+						var re = report[i].targetId;
+						var date = report[i].createDate;
+						var content = report[i].reportContent;
+						var Yn = report[i].processing;
+						var reContent = report[i].replyContent;
 						
 						var qaHtml = '<tr id='+i+' data-bs-toggle="modal" data-bs-target="#exampleModal" class="qaTr">'+
     						'<th scope="row" class="id">'+id+'</th>'+
@@ -227,14 +227,14 @@
 						$(".body2").empty();
 						var idNum = $(this).attr('id');
 						
-						$(".title").append(qa[idNum].qaTitle);
-						$(".body").append(qa[idNum].qaContent);
-						$(".body2").append(qa[idNum].qaReplyContent);
-						console.log(qa[idNum].qaReplyContent);
-						if(qa[idNum].qaReplyContent == null){
+						$(".title").append(report[idNum].reportTitle);
+						$(".body").append(report[idNum].reportContent);
+						$(".body2").append(report[idNum].replyContent);
+						console.log(report[idNum].replyContent);
+						if(report[idNum].replyContent == null){
 							$(".body2").append('좀 더 기다려주시면 감사하겠습니다.');
 						}
-						var id = qa[idNum].qaId;
+						var id = report[idNum].repotrId;
 						$('#de').click(function(){
 							console.log(id);
 							$.ajax({

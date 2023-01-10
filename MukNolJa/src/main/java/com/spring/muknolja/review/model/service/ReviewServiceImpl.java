@@ -89,6 +89,16 @@ public class ReviewServiceImpl implements ReviewService{
 		// TODO Auto-generated method stub
 		return rDAO.selectReply1(sqlSession,num);
 	}
+	@Override
+	public int deleteReply(int replyId) {
+		// TODO Auto-generated method stub
+		return rDAO.deleteReply(sqlSession, replyId);
+	}
+	@Override
+	public int deleteBoard(int boardId) {
+		// TODO Auto-generated method stub
+		return rDAO.deleteBoard(sqlSession,boardId);
+	}
 
 
 

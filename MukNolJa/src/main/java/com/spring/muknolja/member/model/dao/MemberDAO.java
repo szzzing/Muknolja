@@ -15,6 +15,7 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.QA;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
@@ -373,6 +374,18 @@ public class MemberDAO {
 
 	public int todayCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("memberMapper.todayCount");
+	}
+
+	public int getListCountE(SqlSessionTemplate sqlSession, String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.getListCountE",id);
+	}
+
+	public ArrayList<Report> selectReport(SqlSessionTemplate sqlSession, String id, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectReportE", id, rowBounds);
 	}
 	
 	/*
