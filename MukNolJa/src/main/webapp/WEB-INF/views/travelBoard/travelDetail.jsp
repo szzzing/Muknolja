@@ -224,7 +224,12 @@
 			<div id="reply" style="margin-top: 30px;">
 			<c:forEach items="${ rlist }" var="r">
 					<div class="replyProfile">
-						<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">
+						<c:if test="${ r.fileModifyName != null }">
+							<img src="${contextPath}/resources/uploadFiles/${r.fileModifyName}">
+						</c:if>
+						<c:if test="${ r.fileModifyName == null }">
+							<img src="${contextPath}/resources/img/no.png">
+						</c:if>
 						<table style="float:left; margin-left: 10px;">
 							<tr>
 								<td>${ r.nickName }</td>
