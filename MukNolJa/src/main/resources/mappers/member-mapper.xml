@@ -391,7 +391,7 @@
 			into ATTACHED_FILE
 			values(SEQ_FID.nextval, 'D', sysdate, #{attm.fileName}, #{attm.fileModifyName}, #{attm.fileLink}, default, 'Y')
 			into RE_IMG
-			values  ('user',SEQ_FID.currval)
+			values  (#{m.id},SEQ_FID.currval)
 			select * from dual
 		
 		
