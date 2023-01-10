@@ -58,7 +58,7 @@
 	  
 	}
  	.card img{height: 250px;}
-	.card{margin-bottom: 30px; cursor: pointer;}
+	.card{cursor: pointer;}
 	.card td{width: 95px; font-size: 14px; color: gray; margin-right: auto;}
 	#button-addon2{background: #6BB6EC; border-color: lightgray; color: white;}
 	#button-addon2:hover{background: white; border-color: lightgray; color: #6BB6EC;}
@@ -184,22 +184,22 @@
 									  </c:forEach>
 								  </ol>
 							  </div>
-							 <table class="mb-auto">
-							 	<tr>
-							 		<td><i class="fa-solid fa-location-dot"></i> ${ p.partyArea }</td>
-							 		<c:if test="${ p.nowParticipate != p.maxParticipate }">
-							 			<td><i class="fa-solid fa-users"></i> <span>${ p.nowParticipate }/${ p.maxParticipate }</span></td>
-							 		</c:if>
-							 		<c:if test="${ p.nowParticipate == p.maxParticipate }">
-							 			<td width="100px;"><i class="fa-solid fa-users participate"></i> <span class="participate">마감</span></td>
-							 		</c:if>
-							 		<td><i class="fa-solid fa-heart"></i> ${ p.partyGender }</td>
-							 		<td><i class="fa-regular fa-comment-dots"></i> ${ p.replyCount }개</td>
-							 	</tr>
-							 </table>
 							 <input type="hidden" value="${ p.partyId }" class="partyId">
 							 <input type="hidden" value="${ p.nickName }" class="nickName">
 						  </div>
+						 <table style="margin-bottom: 10px;" class="text-center">
+						 	<tr>
+						 		<td><i class="fa-solid fa-location-dot"></i> ${ p.partyArea }</td>
+						 		<c:if test="${ p.nowParticipate != p.maxParticipate }">
+						 			<td><i class="fa-solid fa-users"></i> <span>${ p.nowParticipate }/${ p.maxParticipate }</span></td>
+						 		</c:if>
+						 		<c:if test="${ p.nowParticipate == p.maxParticipate }">
+						 			<td width="100px;"><i class="fa-solid fa-users participate"></i> <span class="participate">마감</span></td>
+						 		</c:if>
+						 		<td><i class="fa-solid fa-heart"></i> ${ p.partyGender }</td>
+						 		<td><i class="fa-regular fa-comment-dots"></i> ${ p.replyCount }개</td>
+						 	</tr>
+						 </table>
 						</div>
 					</div>
 				</c:forEach>
