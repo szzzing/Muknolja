@@ -27,6 +27,7 @@ public class Board {
 	private String fileModifyName;
 	private String contentCourse;
 	private int fileId;
+	private String nickName;
 	
 	private int reportCount;
 }

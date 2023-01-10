@@ -89,7 +89,7 @@
 	     			
 	     			<div id ="album">
      				<div style="width: 100%; height:100%;   float:left;  font-size: 40px; font-weight:1000; background: white; box-shadow: 0px 30px 60px 0px rgba(0,0,0,0.3); "><div  style="color: white; margin:15px; background: radial-gradient(ellipse at bottom, #C0DEFF 0%, #89C4E1 100%);  ">${board.boardTitle }</div><br>
-     				<div style="text-align:right;font-size: 20px; margin-right:7%">닉네임: ${ board.boardWriter } <c:if test="${ board.boardWriter eq loginUser.id}"> <i class="bi bi-trash3 trash"  data-bs-toggle="modal" data-bs-target="#exampleModal1"></i></c:if></div>
+     				<div style="text-align:right;font-size: 20px; margin-right:7%">글쓴이: ${ board.nickName } <c:if test="${ board.boardWriter eq loginUser.id}"> <i class="bi bi-trash3 trash"  data-bs-toggle="modal" data-bs-target="#exampleModal1"></i></c:if></div>
      					<div style="padding-left: 10%; align-items:center; text-align: left; float:left; margin-top: 50px;">
      						
      						<div style="margin-left:3% ;text-align:left">순서</div>
@@ -156,7 +156,7 @@
 					
 				 	<div class="replyId" style="display:none">${r.replyId}</div>
 				 	<div class="replyContent col-8 col-lg-7" style="height:90px; padding-left:10px;"><div class="sele">
-				 	<div style="width:100%; height:60px;display:flex;" class="writer">${ r.replyWriter }님<div style="margin-left:2%">${r.replyContent}</div></div></div>
+				 	<div style="width:100%; height:60px;display:flex;" class="writer">${ r.nickName }님<div style="margin-left:2%">${r.replyContent}</div></div></div>
 				 	<div>${r.replyModifyDate }<Button type="button" class="refReply" style="background:none; border:none">댓글달기</Button>
 				 	</div>
 				 	</div>
@@ -305,7 +305,7 @@ var user = $('#iddd').text();
 								 
 								 var name = reply.replyWriter;
 								 var id = reply.replyId;
-								 var writer = reply.replyWriter;
+								 var writer = reply.nickName;
 								 var date = reply.replyModifyDate;
 								 var content = reply.replyContent;
 								 var img = reply.fileModifyName;
@@ -386,7 +386,7 @@ var user = $('#iddd').text();
 																		 '<div class="rereply" style="display: flex">'+
 																		 
 																		 '<div class="col"><textarea class="reText" style="width:100%; height:100%; border:none"></textarea></div>'+
-																		'<div class="col" style=" padding-left:2%"><button class="replyBu" type="button" style="width:100%; height:100%; border:none; background: white;">댓글달기</button></div>'+
+																		'<div class="col" style=""><button class="replyBu" type="button" style="width:100%; height:100%; border:none; background: white;">댓글달기</button></div>'+
 																		 '</div></div>'
 																 
 																 
@@ -448,7 +448,7 @@ var user = $('#iddd').text();
 																 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style="text-align:center; width:100%;"class="bi bi-arrow-return-right"></i></div>'+
 																    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
 																	   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
-																	   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+																	   '<div style="width:100%; height:60px;display:flex;">'+list[i].nickName+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 																	   '<div>'+list[i].replyModifyDate+'</div></div>'+
 																	 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button><br><br><div class="delete">'+del+'</div></div>'+
 																	 	'</div></div>';
@@ -499,7 +499,7 @@ var user = $('#iddd').text();
 																 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" width:100%;"class="bi bi-arrow-return-right"></i></div>'+
 																		    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
 																		   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
-																		   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+																		   '<div style="width:100%; height:60px;display:flex;">'+list[i].nickName+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 																		   '<div>'+list[i].replyModifyDate+'</div></div>'+
 																		 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button><br><br><div class="delete">'+del+'</div></div>'+
 																		 	'</div></div>';
@@ -644,7 +644,7 @@ var user = $('#iddd').text();
 									 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style="text-align:center; width:100%;"class="bi bi-arrow-return-right"></i></div>'+
 									    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
 										   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
-										   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+										   '<div style="width:100%; height:60px;display:flex;">'+list[i].nickName+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 										   '<div>'+list[i].replyModifyDate+'</div></div>'+
 										 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button><br><br><div class="delete">'+del+'</div></div>'+
 										 	'</div></div>';
@@ -695,7 +695,7 @@ var user = $('#iddd').text();
 									 var Html = '<div style="display:flex"><div class="col-2 col-lg-1" style=" height:60px; padding-left:30px;" ><i style=" width:100%;"class="bi bi-arrow-return-right"></i></div>'+
 											    '<div class="col-2 col-lg-1" style=" height:60px; " ><img alt="1" width=100%; height=100% src="${contextPath }/resources/uploadFiles/'+list[i].fileModifyName+'" ></div>'+
 											   '<div class=" col-6 col-lg-6" style="height:90px; padding-left:10px;">'+
-											   '<div style="width:100%; height:60px;display:flex;">'+list[i].replyWriter+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
+											   '<div style="width:100%; height:60px;display:flex;">'+list[i].nickName+'님<div style="margin-left:2%">'+list[i].replyContent+'</div></div>'+
 											   '<div>'+list[i].replyModifyDate+'</div></div>'+
 											 	'<div class="col-2 col-lg-4" style="float:right"><button type="button" class="sin" style="border:none; float:right;background:none">신고</button></div>'+
 											 	'</div></div>';
