@@ -26,6 +26,8 @@
 	
 	
 	</select>
+	
+	
 	<resultMap type="AttachedFile" id="attachedFileResultSet">
 		<id column="FILE_ID" property="fileId"/>
 		<result column="FILE_TYPE" property="fileType"/>
