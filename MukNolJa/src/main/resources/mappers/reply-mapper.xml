@@ -34,7 +34,7 @@
 	<select id="selectReply" resultMap="replyResultMap">
 		select *
 		from reply
-			 join member on(reply_writer = id) join re_img using (id) join ATTACHED_FILE using (FILE_ID)
+			 join member on(reply_writer = id) left outer join re_img using (id) left outer join ATTACHED_FILE using (FILE_ID)
 		where ref_board_id=#{refBoardId}
 			  and reply_status='Y'
 			  and ref_reply_id=0
@@ -53,7 +53,7 @@
 	<select id="selectReReply" resultMap="replyResultMap">
 		select *
 		from reply
-			 join member on(reply_writer = id) join re_img using (id) join ATTACHED_FILE using (FILE_ID)
+			 join member on(reply_writer = id) left outer join re_img using (id) left outer join ATTACHED_FILE using (FILE_ID)
 		where ref_reply_id=#{refReplyId}
 			  and reply_status='Y'
 		order by reply_id desc

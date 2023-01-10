@@ -17,14 +17,17 @@
 		<result column="FILE_MODIFY_NAME" property="fileModifyName"/>
 		<result column="CONTENT_COURSE" property="contentCourse"/>
 		<result column="FILE_ID" property="fileId"/>
+		<result column="NICKNAME" property="nickName"/>
 	</resultMap>
 	<select id = "boardDetail" resultMap="boardResultSet">
-	select BOARD_ID, BOARD_WRITER, BOARD_COURSE, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATE_DATE, CONTENT_COURSE
-	from board
+	select BOARD_ID, BOARD_WRITER, BOARD_COURSE, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATE_DATE, CONTENT_COURSE, NICKNAME
+	from board join member on(BOARD_WRITER = id) 
 	where board_id = #{boardId}
 	
 	
 	</select>
+	
+	
 	<resultMap type="AttachedFile" id="attachedFileResultSet">
 		<id column="FILE_ID" property="fileId"/>
 		<result column="FILE_TYPE" property="fileType"/>
@@ -200,6 +203,12 @@
 		insert into REPORT
 		values (SEQ_REPORTID.nextval, #{memberId},  #{targetId}, 'R', #{reportContent}, sysdate, default, #{reportTitle}, null  )
 	</insert>
+	
+	<update id="deleteBoard">
+		update board
+		set board_status='N'
+		where board_id=#{boardId}
+	</update>
 	
 	
 </mapper>

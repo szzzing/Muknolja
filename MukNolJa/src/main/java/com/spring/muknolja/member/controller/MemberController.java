@@ -608,6 +608,23 @@ public class MemberController {
 			return "myInfoB";		
 		}
 		
+		@RequestMapping("myInfoE.me")
+		public String myinfoE(HttpSession session,@RequestParam(value="page", required=false) Integer page,Model model) {
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCountE(id);
+			
+			System.out.println(currentPage);
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
+			model.addAttribute("pi",pi);
+			return "myInfoE";		
+		}
+		
 		@RequestMapping(value="myInfoAA.me", produces="application/json; charset=UTF-8")
 		@ResponseBody
 		public void myinfoAA(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
@@ -658,6 +675,38 @@ public class MemberController {
 			
 			HashMap map = new HashMap();
 			map.put("qa", qa);
+			
+			
+			response.setContentType("application/json; charset=UTF-8");
+			Gson gson = new Gson();
+			GsonBuilder gb = new GsonBuilder().setDateFormat("yyyy.MM.dd");
+			gson = gb.create();
+			
+			try {
+				gson.toJson(map, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		@RequestMapping(value="myInfoEE.me", produces="application/json; charset=UTF-8")
+		@ResponseBody
+		public void myinfoEE(HttpSession session,@RequestParam(value="page", required=false) Integer page, HttpServletResponse response,Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			String id = m.getId();
+			int listCount = mService.getListCountE(id);
+			int currentPage = 1;
+			if(page!=null) {
+				currentPage = page;
+			}
+			
+			PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+			ArrayList<Report> report= mService.selectReport(id,pi);
+			
+			
+			
+			HashMap map = new HashMap();
+			map.put("report", report);
 			
 			
 			response.setContentType("application/json; charset=UTF-8");

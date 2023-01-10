@@ -37,6 +37,10 @@ public interface ReviewService {
 
 	Reply selectReply1(Reply num);
 
+	int deleteReply(int replyId);
+
+	int deleteBoard(int boardId);
+
 
 
 	

@@ -595,6 +595,12 @@
 		<result column="REVIEW_CONTENT" property="reviewContent"/>
 	</resultMap>
 	
+	<select id="selectReportE" resultMap="ReportResultSet">
+		select *
+		from report
+		where member_id = #{id}
+	</select>
+	
 	<select id="selectBoardType" resultType="String">
 		select BOARD_TYPE
 		from board
@@ -759,5 +765,11 @@
 		from ATTACHED_FILE
 		join RE_IMG r using(FILE_ID)
 		where r.id = #{id}
+	</select>
+	
+	<select id="getListCountE" resultType="_int">
+		select count(*)
+		from report
+		where MEMBER_ID = #{id}
 	</select>
   </mapper>

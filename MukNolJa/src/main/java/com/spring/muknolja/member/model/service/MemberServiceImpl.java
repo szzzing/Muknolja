@@ -16,6 +16,7 @@ import com.spring.muknolja.common.model.vo.AttachedFile;
 import com.spring.muknolja.common.model.vo.Board;
 import com.spring.muknolja.common.model.vo.PageInfo;
 import com.spring.muknolja.common.model.vo.QA;
+import com.spring.muknolja.common.model.vo.Report;
 import com.spring.muknolja.hotel.model.vo.Hotel;
 import com.spring.muknolja.hotel.model.vo.LikeHotel;
 import com.spring.muknolja.hotel.model.vo.Reservation;
@@ -448,6 +449,18 @@ public class MemberServiceImpl implements MemberService {
 	public String findId(String email) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int getListCountE(String id) {
+		// TODO Auto-generated method stub
+		return mDAO.getListCountE(sqlSession,id);
+	}
+
+	@Override
+	public ArrayList<Report> selectReport(String id, PageInfo pi) {
+		// TODO Auto-generated method stub
+		return mDAO.selectReport(sqlSession, id, pi);
 	}
 	
 

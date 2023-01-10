@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
     .inbu{height:70px;
-          width:25%; 
+          width:20%; 
           background:none;
           border:none;
           border-right: 1px solid RGB(107, 182, 236, 0.3);
@@ -62,6 +62,7 @@
 			            		<button type="button" class="inbu" id="bu1" onclick= "location.href='${contextPath }/myInfo.me'"style="padding-left:0px;border-left: 1px solid RGB(107, 182, 236, 0.3);">내가 쓴글</button>
 			            		<button type="button" class="inbu" id="bu2" onclick= "location.href='${contextPath }/myInfoA.me'">찜목록</button>
 			            		<button type="button" class="inbu" id="bu3" onclick= "location.href='${contextPath }/myInfoB.me'">문의 내역</button>
+			            		<button type="button" class="inbu" id="bu6" onclick= "location.href='${contextPath }/myInfoE.me'">신고 내역</button>
 			            		<button type="button" class="inbu" id="bu4" onclick= "location.href='${contextPath }/myInfoC.me'">동행 확인</button>
 			            		<button type="button" class="inbu" id="bu5" onclick= "location.href='${contextPath }/myInfoD.me'">예약 확인</button>
 			            		</div>

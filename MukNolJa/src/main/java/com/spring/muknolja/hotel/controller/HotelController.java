@@ -780,6 +780,7 @@ public class HotelController {
 			e.printStackTrace();
 		}
 	}
+
 	
 	// 리뷰 작성
 	@RequestMapping(value="insertReview.ho", produces="application/json; charset=UTF-8")
