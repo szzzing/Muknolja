@@ -121,6 +121,7 @@
   	}
  	
 	$( '#bobo').click(function(){
+		email = true;
 		if(email){
 			$('form').submit();
 		}

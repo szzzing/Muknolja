@@ -223,7 +223,7 @@
   		set pwd=#{pwd} 
   		WHERE ID = #{id}
   	</update>
-  	<select id="selectEid">
+  	<select id="selectEid" resultType="String">
   		select id
   		from member
   		where email=#{email}

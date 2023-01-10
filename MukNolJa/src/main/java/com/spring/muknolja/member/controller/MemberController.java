@@ -239,6 +239,7 @@ public class MemberController {
 		@RequestMapping("findId2.me")
 		public String findid2(@RequestParam("email")String email,Model model) {
 			String id = mService.selectEid(email);
+			System.out.println(id);
 			model.addAttribute("id",id);
 			return"findId2";
 		}

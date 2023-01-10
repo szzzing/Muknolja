@@ -41,7 +41,7 @@
           				<div style=" margin-top:5vh; font-size: 50px; font-weight:700; color:#6BB6EC; width: 800; height:100" onclick= "location.href='${contextPath }/home.do'">MUKNOLJA</div>
             				<div style="float:left;  margin-top: 4vh;">
 		            			
-		            				<label for="email" style="float:left; font-size:20px;">이메일</label>
+		            				<label for="email" style="float:left; font-size:20px;">아이디</label>
 		            				<br>
 		            				<input type="text" value="${ id }" readonly name="email" id="email" class="email" style="width:500px; font-size:20px; padding:10px; padding-top:15px">
 		            				<br>
@@ -53,10 +53,13 @@
 			            			<div style="position:absolute; top:85%; margin-left:0vw;">
 			            			
 			            			</div>
+			            			<br><br>
+			            			<div style="float:left; margin-left:35%"><a href="${ contextPath }/loginView.me" >로그인</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a  href="">비밀번호 찾기</a></div>
 		            			
 		            		</div>
             		</div>
             		</div>
+            		
             	</div>
             	
             </div>
