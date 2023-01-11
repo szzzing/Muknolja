@@ -515,7 +515,7 @@
 			function error() {
 				$("input[name=geoX]").val(126.9829736);
 				$("input[name=geoY]").val(37.5679283);
-				getAddr(latitude, longitude);
+				getAddr(37.5679283, 126.9829736);
 				console.log("실패");
 			}
 			
