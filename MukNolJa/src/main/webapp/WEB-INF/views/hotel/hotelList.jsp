@@ -519,11 +519,11 @@
 			}
 			
 			if(!navigator.geolocation) {
-				$("input[name=geoX]").val(0);
-				$("input[name=geoY]").val(0);
+				$("input[name=geoX]").val(126.9829736);
+				$("input[name=geoY]").val(37.5679283);
 			} else {
-				$("input[name=geoX]").val(0);
-				$("input[name=geoY]").val(0);
+				$("input[name=geoX]").val(126.9829736);
+				$("input[name=geoY]").val(37.5679283);
 				navigator.geolocation.getCurrentPosition(success, error);
 			}
 		}
