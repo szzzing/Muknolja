@@ -578,7 +578,7 @@
 		<if test="search != null">
 			where REPORT_TITLE LIKE '%'||#{search}||'%'
 		</if>
-		order by REPORT_ID
+		order by REPORT_ID desc
 	</select>
 	
 	<resultMap type="Report" id="ReportResultSet">

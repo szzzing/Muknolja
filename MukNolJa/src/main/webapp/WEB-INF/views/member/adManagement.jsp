@@ -296,7 +296,7 @@
      
      <div id="addModify_modal">
 		<div id="addAdTitle" class="row text-center">
-			<h3>광고 추가</h3>
+			<h3>광고 수정</h3>
 		</div>
 		<form action="${ contextPath }/modifyAd.me" method="post" enctype="multipart/form-data">
 			<div class="row text-center" style="margin-bottom: 20px;">
