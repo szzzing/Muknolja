@@ -73,25 +73,26 @@ public class FestivalController {
 			
 			JSONObject parseResponse = (JSONObject)obj.get("response");
 			JSONObject parseBody = (JSONObject)parseResponse.get("body");
-			JSONObject parseItems = (JSONObject)parseBody.get("items");
-			
-			JSONArray parseItem = (JSONArray)parseItems.get("item");
 			
 			ArrayList<Travel> list = new ArrayList<Travel>();
-			for(Object arr : parseItem) {
-				JSONObject tr = (JSONObject)arr;
-				
-				Travel travel = new Travel();
-				travel.setAddr(tr.get("addr1").toString());
-				travel.setContentId(tr.get("contentid").toString());
-				travel.setFirstImage(tr.get("firstimage").toString());
-				travel.setMapx(tr.get("mapx").toString());
-				travel.setMapy(tr.get("mapy").toString());
-				travel.setReadCount(tr.get("readcount").toString());
-				travel.setTel(tr.get("tel").toString());
-				travel.setTitle(tr.get("title").toString());
-				
-				list.add(travel);
+			if(!(parseBody.get("items")).toString().equals("")) {
+				JSONObject parseItems = (JSONObject)parseBody.get("items");
+				JSONArray parseItem = (JSONArray)parseItems.get("item");
+				for(Object arr : parseItem) {
+					JSONObject tr = (JSONObject)arr;
+					
+					Travel travel = new Travel();
+					travel.setAddr(tr.get("addr1").toString());
+					travel.setContentId(tr.get("contentid").toString());
+					travel.setFirstImage(tr.get("firstimage").toString());
+					travel.setMapx(tr.get("mapx").toString());
+					travel.setMapy(tr.get("mapy").toString());
+					travel.setReadCount(tr.get("readcount").toString());
+					travel.setTel(tr.get("tel").toString());
+					travel.setTitle(tr.get("title").toString());
+					
+					list.add(travel);
+				}
 			}
 			
 			int listCount = Integer.parseInt(String.valueOf(parseBody.get("totalCount")));
