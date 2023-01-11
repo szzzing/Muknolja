@@ -306,7 +306,12 @@
 					document.getElementById('reply').innerHTML = '';
 					
 					for(const r of data){
-						var profileImg = '<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEwMjVfMTgz%2FMDAxNjY2NzA4NjI5ODgx.xP4DuaOg_fn_wnYQ0icZAdibPZj01TpMH-owvohB7l4g.FkOjV2Nh8vi18cE0h5A-6ItHqqBMPgxW3lRCS_9g028g.JPEG.ymtlfet%2FIMG_6191.JPG&type=sc960_832">';
+						var profileImg = '';
+						if(r.fileModifyName != null){
+							profileImg = '<img src="${contextPath}/resources/uploadFiles/' + r.fileModifyName + '">';
+						}else{
+							profileImg = '<img src="${contextPath}/resources/img/no.png">';
+						}
 						var profileInfo = '<table style="float:left; margin-left: 10px;"><tr><td>' + r.nickName + '</td></tr><tr><td style="color: gray;">' + r.replyModifyDate + '</td></tr></table>';
 						var deleteR = '<div style="float:right;"><button class="buttons deleteReply" type="button"><i class="fa-solid fa-trash-can"></i></button><input type="hidden" value="' + r.replyId + '" name="replyId"></div>';
 						var reportR = '<div style="float:right;"><button class="buttons reportReply" type="button">신고</button><input type="hidden" value="${ r.replyId }" name="replyId"></div>';
