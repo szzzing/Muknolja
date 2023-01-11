@@ -190,7 +190,7 @@ public class PartyController {
 	}
 	
 	@RequestMapping("deleteParty.pa")
-	public String deleteParty(@RequestParam("partyId") int partyId, @RequestParam("fileId") int fileId, @RequestParam(value="managerCheck", required = true) int check) {
+	public String deleteParty(@RequestParam("partyId") int partyId, @RequestParam("fileId") int fileId, @RequestParam(value="managerCheck", required=false) Integer check) {
 		
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("partyId", partyId);
@@ -198,8 +198,8 @@ public class PartyController {
 		
 		int result = pService.deleteParty(map);
 		
-		if(check == 0) {
-			return "redirect:memberManagement.me";
+		if(check != null) {
+			return "redirect:boardManagement.me";
 		} else {
 			return "redirect:partyList.pa";
 		}
