@@ -136,10 +136,10 @@
 			<div id="num" style="display: inline-block">
 				<span>총 <span id="number">${ pi.listCount }</span>건</span>
 			</div>
-			<div id="btn" style="float: right;">
-				<button>최신순</button>
-				<button>인기순</button>
-			</div>
+<!-- 			<div id="btn" style="float: right;"> -->
+<!-- 				<button>최신순</button> -->
+<!-- 				<button>인기순</button> -->
+<!-- 			</div> -->
 			
 			<hr id="hr2" >
 			<br>
