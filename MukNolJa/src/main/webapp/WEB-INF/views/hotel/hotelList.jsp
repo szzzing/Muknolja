@@ -505,14 +505,16 @@
 			function success(position) {
 				const latitude  = position.coords.latitude;
 				const longitude = position.coords.longitude;
+				console.log(latitude);
+				console.log(longitude);
 				
 				$("input[name=geoX]").val(Number(longitude));
 				$("input[name=geoY]").val(Number(latitude));
 				getAddr(latitude, longitude);
 			}
 			function error() {
-				$("input[name=geoX]").val(0);
-				$("input[name=geoY]").val(0);
+				$("input[name=geoX]").val(126.9829736);
+				$("input[name=geoY]").val(37.5679283);
 				console.log("실패");
 			}
 			
