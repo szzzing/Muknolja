@@ -625,7 +625,7 @@
 	<select id="selectQAList" resultMap="qaResultSet">
 		select *
 		from qa
-		order by to_char(QA_CREATE_DATE, 'yymmdd')
+		order by to_char(QA_CREATE_DATE, 'yymmdd') desc
 	</select>
 	
 	<select id="qaListCount" resultType="_int">
